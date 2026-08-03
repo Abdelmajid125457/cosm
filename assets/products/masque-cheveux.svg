@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 1100">
+  <rect width="900" height="1100" fill="#f2ede4"/>
+  <path d="M190 190c72 220 72 460 0 720" fill="none" stroke="#1f211d" stroke-width="18" opacity=".18"/>
+  <path d="M710 190c-72 220-72 460 0 720" fill="none" stroke="#84957a" stroke-width="18" opacity=".28"/>
+  <rect x="260" y="405" width="380" height="300" rx="46" fill="#fffdf8" stroke="#d8c7ae" stroke-width="8"/>
+  <rect x="330" y="315" width="240" height="110" rx="24" fill="#1f211d"/>
+  <text x="450" y="518" text-anchor="middle" font-family="Georgia,serif" font-size="33" fill="#1f211d">COSM'ETHIQUE</text>
+  <text x="450" y="582" text-anchor="middle" font-family="Arial,sans-serif" font-size="24" fill="#84957a">MASQUE CHEVEUX</text>
+  <text x="450" y="628" text-anchor="middle" font-family="Arial,sans-serif" font-size="22" fill="#1f211d">REPARATEUR</text>
+</svg>

@@ -1,0 +1,4 @@
+.DS_Store
+.cosmethique-backups/
+node_modules/
+vendor/

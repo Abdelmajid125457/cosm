@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 1100">
+  <rect width="900" height="1100" fill="#efe4d4"/>
+  <path d="M170 850c200-140 430-140 620 0" fill="none" stroke="#c7a46a" stroke-width="28" opacity=".25"/>
+  <path d="M170 260c92 20 153 82 180 184-102-5-173-65-180-184Z" fill="#84957a" opacity=".55"/>
+  <rect x="325" y="220" width="250" height="660" rx="62" fill="#7b4f2c"/>
+  <rect x="382" y="116" width="136" height="130" rx="24" fill="#1f211d"/>
+  <rect x="355" y="430" width="190" height="260" rx="10" fill="#fffaf2"/>
+  <text x="450" y="510" text-anchor="middle" font-family="Georgia,serif" font-size="33" fill="#1f211d">COSM'ETHIQUE</text>
+  <text x="450" y="575" text-anchor="middle" font-family="Arial,sans-serif" font-size="24" fill="#84957a">HUILE SECHE</text>
+  <text x="450" y="620" text-anchor="middle" font-family="Arial,sans-serif" font-size="22" fill="#1f211d">BOTANIQUE</text>
+</svg>

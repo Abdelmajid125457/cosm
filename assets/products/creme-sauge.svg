@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 1100">
+  <rect width="900" height="1100" fill="#fbf8f1"/>
+  <path d="M120 250c130-110 300-120 430-34 120 80 190 220 170 370-28 210-213 330-396 300-168-28-278-168-284-330-4-112 25-220 80-306Z" fill="#d8c7ae" opacity=".35"/>
+  <path d="M690 210c-80 35-122 92-128 172 86-18 139-78 128-172Z" fill="#84957a" opacity=".65"/>
+  <rect x="270" y="430" width="360" height="270" rx="32" fill="#fffdf8" stroke="#d8c7ae" stroke-width="8"/>
+  <ellipse cx="450" cy="430" rx="182" ry="58" fill="#f4eadc" stroke="#d8c7ae" stroke-width="8"/>
+  <ellipse cx="450" cy="416" rx="132" ry="34" fill="#fffaf2"/>
+  <text x="450" y="535" text-anchor="middle" font-family="Georgia,serif" font-size="36" fill="#1f211d">COSM'ETHIQUE</text>
+  <text x="450" y="595" text-anchor="middle" font-family="Arial,sans-serif" font-size="24" fill="#84957a">CREME HYDRATANTE</text>
+  <text x="450" y="638" text-anchor="middle" font-family="Arial,sans-serif" font-size="20" fill="#1f211d">SAUGE &amp; CAMOMILLE</text>
+</svg>

@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 1100">
+  <rect width="900" height="1100" fill="#fbf4e8"/>
+  <circle cx="185" cy="810" r="145" fill="#c7a46a" opacity=".24"/>
+  <path d="M690 230c-82 28-132 80-150 156 88-6 147-60 150-156Z" fill="#84957a" opacity=".6"/>
+  <rect x="270" y="385" width="360" height="340" rx="52" fill="#fffdf8" stroke="#d8c7ae" stroke-width="8"/>
+  <ellipse cx="450" cy="384" rx="180" ry="58" fill="#f1dcc1" stroke="#d8c7ae" stroke-width="8"/>
+  <text x="450" y="520" text-anchor="middle" font-family="Georgia,serif" font-size="34" fill="#1f211d">COSM'ETHIQUE</text>
+  <text x="450" y="585" text-anchor="middle" font-family="Arial,sans-serif" font-size="24" fill="#84957a">BAUME CORPS</text>
+  <text x="450" y="630" text-anchor="middle" font-family="Arial,sans-serif" font-size="22" fill="#1f211d">KARITE &amp; AMANDE</text>
+</svg>

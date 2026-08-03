@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 1100">
+  <rect width="900" height="1100" fill="#f4f1f8"/>
+  <path d="M230 850C360 650 470 430 560 160" fill="none" stroke="#84957a" stroke-width="16"/>
+  <circle cx="535" cy="230" r="24" fill="#8f7bb3"/>
+  <circle cx="585" cy="300" r="24" fill="#8f7bb3"/>
+  <circle cx="500" cy="330" r="24" fill="#8f7bb3"/>
+  <circle cx="555" cy="402" r="24" fill="#8f7bb3"/>
+  <rect x="330" y="300" width="240" height="560" rx="54" fill="#5e4938"/>
+  <rect x="382" y="210" width="136" height="110" rx="23" fill="#1f211d"/>
+  <rect x="360" y="485" width="180" height="230" rx="10" fill="#fffdf8"/>
+  <text x="450" y="552" text-anchor="middle" font-family="Georgia,serif" font-size="30" fill="#1f211d">COSM'ETHIQUE</text>
+  <text x="450" y="612" text-anchor="middle" font-family="Arial,sans-serif" font-size="21" fill="#84957a">HUILE ESSENTIELLE</text>
+  <text x="450" y="654" text-anchor="middle" font-family="Arial,sans-serif" font-size="23" fill="#1f211d">LAVANDE FINE</text>
+</svg>
