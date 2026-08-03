@@ -97,13 +97,25 @@ $page = $pages[ $slug ];
         <?php
         $commitments = array(
             array( 'icon' => 'leaf', 'title' => __( 'Beauté naturelle', 'theme-perso' ), 'text' => __( 'Des formules inspirées par les actifs végétaux et la sensorialité des rituels de soin.', 'theme-perso' ) ),
-            array( 'icon' => 'skin', 'title' => __( 'Respect de la peau', 'theme-perso' ), 'text' => __( 'Des textures pensées pour accompagner la peau avec douceur, confort et efficacité.', 'theme-perso' ) ),
+            array( 'icon' => 'flask', 'title' => __( 'Ingrédients responsables', 'theme-perso' ), 'text' => __( 'Des actifs choisis pour leur utilité, leur origine et leur cohérence avec nos formules.', 'theme-perso' ) ),
             array( 'icon' => 'heart', 'title' => __( 'Cruelty Free', 'theme-perso' ), 'text' => __( 'Aucun test sur les animaux, dans une démarche responsable et transparente.', 'theme-perso' ) ),
-            array( 'icon' => 'factory', 'title' => __( 'Fabrication responsable', 'theme-perso' ), 'text' => __( 'Une production maîtrisée, attentive à la qualité et à la réduction des impacts.', 'theme-perso' ) ),
+            array( 'icon' => 'factory', 'title' => __( 'Fabrication française', 'theme-perso' ), 'text' => __( 'Une production maîtrisée avec des exigences qualité précises à chaque étape.', 'theme-perso' ) ),
             array( 'icon' => 'recycle', 'title' => __( 'Emballages recyclables', 'theme-perso' ), 'text' => __( 'Des contenants conçus pour durer, se recycler ou limiter le superflu.', 'theme-perso' ) ),
             array( 'icon' => 'clarity', 'title' => __( 'Transparence', 'theme-perso' ), 'text' => __( 'Des informations claires sur les actifs, les bénéfices et l’usage de chaque soin.', 'theme-perso' ) ),
-            array( 'icon' => 'flask', 'title' => __( 'Sélection rigoureuse des actifs', 'theme-perso' ), 'text' => __( 'Chaque ingrédient est choisi pour sa cohérence, son utilité et son profil sensoriel.', 'theme-perso' ) ),
             array( 'icon' => 'sparkle', 'title' => __( 'Qualité premium', 'theme-perso' ), 'text' => __( 'Une expérience haut de gamme, du packaging à l’application sur la peau.', 'theme-perso' ) ),
+            array( 'icon' => 'leaf', 'title' => __( 'Respect de la planète', 'theme-perso' ), 'text' => __( 'Des choix sobres et durables pour accompagner une beauté plus consciente.', 'theme-perso' ) ),
+        );
+        $commitment_timeline = array(
+            array( 'icon' => 'leaf', 'title' => __( 'Sélectionner', 'theme-perso' ), 'text' => __( 'Nous choisissons des actifs naturels lisibles, sensoriels et utiles.', 'theme-perso' ) ),
+            array( 'icon' => 'flask', 'title' => __( 'Formuler', 'theme-perso' ), 'text' => __( 'Chaque texture est pensée pour associer efficacité, plaisir et douceur.', 'theme-perso' ) ),
+            array( 'icon' => 'factory', 'title' => __( 'Fabriquer', 'theme-perso' ), 'text' => __( 'Les soins suivent un processus responsable et contrôlé.', 'theme-perso' ) ),
+            array( 'icon' => 'package', 'title' => __( 'Conditionner', 'theme-perso' ), 'text' => __( 'Nous privilégions des packagings élégants, recyclables et cohérents.', 'theme-perso' ) ),
+        );
+        $commitment_stats = array(
+            array( 'value' => '98', 'suffix' => '%', 'label' => __( 'd’ingrédients naturels', 'theme-perso' ) ),
+            array( 'value' => '0', 'suffix' => '', 'label' => __( 'test animal', 'theme-perso' ) ),
+            array( 'value' => '100', 'suffix' => '%', 'label' => __( 'emballages recyclables', 'theme-perso' ) ),
+            array( 'value' => '4800', 'suffix' => '+', 'label' => __( 'clients satisfaits', 'theme-perso' ) ),
         );
         ?>
         <section class="institutional-section">
@@ -118,6 +130,31 @@ $page = $pages[ $slug ];
                             <span class="institutional-icon"><?php echo $icon( $item['icon'] ); ?></span>
                             <h3><?php echo esc_html( $item['title'] ); ?></h3>
                             <p><?php echo esc_html( $item['text'] ); ?></p>
+                        </article>
+                    <?php endforeach; ?>
+                </div>
+            </div>
+        </section>
+        <section class="institutional-section institutional-section--soft">
+            <div class="container">
+                <div class="institutional-section-heading motion-reveal">
+                    <p class="eyebrow"><?php esc_html_e( 'Traçabilité', 'theme-perso' ); ?></p>
+                    <h2><?php esc_html_e( 'Nos engagements se construisent étape par étape.', 'theme-perso' ); ?></h2>
+                </div>
+                <div class="commitment-timeline">
+                    <?php foreach ( $commitment_timeline as $step ) : ?>
+                        <article class="commitment-timeline-card motion-reveal">
+                            <span class="institutional-icon"><?php echo $icon( $step['icon'] ); ?></span>
+                            <h3><?php echo esc_html( $step['title'] ); ?></h3>
+                            <p><?php echo esc_html( $step['text'] ); ?></p>
+                        </article>
+                    <?php endforeach; ?>
+                </div>
+                <div class="institutional-stats-grid" data-counter-scope>
+                    <?php foreach ( $commitment_stats as $stat ) : ?>
+                        <article class="institutional-stat-card motion-reveal motion-reveal--scale">
+                            <strong><span data-counter-target="<?php echo esc_attr( $stat['value'] ); ?>">0</span><?php echo esc_html( $stat['suffix'] ); ?></strong>
+                            <p><?php echo esc_html( $stat['label'] ); ?></p>
                         </article>
                     <?php endforeach; ?>
                 </div>

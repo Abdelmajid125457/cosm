@@ -2,6 +2,22 @@
 
 Toutes les interventions sur le thème doivent être sauvegardées et documentées ici.
 
+## 2026-08-03 23:59 - Refonte institutionnelle : Nos engagements
+
+Résumé :
+- Création d'un commit Git de sauvegarde avant intervention : `b41408a`.
+- Mise à jour de la page Nos engagements avec une grille premium de 8 engagements.
+- Ajout d'une timeline illustrée pour présenter la traçabilité des engagements.
+- Ajout de compteurs animés pour renforcer la crédibilité de la page.
+
+Fichiers modifiés :
+- `template-parts/page-institutionnel.php`
+- `CHANGELOG.md`
+
+Corrections de bugs :
+- Remplacement des intitulés génériques par les engagements demandés.
+- Ajout d'une structure plus riche pour éviter une page institutionnelle trop vide.
+
 ## 2026-08-03 23:26 - Refonte premium minimaliste du footer
 
 Résumé :
