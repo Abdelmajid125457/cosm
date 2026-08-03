@@ -11766,7 +11766,16 @@ select:focus,
 .faq-category-card,
 .boutique-card,
 .review-page-card,
-.certification-badge {
+.certification-badge,
+.commitment-timeline-card,
+.institutional-stat-card,
+.ingredient-feature-card,
+.quality-motion-card,
+.quality-gallery-card,
+.quality-choice-card,
+.faq-popular-card,
+.faq-search-panel,
+.faq-contact-panel {
     border: 1px solid var(--institutional-border);
     background: rgba(255, 255, 255, 0.92);
     box-shadow: 0 18px 45px rgba(13, 27, 61, 0.07);
@@ -11785,7 +11794,13 @@ select:focus,
 .faq-category-card:hover,
 .boutique-card:hover,
 .review-page-card:hover,
-.certification-badge:hover {
+.certification-badge:hover,
+.commitment-timeline-card:hover,
+.institutional-stat-card:hover,
+.ingredient-feature-card:hover,
+.quality-gallery-card:hover,
+.quality-choice-card:hover,
+.faq-popular-card:hover {
     border-color: rgba(43, 125, 138, 0.28);
     box-shadow: 0 26px 66px rgba(13, 27, 61, 0.13);
     transform: translateY(-8px) rotateX(1deg) rotateY(-1deg);
@@ -11863,6 +11878,85 @@ select:focus,
 .institutional-check-list svg {
     flex: 0 0 22px;
     color: var(--institutional-turquoise);
+}
+
+.commitment-timeline,
+.institutional-stats-grid,
+.ingredient-feature-grid,
+.quality-gallery-grid,
+.quality-choice-grid,
+.faq-popular-grid {
+    display: grid;
+    gap: 20px;
+}
+
+.commitment-timeline {
+    position: relative;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    margin-bottom: 26px;
+}
+
+.commitment-timeline::before {
+    position: absolute;
+    top: 50%;
+    right: 8%;
+    left: 8%;
+    height: 1px;
+    background: linear-gradient(90deg, rgba(43, 125, 138, 0), rgba(43, 125, 138, 0.38), rgba(43, 125, 138, 0));
+    content: "";
+}
+
+.commitment-timeline-card,
+.institutional-stat-card,
+.ingredient-feature-card,
+.quality-choice-card,
+.faq-popular-card {
+    position: relative;
+    z-index: 1;
+    padding: 26px;
+    border-radius: 26px;
+}
+
+.commitment-timeline-card h3,
+.ingredient-feature-card h3,
+.quality-choice-card h3,
+.faq-popular-card h3,
+.quality-gallery-card h3 {
+    margin: 0 0 10px;
+    color: var(--institutional-navy);
+}
+
+.commitment-timeline-card p,
+.ingredient-feature-card p,
+.quality-choice-card p,
+.faq-popular-card p,
+.quality-gallery-card p,
+.faq-contact-panel p,
+.quality-motion-card p {
+    margin: 0;
+    color: #607184;
+    line-height: 1.72;
+}
+
+.institutional-stats-grid {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+
+.institutional-stat-card {
+    text-align: center;
+}
+
+.institutional-stat-card strong {
+    display: block;
+    color: var(--institutional-navy);
+    font-size: clamp(2.8rem, 5vw, 5.6rem);
+    line-height: 0.95;
+}
+
+.institutional-stat-card p {
+    margin: 12px 0 0;
+    color: #607184;
+    font-weight: 800;
 }
 
 .institutional-toolbar {
@@ -11946,11 +12040,207 @@ select:focus,
     margin: 0 0 8px;
 }
 
+.ingredient-detail-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 42px;
+    margin-top: 18px;
+    padding: 0 18px;
+    border: 1px solid transparent;
+    border-radius: 999px;
+    background: var(--institutional-navy);
+    color: #FFFFFF;
+    font-weight: 800;
+    cursor: pointer;
+    transition: transform 250ms ease, box-shadow 250ms ease, background 250ms ease;
+}
+
+.ingredient-detail-button:hover,
+.ingredient-detail-button:focus-visible {
+    background: var(--institutional-teal);
+    box-shadow: 0 14px 32px rgba(13, 27, 61, 0.16);
+    outline: none;
+    transform: translateY(-2px);
+}
+
+.ingredient-feature-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.ingredient-detail-panel[hidden],
+.ingredient-detail-card[hidden] {
+    display: none !important;
+}
+
+.ingredient-panel-open {
+    overflow: hidden;
+}
+
+.ingredient-detail-panel {
+    position: fixed;
+    inset: 0;
+    z-index: 9999;
+    display: grid;
+    place-items: center;
+    padding: 24px;
+}
+
+.ingredient-panel-backdrop {
+    position: absolute;
+    inset: 0;
+    border: 0;
+    background: rgba(13, 27, 61, 0.58);
+    cursor: pointer;
+}
+
+.ingredient-panel-dialog {
+    position: relative;
+    z-index: 1;
+    width: min(980px, 100%);
+    max-height: min(720px, 90vh);
+    overflow: auto;
+    border: 1px solid rgba(231, 236, 245, 0.9);
+    border-radius: 30px;
+    background: #FFFFFF;
+    box-shadow: 0 34px 90px rgba(13, 27, 61, 0.28);
+    animation: ingredientPanelIn 260ms ease both;
+}
+
+.ingredient-panel-close {
+    position: sticky;
+    top: 16px;
+    left: auto;
+    float: right;
+    z-index: 2;
+    min-height: 40px;
+    margin: 16px 16px 0 0;
+    padding: 0 16px;
+    border: 1px solid var(--institutional-border);
+    border-radius: 999px;
+    background: #FFFFFF;
+    color: var(--institutional-navy);
+    font-weight: 800;
+    cursor: pointer;
+}
+
+.ingredient-detail-card {
+    display: grid;
+    grid-template-columns: minmax(0, 0.82fr) minmax(0, 1fr);
+    gap: clamp(24px, 4vw, 46px);
+    align-items: center;
+    padding: clamp(26px, 5vw, 58px);
+}
+
+.ingredient-detail-card figure {
+    overflow: hidden;
+    margin: 0;
+    border-radius: 24px;
+    background: var(--institutional-soft);
+}
+
+.ingredient-detail-card img {
+    display: block;
+    width: 100%;
+    aspect-ratio: 1 / 1;
+    object-fit: contain;
+    padding: 28px;
+}
+
+.ingredient-detail-card h2 {
+    margin: 0 0 14px;
+    color: var(--institutional-navy);
+    font-size: clamp(34px, 4vw, 56px);
+}
+
+@keyframes ingredientPanelIn {
+    from {
+        opacity: 0;
+        transform: translateY(18px) scale(0.98);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
 .quality-timeline {
     position: relative;
     display: grid;
-    grid-template-columns: repeat(7, minmax(0, 1fr));
+    grid-template-columns: repeat(6, minmax(0, 1fr));
     gap: 16px;
+}
+
+.quality-motion-section {
+    padding-bottom: 0;
+}
+
+.quality-motion-card {
+    position: relative;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 320px;
+    gap: clamp(24px, 4vw, 54px);
+    align-items: center;
+    overflow: hidden;
+    padding: clamp(28px, 5vw, 58px);
+    border-radius: 34px;
+    background:
+        radial-gradient(circle at 80% 24%, rgba(191, 216, 247, 0.7), transparent 24%),
+        linear-gradient(135deg, #FFFFFF, #F8F4EE);
+}
+
+.quality-motion-card h2 {
+    max-width: 720px;
+    margin: 0 0 16px;
+    color: var(--institutional-navy);
+    font-size: clamp(34px, 4vw, 58px);
+    line-height: 1.06;
+}
+
+.quality-orbit {
+    position: relative;
+    min-height: 280px;
+}
+
+.quality-orbit span {
+    position: absolute;
+    display: block;
+    border: 1px solid rgba(43, 125, 138, 0.18);
+    border-radius: 38% 62% 58% 42%;
+    background: rgba(255, 255, 255, 0.72);
+    box-shadow: 0 18px 44px rgba(13, 27, 61, 0.08);
+    animation: qualityFloat 7s ease-in-out infinite;
+}
+
+.quality-orbit span:nth-child(1) {
+    inset: 24px 40px auto auto;
+    width: 170px;
+    height: 170px;
+}
+
+.quality-orbit span:nth-child(2) {
+    top: 116px;
+    left: 18px;
+    width: 130px;
+    height: 130px;
+    animation-delay: -1.8s;
+}
+
+.quality-orbit span:nth-child(3) {
+    right: 70px;
+    bottom: 12px;
+    width: 90px;
+    height: 90px;
+    animation-delay: -3.2s;
+}
+
+@keyframes qualityFloat {
+    0%, 100% {
+        transform: translateY(0) rotate(0deg);
+    }
+    50% {
+        transform: translateY(-10px) rotate(5deg);
+    }
 }
 
 .quality-timeline::before {
@@ -12023,6 +12313,41 @@ select:focus,
 
 .certification-badge svg {
     color: var(--institutional-teal);
+}
+
+.quality-gallery-grid {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+
+.quality-gallery-card {
+    overflow: hidden;
+    border-radius: 28px;
+}
+
+.quality-gallery-card figure {
+    overflow: hidden;
+    margin: 0;
+}
+
+.quality-gallery-card img {
+    display: block;
+    width: 100%;
+    aspect-ratio: 1.1 / 1;
+    object-fit: cover;
+    transition: transform 650ms ease, filter 650ms ease;
+}
+
+.quality-gallery-card:hover img {
+    filter: saturate(1.04) contrast(1.02);
+    transform: scale(1.045);
+}
+
+.quality-gallery-card div {
+    padding: 24px;
+}
+
+.quality-choice-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
 }
 
 .boutiques-layout {
@@ -12187,9 +12512,59 @@ select:focus,
     grid-template-columns: repeat(2, minmax(0, 1fr));
 }
 
+.faq-search-panel,
+.faq-contact-panel {
+    display: flex;
+    gap: clamp(20px, 4vw, 48px);
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 24px;
+    padding: clamp(24px, 4vw, 42px);
+    border-radius: 30px;
+    background: linear-gradient(135deg, #FFFFFF, var(--institutional-soft));
+}
+
+.faq-search-panel h2,
+.faq-contact-panel h2 {
+    margin: 0;
+    color: var(--institutional-navy);
+    font-size: clamp(30px, 3.4vw, 52px);
+    line-height: 1.08;
+}
+
+.faq-search-panel label {
+    flex: 0 1 430px;
+}
+
+.faq-search-panel input {
+    width: 100%;
+    height: 56px;
+    padding: 0 20px;
+    border: 1px solid var(--institutional-border);
+    border-radius: 999px;
+    background: #FFFFFF;
+    color: var(--institutional-navy);
+    box-shadow: 0 14px 34px rgba(13, 27, 61, 0.07);
+}
+
+.faq-search-panel input:focus {
+    border-color: var(--institutional-teal);
+    outline: none;
+    box-shadow: 0 0 0 4px rgba(43, 125, 138, 0.12);
+}
+
+.faq-popular-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    margin-bottom: 24px;
+}
+
 .faq-category-card {
     padding: 28px;
     border-radius: 28px;
+}
+
+.faq-category-card.is-empty {
+    display: none;
 }
 
 .institutional-accordion {
@@ -12228,6 +12603,14 @@ select:focus,
 
 .institutional-accordion details p {
     padding: 0 18px 18px;
+}
+
+.faq-contact-panel {
+    margin-bottom: 0;
+}
+
+.faq-contact-panel .button {
+    flex: 0 0 auto;
 }
 
 .review-summary {
@@ -12313,16 +12696,19 @@ select:focus,
 
 @media (max-width: 1180px) {
     .institutional-card-grid--four,
-    .ingredient-library-grid {
+    .ingredient-library-grid,
+    .quality-gallery-grid {
         grid-template-columns: repeat(2, minmax(0, 1fr));
     }
 
     .quality-timeline,
-    .boutique-card-grid {
+    .boutique-card-grid,
+    .commitment-timeline {
         grid-template-columns: repeat(2, minmax(0, 1fr));
     }
 
-    .quality-timeline::before {
+    .quality-timeline::before,
+    .commitment-timeline::before {
         display: none;
     }
 }
@@ -12350,8 +12736,33 @@ select:focus,
 
     .faq-category-grid,
     .review-card-grid,
-    .certification-grid {
+    .certification-grid,
+    .institutional-stats-grid,
+    .ingredient-feature-grid,
+    .quality-choice-grid,
+    .faq-popular-grid {
         grid-template-columns: 1fr;
+    }
+
+    .quality-motion-card,
+    .ingredient-detail-card {
+        grid-template-columns: 1fr;
+    }
+
+    .quality-orbit {
+        min-height: 180px;
+        order: -1;
+    }
+
+    .faq-search-panel,
+    .faq-contact-panel {
+        align-items: flex-start;
+        flex-direction: column;
+    }
+
+    .faq-search-panel label,
+    .faq-contact-panel .button {
+        width: 100%;
     }
 
     .boutique-map-visual {
@@ -12372,13 +12783,32 @@ select:focus,
     .institutional-card-grid--four,
     .ingredient-library-grid,
     .quality-timeline,
-    .boutique-card-grid {
+    .boutique-card-grid,
+    .commitment-timeline,
+    .quality-gallery-grid {
         grid-template-columns: 1fr;
     }
 
     .institutional-value-card,
-    .faq-category-card {
+    .faq-category-card,
+    .commitment-timeline-card,
+    .institutional-stat-card,
+    .ingredient-feature-card,
+    .quality-choice-card,
+    .faq-popular-card {
         min-height: auto;
+        padding: 22px;
+    }
+
+    .ingredient-detail-panel {
+        padding: 12px;
+    }
+
+    .ingredient-panel-dialog {
+        border-radius: 22px;
+    }
+
+    .ingredient-detail-card {
         padding: 22px;
     }
 

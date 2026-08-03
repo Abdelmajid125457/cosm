@@ -2114,6 +2114,77 @@ Thomas Bernard`,
         });
     });
 
+    const ingredientPanel = document.querySelector('[data-ingredient-panel]');
+    const ingredientDetailCards = ingredientPanel ? ingredientPanel.querySelectorAll('[data-ingredient-detail]') : [];
+    const ingredientCloseButtons = ingredientPanel ? ingredientPanel.querySelectorAll('[data-ingredient-close]') : [];
+
+    const closeIngredientPanel = () => {
+        if (!ingredientPanel) {
+            return;
+        }
+
+        ingredientPanel.hidden = true;
+        document.documentElement.classList.remove('ingredient-panel-open');
+        ingredientDetailCards.forEach((card) => {
+            card.hidden = true;
+        });
+    };
+
+    if (ingredientPanel && ingredientDetailCards.length) {
+        document.querySelectorAll('[data-ingredient-open]').forEach((button) => {
+            button.addEventListener('click', () => {
+                const target = button.dataset.ingredientOpen || '';
+
+                ingredientDetailCards.forEach((card) => {
+                    card.hidden = card.dataset.ingredientDetail !== target;
+                });
+
+                ingredientPanel.hidden = false;
+                document.documentElement.classList.add('ingredient-panel-open');
+
+                const closeButton = ingredientPanel.querySelector('.ingredient-panel-close');
+                closeButton?.focus({ preventScroll: true });
+            });
+        });
+
+        ingredientCloseButtons.forEach((button) => {
+            button.addEventListener('click', closeIngredientPanel);
+        });
+
+        document.addEventListener('keydown', (event) => {
+            if (event.key === 'Escape' && !ingredientPanel.hidden) {
+                closeIngredientPanel();
+            }
+        });
+    }
+
+    const faqSearch = document.querySelector('[data-faq-search]');
+    const faqCategories = document.querySelectorAll('[data-faq-category]');
+
+    if (faqSearch && faqCategories.length) {
+        faqSearch.addEventListener('input', () => {
+            const query = normalizeSearch(faqSearch.value);
+
+            faqCategories.forEach((category) => {
+                let visibleItems = 0;
+
+                category.querySelectorAll('[data-faq-item]').forEach((item) => {
+                    const text = normalizeSearch(item.textContent || '');
+                    const isVisible = !query || text.includes(query);
+                    item.hidden = !isVisible;
+
+                    if (isVisible) {
+                        visibleItems += 1;
+                    } else {
+                        item.open = false;
+                    }
+                });
+
+                category.classList.toggle('is-empty', visibleItems === 0);
+            });
+        });
+    }
+
     const storeSearch = document.querySelector('[data-store-search]');
     const storeCards = document.querySelectorAll('[data-store-card]');
     const storePins = document.querySelectorAll('[data-store-pin]');
@@ -2196,8 +2267,16 @@ Thomas Bernard`,
             .institutional-page section,
             .institutional-value-card,
             .ingredient-library-card,
+            .ingredient-feature-card,
+            .commitment-timeline-card,
+            .institutional-stat-card,
             .quality-step,
+            .quality-gallery-card,
+            .quality-choice-card,
             .faq-category-card,
+            .faq-popular-card,
+            .faq-search-panel,
+            .faq-contact-panel,
             .boutique-card,
             .review-page-card
         `).forEach((item) => item.classList.add('motion-reveal'));
@@ -2207,9 +2286,9 @@ Thomas Bernard`,
         document.querySelectorAll('.front-page .product-card, .front-page .home-universe-card, .front-page .blog-showcase-card, .front-page .testimonial-grid figure').forEach((item) => item.classList.add('motion-reveal--scale'));
     }
 
-    const revealItems = document.querySelectorAll('.motion-reveal, .category-card, .product-card, .promo-card, .story-grid, .testimonial-grid figure, .blog-card, .blog-showcase-card, .blog-featured-card, .blog-sidebar-card, .shop-premium-block, .shop-promo-section, .shop-packs-section, .shop-product-card, .shop-pack-card, .about-reveal, .home-universe-card, .home-diagnostic-panel, .home-expertise-heading, .home-expertise-copy, .home-expertise-media, .home-expertise-cards article, .account-login-card, .account-benefit-card, .account-stats-band, .institutional-page section, .institutional-value-card, .ingredient-library-card, .quality-step, .faq-category-card, .boutique-card, .review-page-card, .site-footer[data-animate]');
+    const revealItems = document.querySelectorAll('.motion-reveal, .category-card, .product-card, .promo-card, .story-grid, .testimonial-grid figure, .blog-card, .blog-showcase-card, .blog-featured-card, .blog-sidebar-card, .shop-premium-block, .shop-promo-section, .shop-packs-section, .shop-product-card, .shop-pack-card, .about-reveal, .home-universe-card, .home-diagnostic-panel, .home-expertise-heading, .home-expertise-copy, .home-expertise-media, .home-expertise-cards article, .account-login-card, .account-benefit-card, .account-stats-band, .institutional-page section, .institutional-value-card, .ingredient-library-card, .ingredient-feature-card, .commitment-timeline-card, .institutional-stat-card, .quality-step, .quality-gallery-card, .quality-choice-card, .faq-category-card, .faq-popular-card, .faq-search-panel, .faq-contact-panel, .boutique-card, .review-page-card, .site-footer[data-animate]');
 
-    const revealGroups = document.querySelectorAll('.front-page .products-grid, .front-page .home-univers-grid, .front-page .testimonial-grid, .front-page .blog-showcase-grid, .front-page .home-expertise-cards, .shop-products-slider, .shop-pack-grid, .visage-product-grid, .blog-showcase-grid, .institutional-card-grid, .ingredient-library-grid, .quality-timeline, .faq-category-grid, .boutique-card-grid, .review-card-grid');
+    const revealGroups = document.querySelectorAll('.front-page .products-grid, .front-page .home-univers-grid, .front-page .testimonial-grid, .front-page .blog-showcase-grid, .front-page .home-expertise-cards, .shop-products-slider, .shop-pack-grid, .visage-product-grid, .blog-showcase-grid, .institutional-card-grid, .ingredient-library-grid, .ingredient-feature-grid, .commitment-timeline, .institutional-stats-grid, .quality-timeline, .quality-gallery-grid, .quality-choice-grid, .faq-popular-grid, .faq-category-grid, .boutique-card-grid, .review-card-grid');
     revealGroups.forEach((group) => {
         Array.from(group.children).forEach((item, index) => {
             item.style.setProperty('--reveal-delay', `${Math.min(index * 70, 420)}ms`);

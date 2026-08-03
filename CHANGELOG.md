@@ -2,6 +2,30 @@
 
 Toutes les interventions sur le thème doivent être sauvegardées et documentées ici.
 
+## 2026-08-04 00:30 - Refonte premium des pages institutionnelles
+
+Résumé :
+- Refonte complète des pages Nos ingrédients, Fabrication & Qualité et FAQ.
+- Création d'une bibliothèque d'ingrédients avec filtres, cartes premium et fiches détaillées ouvrables au clic.
+- Ajout d'une section Notre sélection d'actifs pour structurer les bénéfices beauté.
+- Refonte de Fabrication & Qualité avec animation légère, timeline en 6 étapes, certifications, galerie coulisses et cartes de réassurance.
+- Refonte de la FAQ avec barre de recherche, questions fréquentes, catégories en accordéon et CTA contact.
+- Ajout des styles responsive et des micro-interactions premium.
+- Ajout des scripts pour la recherche FAQ, les fiches ingrédients et les animations au scroll.
+- Ajout des traductions français, anglais, espagnol et arabe pour les nouvelles sections principales.
+
+Fichiers modifiés :
+- `template-parts/page-institutionnel.php`
+- `style.css`
+- `js/main.js`
+- `inc/multilingual.php`
+- `CHANGELOG.md`
+
+Corrections de bugs :
+- Suppression de textes FAQ non traduisibles codés en dur.
+- Ajustement de la timeline qualité pour correspondre aux étapes demandées.
+- Ajout d'un comportement de fermeture clavier pour les fiches ingrédients.
+
 ## 2026-08-03 23:59 - Refonte institutionnelle : Nos engagements
 
 Résumé :

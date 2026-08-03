@@ -180,18 +180,22 @@ $page = $pages[ $slug ];
     <?php if ( 'ingredients' === $slug ) : ?>
         <?php
         $ingredients = array(
-            array( 'name' => 'Rose', 'image' => $asset( 'products', 'ingredient-rose.svg' ), 'group' => 'visage', 'benefits' => __( 'Hydrate, illumine et apporte de l’éclat.', 'theme-perso' ), 'skin' => __( 'Peaux ternes et déshydratées', 'theme-perso' ), 'origin' => __( 'France / Europe', 'theme-perso' ) ),
-            array( 'name' => 'Karité', 'image' => $asset( 'products', 'baume-corps.svg' ), 'group' => 'corps cheveux', 'benefits' => __( 'Nourrit intensément et restaure le confort.', 'theme-perso' ), 'skin' => __( 'Peaux sèches, cheveux secs', 'theme-perso' ), 'origin' => __( 'Afrique de l’Ouest', 'theme-perso' ) ),
-            array( 'name' => 'Camomille', 'image' => $asset( 'products', 'photo-creme-hydratante-sauge-camomille.png' ), 'group' => 'visage', 'benefits' => __( 'Apaise et aide à réduire les sensations d’inconfort.', 'theme-perso' ), 'skin' => __( 'Peaux sensibles', 'theme-perso' ), 'origin' => __( 'Europe', 'theme-perso' ) ),
-            array( 'name' => 'Sauge', 'image' => $asset( 'products', 'photo-shampooing-doux-sauge-ortie.png' ), 'group' => 'visage cheveux', 'benefits' => __( 'Équilibre, purifie et accompagne les routines légères.', 'theme-perso' ), 'skin' => __( 'Peaux mixtes, cuir chevelu', 'theme-perso' ), 'origin' => __( 'France', 'theme-perso' ) ),
-            array( 'name' => 'Lavande', 'image' => $asset( 'products', 'lavender-ingredient.svg' ), 'group' => 'corps cheveux', 'benefits' => __( 'Signature relaxante et sensation de bien-être.', 'theme-perso' ), 'skin' => __( 'Tous types de peau', 'theme-perso' ), 'origin' => __( 'Provence', 'theme-perso' ) ),
-            array( 'name' => 'Aloe Vera', 'image' => $asset( 'products', 'photo-gel-nettoyant-aloe-vera.png' ), 'group' => 'visage cheveux', 'benefits' => __( 'Rafraîchit, hydrate et apporte une sensation de confort.', 'theme-perso' ), 'skin' => __( 'Peaux normales à mixtes', 'theme-perso' ), 'origin' => __( 'Europe du Sud', 'theme-perso' ) ),
-            array( 'name' => 'Calendula', 'image' => $asset( 'products', 'botanical-oil.svg' ), 'group' => 'visage corps', 'benefits' => __( 'Adoucit et accompagne les peaux fragilisées.', 'theme-perso' ), 'skin' => __( 'Peaux sensibles', 'theme-perso' ), 'origin' => __( 'Europe', 'theme-perso' ) ),
-            array( 'name' => 'Huile d’amande douce', 'image' => $asset( 'products', 'photo-baume-corps-karite-amande.png' ), 'group' => 'corps', 'benefits' => __( 'Assouplit, nourrit et laisse la peau plus douce.', 'theme-perso' ), 'skin' => __( 'Peaux sèches', 'theme-perso' ), 'origin' => __( 'Bassin méditerranéen', 'theme-perso' ) ),
-            array( 'name' => 'Huile de jojoba', 'image' => $asset( 'products', 'photo-huile-soin-nourrissante.png' ), 'group' => 'visage cheveux', 'benefits' => __( 'Aide à équilibrer et à nourrir sans fini lourd.', 'theme-perso' ), 'skin' => __( 'Peaux mixtes, cheveux ternes', 'theme-perso' ), 'origin' => __( 'Amérique du Sud', 'theme-perso' ) ),
-            array( 'name' => 'Argile verte', 'image' => $asset( 'products', 'photo-masque-purifiant-argile-verte.png' ), 'group' => 'visage', 'benefits' => __( 'Purifie les pores et affine visuellement le grain de peau.', 'theme-perso' ), 'skin' => __( 'Peaux mixtes à grasses', 'theme-perso' ), 'origin' => __( 'France', 'theme-perso' ) ),
-            array( 'name' => 'Vitamine E', 'image' => $asset( 'products', 'texture-creme.svg' ), 'group' => 'visage corps cheveux', 'benefits' => __( 'Protège les formules et accompagne l’éclat de la peau.', 'theme-perso' ), 'skin' => __( 'Tous types de peau', 'theme-perso' ), 'origin' => __( 'Origine végétale', 'theme-perso' ) ),
-            array( 'name' => 'Beurre de cacao', 'image' => $asset( 'products', 'photo-beurre-corporel-coco-vanille.png' ), 'group' => 'corps', 'benefits' => __( 'Apporte confort, nutrition et texture fondante.', 'theme-perso' ), 'skin' => __( 'Peaux sèches à très sèches', 'theme-perso' ), 'origin' => __( 'Afrique / Amérique latine', 'theme-perso' ) ),
+            array( 'slug' => 'rose', 'name' => __( 'Rose', 'theme-perso' ), 'image' => $asset( 'products', 'ingredient-rose.svg' ), 'group' => 'visage', 'benefits' => __( 'Hydrate, illumine et apporte de l’éclat.', 'theme-perso' ), 'skin' => __( 'Peaux ternes et déshydratées', 'theme-perso' ), 'origin' => __( 'France / Europe', 'theme-perso' ), 'products' => __( 'Sérum Éclat à la Rose, Routine Visage', 'theme-perso' ), 'detail' => __( 'La rose est utilisée pour sa douceur sensorielle et son effet éclat. Elle accompagne les routines visage qui cherchent à hydrater, lisser et réveiller la luminosité naturelle.', 'theme-perso' ) ),
+            array( 'slug' => 'karite', 'name' => __( 'Karité', 'theme-perso' ), 'image' => $asset( 'products', 'baume-corps.svg' ), 'group' => 'corps cheveux', 'benefits' => __( 'Nourrit intensément et restaure le confort.', 'theme-perso' ), 'skin' => __( 'Peaux sèches, cheveux secs', 'theme-perso' ), 'origin' => __( 'Afrique de l’Ouest', 'theme-perso' ), 'products' => __( 'Baume Corps Karité & Amande, Après-Shampooing Aloe Vera & Karité', 'theme-perso' ), 'detail' => __( 'Le karité apporte une nutrition généreuse et un fini protecteur. Il est idéal pour les zones sèches, les longueurs fragilisées et les textures riches.', 'theme-perso' ) ),
+            array( 'slug' => 'camomille', 'name' => __( 'Camomille', 'theme-perso' ), 'image' => $asset( 'products', 'photo-creme-hydratante-sauge-camomille.png' ), 'group' => 'visage', 'benefits' => __( 'Apaise et aide à réduire les sensations d’inconfort.', 'theme-perso' ), 'skin' => __( 'Peaux sensibles', 'theme-perso' ), 'origin' => __( 'Europe', 'theme-perso' ), 'products' => __( 'Crème Hydratante Sauge & Camomille', 'theme-perso' ), 'detail' => __( 'La camomille est choisie pour son profil doux et réconfortant. Elle accompagne les peaux sensibles qui recherchent une routine simple et apaisante.', 'theme-perso' ) ),
+            array( 'slug' => 'sauge', 'name' => __( 'Sauge', 'theme-perso' ), 'image' => $asset( 'products', 'photo-shampooing-doux-sauge-ortie.png' ), 'group' => 'visage cheveux', 'benefits' => __( 'Équilibre, purifie et accompagne les routines légères.', 'theme-perso' ), 'skin' => __( 'Peaux mixtes, cuir chevelu', 'theme-perso' ), 'origin' => __( 'France', 'theme-perso' ), 'products' => __( 'Crème Hydratante Sauge & Camomille, Shampooing Doux Sauge & Ortie', 'theme-perso' ), 'detail' => __( 'La sauge apporte une sensation de fraîcheur et d’équilibre. Elle est particulièrement intéressante dans les soins visage légers et les routines capillaires douces.', 'theme-perso' ) ),
+            array( 'slug' => 'lavande', 'name' => __( 'Lavande', 'theme-perso' ), 'image' => $asset( 'products', 'lavender-ingredient.svg' ), 'group' => 'corps cheveux', 'benefits' => __( 'Signature relaxante et sensation de bien-être.', 'theme-perso' ), 'skin' => __( 'Tous types de peau', 'theme-perso' ), 'origin' => __( 'Provence', 'theme-perso' ), 'products' => __( 'Huile Essentielle Lavande Fine, Gommage Corps Sucre & Lavande', 'theme-perso' ), 'detail' => __( 'La lavande signe des rituels relaxants et raffinés. Elle évoque la Provence, le soin du soir et les textures enveloppantes.', 'theme-perso' ) ),
+            array( 'slug' => 'calendula', 'name' => __( 'Calendula', 'theme-perso' ), 'image' => $asset( 'products', 'botanical-oil.svg' ), 'group' => 'visage corps', 'benefits' => __( 'Adoucit et accompagne les peaux fragilisées.', 'theme-perso' ), 'skin' => __( 'Peaux sensibles', 'theme-perso' ), 'origin' => __( 'Europe', 'theme-perso' ), 'products' => __( 'Huile de Soin Nourrissante, Lait Corps Hydratant', 'theme-perso' ), 'detail' => __( 'Le calendula est associé aux routines de confort. Il soutient les soins pensés pour adoucir, protéger et améliorer la sensation de souplesse.', 'theme-perso' ) ),
+            array( 'slug' => 'jojoba', 'name' => __( 'Huile de jojoba', 'theme-perso' ), 'image' => $asset( 'products', 'photo-huile-soin-nourrissante.png' ), 'group' => 'visage cheveux', 'benefits' => __( 'Aide à équilibrer et à nourrir sans fini lourd.', 'theme-perso' ), 'skin' => __( 'Peaux mixtes, cheveux ternes', 'theme-perso' ), 'origin' => __( 'Amérique du Sud', 'theme-perso' ), 'products' => __( 'Huile de Soin Nourrissante, Sérum Pointes Nourrissant', 'theme-perso' ), 'detail' => __( 'L’huile de jojoba est appréciée pour son toucher fin et équilibrant. Elle nourrit sans alourdir et trouve sa place dans les soins visage comme capillaires.', 'theme-perso' ) ),
+            array( 'slug' => 'amande', 'name' => __( 'Huile d’amande douce', 'theme-perso' ), 'image' => $asset( 'products', 'photo-baume-corps-karite-amande.png' ), 'group' => 'corps', 'benefits' => __( 'Assouplit, nourrit et laisse la peau plus douce.', 'theme-perso' ), 'skin' => __( 'Peaux sèches', 'theme-perso' ), 'origin' => __( 'Bassin méditerranéen', 'theme-perso' ), 'products' => __( 'Baume Corps Karité & Amande, Huile de Massage', 'theme-perso' ), 'detail' => __( 'L’amande douce apporte une sensorialité ronde et confortable. Elle est idéale pour les soins corps nourrissants et les massages délicats.', 'theme-perso' ) ),
+            array( 'slug' => 'argile', 'name' => __( 'Argile verte', 'theme-perso' ), 'image' => $asset( 'products', 'photo-masque-purifiant-argile-verte.png' ), 'group' => 'visage', 'benefits' => __( 'Purifie les pores et affine visuellement le grain de peau.', 'theme-perso' ), 'skin' => __( 'Peaux mixtes à grasses', 'theme-perso' ), 'origin' => __( 'France', 'theme-perso' ), 'products' => __( 'Masque Purifiant Argile Verte', 'theme-perso' ), 'detail' => __( 'L’argile verte est un incontournable des routines purifiantes. Elle aide à absorber l’excès de sébum et à retrouver une peau nette.', 'theme-perso' ) ),
+            array( 'slug' => 'vitamine-e', 'name' => __( 'Vitamine E', 'theme-perso' ), 'image' => $asset( 'products', 'texture-creme.svg' ), 'group' => 'visage corps cheveux', 'benefits' => __( 'Protège les formules et accompagne l’éclat de la peau.', 'theme-perso' ), 'skin' => __( 'Tous types de peau', 'theme-perso' ), 'origin' => __( 'Origine végétale', 'theme-perso' ), 'products' => __( 'Huile Sèche Botanique, Sérum Éclat à la Rose', 'theme-perso' ), 'detail' => __( 'La vitamine E est intégrée pour soutenir la stabilité des formules et enrichir les rituels qui recherchent douceur, confort et éclat.', 'theme-perso' ) ),
+            array( 'slug' => 'cacao', 'name' => __( 'Beurre de cacao', 'theme-perso' ), 'image' => $asset( 'products', 'photo-beurre-corporel-coco-vanille.png' ), 'group' => 'corps', 'benefits' => __( 'Apporte confort, nutrition et texture fondante.', 'theme-perso' ), 'skin' => __( 'Peaux sèches à très sèches', 'theme-perso' ), 'origin' => __( 'Afrique / Amérique latine', 'theme-perso' ), 'products' => __( 'Beurre Corporel Coco & Vanille', 'theme-perso' ), 'detail' => __( 'Le beurre de cacao donne du corps aux textures riches. Il apporte une sensation enveloppante et une nutrition durable.', 'theme-perso' ) ),
+        );
+        $featured_actives = array(
+            array( 'icon' => 'sparkle', 'title' => __( 'Éclat', 'theme-perso' ), 'text' => __( 'Rose, vitamine E et huiles fines pour réveiller la luminosité naturelle.', 'theme-perso' ) ),
+            array( 'icon' => 'heart', 'title' => __( 'Confort', 'theme-perso' ), 'text' => __( 'Karité, camomille et calendula pour accompagner les peaux en recherche de douceur.', 'theme-perso' ) ),
+            array( 'icon' => 'leaf', 'title' => __( 'Équilibre', 'theme-perso' ), 'text' => __( 'Sauge, argile verte et jojoba pour des routines plus légères et ciblées.', 'theme-perso' ) ),
         );
         ?>
         <section class="institutional-section">
@@ -217,13 +221,53 @@ $page = $pages[ $slug ];
                                 <dl>
                                     <dt><?php esc_html_e( 'Type de peau', 'theme-perso' ); ?></dt><dd><?php echo esc_html( $item['skin'] ); ?></dd>
                                     <dt><?php esc_html_e( 'Origine', 'theme-perso' ); ?></dt><dd><?php echo esc_html( $item['origin'] ); ?></dd>
+                                    <dt><?php esc_html_e( 'Produits associés', 'theme-perso' ); ?></dt><dd><?php echo esc_html( $item['products'] ); ?></dd>
                                 </dl>
+                                <button type="button" class="ingredient-detail-button" data-ingredient-open="<?php echo esc_attr( $item['slug'] ); ?>"><?php esc_html_e( 'Découvrir', 'theme-perso' ); ?></button>
                             </div>
                         </article>
                     <?php endforeach; ?>
                 </div>
             </div>
         </section>
+        <section class="institutional-section institutional-section--soft">
+            <div class="container">
+                <div class="institutional-section-heading motion-reveal">
+                    <p class="eyebrow"><?php esc_html_e( 'Notre sélection d’actifs', 'theme-perso' ); ?></p>
+                    <h2><?php esc_html_e( 'Des actifs choisis pour construire des routines lisibles.', 'theme-perso' ); ?></h2>
+                </div>
+                <div class="ingredient-feature-grid">
+                    <?php foreach ( $featured_actives as $active ) : ?>
+                        <article class="ingredient-feature-card motion-reveal motion-reveal--scale">
+                            <span class="institutional-icon"><?php echo $icon( $active['icon'] ); ?></span>
+                            <h3><?php echo esc_html( $active['title'] ); ?></h3>
+                            <p><?php echo esc_html( $active['text'] ); ?></p>
+                        </article>
+                    <?php endforeach; ?>
+                </div>
+            </div>
+        </section>
+        <div class="ingredient-detail-panel" data-ingredient-panel hidden>
+            <button type="button" class="ingredient-panel-backdrop" data-ingredient-close aria-label="<?php esc_attr_e( 'Fermer', 'theme-perso' ); ?>"></button>
+            <div class="ingredient-panel-dialog" role="dialog" aria-modal="true" aria-label="<?php esc_attr_e( 'Fiche ingrédient', 'theme-perso' ); ?>">
+                <button type="button" class="ingredient-panel-close" data-ingredient-close><?php esc_html_e( 'Fermer', 'theme-perso' ); ?></button>
+                <?php foreach ( $ingredients as $item ) : ?>
+                    <article class="ingredient-detail-card" data-ingredient-detail="<?php echo esc_attr( $item['slug'] ); ?>" hidden>
+                        <figure><img src="<?php echo esc_url( $item['image'] ); ?>" alt="<?php echo esc_attr( $item['name'] ); ?>" loading="lazy"></figure>
+                        <div>
+                            <p class="eyebrow"><?php esc_html_e( 'Fiche ingrédient', 'theme-perso' ); ?></p>
+                            <h2><?php echo esc_html( $item['name'] ); ?></h2>
+                            <p><?php echo esc_html( $item['detail'] ); ?></p>
+                            <ul class="institutional-check-list">
+                                <li><?php echo $icon( 'check' ); ?><?php echo esc_html( $item['benefits'] ); ?></li>
+                                <li><?php echo $icon( 'check' ); ?><?php echo esc_html( $item['skin'] ); ?></li>
+                                <li><?php echo $icon( 'check' ); ?><?php echo esc_html( $item['products'] ); ?></li>
+                            </ul>
+                        </div>
+                    </article>
+                <?php endforeach; ?>
+            </div>
+        </div>
     <?php endif; ?>
 
     <?php if ( 'qualite' === $slug ) : ?>
@@ -233,11 +277,33 @@ $page = $pages[ $slug ];
             array( 'icon' => 'clarity', 'title' => __( 'Contrôle qualité', 'theme-perso' ), 'text' => __( 'Chaque lot est suivi pour garantir constance et traçabilité.', 'theme-perso' ) ),
             array( 'icon' => 'flask', 'title' => __( 'Formulation', 'theme-perso' ), 'text' => __( 'Les textures sont travaillées pour conjuguer sensorialité et efficacité.', 'theme-perso' ) ),
             array( 'icon' => 'factory', 'title' => __( 'Fabrication', 'theme-perso' ), 'text' => __( 'La production respecte un cahier des charges précis et responsable.', 'theme-perso' ) ),
-            array( 'icon' => 'check', 'title' => __( 'Tests', 'theme-perso' ), 'text' => __( 'Les formules sont évaluées avant leur mise à disposition.', 'theme-perso' ) ),
             array( 'icon' => 'package', 'title' => __( 'Conditionnement', 'theme-perso' ), 'text' => __( 'Les packagings protègent les soins et valorisent l’expérience.', 'theme-perso' ) ),
             array( 'icon' => 'truck', 'title' => __( 'Expédition', 'theme-perso' ), 'text' => __( 'Les commandes sont préparées avec soin pour préserver les produits.', 'theme-perso' ) ),
         );
+        $quality_gallery = array(
+            array( 'title' => __( 'Le laboratoire', 'theme-perso' ), 'text' => __( 'Un univers propre, précis et organisé pour développer des soins cohérents.', 'theme-perso' ), 'image' => $asset( 'about', 'about-eco-commitment.png' ) ),
+            array( 'title' => __( 'Les matières premières', 'theme-perso' ), 'text' => __( 'Des actifs naturels sélectionnés pour leur intérêt et leur traçabilité.', 'theme-perso' ), 'image' => $asset( 'about', 'reference-catalog-products.png' ) ),
+            array( 'title' => __( 'Les tests qualité', 'theme-perso' ), 'text' => __( 'Des contrôles réguliers pour conserver stabilité, texture et sécurité.', 'theme-perso' ), 'image' => $asset( 'products', 'category-soins-visage-hero.png' ) ),
+            array( 'title' => __( 'Le packaging', 'theme-perso' ), 'text' => __( 'Des contenants élégants, protecteurs et alignés avec l’identité de la marque.', 'theme-perso' ), 'image' => $asset( 'products', 'photo-pack-routine-premium-reel.png' ) ),
+        );
+        $quality_reasons = array(
+            array( 'icon' => 'sparkle', 'title' => __( 'Sensorialité', 'theme-perso' ), 'text' => __( 'Des textures agréables qui transforment le soin en rituel.', 'theme-perso' ) ),
+            array( 'icon' => 'clarity', 'title' => __( 'Lisibilité', 'theme-perso' ), 'text' => __( 'Des bénéfices clairs, des usages simples et une communication transparente.', 'theme-perso' ) ),
+            array( 'icon' => 'check', 'title' => __( 'Rigueur', 'theme-perso' ), 'text' => __( 'Un niveau d’exigence constant du choix des actifs à la livraison.', 'theme-perso' ) ),
+        );
         ?>
+        <section class="institutional-section quality-motion-section">
+            <div class="container quality-motion-card motion-reveal">
+                <div>
+                    <p class="eyebrow"><?php esc_html_e( 'Atelier qualité', 'theme-perso' ); ?></p>
+                    <h2><?php esc_html_e( 'Une fabrication pensée comme un rituel de précision.', 'theme-perso' ); ?></h2>
+                    <p><?php esc_html_e( 'Chaque formule avance par étapes : choisir, tester, ajuster, contrôler puis conditionner avec soin. Cette méthode garantit une expérience fiable et premium.', 'theme-perso' ); ?></p>
+                </div>
+                <div class="quality-orbit" aria-hidden="true">
+                    <span></span><span></span><span></span>
+                </div>
+            </div>
+        </section>
         <section class="institutional-section">
             <div class="container">
                 <div class="institutional-section-heading motion-reveal">
@@ -263,8 +329,44 @@ $page = $pages[ $slug ];
                     <h2><?php esc_html_e( 'Des garanties visibles et rassurantes.', 'theme-perso' ); ?></h2>
                 </div>
                 <div class="certification-grid">
-                    <?php foreach ( array( 'Origine naturelle', 'Cruelty Free', 'Vegan friendly', 'Emballages recyclables', 'Contrôle qualité', 'Fabrication responsable' ) as $badge ) : ?>
+                    <?php foreach ( array( __( 'Origine naturelle', 'theme-perso' ), __( 'Cruelty Free', 'theme-perso' ), __( 'Vegan friendly', 'theme-perso' ), __( 'Emballages recyclables', 'theme-perso' ), __( 'Contrôle qualité', 'theme-perso' ), __( 'Fabrication responsable', 'theme-perso' ) ) as $badge ) : ?>
                         <span class="certification-badge motion-reveal motion-reveal--scale"><?php echo $icon( 'check' ); ?><?php echo esc_html( $badge ); ?></span>
+                    <?php endforeach; ?>
+                </div>
+            </div>
+        </section>
+        <section class="institutional-section">
+            <div class="container">
+                <div class="institutional-section-heading motion-reveal">
+                    <p class="eyebrow"><?php esc_html_e( 'Dans les coulisses', 'theme-perso' ); ?></p>
+                    <h2><?php esc_html_e( 'Une qualité visible jusque dans les détails.', 'theme-perso' ); ?></h2>
+                </div>
+                <div class="quality-gallery-grid">
+                    <?php foreach ( $quality_gallery as $item ) : ?>
+                        <article class="quality-gallery-card motion-reveal motion-reveal--scale">
+                            <figure><img src="<?php echo esc_url( $item['image'] ); ?>" alt="<?php echo esc_attr( $item['title'] ); ?>" loading="lazy"></figure>
+                            <div>
+                                <h3><?php echo esc_html( $item['title'] ); ?></h3>
+                                <p><?php echo esc_html( $item['text'] ); ?></p>
+                            </div>
+                        </article>
+                    <?php endforeach; ?>
+                </div>
+            </div>
+        </section>
+        <section class="institutional-section institutional-section--soft">
+            <div class="container">
+                <div class="institutional-section-heading motion-reveal">
+                    <p class="eyebrow"><?php esc_html_e( 'Pourquoi choisir Cosm’Éthique', 'theme-perso' ); ?></p>
+                    <h2><?php esc_html_e( 'Une exigence premium, simple à comprendre.', 'theme-perso' ); ?></h2>
+                </div>
+                <div class="quality-choice-grid">
+                    <?php foreach ( $quality_reasons as $item ) : ?>
+                        <article class="quality-choice-card motion-reveal motion-reveal--scale">
+                            <span class="institutional-icon"><?php echo $icon( $item['icon'] ); ?></span>
+                            <h3><?php echo esc_html( $item['title'] ); ?></h3>
+                            <p><?php echo esc_html( $item['text'] ); ?></p>
+                        </article>
                     <?php endforeach; ?>
                 </div>
             </div>
@@ -322,25 +424,53 @@ $page = $pages[ $slug ];
     <?php if ( 'faq' === $slug ) : ?>
         <?php
         $faqs = array(
-            'Livraison' => array( 'Quand ma commande est-elle expédiée ?' => 'Les commandes sont préparées sous 24 à 48h ouvrées, puis confiées au transporteur.', 'La livraison est-elle offerte ?' => 'La livraison est offerte dès 40 € d’achat en France métropolitaine.' ),
-            'Paiement' => array( 'Le paiement est-il sécurisé ?' => 'Oui, les paiements sont protégés par chiffrement SSL et des solutions de paiement reconnues.', 'Puis-je payer en plusieurs fois ?' => 'Des options de paiement fractionné peuvent être proposées selon le montant et l’éligibilité.' ),
-            'Commande' => array( 'Puis-je modifier une commande ?' => 'Contactez-nous rapidement après validation afin que nous puissions vérifier les possibilités.', 'Comment suivre ma commande ?' => 'Le suivi est disponible depuis votre espace client lorsque la commande est expédiée.' ),
-            'Compte' => array( 'Dois-je créer un compte ?' => 'Le compte permet de retrouver vos commandes, recommandations et informations plus facilement.', 'Mes données sont-elles protégées ?' => 'Nous traitons vos données avec attention et uniquement pour les finalités nécessaires.' ),
-            'Produits' => array( 'Les soins conviennent-ils aux peaux sensibles ?' => 'Chaque fiche produit précise les types de peau recommandés et les conseils d’utilisation.', 'Les produits sont-ils testés sur les animaux ?' => 'Non, Cosm’Éthique s’inscrit dans une démarche cruelty free.' ),
-            'Diagnostic' => array( 'Le diagnostic est-il gratuit ?' => 'Oui, il permet d’obtenir une routine indicative en moins d’une minute.', 'Puis-je recommencer le diagnostic ?' => 'Oui, vous pouvez le relancer à tout moment pour adapter votre routine.' ),
-            'Franchise' => array( 'Comment devenir franchisé ?' => 'La page Devenir franchisé présente le concept et le formulaire de demande.', 'Quels profils recherchez-vous ?' => 'Des profils sensibles à la beauté naturelle, au commerce premium et au conseil client.' ),
-            'Retour' => array( 'Puis-je retourner un produit ?' => 'Les conditions de retour sont détaillées dans les CGV du site.', 'Quel est le délai de retour ?' => 'Le délai indiqué est de 30 jours selon les conditions applicables.' ),
+            __( 'Livraison', 'theme-perso' ) => array( __( 'Quand ma commande est-elle expédiée ?', 'theme-perso' ) => __( 'Les commandes sont préparées sous 24 à 48h ouvrées, puis confiées au transporteur.', 'theme-perso' ), __( 'La livraison est-elle offerte ?', 'theme-perso' ) => __( 'La livraison est offerte dès 40 € d’achat en France métropolitaine.', 'theme-perso' ) ),
+            __( 'Commande', 'theme-perso' ) => array( __( 'Puis-je modifier une commande ?', 'theme-perso' ) => __( 'Contactez-nous rapidement après validation afin que nous puissions vérifier les possibilités.', 'theme-perso' ), __( 'Comment suivre ma commande ?', 'theme-perso' ) => __( 'Le suivi est disponible depuis votre espace client lorsque la commande est expédiée.', 'theme-perso' ) ),
+            __( 'Paiement', 'theme-perso' ) => array( __( 'Le paiement est-il sécurisé ?', 'theme-perso' ) => __( 'Oui, les paiements sont protégés par chiffrement SSL et des solutions de paiement reconnues.', 'theme-perso' ), __( 'Puis-je payer en plusieurs fois ?', 'theme-perso' ) => __( 'Des options de paiement fractionné peuvent être proposées selon le montant et l’éligibilité.', 'theme-perso' ) ),
+            __( 'Compte', 'theme-perso' ) => array( __( 'Dois-je créer un compte ?', 'theme-perso' ) => __( 'Le compte permet de retrouver vos commandes, recommandations et informations plus facilement.', 'theme-perso' ), __( 'Mes données sont-elles protégées ?', 'theme-perso' ) => __( 'Nous traitons vos données avec attention et uniquement pour les finalités nécessaires.', 'theme-perso' ) ),
+            __( 'Diagnostic', 'theme-perso' ) => array( __( 'Le diagnostic est-il gratuit ?', 'theme-perso' ) => __( 'Oui, il permet d’obtenir une routine indicative en moins d’une minute.', 'theme-perso' ), __( 'Puis-je recommencer le diagnostic ?', 'theme-perso' ) => __( 'Oui, vous pouvez le relancer à tout moment pour adapter votre routine.', 'theme-perso' ) ),
+            __( 'Produits', 'theme-perso' ) => array( __( 'Les soins conviennent-ils aux peaux sensibles ?', 'theme-perso' ) => __( 'Chaque fiche produit précise les types de peau recommandés et les conseils d’utilisation.', 'theme-perso' ), __( 'Les produits sont-ils testés sur les animaux ?', 'theme-perso' ) => __( 'Non, Cosm’Éthique s’inscrit dans une démarche cruelty free.', 'theme-perso' ) ),
+            __( 'Retours', 'theme-perso' ) => array( __( 'Puis-je retourner un produit ?', 'theme-perso' ) => __( 'Les conditions de retour sont détaillées dans les CGV du site.', 'theme-perso' ), __( 'Quel est le délai de retour ?', 'theme-perso' ) => __( 'Le délai indiqué est de 30 jours selon les conditions applicables.', 'theme-perso' ) ),
+            __( 'Franchise', 'theme-perso' ) => array( __( 'Comment devenir franchisé ?', 'theme-perso' ) => __( 'La page Devenir franchisé présente le concept et le formulaire de demande.', 'theme-perso' ), __( 'Quels profils recherchez-vous ?', 'theme-perso' ) => __( 'Des profils sensibles à la beauté naturelle, au commerce premium et au conseil client.', 'theme-perso' ) ),
+        );
+        $popular_faqs = array(
+            array( 'title' => __( 'Livraison offerte', 'theme-perso' ), 'text' => __( 'La livraison est offerte dès 40 € d’achat en France métropolitaine.', 'theme-perso' ) ),
+            array( 'title' => __( 'Diagnostic beauté', 'theme-perso' ), 'text' => __( 'Le diagnostic vous aide à composer une routine adaptée en moins d’une minute.', 'theme-perso' ) ),
+            array( 'title' => __( 'Paiement sécurisé', 'theme-perso' ), 'text' => __( 'Vos données sont protégées et chiffrées grâce au protocole SSL.', 'theme-perso' ) ),
         );
         ?>
         <section class="institutional-section">
-            <div class="container faq-category-grid">
+            <div class="container faq-search-panel motion-reveal">
+                <div>
+                    <p class="eyebrow"><?php esc_html_e( 'Centre d’aide', 'theme-perso' ); ?></p>
+                    <h2><?php esc_html_e( 'Rechercher une réponse.', 'theme-perso' ); ?></h2>
+                </div>
+                <label>
+                    <span class="screen-reader-text"><?php esc_html_e( 'Rechercher une question', 'theme-perso' ); ?></span>
+                    <input type="search" data-faq-search placeholder="<?php esc_attr_e( 'Rechercher une question...', 'theme-perso' ); ?>">
+                </label>
+            </div>
+            <div class="container institutional-section-heading faq-popular-heading motion-reveal">
+                <p class="eyebrow"><?php esc_html_e( 'Les questions les plus fréquentes', 'theme-perso' ); ?></p>
+                <h2><?php esc_html_e( 'Les réponses à consulter en priorité.', 'theme-perso' ); ?></h2>
+            </div>
+            <div class="container faq-popular-grid">
+                <?php foreach ( $popular_faqs as $item ) : ?>
+                    <article class="faq-popular-card motion-reveal motion-reveal--scale">
+                        <span class="institutional-icon"><?php echo $icon( 'star' ); ?></span>
+                        <h3><?php echo esc_html( $item['title'] ); ?></h3>
+                        <p><?php echo esc_html( $item['text'] ); ?></p>
+                    </article>
+                <?php endforeach; ?>
+            </div>
+            <div class="container faq-category-grid" data-faq-list>
                 <?php foreach ( $faqs as $category => $items ) : ?>
-                    <article class="faq-category-card motion-reveal">
+                    <article class="faq-category-card motion-reveal" data-faq-category>
                         <span class="institutional-icon"><?php echo $icon( 'question' ); ?></span>
                         <h2><?php echo esc_html( $category ); ?></h2>
                         <div class="institutional-accordion">
                             <?php foreach ( $items as $question => $answer ) : ?>
-                                <details>
+                                <details data-faq-item>
                                     <summary><?php echo esc_html( $question ); ?></summary>
                                     <p><?php echo esc_html( $answer ); ?></p>
                                 </details>
@@ -348,6 +478,16 @@ $page = $pages[ $slug ];
                         </div>
                     </article>
                 <?php endforeach; ?>
+            </div>
+        </section>
+        <section class="institutional-section institutional-section--soft">
+            <div class="container faq-contact-panel motion-reveal">
+                <div>
+                    <p class="eyebrow"><?php esc_html_e( 'Besoin d’un conseil', 'theme-perso' ); ?></p>
+                    <h2><?php esc_html_e( 'Vous n’avez pas trouvé votre réponse ?', 'theme-perso' ); ?></h2>
+                    <p><?php esc_html_e( 'Notre équipe vous accompagne pour choisir vos soins, suivre une commande ou préparer un projet de franchise.', 'theme-perso' ); ?></p>
+                </div>
+                <a class="button button-primary" href="<?php echo esc_url( home_url( '/contact/' ) ); ?>"><?php esc_html_e( 'Contacter notre équipe', 'theme-perso' ); ?></a>
             </div>
         </section>
     <?php endif; ?>
