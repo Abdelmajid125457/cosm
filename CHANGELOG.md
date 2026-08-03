@@ -2,6 +2,32 @@
 
 Toutes les interventions sur le thème doivent être sauvegardées et documentées ici.
 
+## 2026-08-03 23:26 - Refonte premium minimaliste du footer
+
+Résumé :
+- Création d'un commit Git de sauvegarde avant intervention : `e1370d8`.
+- Refonte du footer avec une structure plus premium, aérée et minimaliste.
+- Newsletter déplacée en haut du footer sous forme de ligne élégante.
+- Bloc marque simplifié : logo, description courte, réseaux sociaux et micro-ligne d'engagements.
+- Navigation réduite à 3 colonnes : Produits, À propos, Aide & Informations.
+- Ajout d'un bloc contact sobre avec email, téléphone et horaires.
+- Partie inférieure compactée avec copyright, moyens de paiement et services essentiels.
+- Optimisation responsive : colonnes transformées en accordéons sur mobile.
+- Ajout de micro-interactions discrètes au focus, au hover et sur les accordéons.
+- Ajout des nouvelles chaînes du footer dans le système multilingue.
+
+Fichiers modifiés :
+- `footer.php`
+- `style.css`
+- `js/main.js`
+- `inc/multilingual.php`
+- `CHANGELOG.md`
+
+Corrections de bugs :
+- Suppression du bloc d'engagements en cartes qui surchargeait visuellement le footer.
+- Réduction des doublons visuels entre newsletter, informations et réassurance.
+- Amélioration de la lisibilité et de l'équilibre du footer sur mobile.
+
 ## 2026-08-03 22:54 - Version reference-2026-08-03_22-54-34
 
 Résumé :

@@ -1180,6 +1180,26 @@ function theme_perso_multilingual_text_map() {
             'es' => 'Información',
             'ar' => 'معلومات',
         ),
+        'Produits' => array(
+            'en' => 'Products',
+            'es' => 'Productos',
+            'ar' => 'المنتجات',
+        ),
+        'À propos' => array(
+            'en' => 'About',
+            'es' => 'Acerca de',
+            'ar' => 'من نحن',
+        ),
+        'Aide & Informations' => array(
+            'en' => 'Help & Information',
+            'es' => 'Ayuda e información',
+            'ar' => 'المساعدة والمعلومات',
+        ),
+        '98 % naturel · Cruelty Free · Emballages responsables' => array(
+            'en' => '98% natural · Cruelty Free · Responsible packaging',
+            'es' => '98 % natural · Cruelty Free · Envases responsables',
+            'ar' => '98٪ طبيعي · خال من التجارب على الحيوانات · عبوات مسؤولة',
+        ),
         'Paiement sécurisé · Expédition France · Cruelty free' => array(
             'en' => 'Secure payment · France shipping · Cruelty free',
             'es' => 'Pago seguro · Envío en Francia · Cruelty free',

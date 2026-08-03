@@ -2154,6 +2154,33 @@ Thomas Bernard`,
         });
     });
 
+    const footerNavGroups = Array.from(document.querySelectorAll('.site-footer .footer-nav-group'));
+    if (footerNavGroups.length) {
+        const mobileFooterQuery = window.matchMedia('(max-width: 820px)');
+        const syncFooterAccordions = () => {
+            footerNavGroups.forEach((group, index) => {
+                group.open = !mobileFooterQuery.matches || index === 0;
+            });
+        };
+
+        syncFooterAccordions();
+        mobileFooterQuery.addEventListener?.('change', syncFooterAccordions);
+
+        footerNavGroups.forEach((group) => {
+            group.addEventListener('toggle', () => {
+                if (!mobileFooterQuery.matches || !group.open) {
+                    return;
+                }
+
+                footerNavGroups.forEach((otherGroup) => {
+                    if (otherGroup !== group) {
+                        otherGroup.open = false;
+                    }
+                });
+            });
+        });
+    }
+
     if (!prefersReducedMotion) {
         document.querySelectorAll(`
             .front-page > section:not(.hero-section),

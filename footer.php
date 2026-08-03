@@ -69,12 +69,6 @@
             esc_html__( 'Contact', 'theme-perso' )                     => $footer_page_link( 'Contact', 'contact', 'Notre équipe vous accompagne avec attention.' ),
             esc_html__( 'Politique de cookies', 'theme-perso' )         => theme_perso_cookie_policy_url(),
         );
-        $footer_commitments     = array(
-            array( 'icon' => 'leaf', 'title' => esc_html__( 'Ingrédients d’origine naturelle', 'theme-perso' ), 'text' => esc_html__( 'Actifs sélectionnés avec exigence.', 'theme-perso' ) ),
-            array( 'icon' => 'shield', 'title' => esc_html__( 'Formules sûres et efficaces', 'theme-perso' ), 'text' => esc_html__( 'Sans ingrédients controversés.', 'theme-perso' ) ),
-            array( 'icon' => 'heart', 'title' => esc_html__( 'Cruelty Free', 'theme-perso' ), 'text' => esc_html__( 'Aucun test sur les animaux.', 'theme-perso' ) ),
-            array( 'icon' => 'recycle', 'title' => esc_html__( 'Emballages responsables', 'theme-perso' ), 'text' => esc_html__( 'Recyclables ou réutilisables.', 'theme-perso' ) ),
-        );
         $footer_icon = function( $icon ) {
             $icons = array(
                 'leaf'    => '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 19c8.5-.2 13.4-5.2 14-14-8.8.6-13.8 5.5-14 14Z"></path><path d="M5 19c2.8-4 6.3-7.3 10.5-10"></path></svg>',
@@ -88,8 +82,35 @@
 
             return isset( $icons[ $icon ] ) ? $icons[ $icon ] : '';
         };
+        $footer_product_links = array_slice( $footer_shop_links, 0, 5, true );
+        $footer_about_links   = array_slice( $footer_house_links, 0, 5, true );
+        $footer_help_links    = array(
+            esc_html__( 'Contact', 'theme-perso' )                     => $footer_legal_links[ esc_html__( 'Contact', 'theme-perso' ) ],
+            esc_html__( 'FAQ', 'theme-perso' )                         => $footer_house_links[ esc_html__( 'FAQ', 'theme-perso' ) ],
+            esc_html__( 'CGV', 'theme-perso' )                         => $footer_legal_links[ esc_html__( 'CGV', 'theme-perso' ) ],
+            esc_html__( 'Mentions légales', 'theme-perso' )             => $footer_legal_links[ esc_html__( 'Mentions légales', 'theme-perso' ) ],
+            esc_html__( 'Politique de confidentialité', 'theme-perso' ) => $footer_legal_links[ esc_html__( 'Politique de confidentialité', 'theme-perso' ) ],
+            esc_html__( 'Politique de cookies', 'theme-perso' )         => $footer_legal_links[ esc_html__( 'Politique de cookies', 'theme-perso' ) ],
+        );
         ?>
-        <div class="footer-main">
+        <section class="footer-newsletter footer-newsletter--top" aria-labelledby="footer-newsletter-title">
+            <div class="footer-newsletter-copy">
+                <p class="eyebrow"><?php esc_html_e( 'Newsletter', 'theme-perso' ); ?></p>
+                <h2 id="footer-newsletter-title"><?php esc_html_e( 'L’essentiel dans votre boîte', 'theme-perso' ); ?></h2>
+                <p><?php esc_html_e( 'Recevez nos nouveautés, conseils beauté et offres exclusives.', 'theme-perso' ); ?></p>
+            </div>
+            <form class="newsletter-form footer-newsletter-form" action="<?php echo esc_url( home_url( '/' ) ); ?>" method="post" novalidate>
+                <label class="screen-reader-text" for="footer-newsletter-email"><?php esc_html_e( 'Adresse email', 'theme-perso' ); ?></label>
+                <input id="footer-newsletter-email" type="email" name="email" placeholder="<?php esc_attr_e( 'Votre adresse email', 'theme-perso' ); ?>" autocomplete="email" required>
+                <button type="submit" aria-label="<?php esc_attr_e( 'S’inscrire à la newsletter', 'theme-perso' ); ?>">
+                    <span><?php esc_html_e( 'S’inscrire', 'theme-perso' ); ?></span>
+                    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h13"></path><path d="m13 6 6 6-6 6"></path></svg>
+                </button>
+                <small class="newsletter-status" aria-live="polite"></small>
+            </form>
+        </section>
+
+        <div class="footer-main footer-main--minimal">
             <div class="footer-brand footer-brand-rich">
                 <a class="footer-logo" href="<?php echo esc_url( home_url( '/' ) ); ?>">COSM’ETHIQUE</a>
                 <p><?php esc_html_e( 'Soins naturels premium, formulés avec exigence pour une beauté plus consciente.', 'theme-perso' ); ?></p>
@@ -101,61 +122,44 @@
                         </a>
                     <?php endforeach; ?>
                 </div>
-
-                <div class="footer-commitments" aria-label="<?php esc_attr_e( 'Engagements COSM’ÉTHIQUE', 'theme-perso' ); ?>">
-                    <?php foreach ( $footer_commitments as $commitment ) : ?>
-                        <article class="footer-commitment-card">
-                            <span class="footer-commitment-icon"><?php echo $footer_icon( $commitment['icon'] ); ?></span>
-                            <span>
-                                <strong><?php echo esc_html( $commitment['title'] ); ?></strong>
-                                <small><?php echo esc_html( $commitment['text'] ); ?></small>
-                            </span>
-                        </article>
-                    <?php endforeach; ?>
-                </div>
+                <p class="footer-brand-note"><?php esc_html_e( '98 % naturel · Cruelty Free · Emballages responsables', 'theme-perso' ); ?></p>
             </div>
 
-            <div class="footer-column">
-                <h2><?php esc_html_e( 'Nos collections', 'theme-perso' ); ?></h2>
+            <details class="footer-column footer-nav-group" open>
+                <summary><?php esc_html_e( 'Produits', 'theme-perso' ); ?><span aria-hidden="true">+</span></summary>
                 <ul class="footer-link-list">
-                    <?php foreach ( $footer_shop_links as $label => $url ) : ?>
+                    <?php foreach ( $footer_product_links as $label => $url ) : ?>
                         <li><a href="<?php echo esc_url( $url ); ?>"><?php echo esc_html( $label ); ?><span aria-hidden="true">›</span></a></li>
                     <?php endforeach; ?>
                 </ul>
-            </div>
+            </details>
 
-            <div class="footer-column">
-                <h2><?php esc_html_e( 'À propos de Cosm’Éthique', 'theme-perso' ); ?></h2>
+            <details class="footer-column footer-nav-group" open>
+                <summary><?php esc_html_e( 'À propos', 'theme-perso' ); ?><span aria-hidden="true">+</span></summary>
                 <ul class="footer-link-list">
-                    <?php foreach ( $footer_house_links as $label => $url ) : ?>
+                    <?php foreach ( $footer_about_links as $label => $url ) : ?>
                         <li><a href="<?php echo esc_url( $url ); ?>"><?php echo esc_html( $label ); ?><span aria-hidden="true">›</span></a></li>
                     <?php endforeach; ?>
                 </ul>
-            </div>
+            </details>
 
-            <div class="footer-column footer-utility-column">
-                <h2><?php esc_html_e( 'Informations', 'theme-perso' ); ?></h2>
+            <details class="footer-column footer-nav-group footer-utility-column" open>
+                <summary><?php esc_html_e( 'Aide & Informations', 'theme-perso' ); ?><span aria-hidden="true">+</span></summary>
                 <ul class="footer-link-list">
-                    <?php foreach ( $footer_legal_links as $label => $url ) : ?>
+                    <?php foreach ( $footer_help_links as $label => $url ) : ?>
                         <li><a href="<?php echo esc_url( $url ); ?>"><?php echo esc_html( $label ); ?><span aria-hidden="true">›</span></a></li>
                     <?php endforeach; ?>
                     <li><button class="footer-cookie-link" type="button" data-cookie-manage><?php esc_html_e( 'Gérer mes cookies', 'theme-perso' ); ?><span aria-hidden="true">›</span></button></li>
                 </ul>
+            </details>
 
-                <section class="footer-newsletter" aria-labelledby="footer-newsletter-title">
-                    <h3 id="footer-newsletter-title"><?php esc_html_e( 'L’essentiel dans votre boîte', 'theme-perso' ); ?></h3>
-                    <p><?php esc_html_e( 'Recevez nos nouveautés, conseils beauté et offres exclusives.', 'theme-perso' ); ?></p>
-                    <form class="newsletter-form footer-newsletter-form" action="<?php echo esc_url( home_url( '/' ) ); ?>" method="post" novalidate>
-                        <label class="screen-reader-text" for="footer-newsletter-email"><?php esc_html_e( 'Adresse email', 'theme-perso' ); ?></label>
-                        <input id="footer-newsletter-email" type="email" name="email" placeholder="<?php esc_attr_e( 'Votre adresse email', 'theme-perso' ); ?>" autocomplete="email" required>
-                        <button type="submit" aria-label="<?php esc_attr_e( 'S’inscrire à la newsletter', 'theme-perso' ); ?>">
-                            <span><?php esc_html_e( 'S’inscrire', 'theme-perso' ); ?></span>
-                            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h13"></path><path d="m13 6 6 6-6 6"></path></svg>
-                        </button>
-                        <small class="newsletter-status" aria-live="polite"></small>
-                    </form>
-                </section>
-            </div>
+            <aside class="footer-contact-card" aria-labelledby="footer-contact-title">
+                <span class="footer-contact-mark">CÉ</span>
+                <h2 id="footer-contact-title"><?php esc_html_e( 'Contact', 'theme-perso' ); ?></h2>
+                <a href="mailto:contact@cosmethique.fr">contact@cosmethique.fr</a>
+                <a href="tel:+33142184012">01 42 18 40 12</a>
+                <p><?php esc_html_e( 'Du lundi au vendredi, 9h-18h', 'theme-perso' ); ?></p>
+            </aside>
         </div>
 
         <div class="footer-bottom">
