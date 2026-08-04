@@ -2185,44 +2185,6 @@ Thomas Bernard`,
         });
     }
 
-    const institutionalParallaxItems = Array.from(document.querySelectorAll(`
-        .institutional-page--engagements .institutional-hero-media img,
-        .institutional-page--ingredients .institutional-hero-media img,
-        .institutional-page--qualite .institutional-hero-media img,
-        .institutional-page--faq .institutional-hero-media img,
-        .institutional-page--engagements .institutional-split figure img
-    `));
-
-    if (institutionalParallaxItems.length && !prefersReducedMotion) {
-        let parallaxFrame = null;
-
-        const updateInstitutionalParallax = () => {
-            parallaxFrame = null;
-            const viewportHeight = window.innerHeight || 1;
-
-            institutionalParallaxItems.forEach((item) => {
-                const rect = item.getBoundingClientRect();
-                if (rect.bottom < 0 || rect.top > viewportHeight) {
-                    return;
-                }
-
-                const progress = ((rect.top + rect.height / 2) - viewportHeight / 2) / viewportHeight;
-                const offset = Math.max(-18, Math.min(18, progress * -34));
-                item.style.setProperty('--institutional-parallax', `${offset.toFixed(2)}px`);
-            });
-        };
-
-        const requestInstitutionalParallax = () => {
-            if (!parallaxFrame) {
-                parallaxFrame = window.requestAnimationFrame(updateInstitutionalParallax);
-            }
-        };
-
-        updateInstitutionalParallax();
-        window.addEventListener('scroll', requestInstitutionalParallax, { passive: true });
-        window.addEventListener('resize', requestInstitutionalParallax);
-    }
-
     const storeSearch = document.querySelector('[data-store-search]');
     const storeCards = document.querySelectorAll('[data-store-card]');
     const storePins = document.querySelectorAll('[data-store-pin]');

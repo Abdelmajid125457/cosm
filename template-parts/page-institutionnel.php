@@ -300,7 +300,6 @@ $page = $pages[ $slug ];
                     <p><?php esc_html_e( 'Chaque formule avance par étapes : choisir, tester, ajuster, contrôler puis conditionner avec soin. Cette méthode garantit une expérience fiable et premium.', 'theme-perso' ); ?></p>
                 </div>
                 <div class="quality-orbit" aria-hidden="true">
-                    <img src="<?php echo esc_url( $asset( 'about', 'reference-catalog-products.png' ) ); ?>" alt="">
                     <span></span><span></span><span></span>
                 </div>
             </div>
