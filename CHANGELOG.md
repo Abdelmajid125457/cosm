@@ -2,6 +2,32 @@
 
 Toutes les interventions sur le thème doivent être sauvegardées et documentées ici.
 
+## 2026-08-04 20:17 - Refonte immersive de la page FAQ
+
+Résumé :
+- Création d'un point de restauration avant intervention : `815db1c`.
+- Suppression du rendu FAQ centré type "feuille A4".
+- Création d'un hero FAQ pleine largeur avec image immersive, overlay, grand titre et bouton Contact.
+- Création d'une grande barre de recherche premium avec suggestions rapides.
+- Ajout de grandes cartes de catégories : Livraison, Commande, Paiement, Compte client, Produits, Diagnostic, Franchise et Retours.
+- Remplacement des petites cartes FAQ par de grands accordéons modernes, plus lisibles et animés.
+- Ajout d'une section Questions populaires en grille large.
+- Ajout d'une section Besoin d'aide avec grande image et boutons Contact / Diagnostic.
+- Ajout des interactions JavaScript pour les suggestions, le filtrage FAQ et le défilement vers une catégorie.
+- Ajout des traductions FR/EN/ES/AR pour les nouvelles chaînes FAQ.
+
+Fichiers modifiés :
+- `template-parts/page-institutionnel.php`
+- `style.css`
+- `js/main.js`
+- `inc/multilingual.php`
+- `CHANGELOG.md`
+
+Corrections de bugs :
+- La page FAQ ne réutilise plus le CTA institutionnel générique en bas de page.
+- Les nouveaux blocs FAQ exploitent presque toute la largeur de l'écran et restent responsive.
+- Les contrôles JavaScript respectent la préférence `prefers-reduced-motion`.
+
 ## 2026-08-04 09:35 - Refonte immersive de la page Nos engagements
 
 Résumé :

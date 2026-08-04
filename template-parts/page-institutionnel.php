@@ -109,6 +109,17 @@ $page = $pages[ $slug ];
                 </div>
             </div>
         </section>
+    <?php elseif ( 'faq' === $slug ) : ?>
+        <section class="faq-immersive-hero">
+            <img src="<?php echo esc_url( $asset( 'about', 'about-story-lifestyle.png' ) ); ?>" alt="<?php esc_attr_e( 'Conseils et accompagnement Cosm’Éthique', 'theme-perso' ); ?>" loading="eager">
+            <div class="faq-immersive-hero-overlay"></div>
+            <div class="faq-immersive-hero-content motion-reveal motion-reveal--left">
+                <p class="eyebrow"><?php esc_html_e( 'Centre d’aide', 'theme-perso' ); ?></p>
+                <h1><?php esc_html_e( 'Questions fréquentes', 'theme-perso' ); ?></h1>
+                <p><?php esc_html_e( 'Toutes les réponses pour profiter pleinement de votre expérience Cosm’Éthique.', 'theme-perso' ); ?></p>
+                <a class="button button-primary" href="<?php echo esc_url( home_url( '/contact/' ) ); ?>"><?php esc_html_e( 'Nous contacter', 'theme-perso' ); ?></a>
+            </div>
+        </section>
     <?php else : ?>
         <section class="institutional-hero">
             <div class="container institutional-hero-grid">
@@ -484,71 +495,198 @@ $page = $pages[ $slug ];
 
     <?php if ( 'faq' === $slug ) : ?>
         <?php
-        $faqs = array(
-            __( 'Livraison', 'theme-perso' ) => array( __( 'Quand ma commande est-elle expédiée ?', 'theme-perso' ) => __( 'Les commandes sont préparées sous 24 à 48h ouvrées, puis confiées au transporteur.', 'theme-perso' ), __( 'La livraison est-elle offerte ?', 'theme-perso' ) => __( 'La livraison est offerte dès 40 € d’achat en France métropolitaine.', 'theme-perso' ) ),
-            __( 'Commande', 'theme-perso' ) => array( __( 'Puis-je modifier une commande ?', 'theme-perso' ) => __( 'Contactez-nous rapidement après validation afin que nous puissions vérifier les possibilités.', 'theme-perso' ), __( 'Comment suivre ma commande ?', 'theme-perso' ) => __( 'Le suivi est disponible depuis votre espace client lorsque la commande est expédiée.', 'theme-perso' ) ),
-            __( 'Paiement', 'theme-perso' ) => array( __( 'Le paiement est-il sécurisé ?', 'theme-perso' ) => __( 'Oui, les paiements sont protégés par chiffrement SSL et des solutions de paiement reconnues.', 'theme-perso' ), __( 'Puis-je payer en plusieurs fois ?', 'theme-perso' ) => __( 'Des options de paiement fractionné peuvent être proposées selon le montant et l’éligibilité.', 'theme-perso' ) ),
-            __( 'Compte', 'theme-perso' ) => array( __( 'Dois-je créer un compte ?', 'theme-perso' ) => __( 'Le compte permet de retrouver vos commandes, recommandations et informations plus facilement.', 'theme-perso' ), __( 'Mes données sont-elles protégées ?', 'theme-perso' ) => __( 'Nous traitons vos données avec attention et uniquement pour les finalités nécessaires.', 'theme-perso' ) ),
-            __( 'Diagnostic', 'theme-perso' ) => array( __( 'Le diagnostic est-il gratuit ?', 'theme-perso' ) => __( 'Oui, il permet d’obtenir une routine indicative en moins d’une minute.', 'theme-perso' ), __( 'Puis-je recommencer le diagnostic ?', 'theme-perso' ) => __( 'Oui, vous pouvez le relancer à tout moment pour adapter votre routine.', 'theme-perso' ) ),
-            __( 'Produits', 'theme-perso' ) => array( __( 'Les soins conviennent-ils aux peaux sensibles ?', 'theme-perso' ) => __( 'Chaque fiche produit précise les types de peau recommandés et les conseils d’utilisation.', 'theme-perso' ), __( 'Les produits sont-ils testés sur les animaux ?', 'theme-perso' ) => __( 'Non, Cosm’Éthique s’inscrit dans une démarche cruelty free.', 'theme-perso' ) ),
-            __( 'Retours', 'theme-perso' ) => array( __( 'Puis-je retourner un produit ?', 'theme-perso' ) => __( 'Les conditions de retour sont détaillées dans les CGV du site.', 'theme-perso' ), __( 'Quel est le délai de retour ?', 'theme-perso' ) => __( 'Le délai indiqué est de 30 jours selon les conditions applicables.', 'theme-perso' ) ),
-            __( 'Franchise', 'theme-perso' ) => array( __( 'Comment devenir franchisé ?', 'theme-perso' ) => __( 'La page Devenir franchisé présente le concept et le formulaire de demande.', 'theme-perso' ), __( 'Quels profils recherchez-vous ?', 'theme-perso' ) => __( 'Des profils sensibles à la beauté naturelle, au commerce premium et au conseil client.', 'theme-perso' ) ),
+        $faq_categories = array(
+            'livraison' => array(
+                'icon'        => 'truck',
+                'title'       => __( 'Livraison', 'theme-perso' ),
+                'description' => __( 'Délais, frais et suivi de livraison.', 'theme-perso' ),
+                'items'       => array(
+                    array( 'question' => __( 'Quand ma commande est-elle expédiée ?', 'theme-perso' ), 'answer' => __( 'Les commandes sont préparées sous 24 à 48h ouvrées, puis confiées au transporteur.', 'theme-perso' ) ),
+                    array( 'question' => __( 'La livraison est-elle offerte ?', 'theme-perso' ), 'answer' => __( 'La livraison est offerte dès 40 € d’achat en France métropolitaine.', 'theme-perso' ) ),
+                    array( 'question' => __( 'Comment suivre ma livraison ?', 'theme-perso' ), 'answer' => __( 'Le lien de suivi est disponible dans votre espace client dès l’expédition de la commande.', 'theme-perso' ) ),
+                ),
+            ),
+            'commande' => array(
+                'icon'        => 'package',
+                'title'       => __( 'Commande', 'theme-perso' ),
+                'description' => __( 'Validation, modification et historique de commande.', 'theme-perso' ),
+                'items'       => array(
+                    array( 'question' => __( 'Puis-je modifier une commande ?', 'theme-perso' ), 'answer' => __( 'Contactez-nous rapidement après validation afin que nous puissions vérifier les possibilités.', 'theme-perso' ) ),
+                    array( 'question' => __( 'Comment suivre ma commande ?', 'theme-perso' ), 'answer' => __( 'Le suivi est disponible depuis votre espace client lorsque la commande est expédiée.', 'theme-perso' ) ),
+                    array( 'question' => __( 'Où retrouver ma facture ?', 'theme-perso' ), 'answer' => __( 'Les documents liés à vos commandes sont accessibles depuis votre espace client.', 'theme-perso' ) ),
+                ),
+            ),
+            'paiement' => array(
+                'icon'        => 'check',
+                'title'       => __( 'Paiement', 'theme-perso' ),
+                'description' => __( 'Moyens de paiement et sécurité.', 'theme-perso' ),
+                'items'       => array(
+                    array( 'question' => __( 'Le paiement est-il sécurisé ?', 'theme-perso' ), 'answer' => __( 'Oui, les paiements sont protégés par chiffrement SSL et des solutions de paiement reconnues.', 'theme-perso' ) ),
+                    array( 'question' => __( 'Puis-je payer en plusieurs fois ?', 'theme-perso' ), 'answer' => __( 'Des options de paiement fractionné peuvent être proposées selon le montant et l’éligibilité.', 'theme-perso' ) ),
+                    array( 'question' => __( 'Quels moyens de paiement sont acceptés ?', 'theme-perso' ), 'answer' => __( 'Le site présente les solutions disponibles directement dans le tunnel de commande.', 'theme-perso' ) ),
+                ),
+            ),
+            'compte' => array(
+                'icon'        => 'skin',
+                'title'       => __( 'Compte client', 'theme-perso' ),
+                'description' => __( 'Connexion, données et espace personnel.', 'theme-perso' ),
+                'items'       => array(
+                    array( 'question' => __( 'Dois-je créer un compte ?', 'theme-perso' ), 'answer' => __( 'Le compte permet de retrouver vos commandes, recommandations et informations plus facilement.', 'theme-perso' ) ),
+                    array( 'question' => __( 'Mes données sont-elles protégées ?', 'theme-perso' ), 'answer' => __( 'Nous traitons vos données avec attention et uniquement pour les finalités nécessaires.', 'theme-perso' ) ),
+                    array( 'question' => __( 'Puis-je modifier mes informations ?', 'theme-perso' ), 'answer' => __( 'Vos informations personnelles peuvent être mises à jour depuis la rubrique dédiée de votre espace client.', 'theme-perso' ) ),
+                ),
+            ),
+            'produits' => array(
+                'icon'        => 'leaf',
+                'title'       => __( 'Produits', 'theme-perso' ),
+                'description' => __( 'Conseils, compositions et types de peau.', 'theme-perso' ),
+                'items'       => array(
+                    array( 'question' => __( 'Les soins conviennent-ils aux peaux sensibles ?', 'theme-perso' ), 'answer' => __( 'Chaque fiche produit précise les types de peau recommandés et les conseils d’utilisation.', 'theme-perso' ) ),
+                    array( 'question' => __( 'Les produits sont-ils testés sur les animaux ?', 'theme-perso' ), 'answer' => __( 'Non, Cosm’Éthique s’inscrit dans une démarche cruelty free.', 'theme-perso' ) ),
+                    array( 'question' => __( 'Comment choisir ma routine ?', 'theme-perso' ), 'answer' => __( 'Le diagnostic beauté vous oriente vers les soins les plus adaptés à vos besoins.', 'theme-perso' ) ),
+                ),
+            ),
+            'diagnostic' => array(
+                'icon'        => 'sparkle',
+                'title'       => __( 'Diagnostic', 'theme-perso' ),
+                'description' => __( 'Routine personnalisée et recommandations.', 'theme-perso' ),
+                'items'       => array(
+                    array( 'question' => __( 'Le diagnostic est-il gratuit ?', 'theme-perso' ), 'answer' => __( 'Oui, il permet d’obtenir une routine indicative en moins d’une minute.', 'theme-perso' ) ),
+                    array( 'question' => __( 'Puis-je recommencer le diagnostic ?', 'theme-perso' ), 'answer' => __( 'Oui, vous pouvez le relancer à tout moment pour adapter votre routine.', 'theme-perso' ) ),
+                    array( 'question' => __( 'Les recommandations sont-elles personnalisées ?', 'theme-perso' ), 'answer' => __( 'Les produits proposés dépendent des réponses données pendant le diagnostic.', 'theme-perso' ) ),
+                ),
+            ),
+            'franchise' => array(
+                'icon'        => 'store',
+                'title'       => __( 'Franchise', 'theme-perso' ),
+                'description' => __( 'Ouvrir une boutique Cosm’Éthique.', 'theme-perso' ),
+                'items'       => array(
+                    array( 'question' => __( 'Comment devenir franchisé ?', 'theme-perso' ), 'answer' => __( 'La page Devenir franchisé présente le concept et le formulaire de demande.', 'theme-perso' ) ),
+                    array( 'question' => __( 'Quels profils recherchez-vous ?', 'theme-perso' ), 'answer' => __( 'Des profils sensibles à la beauté naturelle, au commerce premium et au conseil client.', 'theme-perso' ) ),
+                    array( 'question' => __( 'Puis-je proposer ma ville ?', 'theme-perso' ), 'answer' => __( 'Oui, le formulaire permet d’indiquer la ville souhaitée pour votre projet.', 'theme-perso' ) ),
+                ),
+            ),
+            'retours' => array(
+                'icon'        => 'recycle',
+                'title'       => __( 'Retours', 'theme-perso' ),
+                'description' => __( 'Conditions et délais de retour.', 'theme-perso' ),
+                'items'       => array(
+                    array( 'question' => __( 'Puis-je retourner un produit ?', 'theme-perso' ), 'answer' => __( 'Les conditions de retour sont détaillées dans les CGV du site.', 'theme-perso' ) ),
+                    array( 'question' => __( 'Quel est le délai de retour ?', 'theme-perso' ), 'answer' => __( 'Le délai indiqué est de 30 jours selon les conditions applicables.', 'theme-perso' ) ),
+                    array( 'question' => __( 'Comment demander un retour ?', 'theme-perso' ), 'answer' => __( 'Contactez notre équipe avec votre numéro de commande afin d’être accompagné.', 'theme-perso' ) ),
+                ),
+            ),
         );
         $popular_faqs = array(
             array( 'title' => __( 'Livraison offerte', 'theme-perso' ), 'text' => __( 'La livraison est offerte dès 40 € d’achat en France métropolitaine.', 'theme-perso' ) ),
             array( 'title' => __( 'Diagnostic beauté', 'theme-perso' ), 'text' => __( 'Le diagnostic vous aide à composer une routine adaptée en moins d’une minute.', 'theme-perso' ) ),
             array( 'title' => __( 'Paiement sécurisé', 'theme-perso' ), 'text' => __( 'Vos données sont protégées et chiffrées grâce au protocole SSL.', 'theme-perso' ) ),
+            array( 'title' => __( 'Peaux sensibles', 'theme-perso' ), 'text' => __( 'Les fiches produits précisent les conseils adaptés aux peaux délicates.', 'theme-perso' ) ),
+        );
+        $faq_suggestions = array(
+            __( 'livraison', 'theme-perso' ),
+            __( 'paiement', 'theme-perso' ),
+            __( 'diagnostic', 'theme-perso' ),
+            __( 'peau sensible', 'theme-perso' ),
+            __( 'retour', 'theme-perso' ),
         );
         ?>
-        <section class="institutional-section">
-            <div class="container faq-search-panel motion-reveal">
-                <div>
-                    <p class="eyebrow"><?php esc_html_e( 'Centre d’aide', 'theme-perso' ); ?></p>
-                    <h2><?php esc_html_e( 'Rechercher une réponse.', 'theme-perso' ); ?></h2>
+        <section class="faq-search-immersive">
+            <div class="faq-full">
+                <div class="faq-search-copy motion-reveal">
+                    <p class="eyebrow"><?php esc_html_e( 'Rechercher dans l’aide', 'theme-perso' ); ?></p>
+                    <h2><?php esc_html_e( 'Une réponse claire, rapide et pensée pour vous.', 'theme-perso' ); ?></h2>
                 </div>
-                <label>
+                <label class="faq-search-giant motion-reveal motion-reveal--scale">
+                    <span class="faq-search-icon"><?php echo $icon( 'question' ); ?></span>
                     <span class="screen-reader-text"><?php esc_html_e( 'Rechercher une question', 'theme-perso' ); ?></span>
                     <input type="search" data-faq-search placeholder="<?php esc_attr_e( 'Rechercher une question...', 'theme-perso' ); ?>">
                 </label>
-            </div>
-            <div class="container institutional-section-heading faq-popular-heading motion-reveal">
-                <p class="eyebrow"><?php esc_html_e( 'Les questions les plus fréquentes', 'theme-perso' ); ?></p>
-                <h2><?php esc_html_e( 'Les réponses à consulter en priorité.', 'theme-perso' ); ?></h2>
-            </div>
-            <div class="container faq-popular-grid">
-                <?php foreach ( $popular_faqs as $item ) : ?>
-                    <article class="faq-popular-card motion-reveal motion-reveal--scale">
-                        <span class="institutional-icon"><?php echo $icon( 'star' ); ?></span>
-                        <h3><?php echo esc_html( $item['title'] ); ?></h3>
-                        <p><?php echo esc_html( $item['text'] ); ?></p>
-                    </article>
-                <?php endforeach; ?>
-            </div>
-            <div class="container faq-category-grid" data-faq-list>
-                <?php foreach ( $faqs as $category => $items ) : ?>
-                    <article class="faq-category-card motion-reveal" data-faq-category>
-                        <span class="institutional-icon"><?php echo $icon( 'question' ); ?></span>
-                        <h2><?php echo esc_html( $category ); ?></h2>
-                        <div class="institutional-accordion">
-                            <?php foreach ( $items as $question => $answer ) : ?>
-                                <details data-faq-item>
-                                    <summary><?php echo esc_html( $question ); ?></summary>
-                                    <p><?php echo esc_html( $answer ); ?></p>
-                                </details>
-                            <?php endforeach; ?>
-                        </div>
-                    </article>
-                <?php endforeach; ?>
+                <div class="faq-suggestion-list motion-reveal" aria-label="<?php esc_attr_e( 'Suggestions rapides', 'theme-perso' ); ?>">
+                    <?php foreach ( $faq_suggestions as $suggestion ) : ?>
+                        <button type="button" data-faq-suggestion="<?php echo esc_attr( $suggestion ); ?>"><?php echo esc_html( $suggestion ); ?></button>
+                    <?php endforeach; ?>
+                </div>
             </div>
         </section>
-        <section class="institutional-section institutional-section--soft">
-            <div class="container faq-contact-panel motion-reveal">
-                <div>
-                    <p class="eyebrow"><?php esc_html_e( 'Besoin d’un conseil', 'theme-perso' ); ?></p>
-                    <h2><?php esc_html_e( 'Vous n’avez pas trouvé votre réponse ?', 'theme-perso' ); ?></h2>
-                    <p><?php esc_html_e( 'Notre équipe vous accompagne pour choisir vos soins, suivre une commande ou préparer un projet de franchise.', 'theme-perso' ); ?></p>
+        <section class="faq-categories-immersive">
+            <div class="faq-full">
+                <div class="faq-section-heading motion-reveal">
+                    <p class="eyebrow"><?php esc_html_e( 'Catégories d’aide', 'theme-perso' ); ?></p>
+                    <h2><?php esc_html_e( 'Choisissez un thème pour accéder directement aux questions associées.', 'theme-perso' ); ?></h2>
                 </div>
-                <a class="button button-primary" href="<?php echo esc_url( home_url( '/contact/' ) ); ?>"><?php esc_html_e( 'Contacter notre équipe', 'theme-perso' ); ?></a>
+                <div class="faq-category-strip">
+                    <?php foreach ( $faq_categories as $key => $category ) : ?>
+                        <button type="button" class="faq-category-tile motion-reveal motion-reveal--scale" data-faq-category-jump="<?php echo esc_attr( $key ); ?>">
+                            <span class="institutional-icon"><?php echo $icon( $category['icon'] ); ?></span>
+                            <strong><?php echo esc_html( $category['title'] ); ?></strong>
+                            <small><?php echo esc_html( $category['description'] ); ?></small>
+                        </button>
+                    <?php endforeach; ?>
+                </div>
+            </div>
+        </section>
+        <section class="faq-questions-immersive" data-faq-list>
+            <div class="faq-full faq-questions-layout">
+                <aside class="faq-question-aside motion-reveal motion-reveal--left">
+                    <p class="eyebrow"><?php esc_html_e( 'Toutes vos questions', 'theme-perso' ); ?></p>
+                    <h2><?php esc_html_e( 'Des réponses détaillées, organisées par sujet.', 'theme-perso' ); ?></h2>
+                    <p><?php esc_html_e( 'Parcourez les thèmes essentiels pour commander, choisir vos soins, gérer votre compte ou préparer votre projet franchise.', 'theme-perso' ); ?></p>
+                </aside>
+                <div class="faq-accordion-column">
+                    <?php foreach ( $faq_categories as $key => $category ) : ?>
+                        <section class="faq-accordion-group motion-reveal" data-faq-category data-faq-category-key="<?php echo esc_attr( $key ); ?>">
+                            <header>
+                                <span class="institutional-icon"><?php echo $icon( $category['icon'] ); ?></span>
+                                <div>
+                                    <p><?php echo esc_html( $category['description'] ); ?></p>
+                                    <h3><?php echo esc_html( $category['title'] ); ?></h3>
+                                </div>
+                            </header>
+                            <div class="faq-large-accordion-list">
+                                <?php foreach ( $category['items'] as $item ) : ?>
+                                    <details class="faq-large-accordion" data-faq-item>
+                                        <summary><span><?php echo esc_html( $item['question'] ); ?></span></summary>
+                                        <p><?php echo esc_html( $item['answer'] ); ?></p>
+                                    </details>
+                                <?php endforeach; ?>
+                            </div>
+                        </section>
+                    <?php endforeach; ?>
+                </div>
+            </div>
+        </section>
+        <section class="faq-popular-immersive">
+            <div class="faq-full">
+                <div class="faq-section-heading motion-reveal">
+                    <p class="eyebrow"><?php esc_html_e( 'Les plus consultées', 'theme-perso' ); ?></p>
+                    <h2><?php esc_html_e( 'Les réponses que nos clientes consultent le plus souvent.', 'theme-perso' ); ?></h2>
+                </div>
+                <div class="faq-popular-large-grid">
+                    <?php foreach ( $popular_faqs as $item ) : ?>
+                        <article class="faq-popular-large-card motion-reveal motion-reveal--scale">
+                            <span class="institutional-icon"><?php echo $icon( 'star' ); ?></span>
+                            <h3><?php echo esc_html( $item['title'] ); ?></h3>
+                            <p><?php echo esc_html( $item['text'] ); ?></p>
+                        </article>
+                    <?php endforeach; ?>
+                </div>
+            </div>
+        </section>
+        <section class="faq-help-immersive">
+            <div class="faq-full faq-help-grid">
+                <figure class="faq-help-media motion-reveal motion-reveal--left">
+                    <img src="<?php echo esc_url( $asset( 'products', 'category-packs-hero-reel.png' ) ); ?>" alt="<?php esc_attr_e( 'Conseillère Cosm’Éthique et produits premium', 'theme-perso' ); ?>" loading="lazy">
+                </figure>
+                <div class="faq-help-copy motion-reveal motion-reveal--right">
+                    <p class="eyebrow"><?php esc_html_e( 'Besoin d’aide ?', 'theme-perso' ); ?></p>
+                    <h2><?php esc_html_e( 'Vous ne trouvez pas votre réponse ?', 'theme-perso' ); ?></h2>
+                    <p><?php esc_html_e( 'Notre équipe vous accompagne pour choisir vos soins, suivre une commande ou préparer un projet de franchise.', 'theme-perso' ); ?></p>
+                    <div class="button-group">
+                        <a class="button button-primary" href="<?php echo esc_url( home_url( '/contact/' ) ); ?>"><?php esc_html_e( 'Contact', 'theme-perso' ); ?></a>
+                        <a class="button button-secondary" href="<?php echo esc_url( home_url( '/diagnostic/' ) ); ?>"><?php esc_html_e( 'Diagnostic', 'theme-perso' ); ?></a>
+                    </div>
+                </div>
             </div>
         </section>
     <?php endif; ?>
@@ -593,14 +731,16 @@ $page = $pages[ $slug ];
         </section>
     <?php endif; ?>
 
-    <section class="institutional-cta motion-reveal">
-        <div class="container institutional-cta-inner">
-            <p class="eyebrow"><?php esc_html_e( 'Cosm’Éthique', 'theme-perso' ); ?></p>
-            <h2><?php esc_html_e( 'Découvrez des soins naturels pensés avec exigence.', 'theme-perso' ); ?></h2>
-            <div class="button-group">
-                <a class="button button-primary" href="<?php echo esc_url( function_exists( 'wc_get_page_permalink' ) ? wc_get_page_permalink( 'shop' ) : home_url( '/boutique/' ) ); ?>"><?php esc_html_e( 'Découvrir la boutique', 'theme-perso' ); ?></a>
-                <a class="button button-secondary" href="<?php echo esc_url( home_url( '/diagnostic/' ) ); ?>"><?php esc_html_e( 'Faire mon diagnostic', 'theme-perso' ); ?></a>
+    <?php if ( 'faq' !== $slug ) : ?>
+        <section class="institutional-cta motion-reveal">
+            <div class="container institutional-cta-inner">
+                <p class="eyebrow"><?php esc_html_e( 'Cosm’Éthique', 'theme-perso' ); ?></p>
+                <h2><?php esc_html_e( 'Découvrez des soins naturels pensés avec exigence.', 'theme-perso' ); ?></h2>
+                <div class="button-group">
+                    <a class="button button-primary" href="<?php echo esc_url( function_exists( 'wc_get_page_permalink' ) ? wc_get_page_permalink( 'shop' ) : home_url( '/boutique/' ) ); ?>"><?php esc_html_e( 'Découvrir la boutique', 'theme-perso' ); ?></a>
+                    <a class="button button-secondary" href="<?php echo esc_url( home_url( '/diagnostic/' ) ); ?>"><?php esc_html_e( 'Faire mon diagnostic', 'theme-perso' ); ?></a>
+                </div>
             </div>
-        </div>
-    </section>
+        </section>
+    <?php endif; ?>
 </div>

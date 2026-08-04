@@ -2160,9 +2160,11 @@ Thomas Bernard`,
 
     const faqSearch = document.querySelector('[data-faq-search]');
     const faqCategories = document.querySelectorAll('[data-faq-category]');
+    const faqSuggestions = document.querySelectorAll('[data-faq-suggestion]');
+    const faqCategoryJumps = document.querySelectorAll('[data-faq-category-jump]');
 
     if (faqSearch && faqCategories.length) {
-        faqSearch.addEventListener('input', () => {
+        const filterFaq = () => {
             const query = normalizeSearch(faqSearch.value);
 
             faqCategories.forEach((category) => {
@@ -2182,10 +2184,41 @@ Thomas Bernard`,
 
                 category.classList.toggle('is-empty', visibleItems === 0);
             });
+        };
+
+        faqSearch.addEventListener('input', filterFaq);
+
+        faqSuggestions.forEach((button) => {
+            button.addEventListener('click', () => {
+                faqSearch.value = button.dataset.faqSuggestion || button.textContent || '';
+                filterFaq();
+                faqSearch.focus({ preventScroll: true });
+            });
+        });
+
+        faqCategoryJumps.forEach((button) => {
+            button.addEventListener('click', () => {
+                const key = button.dataset.faqCategoryJump || '';
+                const target = document.querySelector(`[data-faq-category-key="${key}"]`);
+
+                if (!target) {
+                    return;
+                }
+
+                target.classList.remove('is-empty');
+                target.scrollIntoView({ behavior: prefersReducedMotion ? 'auto' : 'smooth', block: 'start' });
+
+                const firstQuestion = target.querySelector('[data-faq-item]');
+                if (firstQuestion && !firstQuestion.open) {
+                    window.setTimeout(() => {
+                        firstQuestion.open = true;
+                    }, prefersReducedMotion ? 0 : 320);
+                }
+            });
         });
     }
 
-    const commitmentsParallaxItems = Array.from(document.querySelectorAll('.commitments-action-media img, .commitments-quote-banner img'));
+    const commitmentsParallaxItems = Array.from(document.querySelectorAll('.commitments-action-media img, .commitments-quote-banner img, .faq-immersive-hero > img, .faq-help-media img'));
     if (commitmentsParallaxItems.length && !prefersReducedMotion) {
         let commitmentsParallaxFrame = null;
 
@@ -2308,6 +2341,16 @@ Thomas Bernard`,
             .faq-popular-card,
             .faq-search-panel,
             .faq-contact-panel,
+            .faq-search-copy,
+            .faq-search-giant,
+            .faq-suggestion-list,
+            .faq-section-heading,
+            .faq-category-tile,
+            .faq-question-aside,
+            .faq-accordion-group,
+            .faq-popular-large-card,
+            .faq-help-media,
+            .faq-help-copy,
             .commitments-hero,
             .commitments-value-card,
             .commitments-stat-card,
@@ -2323,9 +2366,9 @@ Thomas Bernard`,
         document.querySelectorAll('.front-page .product-card, .front-page .home-universe-card, .front-page .blog-showcase-card, .front-page .testimonial-grid figure').forEach((item) => item.classList.add('motion-reveal--scale'));
     }
 
-    const revealItems = document.querySelectorAll('.motion-reveal, .category-card, .product-card, .promo-card, .story-grid, .testimonial-grid figure, .blog-card, .blog-showcase-card, .blog-featured-card, .blog-sidebar-card, .shop-premium-block, .shop-promo-section, .shop-packs-section, .shop-product-card, .shop-pack-card, .about-reveal, .home-universe-card, .home-diagnostic-panel, .home-expertise-heading, .home-expertise-copy, .home-expertise-media, .home-expertise-cards article, .account-login-card, .account-benefit-card, .account-stats-band, .institutional-page section, .institutional-value-card, .ingredient-library-card, .ingredient-feature-card, .commitment-timeline-card, .institutional-stat-card, .quality-step, .quality-gallery-card, .quality-choice-card, .faq-category-card, .faq-popular-card, .faq-search-panel, .faq-contact-panel, .commitments-hero, .commitments-value-card, .commitments-stat-card, .commitments-action-timeline article, .commitments-priority-card, .commitments-quote-banner, .boutique-card, .review-page-card, .site-footer[data-animate]');
+    const revealItems = document.querySelectorAll('.motion-reveal, .category-card, .product-card, .promo-card, .story-grid, .testimonial-grid figure, .blog-card, .blog-showcase-card, .blog-featured-card, .blog-sidebar-card, .shop-premium-block, .shop-promo-section, .shop-packs-section, .shop-product-card, .shop-pack-card, .about-reveal, .home-universe-card, .home-diagnostic-panel, .home-expertise-heading, .home-expertise-copy, .home-expertise-media, .home-expertise-cards article, .account-login-card, .account-benefit-card, .account-stats-band, .institutional-page section, .institutional-value-card, .ingredient-library-card, .ingredient-feature-card, .commitment-timeline-card, .institutional-stat-card, .quality-step, .quality-gallery-card, .quality-choice-card, .faq-category-card, .faq-popular-card, .faq-search-panel, .faq-contact-panel, .faq-search-copy, .faq-search-giant, .faq-suggestion-list, .faq-section-heading, .faq-category-tile, .faq-question-aside, .faq-accordion-group, .faq-popular-large-card, .faq-help-media, .faq-help-copy, .commitments-hero, .commitments-value-card, .commitments-stat-card, .commitments-action-timeline article, .commitments-priority-card, .commitments-quote-banner, .boutique-card, .review-page-card, .site-footer[data-animate]');
 
-    const revealGroups = document.querySelectorAll('.front-page .products-grid, .front-page .home-univers-grid, .front-page .testimonial-grid, .front-page .blog-showcase-grid, .front-page .home-expertise-cards, .shop-products-slider, .shop-pack-grid, .visage-product-grid, .blog-showcase-grid, .institutional-card-grid, .ingredient-library-grid, .ingredient-feature-grid, .commitment-timeline, .institutional-stats-grid, .quality-timeline, .quality-gallery-grid, .quality-choice-grid, .faq-popular-grid, .faq-category-grid, .commitments-values-grid, .commitments-stats-grid, .commitments-action-timeline, .commitments-priorities-grid, .boutique-card-grid, .review-card-grid');
+    const revealGroups = document.querySelectorAll('.front-page .products-grid, .front-page .home-univers-grid, .front-page .testimonial-grid, .front-page .blog-showcase-grid, .front-page .home-expertise-cards, .shop-products-slider, .shop-pack-grid, .visage-product-grid, .blog-showcase-grid, .institutional-card-grid, .ingredient-library-grid, .ingredient-feature-grid, .commitment-timeline, .institutional-stats-grid, .quality-timeline, .quality-gallery-grid, .quality-choice-grid, .faq-popular-grid, .faq-category-grid, .faq-category-strip, .faq-popular-large-grid, .faq-accordion-column, .commitments-values-grid, .commitments-stats-grid, .commitments-action-timeline, .commitments-priorities-grid, .boutique-card-grid, .review-card-grid');
     revealGroups.forEach((group) => {
         Array.from(group.children).forEach((item, index) => {
             item.style.setProperty('--reveal-delay', `${Math.min(index * 70, 420)}ms`);
