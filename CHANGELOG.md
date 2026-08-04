@@ -2,6 +2,28 @@
 
 Toutes les interventions sur le thème doivent être sauvegardées et documentées ici.
 
+## 2026-08-04 00:51 - Refonte immersive plein écran des pages institutionnelles
+
+Résumé :
+- Création d'un commit Git de sauvegarde avant intervention : `5a5e879`.
+- Suppression de l'effet visuel "feuille A4" sur les pages Nos engagements, Nos ingrédients, Fabrication & Qualité et FAQ.
+- Élargissement des conteneurs institutionnels pour utiliser quasiment toute la largeur de l'écran.
+- Transformation des héros en sections immersives avec grands visuels et grandes typographies.
+- Création de grilles asymétriques et de sections alternées pour donner une identité différente à chaque page.
+- Ajout d'un visuel produit dans la section immersive Fabrication & Qualité.
+- Ajout d'un parallaxe léger sur les grands visuels, désactivé automatiquement si l'utilisateur préfère réduire les animations.
+- Optimisation responsive desktop, tablette et mobile.
+
+Fichiers modifiés :
+- `template-parts/page-institutionnel.php`
+- `style.css`
+- `js/main.js`
+- `CHANGELOG.md`
+
+Corrections de bugs :
+- Correction de l'impression de contenu trop étroit et centré.
+- Réduction des blocs perdus au milieu de page grâce à des sections plus larges, plus visuelles et plus variées.
+
 ## 2026-08-04 00:30 - Refonte premium des pages institutionnelles
 
 Résumé :
