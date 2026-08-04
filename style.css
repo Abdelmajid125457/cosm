@@ -12826,6 +12826,569 @@ select:focus,
     }
 }
 
+/* Page Nos engagements immersive */
+.institutional-page--engagements {
+    background: #FFFFFF;
+}
+
+.commitments-wide,
+.commitments-hero-inner {
+    width: min(1780px, calc(100% - clamp(32px, 6vw, 132px)));
+    max-width: none;
+    margin: 0 auto;
+}
+
+.commitments-hero {
+    position: relative;
+    display: grid;
+    min-height: clamp(680px, 88vh, 980px);
+    align-items: center;
+    overflow: hidden;
+    padding: clamp(72px, 8vw, 132px) 0;
+    background:
+        radial-gradient(circle at 8% 18%, rgba(191, 216, 247, 0.5), transparent 28%),
+        radial-gradient(circle at 86% 12%, rgba(30, 156, 166, 0.14), transparent 24%),
+        linear-gradient(135deg, #FFFFFF 0%, #F5F7FF 54%, #F8F4EE 100%);
+}
+
+.commitments-hero::before {
+    position: absolute;
+    inset: 8% auto auto -12%;
+    width: 38vw;
+    height: 38vw;
+    border: 1px solid rgba(13, 27, 61, 0.08);
+    border-radius: 46% 54% 62% 38%;
+    content: "";
+}
+
+.commitments-hero-inner {
+    position: relative;
+    z-index: 1;
+    display: grid;
+    grid-template-columns: minmax(0, 0.78fr) minmax(0, 1.22fr);
+    gap: clamp(44px, 7vw, 130px);
+    align-items: center;
+}
+
+.commitments-hero-copy {
+    max-width: 820px;
+}
+
+.commitments-hero .eyebrow,
+.commitments-section-heading .eyebrow,
+.commitments-action-copy .eyebrow {
+    color: var(--institutional-teal);
+    letter-spacing: 0.14em;
+}
+
+.commitments-hero h1 {
+    max-width: 900px;
+    margin: 0;
+    color: var(--institutional-navy);
+    font-size: clamp(64px, 8.4vw, 146px);
+    line-height: 0.92;
+}
+
+.commitments-hero-copy > p:not(.eyebrow) {
+    max-width: 720px;
+    margin: 28px 0 0;
+    color: #5F6F84;
+    font-size: clamp(1.08rem, 1.35vw, 1.34rem);
+    line-height: 1.85;
+}
+
+.commitments-hero .button-group {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 14px;
+    margin-top: 34px;
+}
+
+.commitments-hero-collage {
+    position: relative;
+    min-height: clamp(500px, 67vh, 760px);
+}
+
+.commitments-collage-card {
+    position: absolute;
+    overflow: hidden;
+    margin: 0;
+    border: 1px solid rgba(231, 236, 245, 0.9);
+    border-radius: clamp(26px, 3vw, 46px);
+    background: #FFFFFF;
+    box-shadow: 0 34px 90px rgba(13, 27, 61, 0.16);
+    animation: commitmentsFloat 7s ease-in-out infinite;
+}
+
+.commitments-collage-card img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 800ms ease, filter 800ms ease;
+}
+
+.commitments-collage-card:hover img,
+.commitments-action-media:hover img,
+.commitments-priority-card:hover img,
+.commitments-quote-banner:hover img {
+    filter: saturate(1.04) contrast(1.03);
+    transform: translate3d(0, var(--commitments-parallax, 0px), 0) scale(1.06);
+}
+
+.commitments-collage-card--large {
+    inset: 0 5% 17% 12%;
+}
+
+.commitments-collage-card--small {
+    right: 0;
+    bottom: 4%;
+    width: 34%;
+    height: 42%;
+    animation-delay: -2s;
+}
+
+.commitments-collage-card--wide {
+    bottom: 0;
+    left: 0;
+    width: 48%;
+    height: 30%;
+    animation-delay: -4s;
+}
+
+.commitments-floating-note {
+    position: absolute;
+    right: 4%;
+    top: 9%;
+    display: grid;
+    min-width: 170px;
+    padding: 22px 24px;
+    border: 1px solid rgba(231, 236, 245, 0.95);
+    border-radius: 26px;
+    background: rgba(255, 255, 255, 0.9);
+    box-shadow: 0 22px 60px rgba(13, 27, 61, 0.13);
+    backdrop-filter: blur(14px);
+}
+
+.commitments-floating-note strong {
+    color: var(--institutional-navy);
+    font-size: clamp(2.3rem, 4vw, 4.4rem);
+    line-height: 1;
+}
+
+.commitments-floating-note span {
+    color: #607184;
+    font-weight: 800;
+}
+
+@keyframes commitmentsFloat {
+    0%, 100% {
+        transform: translateY(0);
+    }
+    50% {
+        transform: translateY(-10px);
+    }
+}
+
+.commitments-values-section,
+.commitments-priorities-section {
+    padding: clamp(86px, 10vw, 162px) 0;
+}
+
+.commitments-section-heading {
+    max-width: 1120px;
+    margin-bottom: clamp(42px, 5vw, 78px);
+}
+
+.commitments-section-heading h2 {
+    max-width: 1040px;
+    margin: 0;
+    color: var(--institutional-navy);
+    font-size: clamp(46px, 6vw, 104px);
+    line-height: 0.98;
+}
+
+.commitments-values-grid {
+    display: grid;
+    grid-template-columns: 1.15fr 0.85fr 1fr 0.92fr;
+    gap: clamp(18px, 2vw, 32px);
+}
+
+.commitments-value-card,
+.commitments-priority-card,
+.commitments-stat-card {
+    border: 1px solid var(--institutional-border);
+    background: #FFFFFF;
+    box-shadow: 0 22px 60px rgba(13, 27, 61, 0.08);
+    transition: transform 320ms ease, box-shadow 320ms ease, border-color 320ms ease;
+}
+
+.commitments-value-card {
+    min-height: clamp(270px, 24vw, 410px);
+    padding: clamp(28px, 3.2vw, 54px);
+    border-radius: 38px;
+}
+
+.commitments-value-card:nth-child(1),
+.commitments-value-card:nth-child(6) {
+    grid-row: span 2;
+    background:
+        radial-gradient(circle at 84% 12%, rgba(30, 156, 166, 0.12), transparent 30%),
+        linear-gradient(145deg, #FFFFFF, #F5F7FF);
+}
+
+.commitments-value-card:hover,
+.commitments-priority-card:hover,
+.commitments-stat-card:hover {
+    border-color: rgba(43, 125, 138, 0.32);
+    box-shadow: 0 34px 90px rgba(13, 27, 61, 0.14);
+    transform: translateY(-10px);
+}
+
+.commitments-value-card .institutional-icon {
+    width: 64px;
+    height: 64px;
+}
+
+.commitments-value-card h3 {
+    max-width: 420px;
+    margin: 0 0 14px;
+    color: var(--institutional-navy);
+    font-size: clamp(1.45rem, 2.05vw, 2.35rem);
+    line-height: 1.08;
+}
+
+.commitments-value-card p {
+    max-width: 460px;
+    margin: 0;
+    color: #607184;
+    line-height: 1.75;
+}
+
+.commitments-stats-band {
+    padding: clamp(72px, 9vw, 136px) 0;
+    background:
+        radial-gradient(circle at 15% 22%, rgba(30, 156, 166, 0.2), transparent 28%),
+        linear-gradient(135deg, #0D1B3D 0%, #08152F 100%);
+}
+
+.commitments-stats-grid {
+    display: grid;
+    grid-template-columns: 1.25fr 0.8fr 1fr 1.05fr;
+    gap: clamp(18px, 2vw, 32px);
+}
+
+.commitments-stat-card {
+    display: grid;
+    min-height: clamp(260px, 25vw, 390px);
+    place-items: center;
+    padding: clamp(28px, 4vw, 58px);
+    border-color: rgba(255, 255, 255, 0.12);
+    border-radius: 38px;
+    background: rgba(255, 255, 255, 0.06);
+    text-align: center;
+}
+
+.commitments-stat-card strong {
+    display: block;
+    color: #FFFFFF;
+    font-size: clamp(4.2rem, 8.4vw, 10rem);
+    line-height: 0.9;
+}
+
+.commitments-stat-card p {
+    max-width: 260px;
+    margin: 18px auto 0;
+    color: rgba(255, 255, 255, 0.78);
+    font-weight: 800;
+    line-height: 1.35;
+}
+
+.commitments-action-section {
+    background: #F8F4EE;
+}
+
+.commitments-action-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1.08fr) minmax(0, 0.92fr);
+    min-height: clamp(700px, 88vh, 980px);
+}
+
+.commitments-action-media {
+    overflow: hidden;
+    margin: 0;
+}
+
+.commitments-action-media img,
+.commitments-quote-banner img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transform: translate3d(0, var(--commitments-parallax, 0px), 0) scale(1.02);
+    transition: transform 800ms ease, filter 800ms ease;
+}
+
+.commitments-action-copy {
+    display: grid;
+    align-content: center;
+    padding: clamp(46px, 7vw, 118px);
+}
+
+.commitments-action-copy h2 {
+    max-width: 760px;
+    margin: 0;
+    color: var(--institutional-navy);
+    font-size: clamp(46px, 5.6vw, 98px);
+    line-height: 0.98;
+}
+
+.commitments-action-copy > p:not(.eyebrow) {
+    max-width: 660px;
+    color: #607184;
+    font-size: clamp(1.02rem, 1.2vw, 1.22rem);
+    line-height: 1.85;
+}
+
+.commitments-action-timeline {
+    display: grid;
+    gap: 18px;
+    margin-top: clamp(28px, 4vw, 54px);
+}
+
+.commitments-action-timeline article {
+    display: grid;
+    grid-template-columns: 70px minmax(0, 1fr);
+    gap: 18px;
+    align-items: start;
+    padding: 20px;
+    border: 1px solid rgba(231, 236, 245, 0.9);
+    border-radius: 26px;
+    background: rgba(255, 255, 255, 0.78);
+    box-shadow: 0 16px 40px rgba(13, 27, 61, 0.06);
+}
+
+.commitments-action-timeline h3 {
+    margin: 0 0 6px;
+    color: var(--institutional-navy);
+}
+
+.commitments-action-timeline p {
+    margin: 0;
+    color: #607184;
+    line-height: 1.65;
+}
+
+.commitments-priorities-section {
+    background:
+        radial-gradient(circle at 92% 12%, rgba(191, 216, 247, 0.48), transparent 24%),
+        #FFFFFF;
+}
+
+.commitments-priorities-grid {
+    display: grid;
+    grid-template-columns: 1.25fr 0.9fr 0.9fr;
+    gap: clamp(18px, 2vw, 32px);
+}
+
+.commitments-priority-card {
+    overflow: hidden;
+    border-radius: 38px;
+}
+
+.commitments-priority-card:first-child {
+    grid-row: span 2;
+}
+
+.commitments-priority-card figure {
+    overflow: hidden;
+    margin: 0;
+}
+
+.commitments-priority-card img {
+    display: block;
+    width: 100%;
+    aspect-ratio: 1.18 / 1;
+    object-fit: cover;
+    transition: transform 800ms ease, filter 800ms ease;
+}
+
+.commitments-priority-card:first-child img {
+    aspect-ratio: auto;
+    height: 100%;
+    min-height: 520px;
+}
+
+.commitments-priority-card div {
+    padding: clamp(24px, 3vw, 44px);
+}
+
+.commitments-priority-card h3 {
+    margin: 0 0 10px;
+    color: var(--institutional-navy);
+    font-size: clamp(1.35rem, 1.8vw, 2rem);
+}
+
+.commitments-priority-card p {
+    margin: 0;
+    color: #607184;
+    line-height: 1.7;
+}
+
+.commitments-quote-banner {
+    position: relative;
+    min-height: clamp(520px, 72vh, 820px);
+    overflow: hidden;
+    background: var(--institutional-navy);
+}
+
+.commitments-quote-banner::after {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(90deg, rgba(13, 27, 61, 0.82), rgba(13, 27, 61, 0.28));
+    content: "";
+}
+
+.commitments-quote-banner div {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    display: grid;
+    align-content: center;
+    width: min(1320px, calc(100% - clamp(32px, 8vw, 150px)));
+    margin: 0 auto;
+    pointer-events: none;
+}
+
+.commitments-quote-banner p {
+    max-width: 940px;
+    margin: 0;
+    color: #FFFFFF;
+    font-size: clamp(46px, 6vw, 104px);
+    line-height: 1;
+}
+
+.institutional-page--engagements .institutional-cta {
+    padding: clamp(78px, 10vw, 150px) 0;
+}
+
+.institutional-page--engagements .institutional-cta-inner {
+    width: min(1320px, calc(100% - clamp(32px, 8vw, 150px)));
+    min-height: 360px;
+    justify-content: center;
+    padding: clamp(34px, 6vw, 84px);
+    border: 1px solid rgba(255, 255, 255, 0.14);
+    border-radius: 46px;
+    background: rgba(255, 255, 255, 0.05);
+}
+
+@media (max-width: 1180px) {
+    .commitments-hero-inner,
+    .commitments-action-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .commitments-hero-collage {
+        min-height: 560px;
+        order: -1;
+    }
+
+    .commitments-values-grid,
+    .commitments-stats-grid,
+    .commitments-priorities-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .commitments-value-card:nth-child(n),
+    .commitments-priority-card:first-child {
+        grid-row: auto;
+    }
+
+    .commitments-action-media {
+        min-height: 520px;
+    }
+}
+
+@media (max-width: 720px) {
+    .commitments-wide,
+    .commitments-hero-inner {
+        width: min(100% - 28px, 100%);
+    }
+
+    .commitments-hero {
+        min-height: auto;
+        padding: 46px 0 64px;
+    }
+
+    .commitments-hero h1,
+    .commitments-section-heading h2,
+    .commitments-action-copy h2,
+    .commitments-quote-banner p {
+        font-size: clamp(42px, 14vw, 70px);
+    }
+
+    .commitments-hero-collage {
+        min-height: 420px;
+    }
+
+    .commitments-collage-card--large {
+        inset: 0 0 22% 0;
+    }
+
+    .commitments-collage-card--small {
+        width: 42%;
+        height: 36%;
+    }
+
+    .commitments-collage-card--wide {
+        width: 58%;
+        height: 28%;
+    }
+
+    .commitments-values-section,
+    .commitments-priorities-section,
+    .commitments-stats-band {
+        padding: 58px 0;
+    }
+
+    .commitments-values-grid,
+    .commitments-stats-grid,
+    .commitments-priorities-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .commitments-value-card,
+    .commitments-stat-card {
+        min-height: auto;
+    }
+
+    .commitments-action-grid {
+        min-height: auto;
+    }
+
+    .commitments-action-media,
+    .commitments-quote-banner {
+        min-height: 420px;
+    }
+
+    .commitments-action-copy {
+        padding: 34px 18px 54px;
+    }
+
+    .commitments-action-timeline article {
+        grid-template-columns: 1fr;
+    }
+
+    .commitments-priority-card:first-child img {
+        min-height: 320px;
+    }
+
+    .institutional-page--engagements .institutional-cta-inner {
+        width: min(100% - 28px, 100%);
+        border-radius: 30px;
+    }
+}
+
 /* Footer premium minimaliste */
 .site-footer {
     --footer-navy: #0D1B3D;

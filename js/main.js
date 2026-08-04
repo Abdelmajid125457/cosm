@@ -2185,6 +2185,37 @@ Thomas Bernard`,
         });
     }
 
+    const commitmentsParallaxItems = Array.from(document.querySelectorAll('.commitments-action-media img, .commitments-quote-banner img'));
+    if (commitmentsParallaxItems.length && !prefersReducedMotion) {
+        let commitmentsParallaxFrame = null;
+
+        const updateCommitmentsParallax = () => {
+            commitmentsParallaxFrame = null;
+            const viewportHeight = window.innerHeight || 1;
+
+            commitmentsParallaxItems.forEach((item) => {
+                const rect = item.getBoundingClientRect();
+                if (rect.bottom < 0 || rect.top > viewportHeight) {
+                    return;
+                }
+
+                const progress = ((rect.top + rect.height / 2) - viewportHeight / 2) / viewportHeight;
+                const offset = Math.max(-20, Math.min(20, progress * -38));
+                item.style.setProperty('--commitments-parallax', `${offset.toFixed(2)}px`);
+            });
+        };
+
+        const requestCommitmentsParallax = () => {
+            if (!commitmentsParallaxFrame) {
+                commitmentsParallaxFrame = window.requestAnimationFrame(updateCommitmentsParallax);
+            }
+        };
+
+        updateCommitmentsParallax();
+        window.addEventListener('scroll', requestCommitmentsParallax, { passive: true });
+        window.addEventListener('resize', requestCommitmentsParallax);
+    }
+
     const storeSearch = document.querySelector('[data-store-search]');
     const storeCards = document.querySelectorAll('[data-store-card]');
     const storePins = document.querySelectorAll('[data-store-pin]');
@@ -2277,6 +2308,12 @@ Thomas Bernard`,
             .faq-popular-card,
             .faq-search-panel,
             .faq-contact-panel,
+            .commitments-hero,
+            .commitments-value-card,
+            .commitments-stat-card,
+            .commitments-action-timeline article,
+            .commitments-priority-card,
+            .commitments-quote-banner,
             .boutique-card,
             .review-page-card
         `).forEach((item) => item.classList.add('motion-reveal'));
@@ -2286,9 +2323,9 @@ Thomas Bernard`,
         document.querySelectorAll('.front-page .product-card, .front-page .home-universe-card, .front-page .blog-showcase-card, .front-page .testimonial-grid figure').forEach((item) => item.classList.add('motion-reveal--scale'));
     }
 
-    const revealItems = document.querySelectorAll('.motion-reveal, .category-card, .product-card, .promo-card, .story-grid, .testimonial-grid figure, .blog-card, .blog-showcase-card, .blog-featured-card, .blog-sidebar-card, .shop-premium-block, .shop-promo-section, .shop-packs-section, .shop-product-card, .shop-pack-card, .about-reveal, .home-universe-card, .home-diagnostic-panel, .home-expertise-heading, .home-expertise-copy, .home-expertise-media, .home-expertise-cards article, .account-login-card, .account-benefit-card, .account-stats-band, .institutional-page section, .institutional-value-card, .ingredient-library-card, .ingredient-feature-card, .commitment-timeline-card, .institutional-stat-card, .quality-step, .quality-gallery-card, .quality-choice-card, .faq-category-card, .faq-popular-card, .faq-search-panel, .faq-contact-panel, .boutique-card, .review-page-card, .site-footer[data-animate]');
+    const revealItems = document.querySelectorAll('.motion-reveal, .category-card, .product-card, .promo-card, .story-grid, .testimonial-grid figure, .blog-card, .blog-showcase-card, .blog-featured-card, .blog-sidebar-card, .shop-premium-block, .shop-promo-section, .shop-packs-section, .shop-product-card, .shop-pack-card, .about-reveal, .home-universe-card, .home-diagnostic-panel, .home-expertise-heading, .home-expertise-copy, .home-expertise-media, .home-expertise-cards article, .account-login-card, .account-benefit-card, .account-stats-band, .institutional-page section, .institutional-value-card, .ingredient-library-card, .ingredient-feature-card, .commitment-timeline-card, .institutional-stat-card, .quality-step, .quality-gallery-card, .quality-choice-card, .faq-category-card, .faq-popular-card, .faq-search-panel, .faq-contact-panel, .commitments-hero, .commitments-value-card, .commitments-stat-card, .commitments-action-timeline article, .commitments-priority-card, .commitments-quote-banner, .boutique-card, .review-page-card, .site-footer[data-animate]');
 
-    const revealGroups = document.querySelectorAll('.front-page .products-grid, .front-page .home-univers-grid, .front-page .testimonial-grid, .front-page .blog-showcase-grid, .front-page .home-expertise-cards, .shop-products-slider, .shop-pack-grid, .visage-product-grid, .blog-showcase-grid, .institutional-card-grid, .ingredient-library-grid, .ingredient-feature-grid, .commitment-timeline, .institutional-stats-grid, .quality-timeline, .quality-gallery-grid, .quality-choice-grid, .faq-popular-grid, .faq-category-grid, .boutique-card-grid, .review-card-grid');
+    const revealGroups = document.querySelectorAll('.front-page .products-grid, .front-page .home-univers-grid, .front-page .testimonial-grid, .front-page .blog-showcase-grid, .front-page .home-expertise-cards, .shop-products-slider, .shop-pack-grid, .visage-product-grid, .blog-showcase-grid, .institutional-card-grid, .ingredient-library-grid, .ingredient-feature-grid, .commitment-timeline, .institutional-stats-grid, .quality-timeline, .quality-gallery-grid, .quality-choice-grid, .faq-popular-grid, .faq-category-grid, .commitments-values-grid, .commitments-stats-grid, .commitments-action-timeline, .commitments-priorities-grid, .boutique-card-grid, .review-card-grid');
     revealGroups.forEach((group) => {
         Array.from(group.children).forEach((item, index) => {
             item.style.setProperty('--reveal-delay', `${Math.min(index * 70, 420)}ms`);

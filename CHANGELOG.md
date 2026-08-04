@@ -2,6 +2,33 @@
 
 Toutes les interventions sur le thème doivent être sauvegardées et documentées ici.
 
+## 2026-08-04 09:35 - Refonte immersive de la page Nos engagements
+
+Résumé :
+- Sauvegarde locale de l'état non validé précédent : `2fb30b6`.
+- Restauration de la base propre avant refonte ciblée : `fd24bc5`.
+- Refonte complète de la page Nos engagements uniquement.
+- Création d'un hero presque plein écran avec grand titre, boutons et collage produit premium.
+- Transformation des valeurs en grandes cartes asymétriques pleine largeur.
+- Création d'une section chiffres sur fond bleu marine avec compteurs animés.
+- Création d'une section Notre engagement en action avec grande image immersive et timeline.
+- Ajout d'une section Nos priorités avec cartes illustrées.
+- Ajout d'une bannière pleine largeur avec citation et effet visuel premium.
+- Ajout d'un parallaxe léger ciblé sur les grands visuels de la page.
+- Ajout des chaînes multilingues FR/EN/ES/AR pour les nouveaux contenus.
+
+Fichiers modifiés :
+- `template-parts/page-institutionnel.php`
+- `style.css`
+- `js/main.js`
+- `inc/multilingual.php`
+- `CHANGELOG.md`
+
+Corrections de bugs :
+- Suppression du rendu trop étroit type "feuille A4" sur la page Nos engagements.
+- Agrandissement des images et suppression de l'effet de petits blocs centrés.
+- Limitation des styles et scripts ajoutés à la page Nos engagements afin de ne pas impacter le reste du site.
+
 ## 2026-08-04 00:30 - Refonte premium des pages institutionnelles
 
 Résumé :

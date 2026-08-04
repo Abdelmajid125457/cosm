@@ -80,18 +80,49 @@ $page = $pages[ $slug ];
 ?>
 
 <div class="institutional-page institutional-page--<?php echo esc_attr( $slug ); ?>">
-    <section class="institutional-hero">
-        <div class="container institutional-hero-grid">
-            <div class="institutional-hero-copy motion-reveal motion-reveal--left">
-                <p class="eyebrow"><?php echo esc_html( $page['label'] ); ?></p>
-                <h1><?php echo esc_html( $page['title'] ); ?></h1>
-                <p><?php echo esc_html( $page['subtitle'] ); ?></p>
+    <?php if ( 'engagements' === $slug ) : ?>
+        <section class="commitments-hero">
+            <div class="commitments-hero-inner">
+                <div class="commitments-hero-copy motion-reveal motion-reveal--left">
+                    <p class="eyebrow"><?php esc_html_e( 'Nos engagements', 'theme-perso' ); ?></p>
+                    <h1><?php esc_html_e( 'Une beauté plus responsable.', 'theme-perso' ); ?></h1>
+                    <p><?php esc_html_e( 'Cosm’Éthique imagine des soins premium qui respectent la peau, la nature et les gestes du quotidien. Chaque formule, chaque texture et chaque packaging répond à une exigence simple : faire mieux, avec élégance.', 'theme-perso' ); ?></p>
+                    <div class="button-group">
+                        <a class="button button-primary" href="#nos-valeurs"><?php esc_html_e( 'Découvrir nos engagements', 'theme-perso' ); ?></a>
+                        <a class="button button-secondary" href="<?php echo esc_url( function_exists( 'wc_get_page_permalink' ) ? wc_get_page_permalink( 'shop' ) : home_url( '/boutique/' ) ); ?>"><?php esc_html_e( 'Découvrir nos produits', 'theme-perso' ); ?></a>
+                    </div>
+                </div>
+                <div class="commitments-hero-collage motion-reveal motion-reveal--right" aria-label="<?php esc_attr_e( 'Produits Cosm’Éthique engagés', 'theme-perso' ); ?>">
+                    <figure class="commitments-collage-card commitments-collage-card--large">
+                        <img src="<?php echo esc_url( $asset( 'about', 'reference-catalog-products.png' ) ); ?>" alt="<?php esc_attr_e( 'Sélection de produits Cosm’Éthique', 'theme-perso' ); ?>" loading="eager">
+                    </figure>
+                    <figure class="commitments-collage-card commitments-collage-card--small">
+                        <img src="<?php echo esc_url( $asset( 'products', 'photo-baume-corps-karite-amande.png' ) ); ?>" alt="<?php esc_attr_e( 'Baume corps Cosm’Éthique', 'theme-perso' ); ?>" loading="eager">
+                    </figure>
+                    <figure class="commitments-collage-card commitments-collage-card--wide">
+                        <img src="<?php echo esc_url( $asset( 'products', 'photo-pack-routine-premium-reel.png' ) ); ?>" alt="<?php esc_attr_e( 'Routine premium Cosm’Éthique', 'theme-perso' ); ?>" loading="eager">
+                    </figure>
+                    <div class="commitments-floating-note">
+                        <strong>98%</strong>
+                        <span><?php esc_html_e( 'd’ingrédients naturels', 'theme-perso' ); ?></span>
+                    </div>
+                </div>
             </div>
-            <figure class="institutional-hero-media motion-reveal motion-reveal--right">
-                <img src="<?php echo esc_url( $page['image'] ); ?>" alt="<?php echo esc_attr( $page['title'] ); ?>" loading="eager">
-            </figure>
-        </div>
-    </section>
+        </section>
+    <?php else : ?>
+        <section class="institutional-hero">
+            <div class="container institutional-hero-grid">
+                <div class="institutional-hero-copy motion-reveal motion-reveal--left">
+                    <p class="eyebrow"><?php echo esc_html( $page['label'] ); ?></p>
+                    <h1><?php echo esc_html( $page['title'] ); ?></h1>
+                    <p><?php echo esc_html( $page['subtitle'] ); ?></p>
+                </div>
+                <figure class="institutional-hero-media motion-reveal motion-reveal--right">
+                    <img src="<?php echo esc_url( $page['image'] ); ?>" alt="<?php echo esc_attr( $page['title'] ); ?>" loading="eager">
+                </figure>
+            </div>
+        </section>
+    <?php endif; ?>
 
     <?php if ( 'engagements' === $slug ) : ?>
         <?php
@@ -111,22 +142,29 @@ $page = $pages[ $slug ];
             array( 'icon' => 'factory', 'title' => __( 'Fabriquer', 'theme-perso' ), 'text' => __( 'Les soins suivent un processus responsable et contrôlé.', 'theme-perso' ) ),
             array( 'icon' => 'package', 'title' => __( 'Conditionner', 'theme-perso' ), 'text' => __( 'Nous privilégions des packagings élégants, recyclables et cohérents.', 'theme-perso' ) ),
         );
+        $priorities = array(
+            array( 'icon' => 'leaf', 'title' => __( 'Protection de la planète', 'theme-perso' ), 'text' => __( 'Réduire le superflu, choisir des matières cohérentes et encourager des gestes plus conscients.', 'theme-perso' ), 'image' => $asset( 'about', 'about-eco-commitment.png' ) ),
+            array( 'icon' => 'skin', 'title' => __( 'Respect de la peau', 'theme-perso' ), 'text' => __( 'Des formules pensées pour le confort, la douceur et une routine lisible.', 'theme-perso' ), 'image' => $asset( 'about', 'about-story-lifestyle.png' ) ),
+            array( 'icon' => 'flask', 'title' => __( 'Innovation', 'theme-perso' ), 'text' => __( 'Associer actifs naturels, textures modernes et expérience premium.', 'theme-perso' ), 'image' => $asset( 'products', 'category-soins-visage-hero.png' ) ),
+            array( 'icon' => 'sparkle', 'title' => __( 'Qualité', 'theme-perso' ), 'text' => __( 'Contrôler chaque étape pour proposer des soins réguliers, sûrs et agréables.', 'theme-perso' ), 'image' => $asset( 'products', 'photo-pack-routine-visage-reel.png' ) ),
+            array( 'icon' => 'clarity', 'title' => __( 'Transparence', 'theme-perso' ), 'text' => __( 'Expliquer clairement les bénéfices, les usages et les choix de formulation.', 'theme-perso' ), 'image' => $asset( 'products', 'photo-huile-essentielle-lavande-fine.png' ) ),
+        );
         $commitment_stats = array(
-            array( 'value' => '98', 'suffix' => '%', 'label' => __( 'd’ingrédients naturels', 'theme-perso' ) ),
-            array( 'value' => '0', 'suffix' => '', 'label' => __( 'test animal', 'theme-perso' ) ),
-            array( 'value' => '100', 'suffix' => '%', 'label' => __( 'emballages recyclables', 'theme-perso' ) ),
-            array( 'value' => '4800', 'suffix' => '+', 'label' => __( 'clients satisfaits', 'theme-perso' ) ),
+            array( 'value' => '98', 'suffix' => '%', 'label' => __( 'Ingrédients d’origine naturelle', 'theme-perso' ) ),
+            array( 'value' => '0', 'suffix' => '', 'label' => __( 'Tests sur les animaux', 'theme-perso' ) ),
+            array( 'value' => '100', 'suffix' => '%', 'label' => __( 'Emballages recyclables', 'theme-perso' ) ),
+            array( 'value' => '4800', 'suffix' => '+', 'label' => __( 'Clients satisfaits', 'theme-perso' ) ),
         );
         ?>
-        <section class="institutional-section">
-            <div class="container">
-                <div class="institutional-section-heading motion-reveal">
-                    <p class="eyebrow"><?php esc_html_e( 'Nos piliers', 'theme-perso' ); ?></p>
-                    <h2><?php esc_html_e( 'Une maison de soin exigeante et consciente.', 'theme-perso' ); ?></h2>
+        <section id="nos-valeurs" class="commitments-values-section">
+            <div class="commitments-wide">
+                <div class="commitments-section-heading motion-reveal">
+                    <p class="eyebrow"><?php esc_html_e( 'Nos valeurs', 'theme-perso' ); ?></p>
+                    <h2><?php esc_html_e( 'Des engagements visibles dans chaque détail.', 'theme-perso' ); ?></h2>
                 </div>
-                <div class="institutional-card-grid institutional-card-grid--four">
+                <div class="commitments-values-grid">
                     <?php foreach ( $commitments as $item ) : ?>
-                        <article class="institutional-value-card motion-reveal motion-reveal--scale">
+                        <article class="commitments-value-card motion-reveal motion-reveal--scale">
                             <span class="institutional-icon"><?php echo $icon( $item['icon'] ); ?></span>
                             <h3><?php echo esc_html( $item['title'] ); ?></h3>
                             <p><?php echo esc_html( $item['text'] ); ?></p>
@@ -135,44 +173,67 @@ $page = $pages[ $slug ];
                 </div>
             </div>
         </section>
-        <section class="institutional-section institutional-section--soft">
-            <div class="container">
-                <div class="institutional-section-heading motion-reveal">
-                    <p class="eyebrow"><?php esc_html_e( 'Traçabilité', 'theme-perso' ); ?></p>
-                    <h2><?php esc_html_e( 'Nos engagements se construisent étape par étape.', 'theme-perso' ); ?></h2>
+
+        <section class="commitments-stats-band" data-counter-scope>
+            <div class="commitments-wide commitments-stats-grid">
+                <?php foreach ( $commitment_stats as $stat ) : ?>
+                    <article class="commitments-stat-card motion-reveal motion-reveal--scale">
+                        <strong><span data-counter-target="<?php echo esc_attr( $stat['value'] ); ?>">0</span><?php echo esc_html( $stat['suffix'] ); ?></strong>
+                        <p><?php echo esc_html( $stat['label'] ); ?></p>
+                    </article>
+                <?php endforeach; ?>
+            </div>
+        </section>
+
+        <section class="commitments-action-section">
+            <div class="commitments-action-grid">
+                <figure class="commitments-action-media motion-reveal motion-reveal--left">
+                    <img src="<?php echo esc_url( $asset( 'about', 'about-eco-commitment.png' ) ); ?>" alt="<?php esc_attr_e( 'Engagement écologique Cosm’Éthique', 'theme-perso' ); ?>" loading="lazy">
+                </figure>
+                <div class="commitments-action-copy motion-reveal motion-reveal--right">
+                    <p class="eyebrow"><?php esc_html_e( 'Notre engagement en action', 'theme-perso' ); ?></p>
+                    <h2><?php esc_html_e( 'Faire mieux, à chaque étape.', 'theme-perso' ); ?></h2>
+                    <p><?php esc_html_e( 'Cosm’Éthique associe plaisir d’utilisation, exigence de formulation et responsabilité. Chaque décision vise à créer une beauté plus lisible, plus douce et plus durable.', 'theme-perso' ); ?></p>
+                    <div class="commitments-action-timeline">
+                        <?php foreach ( $commitment_timeline as $step ) : ?>
+                            <article>
+                                <span class="institutional-icon"><?php echo $icon( $step['icon'] ); ?></span>
+                                <div>
+                                    <h3><?php echo esc_html( $step['title'] ); ?></h3>
+                                    <p><?php echo esc_html( $step['text'] ); ?></p>
+                                </div>
+                            </article>
+                        <?php endforeach; ?>
+                    </div>
                 </div>
-                <div class="commitment-timeline">
-                    <?php foreach ( $commitment_timeline as $step ) : ?>
-                        <article class="commitment-timeline-card motion-reveal">
-                            <span class="institutional-icon"><?php echo $icon( $step['icon'] ); ?></span>
-                            <h3><?php echo esc_html( $step['title'] ); ?></h3>
-                            <p><?php echo esc_html( $step['text'] ); ?></p>
-                        </article>
-                    <?php endforeach; ?>
+            </div>
+        </section>
+
+        <section class="commitments-priorities-section">
+            <div class="commitments-wide">
+                <div class="commitments-section-heading motion-reveal">
+                    <p class="eyebrow"><?php esc_html_e( 'Nos priorités', 'theme-perso' ); ?></p>
+                    <h2><?php esc_html_e( 'Une exigence responsable, pensée pour durer.', 'theme-perso' ); ?></h2>
                 </div>
-                <div class="institutional-stats-grid" data-counter-scope>
-                    <?php foreach ( $commitment_stats as $stat ) : ?>
-                        <article class="institutional-stat-card motion-reveal motion-reveal--scale">
-                            <strong><span data-counter-target="<?php echo esc_attr( $stat['value'] ); ?>">0</span><?php echo esc_html( $stat['suffix'] ); ?></strong>
-                            <p><?php echo esc_html( $stat['label'] ); ?></p>
+                <div class="commitments-priorities-grid">
+                    <?php foreach ( $priorities as $priority ) : ?>
+                        <article class="commitments-priority-card motion-reveal motion-reveal--scale">
+                            <figure><img src="<?php echo esc_url( $priority['image'] ); ?>" alt="<?php echo esc_attr( $priority['title'] ); ?>" loading="lazy"></figure>
+                            <div>
+                                <span class="institutional-icon"><?php echo $icon( $priority['icon'] ); ?></span>
+                                <h3><?php echo esc_html( $priority['title'] ); ?></h3>
+                                <p><?php echo esc_html( $priority['text'] ); ?></p>
+                            </div>
                         </article>
                     <?php endforeach; ?>
                 </div>
             </div>
         </section>
-        <section class="institutional-split">
-            <div class="container institutional-split-grid">
-                <figure class="motion-reveal motion-reveal--left"><img src="<?php echo esc_url( $asset( 'about', 'about-eco-commitment.png' ) ); ?>" alt="<?php esc_attr_e( 'Engagement écologique Cosm’Éthique', 'theme-perso' ); ?>" loading="lazy"></figure>
-                <div class="institutional-split-copy motion-reveal motion-reveal--right">
-                    <p class="eyebrow"><?php esc_html_e( 'Notre promesse', 'theme-perso' ); ?></p>
-                    <h2><?php esc_html_e( 'Faire mieux, avec moins de compromis.', 'theme-perso' ); ?></h2>
-                    <p><?php esc_html_e( 'Cosm’Éthique associe plaisir d’utilisation, exigence de formulation et responsabilité. Chaque décision vise à créer une beauté plus lisible, plus douce et plus durable.', 'theme-perso' ); ?></p>
-                    <ul class="institutional-check-list">
-                        <li><?php echo $icon( 'check' ); ?><?php esc_html_e( 'Actifs d’origine naturelle sélectionnés avec soin', 'theme-perso' ); ?></li>
-                        <li><?php echo $icon( 'check' ); ?><?php esc_html_e( 'Formules sûres, efficaces et sensorielles', 'theme-perso' ); ?></li>
-                        <li><?php echo $icon( 'check' ); ?><?php esc_html_e( 'Expérience premium sans surconsommation inutile', 'theme-perso' ); ?></li>
-                    </ul>
-                </div>
+
+        <section class="commitments-quote-banner motion-reveal">
+            <img src="<?php echo esc_url( $asset( 'products', 'category-packs-hero-reel.png' ) ); ?>" alt="<?php esc_attr_e( 'Produits Cosm’Éthique sur fond premium', 'theme-perso' ); ?>" loading="lazy">
+            <div>
+                <p><?php esc_html_e( 'La beauté responsable commence par des choix exigeants.', 'theme-perso' ); ?></p>
             </div>
         </section>
     <?php endif; ?>
