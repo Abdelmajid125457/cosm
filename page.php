@@ -22,7 +22,7 @@ get_header();
         $is_compact_hero   = in_array( $slug, array( 'contact', 'devenir-franchise' ), true );
         $hero_classes      = 'page-hero' . ( $is_compact_hero ? ' page-hero--compact' : '' );
         if ( $is_institutional_page ) {
-            $content_classes = 'page-content-wrap page-content-wrap--institutional';
+            $content_classes = 'page-content-wrap page-content-wrap--institutional page-content-wrap--' . sanitize_html_class( $slug );
         } elseif ( 'diagnostic' === $slug ) {
             $content_classes = 'page-content-wrap page-content-wrap--diagnostic';
         } elseif ( 'mon-compte' === $slug ) {

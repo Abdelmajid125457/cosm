@@ -113,7 +113,7 @@
         <div class="footer-main footer-main--minimal">
             <div class="footer-brand footer-brand-rich">
                 <a class="footer-logo" href="<?php echo esc_url( home_url( '/' ) ); ?>">COSM’ETHIQUE</a>
-                <p><?php esc_html_e( 'Soins naturels premium, formulés avec exigence pour une beauté plus consciente.', 'theme-perso' ); ?></p>
+                <p><?php esc_html_e( 'Soins naturels premium pour une beauté plus consciente.', 'theme-perso' ); ?></p>
                 <div class="social-links" aria-label="<?php esc_attr_e( 'Réseaux sociaux', 'theme-perso' ); ?>">
                     <?php foreach ( theme_perso_social_links() as $network => $social ) : ?>
                         <a class="social-link social-link--<?php echo esc_attr( $network ); ?>" href="<?php echo esc_url( $social['url'] ); ?>" target="_blank" rel="noopener noreferrer" aria-label="<?php echo esc_attr( $social['tooltip'] ); ?>" title="<?php echo esc_attr( $social['tooltip'] ); ?>" data-tooltip="<?php echo esc_attr( $social['tooltip'] ); ?>">
@@ -182,9 +182,6 @@
             </div>
         </div>
 
-        <div class="payment-loyalty-strip" aria-label="<?php esc_attr_e( 'Programme fidélité', 'theme-perso' ); ?>">
-            <strong><?php esc_html_e( 'Programme fidélité : 1 € = 1 point beauté', 'theme-perso' ); ?></strong>
-        </div>
     </footer>
 
     <div class="cookie-banner" role="dialog" aria-live="polite" aria-label="<?php esc_attr_e( 'Gestion des cookies', 'theme-perso' ); ?>" data-cookie-banner hidden>

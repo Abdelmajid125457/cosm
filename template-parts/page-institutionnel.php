@@ -77,48 +77,130 @@ if ( ! isset( $pages[ $slug ] ) ) {
 }
 
 $page = $pages[ $slug ];
+$institutional_shop_heroes = array(
+    'engagements' => array(
+        'aria'      => __( 'Présentation des engagements Cosm’Éthique', 'theme-perso' ),
+        'label'     => __( 'COSM’ÉTHIQUE', 'theme-perso' ),
+        'title'     => __( 'Nos engagements', 'theme-perso' ),
+        'text'      => __( 'Une beauté plus responsable, pensée pour respecter la peau, les gestes du quotidien et les choix qui comptent vraiment.', 'theme-perso' ),
+        'primary'   => array( 'label' => __( 'Découvrir nos engagements', 'theme-perso' ), 'url' => '#nos-valeurs' ),
+        'secondary' => array( 'label' => __( 'Découvrir nos produits', 'theme-perso' ), 'url' => function_exists( 'wc_get_page_permalink' ) ? wc_get_page_permalink( 'shop' ) : home_url( '/boutique/' ) ),
+        'benefits'  => array( __( '98 % d’ingrédients naturels', 'theme-perso' ), __( 'Cruelty Free', 'theme-perso' ), __( 'Packaging responsable', 'theme-perso' ), __( 'Transparence', 'theme-perso' ) ),
+        'image'     => $asset( 'about', 'reference-catalog-products.png' ),
+        'alt'       => __( 'Produits Cosm’Éthique engagés', 'theme-perso' ),
+        'caption'   => __( 'ENGAGEMENTS', 'theme-perso' ),
+        'caption_h' => __( 'Une exigence visible jusque dans les détails.', 'theme-perso' ),
+        'float_one' => array( 'value' => '98%', 'text' => __( 'naturel', 'theme-perso' ) ),
+        'float_two' => array( 'value' => __( 'France', 'theme-perso' ), 'text' => __( 'fabrication suivie', 'theme-perso' ) ),
+    ),
+    'ingredients' => array(
+        'aria'      => __( 'Présentation des ingrédients Cosm’Éthique', 'theme-perso' ),
+        'label'     => __( 'COSM’ÉTHIQUE', 'theme-perso' ),
+        'title'     => __( 'Nos ingrédients', 'theme-perso' ),
+        'text'      => __( 'Une bibliothèque d’actifs naturels sélectionnés pour leur sensorialité, leur efficacité et leur cohérence avec chaque routine.', 'theme-perso' ),
+        'primary'   => array( 'label' => __( 'Explorer les actifs', 'theme-perso' ), 'url' => '#bibliotheque-actifs' ),
+        'secondary' => array( 'label' => __( 'Voir les produits', 'theme-perso' ), 'url' => function_exists( 'wc_get_page_permalink' ) ? wc_get_page_permalink( 'shop' ) : home_url( '/boutique/' ) ),
+        'benefits'  => array( __( 'Rose', 'theme-perso' ), __( 'Karité', 'theme-perso' ), __( 'Camomille', 'theme-perso' ), __( 'Lavande', 'theme-perso' ) ),
+        'image'     => $asset( 'products', 'category-soins-visage-hero.png' ),
+        'alt'       => __( 'Ingrédients naturels et soins Cosm’Éthique', 'theme-perso' ),
+        'caption'   => __( 'ACTIFS NATURELS', 'theme-perso' ),
+        'caption_h' => __( 'Des ingrédients lisibles, beaux et utiles.', 'theme-perso' ),
+        'float_one' => array( 'value' => '12', 'text' => __( 'actifs clés', 'theme-perso' ) ),
+        'float_two' => array( 'value' => '3', 'text' => __( 'univers de soin', 'theme-perso' ) ),
+    ),
+    'qualite' => array(
+        'aria'      => __( 'Présentation fabrication et qualité Cosm’Éthique', 'theme-perso' ),
+        'label'     => __( 'COSM’ÉTHIQUE', 'theme-perso' ),
+        'title'     => __( 'Fabrication & Qualité', 'theme-perso' ),
+        'text'      => __( 'Un processus clair, rigoureux et premium, de la sélection des actifs au conditionnement final de chaque soin.', 'theme-perso' ),
+        'primary'   => array( 'label' => __( 'Voir le processus', 'theme-perso' ), 'url' => '#processus-qualite' ),
+        'secondary' => array( 'label' => __( 'Nos certifications', 'theme-perso' ), 'url' => '#certifications' ),
+        'benefits'  => array( __( 'Contrôle qualité', 'theme-perso' ), __( 'Formulation précise', 'theme-perso' ), __( 'Traçabilité', 'theme-perso' ), __( 'Conditionnement soigné', 'theme-perso' ) ),
+        'image'     => $asset( 'about', 'about-eco-commitment.png' ),
+        'alt'       => __( 'Fabrication responsable Cosm’Éthique', 'theme-perso' ),
+        'caption'   => __( 'ATELIER QUALITÉ', 'theme-perso' ),
+        'caption_h' => __( 'Chaque soin suit une méthode exigeante.', 'theme-perso' ),
+        'float_one' => array( 'value' => '6', 'text' => __( 'étapes suivies', 'theme-perso' ) ),
+        'float_two' => array( 'value' => '100%', 'text' => __( 'contrôlé', 'theme-perso' ) ),
+    ),
+);
 ?>
 
 <div class="institutional-page institutional-page--<?php echo esc_attr( $slug ); ?>">
-    <?php if ( 'engagements' === $slug ) : ?>
-        <section class="commitments-hero">
-            <div class="commitments-hero-inner">
-                <div class="commitments-hero-copy motion-reveal motion-reveal--left">
-                    <p class="eyebrow"><?php esc_html_e( 'Nos engagements', 'theme-perso' ); ?></p>
-                    <h1><?php esc_html_e( 'Une beauté plus responsable.', 'theme-perso' ); ?></h1>
-                    <p><?php esc_html_e( 'Cosm’Éthique imagine des soins premium qui respectent la peau, la nature et les gestes du quotidien. Chaque formule, chaque texture et chaque packaging répond à une exigence simple : faire mieux, avec élégance.', 'theme-perso' ); ?></p>
-                    <div class="button-group">
-                        <a class="button button-primary" href="#nos-valeurs"><?php esc_html_e( 'Découvrir nos engagements', 'theme-perso' ); ?></a>
-                        <a class="button button-secondary" href="<?php echo esc_url( function_exists( 'wc_get_page_permalink' ) ? wc_get_page_permalink( 'shop' ) : home_url( '/boutique/' ) ); ?>"><?php esc_html_e( 'Découvrir nos produits', 'theme-perso' ); ?></a>
-                    </div>
+    <?php if ( isset( $institutional_shop_heroes[ $slug ] ) ) : ?>
+        <?php $hero = $institutional_shop_heroes[ $slug ]; ?>
+        <section class="institutional-shop-hero institutional-shop-hero--<?php echo esc_attr( $slug ); ?>" aria-label="<?php echo esc_attr( $hero['aria'] ); ?>">
+            <div class="institutional-shop-hero-content motion-reveal motion-reveal--left">
+                <p class="shop-label"><?php echo esc_html( $hero['label'] ); ?></p>
+                <h1><?php echo esc_html( $hero['title'] ); ?></h1>
+                <p><?php echo esc_html( $hero['text'] ); ?></p>
+                <div class="shop-hero-actions">
+                    <a class="button button-primary" href="<?php echo esc_url( $hero['primary']['url'] ); ?>"><?php echo esc_html( $hero['primary']['label'] ); ?></a>
+                    <a class="button shop-button-secondary" href="<?php echo esc_url( $hero['secondary']['url'] ); ?>"><?php echo esc_html( $hero['secondary']['label'] ); ?></a>
                 </div>
-                <div class="commitments-hero-collage motion-reveal motion-reveal--right" aria-label="<?php esc_attr_e( 'Produits Cosm’Éthique engagés', 'theme-perso' ); ?>">
-                    <figure class="commitments-collage-card commitments-collage-card--large">
-                        <img src="<?php echo esc_url( $asset( 'about', 'reference-catalog-products.png' ) ); ?>" alt="<?php esc_attr_e( 'Sélection de produits Cosm’Éthique', 'theme-perso' ); ?>" loading="eager">
-                    </figure>
-                    <figure class="commitments-collage-card commitments-collage-card--small">
-                        <img src="<?php echo esc_url( $asset( 'products', 'photo-baume-corps-karite-amande.png' ) ); ?>" alt="<?php esc_attr_e( 'Baume corps Cosm’Éthique', 'theme-perso' ); ?>" loading="eager">
-                    </figure>
-                    <figure class="commitments-collage-card commitments-collage-card--wide">
-                        <img src="<?php echo esc_url( $asset( 'products', 'photo-pack-routine-premium-reel.png' ) ); ?>" alt="<?php esc_attr_e( 'Routine premium Cosm’Éthique', 'theme-perso' ); ?>" loading="eager">
-                    </figure>
-                    <div class="commitments-floating-note">
-                        <strong>98%</strong>
-                        <span><?php esc_html_e( 'd’ingrédients naturels', 'theme-perso' ); ?></span>
-                    </div>
+                <div class="shop-hero-benefits" aria-label="<?php esc_attr_e( 'Points forts Cosm’Éthique', 'theme-perso' ); ?>">
+                    <?php foreach ( $hero['benefits'] as $benefit ) : ?>
+                        <span>
+                            <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M5 12.5l4.2 4.2L19 7"></path></svg>
+                            <?php echo esc_html( $benefit ); ?>
+                        </span>
+                    <?php endforeach; ?>
                 </div>
             </div>
+            <figure class="institutional-shop-visual-card motion-reveal motion-reveal--right">
+                <img src="<?php echo esc_url( $hero['image'] ); ?>" alt="<?php echo esc_attr( $hero['alt'] ); ?>" loading="eager">
+                <figcaption>
+                    <span><?php echo esc_html( $hero['caption'] ); ?></span>
+                    <strong><?php echo esc_html( $hero['caption_h'] ); ?></strong>
+                </figcaption>
+                <div class="shop-floating-card institutional-floating-card institutional-floating-card--one">
+                    <span class="faq-floating-icon" aria-hidden="true"><?php echo $icon( 'sparkle' ); ?></span>
+                    <strong><?php echo esc_html( $hero['float_one']['value'] ); ?></strong>
+                    <em><?php echo esc_html( $hero['float_one']['text'] ); ?></em>
+                </div>
+                <div class="shop-floating-card institutional-floating-card institutional-floating-card--two">
+                    <span class="faq-floating-icon" aria-hidden="true"><?php echo $icon( 'check' ); ?></span>
+                    <strong><?php echo esc_html( $hero['float_two']['value'] ); ?></strong>
+                    <em><?php echo esc_html( $hero['float_two']['text'] ); ?></em>
+                </div>
+            </figure>
         </section>
     <?php elseif ( 'faq' === $slug ) : ?>
-        <section class="faq-immersive-hero">
-            <img src="<?php echo esc_url( $asset( 'about', 'about-story-lifestyle.png' ) ); ?>" alt="<?php esc_attr_e( 'Conseils et accompagnement Cosm’Éthique', 'theme-perso' ); ?>" loading="eager">
-            <div class="faq-immersive-hero-overlay"></div>
-            <div class="faq-immersive-hero-content motion-reveal motion-reveal--left">
-                <p class="eyebrow"><?php esc_html_e( 'Centre d’aide', 'theme-perso' ); ?></p>
+        <section class="faq-shop-hero" aria-label="<?php esc_attr_e( 'Questions fréquentes Cosm’Éthique', 'theme-perso' ); ?>">
+            <div class="faq-shop-hero-content motion-reveal motion-reveal--left">
+                <p class="shop-label"><?php esc_html_e( 'COSM’ÉTHIQUE', 'theme-perso' ); ?></p>
                 <h1><?php esc_html_e( 'Questions fréquentes', 'theme-perso' ); ?></h1>
                 <p><?php esc_html_e( 'Toutes les réponses pour profiter pleinement de votre expérience Cosm’Éthique.', 'theme-perso' ); ?></p>
-                <a class="button button-primary" href="<?php echo esc_url( home_url( '/contact/' ) ); ?>"><?php esc_html_e( 'Nous contacter', 'theme-perso' ); ?></a>
+                <div class="shop-hero-actions">
+                    <a class="button button-primary" href="<?php echo esc_url( home_url( '/contact/' ) ); ?>"><?php esc_html_e( 'Nous contacter', 'theme-perso' ); ?></a>
+                    <a class="button shop-button-secondary" href="<?php echo esc_url( home_url( '/diagnostic/' ) ); ?>"><?php esc_html_e( 'Diagnostic', 'theme-perso' ); ?></a>
+                </div>
+                <div class="shop-hero-benefits" aria-label="<?php esc_attr_e( 'Aide Cosm’Éthique', 'theme-perso' ); ?>">
+                    <?php foreach ( array( __( 'Réponses rapides', 'theme-perso' ), __( 'Commande', 'theme-perso' ), __( 'Paiement sécurisé', 'theme-perso' ), __( 'Conseils produits', 'theme-perso' ) ) as $benefit ) : ?>
+                        <span>
+                            <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M5 12.5l4.2 4.2L19 7"></path></svg>
+                            <?php echo esc_html( $benefit ); ?>
+                        </span>
+                    <?php endforeach; ?>
+                </div>
             </div>
+            <figure class="faq-shop-visual-card motion-reveal motion-reveal--right">
+                <img src="<?php echo esc_url( $asset( 'about', 'about-story-lifestyle.png' ) ); ?>" alt="<?php esc_attr_e( 'Conseils et accompagnement Cosm’Éthique', 'theme-perso' ); ?>" loading="eager">
+                <figcaption>
+                    <span><?php esc_html_e( 'CENTRE D’AIDE', 'theme-perso' ); ?></span>
+                    <strong><?php esc_html_e( 'Une réponse claire à chaque étape.', 'theme-perso' ); ?></strong>
+                </figcaption>
+                <div class="shop-floating-card faq-floating-contact">
+                    <span aria-hidden="true">★★★★★</span>
+                    <strong>4.9/5</strong>
+                    <em><?php esc_html_e( 'clientes accompagnées', 'theme-perso' ); ?></em>
+                </div>
+                <div class="shop-floating-card faq-floating-answer">
+                    <span class="faq-floating-icon" aria-hidden="true"><?php echo $icon( 'question' ); ?></span>
+                    <strong><?php esc_html_e( 'Réponse rapide', 'theme-perso' ); ?></strong>
+                    <em><?php esc_html_e( 'FAQ & contact', 'theme-perso' ); ?></em>
+                </div>
+            </figure>
         </section>
     <?php else : ?>
         <section class="institutional-hero">
@@ -270,7 +352,7 @@ $page = $pages[ $slug ];
             array( 'icon' => 'leaf', 'title' => __( 'Équilibre', 'theme-perso' ), 'text' => __( 'Sauge, argile verte et jojoba pour des routines plus légères et ciblées.', 'theme-perso' ) ),
         );
         ?>
-        <section class="institutional-section">
+        <section id="bibliotheque-actifs" class="institutional-section institutional-section--ingredients-library">
             <div class="container">
                 <div class="institutional-toolbar motion-reveal">
                     <div>
@@ -376,7 +458,7 @@ $page = $pages[ $slug ];
                 </div>
             </div>
         </section>
-        <section class="institutional-section">
+        <section id="processus-qualite" class="institutional-section institutional-section--quality-process">
             <div class="container">
                 <div class="institutional-section-heading motion-reveal">
                     <p class="eyebrow"><?php esc_html_e( 'Processus', 'theme-perso' ); ?></p>
@@ -394,7 +476,7 @@ $page = $pages[ $slug ];
                 </div>
             </div>
         </section>
-        <section class="institutional-section institutional-section--soft">
+        <section id="certifications" class="institutional-section institutional-section--soft institutional-section--quality-certifications">
             <div class="container">
                 <div class="institutional-section-heading motion-reveal">
                     <p class="eyebrow"><?php esc_html_e( 'Nos certifications', 'theme-perso' ); ?></p>
@@ -583,44 +665,23 @@ $page = $pages[ $slug ];
             array( 'title' => __( 'Paiement sécurisé', 'theme-perso' ), 'text' => __( 'Vos données sont protégées et chiffrées grâce au protocole SSL.', 'theme-perso' ) ),
             array( 'title' => __( 'Peaux sensibles', 'theme-perso' ), 'text' => __( 'Les fiches produits précisent les conseils adaptés aux peaux délicates.', 'theme-perso' ) ),
         );
-        $faq_suggestions = array(
-            __( 'livraison', 'theme-perso' ),
-            __( 'paiement', 'theme-perso' ),
-            __( 'diagnostic', 'theme-perso' ),
-            __( 'peau sensible', 'theme-perso' ),
-            __( 'retour', 'theme-perso' ),
-        );
         ?>
-        <section class="faq-search-immersive">
-            <div class="faq-full">
-                <div class="faq-search-copy motion-reveal">
-                    <p class="eyebrow"><?php esc_html_e( 'Rechercher dans l’aide', 'theme-perso' ); ?></p>
-                    <h2><?php esc_html_e( 'Une réponse claire, rapide et pensée pour vous.', 'theme-perso' ); ?></h2>
-                </div>
-                <label class="faq-search-giant motion-reveal motion-reveal--scale">
-                    <span class="faq-search-icon"><?php echo $icon( 'question' ); ?></span>
-                    <span class="screen-reader-text"><?php esc_html_e( 'Rechercher une question', 'theme-perso' ); ?></span>
-                    <input type="search" data-faq-search placeholder="<?php esc_attr_e( 'Rechercher une question...', 'theme-perso' ); ?>">
-                </label>
-                <div class="faq-suggestion-list motion-reveal" aria-label="<?php esc_attr_e( 'Suggestions rapides', 'theme-perso' ); ?>">
-                    <?php foreach ( $faq_suggestions as $suggestion ) : ?>
-                        <button type="button" data-faq-suggestion="<?php echo esc_attr( $suggestion ); ?>"><?php echo esc_html( $suggestion ); ?></button>
-                    <?php endforeach; ?>
-                </div>
-            </div>
-        </section>
         <section class="faq-categories-immersive">
             <div class="faq-full">
                 <div class="faq-section-heading motion-reveal">
                     <p class="eyebrow"><?php esc_html_e( 'Catégories d’aide', 'theme-perso' ); ?></p>
-                    <h2><?php esc_html_e( 'Choisissez un thème pour accéder directement aux questions associées.', 'theme-perso' ); ?></h2>
+                    <h2><?php esc_html_e( 'Choisissez votre sujet, trouvez la bonne réponse.', 'theme-perso' ); ?></h2>
                 </div>
                 <div class="faq-category-strip">
                     <?php foreach ( $faq_categories as $key => $category ) : ?>
                         <button type="button" class="faq-category-tile motion-reveal motion-reveal--scale" data-faq-category-jump="<?php echo esc_attr( $key ); ?>">
-                            <span class="institutional-icon"><?php echo $icon( $category['icon'] ); ?></span>
+                            <span class="faq-category-topline">
+                                <span class="institutional-icon"><?php echo $icon( $category['icon'] ); ?></span>
+                                <span class="faq-category-count"><?php echo esc_html( sprintf( _n( '%d question', '%d questions', count( $category['items'] ), 'theme-perso' ), count( $category['items'] ) ) ); ?></span>
+                            </span>
                             <strong><?php echo esc_html( $category['title'] ); ?></strong>
                             <small><?php echo esc_html( $category['description'] ); ?></small>
+                            <em><?php esc_html_e( 'Voir les réponses', 'theme-perso' ); ?></em>
                         </button>
                     <?php endforeach; ?>
                 </div>

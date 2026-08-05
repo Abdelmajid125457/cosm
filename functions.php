@@ -39,6 +39,52 @@ function theme_perso_setup() {
 }
 add_action( 'after_setup_theme', 'theme_perso_setup' );
 
+function theme_perso_disable_frontend_admin_bar_offset() {
+    if ( is_admin() ) {
+        return;
+    }
+
+    show_admin_bar( false );
+    remove_action( 'wp_head', '_admin_bar_bump_cb' );
+}
+add_action( 'init', 'theme_perso_disable_frontend_admin_bar_offset' );
+
+function theme_perso_remove_frontend_top_spacing() {
+    if ( is_admin() ) {
+        return;
+    }
+    ?>
+    <style id="theme-perso-remove-top-spacing">
+        html,
+        body,
+        body.admin-bar {
+            margin-top: 0 !important;
+            padding-top: 0 !important;
+        }
+
+        :root {
+            --wp-admin--admin-bar--height: 0px !important;
+        }
+
+        #wpadminbar {
+            display: none !important;
+        }
+
+        #page,
+        .site,
+        .site-header,
+        .promo-bar,
+        .header-shell {
+            margin-top: 0 !important;
+            padding-top: 0 !important;
+            top: 0 !important;
+            transform: none !important;
+        }
+    </style>
+    <?php
+}
+add_action( 'wp_head', 'theme_perso_remove_frontend_top_spacing', 999 );
+
 function theme_perso_content_width() {
     $GLOBALS['content_width'] = apply_filters( 'theme_perso_content_width', 1280 );
 }
@@ -4100,15 +4146,21 @@ function theme_perso_customize_single_product_template() {
         return;
     }
 
+    remove_action( 'woocommerce_single_product_summary', 'woocommerce_template_single_title', 5 );
     remove_action( 'woocommerce_single_product_summary', 'woocommerce_template_single_rating', 10 );
+    remove_action( 'woocommerce_single_product_summary', 'woocommerce_template_single_price', 10 );
+    remove_action( 'woocommerce_single_product_summary', 'woocommerce_template_single_excerpt', 20 );
+    remove_action( 'woocommerce_single_product_summary', 'woocommerce_template_single_add_to_cart', 30 );
     remove_action( 'woocommerce_single_product_summary', 'woocommerce_template_single_meta', 40 );
+    remove_action( 'woocommerce_single_product_summary', 'woocommerce_template_single_sharing', 50 );
+    remove_action( 'woocommerce_single_product_summary', 'theme_perso_product_pack_summary', 24 );
+    remove_action( 'woocommerce_single_product_summary', 'theme_perso_product_reassurance', 35 );
     remove_action( 'woocommerce_after_single_product_summary', 'theme_perso_product_static_reviews', 8 );
     remove_action( 'woocommerce_after_single_product_summary', 'woocommerce_output_product_data_tabs', 10 );
     remove_action( 'woocommerce_after_single_product_summary', 'woocommerce_upsell_display', 15 );
     remove_action( 'woocommerce_after_single_product_summary', 'woocommerce_output_related_products', 20 );
 
-    add_action( 'woocommerce_single_product_summary', 'theme_perso_product_premium_rating', 9 );
-    add_action( 'woocommerce_single_product_summary', 'theme_perso_product_benefit_cards', 22 );
+    add_action( 'woocommerce_single_product_summary', 'theme_perso_single_product_summary_premium', 5 );
     add_action( 'woocommerce_after_add_to_cart_button', 'theme_perso_product_buy_now_button', 12 );
     add_action( 'woocommerce_after_single_product_summary', 'theme_perso_product_premium_sections', 8 );
 }
@@ -4192,6 +4244,98 @@ function theme_perso_product_buy_now_button() {
     <button type="submit" class="button product-buy-now-button" name="cosmethique_buy_now" value="<?php echo esc_attr( $product->get_id() ); ?>">
         <?php esc_html_e( 'Acheter maintenant', 'theme-perso' ); ?>
     </button>
+    <?php
+}
+
+function theme_perso_product_primary_category_name( $product ) {
+    if ( ! $product instanceof WC_Product ) {
+        return __( 'Soin COSM’ÉTHIQUE', 'theme-perso' );
+    }
+
+    $terms = get_the_terms( $product->get_id(), 'product_cat' );
+
+    if ( empty( $terms ) || is_wp_error( $terms ) ) {
+        return __( 'Soin COSM’ÉTHIQUE', 'theme-perso' );
+    }
+
+    $term = reset( $terms );
+
+    return $term && ! empty( $term->name ) ? $term->name : __( 'Soin COSM’ÉTHIQUE', 'theme-perso' );
+}
+
+function theme_perso_product_short_story( $product ) {
+    if ( ! $product instanceof WC_Product ) {
+        return '';
+    }
+
+    $short_description = trim( wp_strip_all_tags( $product->get_short_description() ) );
+
+    if ( $short_description ) {
+        return $short_description;
+    }
+
+    return __( 'Un soin formulé avec des actifs soigneusement sélectionnés pour révéler une beauté naturelle, sensorielle et exigeante au quotidien.', 'theme-perso' );
+}
+
+function theme_perso_product_availability_label( $product ) {
+    if ( ! $product instanceof WC_Product ) {
+        return __( 'Disponible', 'theme-perso' );
+    }
+
+    if ( ! $product->is_in_stock() ) {
+        return __( 'Rupture temporaire', 'theme-perso' );
+    }
+
+    return __( 'En stock', 'theme-perso' );
+}
+
+function theme_perso_single_product_summary_premium() {
+    global $product;
+
+    if ( ! $product instanceof WC_Product ) {
+        return;
+    }
+
+    $average      = (float) $product->get_average_rating();
+    $review_count = (int) $product->get_review_count();
+
+    if ( $average <= 0 ) {
+        $average      = 4.9;
+        $review_count = max( $review_count, 128 );
+    }
+    ?>
+    <section class="cosmethique-product-hero-copy" aria-label="<?php esc_attr_e( 'Présentation du produit', 'theme-perso' ); ?>">
+        <span class="product-hero-kicker"><?php echo esc_html( theme_perso_product_primary_category_name( $product ) ); ?></span>
+        <h1 class="product-hero-title"><?php echo esc_html( $product->get_name() ); ?></h1>
+
+        <div class="product-hero-rating" aria-label="<?php echo esc_attr( sprintf( __( 'Note moyenne %1$s sur 5', 'theme-perso' ), number_format_i18n( $average, 1 ) ) ); ?>">
+            <span aria-hidden="true">★★★★★</span>
+            <strong><?php echo esc_html( number_format_i18n( $average, 1 ) ); ?>/5</strong>
+            <em><?php echo esc_html( sprintf( _n( '%s avis client', '%s avis clients', $review_count, 'theme-perso' ), number_format_i18n( $review_count ) ) ); ?></em>
+        </div>
+
+        <div class="product-hero-price"><?php echo wp_kses_post( $product->get_price_html() ); ?></div>
+        <p class="product-hero-description"><?php echo esc_html( theme_perso_product_short_story( $product ) ); ?></p>
+
+        <div class="product-hero-status">
+            <span><?php echo esc_html( theme_perso_product_availability_label( $product ) ); ?></span>
+            <span><?php esc_html_e( 'Expédition 24–72h', 'theme-perso' ); ?></span>
+            <span><?php esc_html_e( 'Paiement sécurisé', 'theme-perso' ); ?></span>
+        </div>
+
+        <div class="product-hero-benefits">
+            <?php foreach ( theme_perso_product_benefit_items( $product ) as $benefit ) : ?>
+                <span><i><?php echo esc_html( $benefit['icon'] ); ?></i><?php echo esc_html( $benefit['label'] ); ?></span>
+            <?php endforeach; ?>
+        </div>
+
+        <div class="product-hero-purchase">
+            <?php woocommerce_template_single_add_to_cart(); ?>
+            <button class="button product-favorite-button" type="button" aria-pressed="false">
+                <?php esc_html_e( 'Ajouter aux favoris', 'theme-perso' ); ?>
+            </button>
+        </div>
+    </section>
     <?php
 }
 
@@ -4562,6 +4706,109 @@ function theme_perso_recently_viewed_products( $current_id, $limit = 4 ) {
     return $products;
 }
 
+function theme_perso_product_detail_items( $product ) {
+    $name = $product instanceof WC_Product ? $product->get_name() : '';
+
+    if ( false !== stripos( $name, 'accessoire' ) || false !== stripos( $name, 'brosse' ) || false !== stripos( $name, 'gua sha' ) || false !== stripos( $name, 'roller' ) || false !== stripos( $name, 'trousse' ) || false !== stripos( $name, 'éponge' ) ) {
+        return array(
+            array( 'icon' => '✦', 'title' => __( 'Pourquoi cet accessoire ?', 'theme-perso' ), 'text' => __( 'Il accompagne les gestes beauté avec précision et apporte une finition premium à chaque routine.', 'theme-perso' ) ),
+            array( 'icon' => '◎', 'title' => __( 'Pour quel usage ?', 'theme-perso' ), 'text' => __( 'Idéal pour compléter le nettoyage, le massage, le coiffage ou l’organisation de vos essentiels.', 'theme-perso' ) ),
+            array( 'icon' => '♡', 'title' => __( 'Ses bénéfices', 'theme-perso' ), 'text' => __( 'Un rituel plus fluide, plus sensoriel et plus durable, pensé pour le quotidien.', 'theme-perso' ) ),
+            array( 'icon' => '↻', 'title' => __( 'Sa finition', 'theme-perso' ), 'text' => __( 'Matières sélectionnées, lignes sobres et rendu élégant pour une salle de bain haut de gamme.', 'theme-perso' ) ),
+        );
+    }
+
+    if ( false !== stripos( $name, 'cheveux' ) || false !== stripos( $name, 'shampooing' ) || false !== stripos( $name, 'capillaire' ) ) {
+        return array(
+            array( 'icon' => '✦', 'title' => __( 'Pourquoi ce soin ?', 'theme-perso' ), 'text' => __( 'Il aide à restaurer la douceur, la brillance et le confort de la fibre capillaire.', 'theme-perso' ) ),
+            array( 'icon' => '◎', 'title' => __( 'Pour quel type de cheveux ?', 'theme-perso' ), 'text' => __( 'Pensé pour les cheveux qui recherchent équilibre, nutrition et toucher léger.', 'theme-perso' ) ),
+            array( 'icon' => '♡', 'title' => __( 'Ses bénéfices', 'theme-perso' ), 'text' => __( 'Les longueurs paraissent plus souples, plus disciplinées et visiblement plus lumineuses.', 'theme-perso' ) ),
+            array( 'icon' => '☾', 'title' => __( 'Sa texture', 'theme-perso' ), 'text' => __( 'Une texture sensorielle facile à répartir, sans effet lourd lorsqu’elle est bien dosée.', 'theme-perso' ) ),
+            array( 'icon' => '✧', 'title' => __( 'Son parfum', 'theme-perso' ), 'text' => __( 'Une signature botanique discrète qui accompagne le rituel sans saturer les sens.', 'theme-perso' ) ),
+            array( 'icon' => '✓', 'title' => __( 'Son utilisation', 'theme-perso' ), 'text' => __( 'À intégrer dans votre routine capillaire selon le besoin : nettoyage, nutrition ou finition.', 'theme-perso' ) ),
+        );
+    }
+
+    if ( false !== stripos( $name, 'corps' ) || false !== stripos( $name, 'baume' ) || false !== stripos( $name, 'huile sèche' ) || false !== stripos( $name, 'gommage' ) || false !== stripos( $name, 'lait' ) ) {
+        return array(
+            array( 'icon' => '✦', 'title' => __( 'Pourquoi ce soin ?', 'theme-perso' ), 'text' => __( 'Il enveloppe la peau de confort et transforme l’hydratation du corps en rituel sensoriel.', 'theme-perso' ) ),
+            array( 'icon' => '◎', 'title' => __( 'Pour quel type de peau ?', 'theme-perso' ), 'text' => __( 'Adapté aux peaux qui recherchent nutrition, souplesse et confort durable.', 'theme-perso' ) ),
+            array( 'icon' => '♡', 'title' => __( 'Ses bénéfices', 'theme-perso' ), 'text' => __( 'La peau paraît plus douce, plus satinée et mieux protégée des sensations de tiraillement.', 'theme-perso' ) ),
+            array( 'icon' => '☾', 'title' => __( 'Sa texture', 'theme-perso' ), 'text' => __( 'Une texture généreuse ou satinée selon le soin, pensée pour une application agréable.', 'theme-perso' ) ),
+            array( 'icon' => '✧', 'title' => __( 'Son parfum', 'theme-perso' ), 'text' => __( 'Des notes naturelles, subtiles et réconfortantes, sans excès.', 'theme-perso' ) ),
+            array( 'icon' => '✓', 'title' => __( 'Son utilisation', 'theme-perso' ), 'text' => __( 'À appliquer après la douche ou dès que la peau demande plus de confort.', 'theme-perso' ) ),
+        );
+    }
+
+    return array(
+        array( 'icon' => '✦', 'title' => __( 'Pourquoi ce soin ?', 'theme-perso' ), 'text' => __( 'Il accompagne la peau avec une formule naturelle, précise et pensée pour révéler l’éclat.', 'theme-perso' ) ),
+        array( 'icon' => '◎', 'title' => __( 'Pour quel type de peau ?', 'theme-perso' ), 'text' => __( 'Idéal pour les peaux qui recherchent hydratation, confort et équilibre au quotidien.', 'theme-perso' ) ),
+        array( 'icon' => '♡', 'title' => __( 'Ses bénéfices', 'theme-perso' ), 'text' => __( 'La peau semble plus lumineuse, plus douce et mieux préparée à recevoir les soins suivants.', 'theme-perso' ) ),
+        array( 'icon' => '☾', 'title' => __( 'Sa texture', 'theme-perso' ), 'text' => __( 'Une texture élégante, facile à appliquer, conçue pour laisser un fini confortable.', 'theme-perso' ) ),
+        array( 'icon' => '✧', 'title' => __( 'Son parfum', 'theme-perso' ), 'text' => __( 'Une signature douce et botanique, fidèle à l’univers COSM’ÉTHIQUE.', 'theme-perso' ) ),
+        array( 'icon' => '✓', 'title' => __( 'Son utilisation', 'theme-perso' ), 'text' => __( 'À utiliser sur peau propre, seul ou dans une routine complète selon vos besoins.', 'theme-perso' ) ),
+    );
+}
+
+function theme_perso_product_routine_steps( $product ) {
+    $name = $product instanceof WC_Product ? $product->get_name() : '';
+
+    if ( false !== stripos( $name, 'cheveux' ) || false !== stripos( $name, 'shampooing' ) || false !== stripos( $name, 'capillaire' ) ) {
+        return array(
+            array( 'title' => __( 'Nettoyer', 'theme-perso' ), 'text' => __( 'Laver délicatement le cuir chevelu sans agresser la fibre.', 'theme-perso' ) ),
+            array( 'title' => __( 'Nourrir', 'theme-perso' ), 'text' => __( 'Appliquer le masque ou le soin ciblé sur les longueurs.', 'theme-perso' ) ),
+            array( 'title' => __( 'Sublimer', 'theme-perso' ), 'text' => __( 'Terminer par une huile ou un sérum sur les pointes.', 'theme-perso' ) ),
+        );
+    }
+
+    if ( false !== stripos( $name, 'corps' ) || false !== stripos( $name, 'baume' ) || false !== stripos( $name, 'huile sèche' ) || false !== stripos( $name, 'gommage' ) ) {
+        return array(
+            array( 'title' => __( 'Préparer', 'theme-perso' ), 'text' => __( 'Appliquer sur peau propre, idéalement après la douche.', 'theme-perso' ) ),
+            array( 'title' => __( 'Masser', 'theme-perso' ), 'text' => __( 'Faire pénétrer avec des mouvements circulaires et lents.', 'theme-perso' ) ),
+            array( 'title' => __( 'Protéger', 'theme-perso' ), 'text' => __( 'Répéter régulièrement pour maintenir douceur et confort.', 'theme-perso' ) ),
+        );
+    }
+
+    return array(
+        array( 'title' => __( 'Nettoyer', 'theme-perso' ), 'text' => __( 'Préparer la peau avec un nettoyage doux et adapté.', 'theme-perso' ) ),
+        array( 'title' => __( 'Cibler', 'theme-perso' ), 'text' => __( 'Appliquer le soin sur les zones qui ont besoin d’éclat ou de confort.', 'theme-perso' ) ),
+        array( 'title' => __( 'Hydrater', 'theme-perso' ), 'text' => __( 'Sceller la routine avec une crème ou une huile selon votre peau.', 'theme-perso' ) ),
+    );
+}
+
+function theme_perso_product_gallery_images( $product ) {
+    if ( ! $product instanceof WC_Product ) {
+        return array();
+    }
+
+    $gallery = get_post_meta( $product->get_id(), '_cosmethique_gallery_images', true );
+
+    if ( ! is_array( $gallery ) || empty( $gallery ) ) {
+        $gallery = array();
+    }
+
+    $image = get_post_meta( $product->get_id(), '_cosmethique_image_url', true );
+
+    if ( $image ) {
+        array_unshift( $gallery, $image );
+    }
+
+    if ( empty( $gallery ) && $product->get_image_id() ) {
+        $main_image = wp_get_attachment_image_url( $product->get_image_id(), 'full' );
+        if ( $main_image ) {
+            $gallery[] = $main_image;
+        }
+    }
+
+    $gallery = array_values( array_unique( array_filter( $gallery ) ) );
+
+    if ( empty( $gallery ) ) {
+        $gallery[] = theme_perso_product_fallback_image_url();
+    }
+
+    return $gallery;
+}
+
 function theme_perso_product_premium_sections() {
     global $product;
 
@@ -4573,46 +4820,22 @@ function theme_perso_product_premium_sections() {
     $routine_products = theme_perso_product_routine_products( $product );
     $related_products = theme_perso_related_products_for_current( $product, 4 );
     $recent_products  = theme_perso_recently_viewed_products( $product->get_id(), 4 );
+    $detail_items     = theme_perso_product_detail_items( $product );
+    $routine_steps    = theme_perso_product_routine_steps( $product );
     ?>
     <div class="product-premium-sections">
-        <section class="product-premium-section product-client-reviews">
+        <section class="product-premium-section product-detail-immersive">
             <div class="product-section-heading">
-                <span><?php esc_html_e( 'Avis clients', 'theme-perso' ); ?></span>
-                <h2><?php esc_html_e( 'Elles ont adopté COSM’ÉTHIQUE', 'theme-perso' ); ?></h2>
+                <span><?php esc_html_e( 'Le produit en détail', 'theme-perso' ); ?></span>
+                <h2><?php esc_html_e( 'Une formule pensée pour votre rituel.', 'theme-perso' ); ?></h2>
             </div>
-            <div class="product-review-grid product-review-grid--premium">
-                <figure>
-                    <img src="<?php echo esc_url( theme_perso_product_asset_url( 'photo-serum-eclat-rose.png' ) ); ?>" alt="<?php esc_attr_e( 'Photo cliente Cosm’Éthique', 'theme-perso' ); ?>" loading="lazy">
-                    <span class="stars" aria-hidden="true">★★★★★</span>
-                    <blockquote><?php esc_html_e( 'Texture raffinée, application facile et un vrai sentiment de soin premium dès les premiers jours.', 'theme-perso' ); ?></blockquote>
-                    <figcaption>Camille R.</figcaption>
-                </figure>
-                <figure>
-                    <img src="<?php echo esc_url( theme_perso_product_asset_url( 'photo-creme-hydratante-sauge-camomille.png' ) ); ?>" alt="<?php esc_attr_e( 'Routine cliente Cosm’Éthique', 'theme-perso' ); ?>" loading="lazy">
-                    <span class="stars" aria-hidden="true">★★★★★</span>
-                    <blockquote><?php esc_html_e( 'La fiche est claire, les produits sont beaux et la routine donne envie de rester régulière.', 'theme-perso' ); ?></blockquote>
-                    <figcaption>Nora B.</figcaption>
-                </figure>
-                <figure>
-                    <img src="<?php echo esc_url( theme_perso_product_asset_url( 'photo-baume-corps-karite-amande.png' ) ); ?>" alt="<?php esc_attr_e( 'Soin Cosm’Éthique en situation', 'theme-perso' ); ?>" loading="lazy">
-                    <span class="stars" aria-hidden="true">★★★★☆</span>
-                    <blockquote><?php esc_html_e( 'Un univers naturel mais très élégant. La livraison est rapide et le packaging fait vraiment premium.', 'theme-perso' ); ?></blockquote>
-                    <figcaption>Leila M.</figcaption>
-                </figure>
-            </div>
-        </section>
-
-        <section class="product-premium-section product-faq-section">
-            <div class="product-section-heading">
-                <span><?php esc_html_e( 'Questions fréquentes', 'theme-perso' ); ?></span>
-                <h2><?php esc_html_e( 'Tout savoir avant de commander', 'theme-perso' ); ?></h2>
-            </div>
-            <div class="product-faq-list">
-                <?php foreach ( theme_perso_product_faq_items( $product ) as $item ) : ?>
-                    <details>
-                        <summary><?php echo esc_html( $item['question'] ); ?></summary>
-                        <p><?php echo esc_html( $item['answer'] ); ?></p>
-                    </details>
+            <div class="product-detail-grid">
+                <?php foreach ( $detail_items as $item ) : ?>
+                    <article>
+                        <span aria-hidden="true"><?php echo esc_html( $item['icon'] ); ?></span>
+                        <h3><?php echo esc_html( $item['title'] ); ?></h3>
+                        <p><?php echo esc_html( $item['text'] ); ?></p>
+                    </article>
                 <?php endforeach; ?>
             </div>
         </section>
@@ -4633,11 +4856,27 @@ function theme_perso_product_premium_sections() {
             </div>
         </section>
 
+        <section class="product-premium-section product-routine-timeline-section">
+            <div class="product-section-heading">
+                <span><?php esc_html_e( 'Routine beauté', 'theme-perso' ); ?></span>
+                <h2><?php esc_html_e( 'Comment l’utiliser', 'theme-perso' ); ?></h2>
+            </div>
+            <div class="product-routine-timeline">
+                <?php foreach ( $routine_steps as $index => $step ) : ?>
+                    <article>
+                        <span><?php echo esc_html( $index + 1 ); ?></span>
+                        <h3><?php echo esc_html( $step['title'] ); ?></h3>
+                        <p><?php echo esc_html( $step['text'] ); ?></p>
+                    </article>
+                <?php endforeach; ?>
+            </div>
+        </section>
+
         <?php if ( ! empty( $routine_products ) ) : ?>
             <section class="product-premium-section product-routine-section">
                 <div class="product-section-heading">
-                    <span><?php esc_html_e( 'Routine recommandée', 'theme-perso' ); ?></span>
-                    <h2><?php esc_html_e( 'Complétez votre rituel beauté', 'theme-perso' ); ?></h2>
+                    <span><?php esc_html_e( 'Produits complémentaires', 'theme-perso' ); ?></span>
+                    <h2><?php esc_html_e( 'Complétez votre routine.', 'theme-perso' ); ?></h2>
                 </div>
                 <div class="premium-product-grid premium-product-grid--routine">
                     <?php foreach ( $routine_products as $routine_product ) : ?>
@@ -4647,13 +4886,61 @@ function theme_perso_product_premium_sections() {
             </section>
         <?php endif; ?>
 
+        <section class="product-premium-section product-client-reviews">
+            <div class="product-section-heading">
+                <span><?php esc_html_e( 'Avis clients', 'theme-perso' ); ?></span>
+                <h2><?php esc_html_e( 'Elles ont adopté COSM’ÉTHIQUE', 'theme-perso' ); ?></h2>
+            </div>
+            <div class="product-review-filters" aria-label="<?php esc_attr_e( 'Filtres avis', 'theme-perso' ); ?>">
+                <button type="button"><?php esc_html_e( 'Tous', 'theme-perso' ); ?></button>
+                <button type="button"><?php esc_html_e( 'Texture', 'theme-perso' ); ?></button>
+                <button type="button"><?php esc_html_e( 'Résultats', 'theme-perso' ); ?></button>
+                <button type="button"><?php esc_html_e( 'Routine', 'theme-perso' ); ?></button>
+            </div>
+            <div class="product-review-grid product-review-grid--premium">
+                <figure>
+                    <img src="<?php echo esc_url( theme_perso_product_asset_url( 'photo-serum-eclat-rose.png' ) ); ?>" alt="<?php esc_attr_e( 'Photo cliente Cosm’Éthique', 'theme-perso' ); ?>" loading="lazy">
+                    <span class="stars" aria-hidden="true">★★★★★</span>
+                    <blockquote><?php esc_html_e( 'Texture raffinée, application facile et un vrai sentiment de soin premium dès les premiers jours.', 'theme-perso' ); ?></blockquote>
+                    <figcaption>Camille R. · <?php esc_html_e( 'il y a 8 jours', 'theme-perso' ); ?></figcaption>
+                </figure>
+                <figure>
+                    <img src="<?php echo esc_url( theme_perso_product_asset_url( 'photo-creme-hydratante-sauge-camomille.png' ) ); ?>" alt="<?php esc_attr_e( 'Routine cliente Cosm’Éthique', 'theme-perso' ); ?>" loading="lazy">
+                    <span class="stars" aria-hidden="true">★★★★★</span>
+                    <blockquote><?php esc_html_e( 'La fiche est claire, les produits sont beaux et la routine donne envie de rester régulière.', 'theme-perso' ); ?></blockquote>
+                    <figcaption>Nora B. · <?php esc_html_e( 'il y a 2 semaines', 'theme-perso' ); ?></figcaption>
+                </figure>
+                <figure>
+                    <img src="<?php echo esc_url( theme_perso_product_asset_url( 'photo-baume-corps-karite-amande.png' ) ); ?>" alt="<?php esc_attr_e( 'Soin Cosm’Éthique en situation', 'theme-perso' ); ?>" loading="lazy">
+                    <span class="stars" aria-hidden="true">★★★★☆</span>
+                    <blockquote><?php esc_html_e( 'Un univers naturel mais très élégant. La livraison est rapide et le packaging fait vraiment premium.', 'theme-perso' ); ?></blockquote>
+                    <figcaption>Leila M. · <?php esc_html_e( 'il y a 1 mois', 'theme-perso' ); ?></figcaption>
+                </figure>
+            </div>
+        </section>
+
+        <section class="product-premium-section product-faq-section">
+            <div class="product-section-heading">
+                <span><?php esc_html_e( 'Questions fréquentes', 'theme-perso' ); ?></span>
+                <h2><?php esc_html_e( 'Tout savoir avant de commander', 'theme-perso' ); ?></h2>
+            </div>
+            <div class="product-faq-list">
+                <?php foreach ( theme_perso_product_faq_items( $product ) as $item ) : ?>
+                    <details>
+                        <summary><?php echo esc_html( $item['question'] ); ?></summary>
+                        <p><?php echo esc_html( $item['answer'] ); ?></p>
+                    </details>
+                <?php endforeach; ?>
+            </div>
+        </section>
+
         <?php if ( ! empty( $related_products ) ) : ?>
-            <section class="product-premium-section">
+            <section class="product-premium-section product-similar-slider-section">
                 <div class="product-section-heading">
                     <span><?php esc_html_e( 'Sélection associée', 'theme-perso' ); ?></span>
                     <h2><?php esc_html_e( 'Produits similaires', 'theme-perso' ); ?></h2>
                 </div>
-                <div class="premium-product-grid">
+                <div class="premium-product-grid premium-product-grid--slider">
                     <?php foreach ( $related_products as $related_product ) : ?>
                         <?php theme_perso_render_premium_product_card( $related_product ); ?>
                     <?php endforeach; ?>
@@ -4675,24 +4962,27 @@ function theme_perso_product_premium_sections() {
             </section>
         <?php endif; ?>
 
-        <section class="product-premium-section product-newsletter-section">
-            <div>
-                <span><?php esc_html_e( 'Newsletter', 'theme-perso' ); ?></span>
-                <h2><?php esc_html_e( 'Recevez nos conseils beauté.', 'theme-perso' ); ?></h2>
-                <p><?php esc_html_e( 'Des routines naturelles, des conseils d’expertes et les nouveautés COSM’ÉTHIQUE directement dans votre boîte mail.', 'theme-perso' ); ?></p>
-            </div>
-            <form class="newsletter-form" action="#" method="post">
-                <input type="email" name="email" placeholder="<?php esc_attr_e( 'Votre adresse email', 'theme-perso' ); ?>" required>
-                <?php theme_perso_security_fields( 'product_newsletter' ); ?>
-                <button class="button button-primary" type="submit"><?php esc_html_e( 'Je m’inscris', 'theme-perso' ); ?></button>
-            </form>
-        </section>
     </div>
     <?php
 }
 
 function theme_perso_shop_product_card_data( $title, $fallback = array() ) {
-    $post    = get_page_by_title( $title, OBJECT, 'product' );
+    $post = function_exists( 'theme_perso_get_seed_product' ) ? theme_perso_get_seed_product( $title ) : get_page_by_title( $title, OBJECT, 'product' );
+
+    $catalog_data = array();
+    foreach ( array( 'theme_perso_visage_collection_products', 'theme_perso_corps_collection_products', 'theme_perso_cheveux_collection_products', 'theme_perso_accessoires_collection_products', 'theme_perso_packs_collection_products' ) as $catalog_callback ) {
+        if ( function_exists( $catalog_callback ) ) {
+            $catalog_data = array_merge( $catalog_data, call_user_func( $catalog_callback ) );
+        }
+    }
+
+    $seed_data = isset( $catalog_data[ $title ] ) ? $catalog_data[ $title ] : array();
+
+    if ( ! $post && ! empty( $seed_data['sku'] ) && function_exists( 'wc_get_product_id_by_sku' ) ) {
+        $product_id = wc_get_product_id_by_sku( $seed_data['sku'] );
+        $post       = $product_id ? get_post( $product_id ) : null;
+    }
+
     $product = $post && function_exists( 'wc_get_product' ) ? wc_get_product( $post->ID ) : null;
     $visuals = function_exists( 'theme_perso_product_visuals' ) ? theme_perso_product_visuals() : array();
     $excerpt = '';
@@ -4715,9 +5005,22 @@ function theme_perso_shop_product_card_data( $title, $fallback = array() ) {
         $image = theme_perso_product_fallback_image_url();
     }
 
+    $price_html = $product ? $product->get_price_html() : '';
+
+    if ( '' === trim( wp_strip_all_tags( $price_html ) ) ) {
+        $regular_price = isset( $fallback['price'] ) ? $fallback['price'] : ( isset( $seed_data['price'] ) ? number_format_i18n( (float) $seed_data['price'], 2 ) . ' €' : '' );
+        $sale_price    = isset( $fallback['sale_price'] ) ? $fallback['sale_price'] : ( isset( $seed_data['sale_price'] ) ? number_format_i18n( (float) $seed_data['sale_price'], 2 ) . ' €' : '' );
+
+        if ( $sale_price && $regular_price && $sale_price !== $regular_price ) {
+            $price_html = '<del>' . esc_html( $regular_price ) . '</del> <ins>' . esc_html( $sale_price ) . '</ins>';
+        } else {
+            $price_html = esc_html( $regular_price );
+        }
+    }
+
     return array(
         'title'      => $product ? $product->get_name() : $title,
-        'price'      => $product ? $product->get_price_html() : ( isset( $fallback['price'] ) ? esc_html( $fallback['price'] ) : '' ),
+        'price'      => $price_html,
         'old_price'  => isset( $fallback['old_price'] ) ? $fallback['old_price'] : '',
         'badge'      => isset( $fallback['badge'] ) ? $fallback['badge'] : '',
         'excerpt'    => $excerpt ? $excerpt : ( isset( $fallback['excerpt'] ) ? $fallback['excerpt'] : '' ),

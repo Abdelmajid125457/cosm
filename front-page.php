@@ -280,21 +280,6 @@ $cheveux_url = function_exists( 'theme_perso_get_shop_collection_url' ) ? theme_
         </div>
     </section>
 
-    <section class="newsletter-section">
-        <div class="container newsletter-panel">
-            <div>
-                <p class="eyebrow">Newsletter</p>
-                <h2>Recevez nos rituels, lancements et offres privées.</h2>
-            </div>
-            <form class="newsletter-form" action="#" method="post">
-                <label class="screen-reader-text" for="newsletter-email"><?php esc_html_e( 'Adresse email', 'theme-perso' ); ?></label>
-                <input id="newsletter-email" type="email" name="email" placeholder="Votre adresse email" required>
-                <?php theme_perso_security_fields( 'newsletter' ); ?>
-                <button class="button button-primary" type="submit">S’inscrire</button>
-                <small>Vos données restent confidentielles.</small>
-            </form>
-        </div>
-    </section>
 </main>
 
 <?php
