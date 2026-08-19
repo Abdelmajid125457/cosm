@@ -22,7 +22,7 @@
         </article>
         <article>
             <h3><?php esc_html_e( 'Cookies analytiques', 'theme-perso' ); ?></h3>
-            <p><?php esc_html_e( 'Ils nous aident à comprendre les pages consultées et les parcours les plus utiles afin d’améliorer continuellement le site.', 'theme-perso' ); ?></p>
+            <p><?php esc_html_e( 'Ils nous aident, via Google Analytics, à comprendre les pages consultées et les parcours les plus utiles afin d’améliorer continuellement le site.', 'theme-perso' ); ?></p>
             <small><?php esc_html_e( 'Durée : 13 mois maximum après consentement.', 'theme-perso' ); ?></small>
         </article>
         <article>
@@ -57,7 +57,7 @@
                 </tr>
                 <tr>
                     <td><?php esc_html_e( 'Analytiques', 'theme-perso' ); ?></td>
-                    <td><?php esc_html_e( 'Mesure d’audience et amélioration de l’expérience utilisateur.', 'theme-perso' ); ?></td>
+                    <td><?php esc_html_e( 'Mesure d’audience avec Google Analytics et amélioration de l’expérience utilisateur.', 'theme-perso' ); ?></td>
                     <td><?php esc_html_e( 'Requis', 'theme-perso' ); ?></td>
                     <td><?php esc_html_e( '13 mois maximum', 'theme-perso' ); ?></td>
                 </tr>

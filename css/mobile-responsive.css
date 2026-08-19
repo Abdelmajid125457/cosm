@@ -1,0 +1,1165 @@
+/*
+ * Optimisations mobiles COSM'ETHIQUE.
+ * Ces règles sont volontairement limitées aux breakpoints mobiles/tablettes
+ * afin de conserver la version desktop validée.
+ */
+
+@media (max-width: 900px) {
+    html,
+    body,
+    #page,
+    .site {
+        width: 100%;
+        max-width: 100%;
+        overflow-x: hidden;
+    }
+
+    body {
+        font-size: 15px;
+    }
+
+    img,
+    video,
+    iframe,
+    svg {
+        max-width: 100%;
+    }
+
+    .container,
+    .header-shell,
+    .footer-newsletter--top,
+    .footer-main--minimal,
+    .footer-bottom,
+    .section-heading,
+    .page-content-wrap,
+    .page-content-wrap--cart,
+    .page-content-wrap--checkout,
+    .page-content-wrap--diagnostic,
+    .about-brand-page,
+    .diagnostic-page,
+    .shop-hero-premium,
+    .shop-premium-block,
+    .shop-promo-section,
+    .shop-packs-section,
+    .visage-category-hero,
+    .visage-collection,
+    .visage-routine-note,
+    .single-product .woocommerce div.product,
+    .faq-full,
+    .faq-immersive-hero-content,
+    .institutional-page--ingredients .container,
+    .institutional-page--qualite .container,
+    .institutional-page--engagements .commitments-wide,
+    .institutional-page--engagements .commitments-hero-inner {
+        width: min(100% - 28px, 100%) !important;
+        max-width: 100% !important;
+        margin-left: auto !important;
+        margin-right: auto !important;
+        box-sizing: border-box;
+    }
+
+    .section,
+    .home-univers,
+    .home-diagnostic-cta,
+    .home-expertise,
+    .featured-products,
+    .shop-premium-section,
+    .account-access-section,
+    .account-benefits-section,
+    .faq-search-immersive,
+    .faq-categories-immersive,
+    .faq-questions-immersive,
+    .faq-popular-immersive,
+    .faq-help-immersive,
+    .institutional-page--ingredients .institutional-section,
+    .institutional-page--qualite .institutional-section,
+    .institutional-page--engagements .commitments-values-section,
+    .institutional-page--engagements .commitments-priorities-section,
+    .institutional-page--engagements .commitments-action-section {
+        padding-top: clamp(48px, 10vw, 72px) !important;
+        padding-bottom: clamp(48px, 10vw, 72px) !important;
+    }
+
+    h1,
+    .hero-section h1,
+    .shop-hero-premium h1,
+    .diagnostic-hero h1,
+    .account-hero-copy h1,
+    .checkout-premium-copy h1,
+    .cart-hero-copy h2,
+    .product-hero-title,
+    .faq-immersive-hero h1,
+    .institutional-shop-hero h1 {
+        max-width: 100%;
+        overflow-wrap: anywhere;
+        word-break: normal;
+        line-height: 1.02;
+    }
+
+    .site-header {
+        position: relative !important;
+        top: auto !important;
+        transform: none !important;
+        z-index: 60;
+    }
+
+    .promo-bar {
+        min-height: 36px;
+        overflow: hidden;
+    }
+
+    .promo-track {
+        gap: 24px;
+        white-space: nowrap;
+    }
+
+    .promo-track span {
+        font-size: 0.82rem;
+    }
+
+    .header-shell {
+        padding: 10px 0 12px;
+    }
+
+    .header-inner {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) auto;
+        gap: 10px;
+        align-items: center;
+    }
+
+    .site-branding,
+    .brand-logo,
+    .custom-logo-link {
+        min-width: 0;
+    }
+
+    .brand-logo,
+    .footer-logo {
+        overflow-wrap: normal;
+        white-space: nowrap;
+    }
+
+    .custom-logo {
+        width: auto;
+        max-width: min(190px, 44vw);
+        height: auto;
+    }
+
+    .mobile-menu-toggle {
+        justify-self: end;
+        width: 42px;
+        height: 42px;
+        border-radius: 999px;
+    }
+
+    .site-navigation {
+        top: calc(100% + 8px);
+        right: 0;
+        left: 0;
+        width: 100%;
+        max-height: min(70vh, 520px);
+        overflow-y: auto;
+        border-radius: 22px;
+    }
+
+    .primary-menu {
+        gap: 8px;
+    }
+
+    .primary-menu a {
+        min-height: 46px;
+        padding: 10px 12px;
+        border-radius: 14px;
+        font-size: 0.96rem;
+    }
+
+    .header-actions {
+        grid-column: 1 / -1;
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) auto auto auto;
+        gap: 8px;
+        align-items: center;
+        width: 100%;
+        padding: 4px 0 0;
+    }
+
+    .product-search-form {
+        min-width: 0;
+        width: 100%;
+        height: 44px;
+        grid-template-columns: minmax(0, 1fr) 42px;
+    }
+
+    .product-search-form input[type="search"] {
+        min-width: 0;
+        font-size: 16px;
+    }
+
+    .product-search-form button,
+    .header-icon,
+    .language-switcher-toggle {
+        width: 42px;
+        height: 42px;
+        min-width: 42px;
+        flex: 0 0 auto;
+    }
+
+    .language-switcher-toggle {
+        padding: 0 12px;
+    }
+
+    .language-label-full {
+        display: none;
+    }
+
+    .language-label-short {
+        display: inline;
+    }
+
+    .language-switcher-menu,
+    .smart-search-panel {
+        max-width: calc(100vw - 28px);
+    }
+
+    .smart-search-panel {
+        right: auto;
+        left: 0;
+        width: calc(100vw - 28px);
+        max-height: 58vh;
+        overflow-y: auto;
+    }
+
+    .hero-section {
+        min-height: auto !important;
+        padding: 72px 0 96px !important;
+    }
+
+    .hero-content {
+        width: min(100% - 28px, 100%);
+        max-width: 100%;
+    }
+
+    .hero-actions,
+    .button-group,
+    .shop-hero-actions,
+    .diagnostic-hero-actions,
+    .account-hero-actions,
+    .cart-empty-actions,
+    .checkout-actions,
+    .diagnostic-actions,
+    .diagnostic-result-actions {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 12px;
+        width: 100%;
+    }
+
+    .button,
+    .added_to_cart,
+    .wp-element-button,
+    .woocommerce a.button,
+    .woocommerce button.button,
+    .woocommerce input.button,
+    .woocommerce #respond input#submit {
+        width: 100%;
+        min-height: 48px;
+        padding-inline: 18px;
+        text-align: center;
+    }
+
+    .floating-review,
+    .shop-floating-review,
+    .shop-floating-delivery,
+    .shop-floating-natural {
+        position: relative;
+        inset: auto;
+        width: 100%;
+        max-width: 100%;
+        margin: 12px 0 0;
+        transform: none !important;
+    }
+
+    .home-univers-grid,
+    .products-grid,
+    .category-grid,
+    .promo-grid,
+    .blog-grid,
+    .magazine-grid,
+    .blog-showcase-grid,
+    .shop-pack-grid,
+    .visage-product-grid,
+    .diagnostic-products,
+    .premium-product-grid,
+    .product-ingredient-grid,
+    .product-review-grid,
+    .cart-benefits-grid,
+    .cart-recommendations-grid,
+    .account-benefits-grid,
+    .account-stats-band,
+    .faq-category-strip,
+    .faq-popular-large-grid,
+    .institutional-page--ingredients .ingredient-library-grid,
+    .institutional-page--ingredients .ingredient-feature-grid,
+    .institutional-page--qualite .quality-timeline,
+    .institutional-page--qualite .quality-gallery-grid,
+    .institutional-page--qualite .quality-choice-grid,
+    .institutional-page--qualite .certification-grid,
+    .institutional-page--engagements .commitments-values-grid,
+    .institutional-page--engagements .commitments-priorities-grid,
+    .woocommerce ul.products {
+        grid-template-columns: 1fr !important;
+    }
+
+    .home-universe-card,
+    .home-universe-card--wide,
+    .shop-product-card,
+    .premium-product-card,
+    .product-card,
+    .shop-pack-card,
+    .faq-category-tile,
+    .faq-popular-large-card,
+    .ingredient-library-card,
+    .commitments-value-card,
+    .quality-step,
+    .quality-choice-card,
+    .certification-badge {
+        grid-column: auto !important;
+        width: 100%;
+        min-width: 0;
+        max-width: 100%;
+    }
+
+    .shop-section-panel,
+    .shop-hero-premium,
+    .home-diagnostic-panel,
+    .home-expertise-grid,
+    .diagnostic-hero,
+    .account-hero,
+    .checkout-premium-hero,
+    .cart-premium-hero,
+    .cart-empty-premium,
+    .faq-help-grid,
+    .faq-questions-layout,
+    .institutional-shop-hero,
+    .commitments-action-grid,
+    .quality-motion-card {
+        grid-template-columns: 1fr !important;
+    }
+
+    .shop-section-panel {
+        margin: -18px 10px 0;
+    }
+
+    .shop-products-slider {
+        display: grid;
+        grid-auto-flow: column;
+        grid-auto-columns: minmax(205px, 72vw);
+        gap: 14px;
+        overflow-x: auto;
+        padding: 4px 2px 12px;
+        scroll-snap-type: x mandatory;
+        -webkit-overflow-scrolling: touch;
+    }
+
+    .shop-products-slider > * {
+        scroll-snap-align: start;
+    }
+
+    .shop-lifestyle-photo img,
+    .shop-hero-slide img,
+    .home-diagnostic-media img,
+    .home-expertise-media img,
+    .account-hero-visual img,
+    .faq-help-media img,
+    .institutional-shop-hero-media img {
+        width: 100%;
+        min-height: 260px;
+        object-fit: cover;
+    }
+
+    .single-product .woocommerce div.product {
+        display: grid !important;
+        grid-template-columns: 1fr !important;
+        gap: 18px !important;
+        overflow: visible !important;
+        padding-top: 18px;
+    }
+
+    .single-product .woocommerce div.product > * {
+        grid-column: 1 / -1 !important;
+    }
+
+    .single-product .woocommerce div.product .cosmethique-product-gallery {
+        position: relative !important;
+        top: auto !important;
+        float: none !important;
+        width: 100% !important;
+        overflow: hidden;
+    }
+
+    .woocommerce div.product .cosmethique-gallery-main img,
+    .cosmethique-gallery-main img {
+        width: 100%;
+        max-height: 72vh;
+        object-fit: contain;
+    }
+
+    .cosmethique-gallery-thumbs {
+        display: flex !important;
+        gap: 10px;
+        overflow-x: auto;
+        padding-bottom: 6px;
+        scroll-snap-type: x mandatory;
+        -webkit-overflow-scrolling: touch;
+    }
+
+    .cosmethique-gallery-thumb {
+        flex: 0 0 clamp(86px, 28vw, 128px);
+        min-width: 0;
+        scroll-snap-align: start;
+    }
+
+    .cosmethique-product-hero-copy,
+    .product-premium-section,
+    .product-detail-grid article,
+    .cart-product-card,
+    .checkout-step-card,
+    .checkout-order-summary-card,
+    .account-login-card,
+    .account-woocommerce-wrap .woocommerce-form,
+    .account-woocommerce-wrap .woocommerce-MyAccount-navigation,
+    .account-woocommerce-wrap .woocommerce-MyAccount-content {
+        width: 100%;
+        min-width: 0;
+        max-width: 100%;
+        overflow: hidden;
+    }
+
+    .product-hero-benefits,
+    .product-detail-grid,
+    .product-routine-timeline,
+    .product-hero-status {
+        grid-template-columns: 1fr !important;
+    }
+
+    .product-hero-benefits span,
+    .product-hero-status span,
+    .product-detail-grid article,
+    .diagnostic-options label,
+    .cosmethique-choice-list label {
+        min-width: 0;
+        overflow-wrap: anywhere;
+    }
+
+    .woocommerce div.product form.cart,
+    .product-hero-purchase,
+    .cart-coupon-premium > div,
+    .checkout-coupon-fields,
+    .checkout-review-item,
+    .cosmethique-card-field-grid,
+    .cosmethique-choice-list--installments label {
+        grid-template-columns: 1fr !important;
+    }
+
+    .woocommerce div.product form.cart div.quantity,
+    .woocommerce div.product form.cart .quantity input.qty,
+    .product-favorite-button,
+    .shop-button-secondary,
+    .checkout-coupon-fields input,
+    .checkout-coupon-fields button {
+        width: 100% !important;
+    }
+
+    .cart-product-card {
+        position: relative;
+        grid-template-columns: 92px minmax(0, 1fr) !important;
+        gap: 14px;
+    }
+
+    .cart-product-media {
+        width: 92px;
+        min-width: 0;
+    }
+
+    .cart-product-info,
+    .cart-product-info a,
+    .cart-product-price,
+    .cart-product-quantity,
+    .cart-product-subtotal {
+        min-width: 0;
+        overflow-wrap: anywhere;
+    }
+
+    .cart-product-price,
+    .cart-product-quantity,
+    .cart-product-subtotal {
+        grid-column: 1 / -1;
+    }
+
+    .checkout-summary-column,
+    .cart-summary-card,
+    .diagnostic-side-card,
+    .faq-question-aside {
+        position: static !important;
+        top: auto !important;
+    }
+
+    .checkout-progress-steps,
+    .cart-progress-steps {
+        grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+        gap: 8px;
+    }
+
+    .checkout-progress-step,
+    .cart-progress-step {
+        min-width: 0;
+        padding: 10px 8px;
+        text-align: center;
+        overflow-wrap: anywhere;
+    }
+
+    .faq-search-giant {
+        grid-template-columns: auto minmax(0, 1fr);
+        width: 100%;
+        min-width: 0;
+    }
+
+    .faq-search-giant input {
+        min-width: 0;
+        font-size: 16px;
+    }
+
+    .institutional-page--engagements .commitments-stats-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+        width: min(100% - 28px, 100%) !important;
+    }
+
+    .institutional-page--engagements .commitments-stat-card strong {
+        font-size: clamp(2.4rem, 12vw, 4.4rem) !important;
+        white-space: normal !important;
+        overflow-wrap: anywhere;
+        line-height: 0.98;
+    }
+
+    .footer-newsletter--top {
+        grid-template-columns: 1fr !important;
+        gap: 16px;
+        padding: 26px 0;
+    }
+
+    .footer-newsletter--top .footer-newsletter-form {
+        grid-template-columns: 1fr !important;
+    }
+
+    .footer-main--minimal {
+        grid-template-columns: 1fr !important;
+        gap: 0;
+        padding: 26px 0;
+    }
+
+    .footer-nav-group {
+        border-top: 1px solid var(--footer-line);
+        padding: 12px 0;
+    }
+
+    .footer-nav-group summary {
+        margin-bottom: 0;
+        cursor: pointer;
+    }
+
+    .footer-nav-group summary > span {
+        display: inline-block;
+    }
+
+    .footer-nav-group .footer-link-list {
+        padding-top: 12px;
+    }
+
+    .footer-contact-card {
+        margin-top: 14px;
+    }
+
+    .footer-bottom {
+        grid-template-columns: 1fr !important;
+        justify-items: start;
+        gap: 14px;
+        padding: 18px 0 22px;
+    }
+
+    .footer-payment-logos,
+    .footer-trust-badges {
+        justify-content: flex-start;
+        width: 100%;
+    }
+}
+
+@media (max-width: 520px) {
+    body {
+        font-size: 14.5px;
+    }
+
+    .container,
+    .header-shell,
+    .footer-newsletter--top,
+    .footer-main--minimal,
+    .footer-bottom,
+    .page-content-wrap,
+    .page-content-wrap--cart,
+    .page-content-wrap--checkout,
+    .page-content-wrap--diagnostic,
+    .single-product .woocommerce div.product,
+    .faq-full,
+    .faq-immersive-hero-content {
+        width: min(100% - 22px, 100%) !important;
+    }
+
+    .header-inner {
+        grid-template-columns: minmax(0, 1fr) 40px;
+        gap: 8px;
+    }
+
+    .header-actions {
+        grid-template-columns: minmax(0, 1fr) 40px 40px 40px;
+        gap: 7px;
+    }
+
+    .product-search-form {
+        height: 40px;
+        grid-template-columns: minmax(0, 1fr) 40px;
+        border-radius: 999px;
+    }
+
+    .product-search-form input[type="search"] {
+        padding-left: 14px;
+        font-size: 16px;
+    }
+
+    .product-search-form button,
+    .header-icon,
+    .language-switcher-toggle {
+        width: 40px;
+        height: 40px;
+        min-width: 40px;
+    }
+
+    .cart-count {
+        min-width: 18px;
+        height: 18px;
+        font-size: 0.68rem;
+    }
+
+    .hero-section,
+    .faq-immersive-hero {
+        min-height: auto !important;
+    }
+
+    .hero-section {
+        padding: 56px 0 72px !important;
+    }
+
+    h1,
+    .hero-section h1,
+    .shop-hero-premium h1,
+    .diagnostic-hero h1,
+    .account-hero-copy h1,
+    .checkout-premium-copy h1,
+    .cart-hero-copy h2,
+    .faq-immersive-hero h1,
+    .institutional-shop-hero h1 {
+        font-size: clamp(2.25rem, 13vw, 3.65rem) !important;
+    }
+
+    h2,
+    .section-heading h2,
+    .faq-section-heading h2,
+    .faq-search-copy h2,
+    .faq-question-aside h2,
+    .faq-help-copy h2,
+    .institutional-page--ingredients .institutional-toolbar h2,
+    .institutional-page--qualite .institutional-section-heading h2 {
+        font-size: clamp(1.95rem, 11vw, 3rem) !important;
+        line-height: 1.04;
+        overflow-wrap: anywhere;
+    }
+
+    .product-hero-title {
+        font-size: clamp(2rem, 12vw, 3.1rem) !important;
+    }
+
+    .shop-hero-benefits,
+    .diagnostic-indicators,
+    .institutional-page--engagements .commitments-stats-grid {
+        grid-template-columns: 1fr !important;
+    }
+
+    .shop-products-slider {
+        grid-auto-columns: minmax(190px, 82vw);
+    }
+
+    .shop-info-card h2,
+    .shop-block-accessoires-beaute .shop-info-card h2 {
+        max-width: 100%;
+        font-size: clamp(2rem, 11vw, 3rem) !important;
+        line-height: 1.03;
+        overflow-wrap: anywhere;
+    }
+
+    .cosmethique-product-hero-copy,
+    .woocommerce div.product .cosmethique-product-gallery,
+    .product-premium-section,
+    .checkout-step-card,
+    .checkout-order-summary-card,
+    .cart-summary-card,
+    .cart-product-card,
+    .account-login-card,
+    .faq-accordion-group,
+    .faq-question-aside,
+    .faq-category-tile,
+    .faq-popular-large-card {
+        border-radius: 22px !important;
+        padding: 18px !important;
+    }
+
+    .woocommerce div.product .cosmethique-gallery-main img,
+    .cosmethique-gallery-main img {
+        max-height: 62vh;
+    }
+
+    .cosmethique-gallery-thumb {
+        flex-basis: 84px;
+    }
+
+    .product-hero-rating,
+    .product-hero-status,
+    .product-hero-benefits,
+    .account-stats-band,
+    .footer-payment-logos,
+    .footer-trust-badges,
+    .faq-suggestion-list {
+        gap: 8px;
+    }
+
+    .footer-payment-logos .payment-logo svg {
+        width: 58px;
+        height: 22px;
+    }
+
+    .footer-trust-badges span {
+        width: 100%;
+        justify-content: flex-start;
+    }
+}
+
+@media (max-width: 380px) {
+    .header-actions {
+        grid-template-columns: minmax(0, 1fr) 38px 38px 38px;
+        gap: 6px;
+    }
+
+    .product-search-form button,
+    .header-icon,
+    .language-switcher-toggle {
+        width: 38px;
+        height: 38px;
+        min-width: 38px;
+    }
+
+    .brand-logo {
+        font-size: 1.16rem !important;
+    }
+
+    .custom-logo {
+        max-width: 148px;
+    }
+
+    h1,
+    .hero-section h1,
+    .product-hero-title,
+    .faq-immersive-hero h1,
+    .institutional-shop-hero h1 {
+        font-size: clamp(2rem, 12vw, 3rem) !important;
+    }
+
+    .cart-product-card {
+        grid-template-columns: 1fr !important;
+    }
+
+    .cart-product-media {
+        width: 100%;
+    }
+}
+
+@media (max-width: 900px) {
+    *,
+    *::before,
+    *::after {
+        box-sizing: border-box;
+    }
+
+    .site-main,
+    .content-area,
+    .woocommerce,
+    .woocommerce-page,
+    .page-template-default .site-main,
+    .single-product .site-main {
+        max-width: 100%;
+        overflow-x: clip;
+    }
+
+    .archive-hero,
+    .blog-page-hero,
+    .blog-article-hero,
+    .page-hero,
+    .compact-hero,
+    .institutional-hero,
+    .faq-shop-hero,
+    .institutional-shop-hero,
+    .visage-category-hero,
+    .cart-premium-hero,
+    .checkout-premium-hero,
+    .account-hero,
+    .diagnostic-hero {
+        min-height: auto !important;
+        width: 100% !important;
+        max-width: 100% !important;
+        padding: 48px 14px !important;
+        overflow: hidden;
+    }
+
+    .faq-shop-hero,
+    .institutional-shop-hero,
+    .shop-hero-premium {
+        display: grid !important;
+        grid-template-columns: 1fr !important;
+        gap: 24px !important;
+    }
+
+    .faq-shop-hero-content,
+    .institutional-shop-hero-content,
+    .shop-hero-content,
+    .visage-category-copy,
+    .checkout-premium-copy,
+    .cart-hero-copy,
+    .account-hero-copy,
+    .diagnostic-hero-copy {
+        width: 100% !important;
+        min-width: 0 !important;
+        max-width: 100% !important;
+    }
+
+    .faq-shop-hero h1,
+    .institutional-shop-hero h1,
+    .visage-category-copy h1,
+    .shop-hero-content h1,
+    .account-hero-copy h1,
+    .diagnostic-hero-copy h1,
+    .checkout-premium-copy h1,
+    .cart-hero-copy h2 {
+        font-size: clamp(2.45rem, 14vw, 4.8rem) !important;
+        line-height: 0.98 !important;
+        letter-spacing: 0 !important;
+        max-width: min(100%, 11ch);
+    }
+
+    .faq-shop-hero-content > p:not(.shop-label),
+    .institutional-shop-hero-content > p:not(.shop-label),
+    .shop-hero-content > p:not(.shop-label),
+    .visage-category-copy > p:not(.shop-label),
+    .checkout-premium-copy > p:not(.shop-label),
+    .cart-hero-copy > p:not(.shop-label),
+    .account-hero-copy > p:not(.shop-label),
+    .diagnostic-hero-copy > p:not(.shop-label) {
+        max-width: 100%;
+        font-size: clamp(1rem, 4vw, 1.18rem) !important;
+        line-height: 1.65 !important;
+    }
+
+    .faq-shop-visual-card,
+    .institutional-shop-visual-card,
+    .shop-hero-slider-card,
+    .visage-category-media,
+    .account-hero-visual,
+    .diagnostic-hero-media {
+        width: 100% !important;
+        min-width: 0 !important;
+        max-width: 100% !important;
+        border-radius: 24px !important;
+        overflow: hidden !important;
+    }
+
+    .faq-shop-visual-card img,
+    .institutional-shop-visual-card img,
+    .shop-hero-slide img,
+    .visage-category-media img,
+    .account-hero-visual img,
+    .diagnostic-hero-media img {
+        aspect-ratio: 4 / 3;
+        height: auto !important;
+        max-height: none !important;
+        object-fit: cover;
+    }
+
+    .faq-search-section,
+    .faq-search-immersive,
+    .institutional-section--ingredients-library,
+    .institutional-section--quality-timeline {
+        width: 100% !important;
+        max-width: 100% !important;
+        padding-left: 14px !important;
+        padding-right: 14px !important;
+        overflow: hidden;
+    }
+
+    .faq-search-giant,
+    .faq-search-giant:focus-within {
+        min-height: 58px !important;
+        border-radius: 999px !important;
+        padding: 8px 12px !important;
+        box-shadow: 0 16px 40px rgba(13, 27, 61, 0.08) !important;
+    }
+
+    .faq-search-giant .faq-search-icon,
+    .faq-search-giant button,
+    .faq-search-clear {
+        width: 40px !important;
+        min-width: 40px !important;
+        height: 40px !important;
+    }
+
+    .faq-suggestion-list,
+    .ingredient-filter-list {
+        display: flex !important;
+        flex-wrap: nowrap !important;
+        gap: 10px !important;
+        overflow-x: auto !important;
+        padding-bottom: 8px !important;
+        -webkit-overflow-scrolling: touch;
+    }
+
+    .faq-suggestion-list button,
+    .ingredient-filter-list button {
+        flex: 0 0 auto;
+        white-space: nowrap;
+    }
+
+    .faq-category-strip,
+    .faq-popular-large-grid,
+    .faq-questions-layout {
+        width: 100% !important;
+        max-width: 100% !important;
+        margin-inline: 0 !important;
+    }
+
+    .faq-category-tile,
+    .faq-accordion-item,
+    .faq-popular-large-card,
+    .ingredient-library-card,
+    .commitments-value-card,
+    .quality-step {
+        overflow: hidden;
+    }
+
+    .faq-category-tile h3,
+    .faq-accordion-item h3,
+    .faq-popular-large-card h3,
+    .ingredient-library-card h3,
+    .commitments-value-card h3,
+    .quality-step h3,
+    .shop-product-title,
+    .product-card h3,
+    .woocommerce-loop-product__title {
+        overflow-wrap: anywhere;
+        word-break: normal;
+        line-height: 1.18;
+    }
+
+    .institutional-page--engagements .commitments-stats-band {
+        overflow: hidden;
+        padding: 52px 14px !important;
+    }
+
+    .institutional-page--engagements .commitments-stats-grid {
+        gap: 12px !important;
+        margin: 0 auto !important;
+    }
+
+    .institutional-page--engagements .commitments-stat-card {
+        min-width: 0;
+        padding: clamp(22px, 6vw, 34px) 14px !important;
+        display: grid;
+        align-content: center;
+        justify-items: center;
+        text-align: center;
+    }
+
+    .institutional-page--engagements .commitments-stat-card strong {
+        display: block;
+        width: 100%;
+        max-width: 100%;
+        font-size: clamp(2.35rem, 13vw, 4.1rem) !important;
+        letter-spacing: 0 !important;
+        white-space: nowrap !important;
+        transform: none !important;
+    }
+
+    .institutional-page--engagements .commitments-stat-card p {
+        max-width: 100%;
+        font-size: clamp(0.88rem, 3.2vw, 1rem) !important;
+        line-height: 1.35 !important;
+    }
+
+    .woocommerce ul.products {
+        display: grid !important;
+        gap: 18px !important;
+        width: 100% !important;
+        margin: 0 !important;
+    }
+
+    .woocommerce ul.products li.product {
+        width: 100% !important;
+        margin: 0 !important;
+        float: none !important;
+    }
+
+    .woocommerce ul.products li.product a img,
+    .product-card img,
+    .shop-product-card img,
+    .premium-product-card img {
+        width: 100% !important;
+        height: auto !important;
+        aspect-ratio: 1 / 1;
+        object-fit: cover;
+    }
+
+    .single-product .woocommerce div.product,
+    .product-premium-container,
+    .product-premium-section,
+    .premium-product-grid,
+    .woocommerce-tabs,
+    .related.products,
+    .upsells.products {
+        width: min(100% - 28px, 100%) !important;
+        max-width: 100% !important;
+        margin-left: auto !important;
+        margin-right: auto !important;
+    }
+
+    .single-product .summary,
+    .single-product .entry-summary,
+    .cosmethique-product-hero-copy {
+        padding: 0 !important;
+    }
+
+    .product-hero-title {
+        font-size: clamp(2.1rem, 12vw, 3.8rem) !important;
+        line-height: 1 !important;
+        max-width: 100% !important;
+    }
+
+    .product-hero-price,
+    .price,
+    .shop-product-price,
+    .product-price {
+        overflow-wrap: anywhere;
+        white-space: normal;
+    }
+
+    .product-hero-purchase,
+    .single-product .cart {
+        gap: 12px !important;
+        align-items: stretch !important;
+    }
+
+    .single-product .button,
+    .single-product button,
+    .single-product input[type="submit"] {
+        max-width: 100%;
+    }
+
+    .blog-article-layout,
+    .blog-showcase-grid-large,
+    .blog-showcase-grid,
+    .archive-grid {
+        grid-template-columns: 1fr !important;
+        width: min(100% - 28px, 100%) !important;
+        max-width: 100% !important;
+        margin-inline: auto !important;
+    }
+
+    .blog-share-rail {
+        position: static !important;
+        display: flex !important;
+        flex-direction: row !important;
+        align-items: center !important;
+        justify-content: flex-start !important;
+        gap: 10px !important;
+        width: 100% !important;
+        margin: 18px 0 !important;
+    }
+}
+
+@media (max-width: 520px) {
+    .faq-shop-hero h1,
+    .institutional-shop-hero h1,
+    .visage-category-copy h1,
+    .shop-hero-content h1,
+    .account-hero-copy h1,
+    .diagnostic-hero-copy h1,
+    .checkout-premium-copy h1,
+    .cart-hero-copy h2 {
+        font-size: clamp(2.2rem, 15vw, 3.6rem) !important;
+        max-width: 10ch;
+    }
+
+    .faq-search-giant {
+        grid-template-columns: 38px minmax(0, 1fr) 34px !important;
+        gap: 8px !important;
+        min-height: 54px !important;
+        padding: 7px 10px !important;
+    }
+
+    .faq-search-giant input {
+        font-size: 16px !important;
+        line-height: 1.3 !important;
+    }
+
+    .faq-suggestion-list,
+    .ingredient-filter-list {
+        margin-inline: -2px;
+    }
+
+    .institutional-page--engagements .commitments-stats-grid {
+        grid-template-columns: 1fr !important;
+    }
+
+    .institutional-page--engagements .commitments-stat-card strong {
+        font-size: clamp(3rem, 20vw, 5rem) !important;
+        white-space: normal !important;
+    }
+
+    .institutional-page--engagements .commitments-stat-card p {
+        font-size: 0.95rem !important;
+    }
+
+    .shop-products-slider {
+        grid-auto-columns: minmax(225px, 84vw);
+    }
+
+    .product-hero-title {
+        font-size: clamp(2rem, 13vw, 3.15rem) !important;
+    }
+
+    .cosmethique-gallery-thumbs {
+        margin-inline: -2px;
+    }
+
+    .cosmethique-gallery-thumb {
+        flex-basis: 78px;
+    }
+
+    .checkout-progress-steps,
+    .cart-progress-steps {
+        grid-template-columns: 1fr !important;
+    }
+}

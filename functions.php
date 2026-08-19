@@ -117,6 +117,58 @@ function theme_perso_cookie_category_allowed( $category ) {
     return ! empty( $consent[ $category ] );
 }
 
+function theme_perso_google_analytics_measurement_id() {
+    $measurement_id = defined( 'COSMETHIQUE_GA_MEASUREMENT_ID' ) ? COSMETHIQUE_GA_MEASUREMENT_ID : get_theme_mod( 'cosmethique_ga_measurement_id', 'G-KDCY4CP560' );
+    $measurement_id = strtoupper( trim( (string) $measurement_id ) );
+
+    if ( ! $measurement_id || ! preg_match( '/^[A-Z]+-[A-Z0-9_-]+$/', $measurement_id ) ) {
+        return '';
+    }
+
+    return apply_filters( 'theme_perso_google_analytics_measurement_id', $measurement_id );
+}
+
+function theme_perso_sanitize_google_analytics_measurement_id( $value ) {
+    $value = strtoupper( trim( sanitize_text_field( (string) $value ) ) );
+
+    if ( '' === $value ) {
+        return '';
+    }
+
+    return preg_match( '/^[A-Z]+-[A-Z0-9_-]+$/', $value ) ? $value : '';
+}
+
+function theme_perso_customize_google_analytics( $wp_customize ) {
+    $wp_customize->add_section(
+        'cosmethique_analytics',
+        array(
+            'title'       => __( 'COSM’ETHIQUE - Analytics', 'theme-perso' ),
+            'description' => __( 'Renseignez l’identifiant de mesure GA4. Google Analytics reste bloqué tant que les cookies analytiques ne sont pas acceptés.', 'theme-perso' ),
+            'priority'    => 160,
+        )
+    );
+
+    $wp_customize->add_setting(
+        'cosmethique_ga_measurement_id',
+        array(
+            'default'           => '',
+            'sanitize_callback' => 'theme_perso_sanitize_google_analytics_measurement_id',
+            'transport'         => 'refresh',
+        )
+    );
+
+    $wp_customize->add_control(
+        'cosmethique_ga_measurement_id',
+        array(
+            'label'       => __( 'Identifiant Google Analytics GA4', 'theme-perso' ),
+            'description' => __( 'Exemple : G-XXXXXXXXXX', 'theme-perso' ),
+            'section'     => 'cosmethique_analytics',
+            'type'        => 'text',
+        )
+    );
+}
+add_action( 'customize_register', 'theme_perso_customize_google_analytics' );
+
 function theme_perso_scripts() {
     $version = wp_get_theme()->get( 'Version' );
 
@@ -127,6 +179,7 @@ function theme_perso_scripts() {
     }
 
     wp_enqueue_style( 'theme-perso-style', get_stylesheet_uri(), array( 'theme-perso-fonts' ), $version );
+    wp_enqueue_style( 'theme-perso-mobile-responsive', get_template_directory_uri() . '/css/mobile-responsive.css', array( 'theme-perso-style' ), $version );
     wp_enqueue_script( 'theme-perso-script', get_template_directory_uri() . '/js/main.js', is_page( 'devenir-franchise' ) ? array( 'leaflet' ) : array(), $version, true );
 
     if ( function_exists( 'theme_perso_multilingual_script_data' ) ) {
@@ -229,6 +282,37 @@ function theme_perso_block_nonconsented_tracking_scripts() {
 add_action( 'wp_print_scripts', 'theme_perso_block_nonconsented_tracking_scripts', 1 );
 add_action( 'wp_print_footer_scripts', 'theme_perso_block_nonconsented_tracking_scripts', 1 );
 
+function theme_perso_render_google_analytics() {
+    if ( is_admin() ) {
+        return;
+    }
+
+    $measurement_id = theme_perso_google_analytics_measurement_id();
+
+    if ( ! $measurement_id ) {
+        return;
+    }
+
+    $gtag_src = add_query_arg(
+        'id',
+        rawurlencode( $measurement_id ),
+        'https://www.googletagmanager.com/gtag/js'
+    );
+    ?>
+    <script type="text/plain" data-cookie-category="analytics" async src="<?php echo esc_url( $gtag_src ); ?>"></script>
+    <script type="text/plain" data-cookie-category="analytics">
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', '<?php echo esc_js( $measurement_id ); ?>', {
+            anonymize_ip: true,
+            cookie_flags: 'SameSite=Lax;Secure'
+        });
+    </script>
+    <?php
+}
+add_action( 'wp_footer', 'theme_perso_render_google_analytics', 5 );
+
 function theme_perso_redirect_notre_histoire_to_about() {
     if ( ! function_exists( 'is_page' ) || ! is_page( 'notre-histoire' ) ) {
         return;
@@ -246,6 +330,10 @@ function theme_perso_resource_hints( $urls, $relation_type ) {
     if ( 'preconnect' === $relation_type ) {
         $urls[] = 'https://fonts.googleapis.com';
         $urls[] = 'https://fonts.gstatic.com';
+
+        if ( theme_perso_google_analytics_measurement_id() ) {
+            $urls[] = 'https://www.googletagmanager.com';
+        }
     }
 
     return $urls;
