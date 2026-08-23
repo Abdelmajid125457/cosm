@@ -72,8 +72,8 @@ endif;
             <h1 id="account-hero-title"><?php esc_html_e( 'Mon espace beauté', 'theme-perso' ); ?></h1>
             <p><?php esc_html_e( 'Retrouvez vos commandes, votre diagnostic personnalisé, vos favoris et profitez d’une expérience pensée pour vous.', 'theme-perso' ); ?></p>
             <div class="account-hero-actions">
-                <a class="button button-primary" href="#customer_login"><?php esc_html_e( 'Créer un compte', 'theme-perso' ); ?></a>
-                <a class="button shop-button-secondary" href="#customer_login"><?php esc_html_e( 'Se connecter', 'theme-perso' ); ?></a>
+                <a class="button button-primary" href="#customer_register" data-account-action="register"><?php esc_html_e( 'Créer un compte', 'theme-perso' ); ?></a>
+                <a class="button shop-button-secondary" href="#customer_login" data-account-action="login"><?php esc_html_e( 'Se connecter', 'theme-perso' ); ?></a>
             </div>
         </div>
 

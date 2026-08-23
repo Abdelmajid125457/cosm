@@ -2390,4 +2390,41 @@ Thomas Bernard`,
         revealItems.forEach((item) => item.classList.add('is-visible'));
     }
 
+    const accountAccess = document.querySelector('.account-woocommerce-wrap');
+    if (accountAccess) {
+        const loginForm = accountAccess.querySelector('.woocommerce-form-login');
+        const registerForm = accountAccess.querySelector('.woocommerce-form-register');
+
+        if (loginForm && !loginForm.id) {
+            loginForm.id = 'customer_login_form';
+        }
+
+        if (registerForm) {
+            const registerColumn = registerForm.closest('.u-column2, .col-2') || registerForm;
+            registerColumn.id = 'customer_register';
+        }
+
+        document.querySelectorAll('[data-account-action]').forEach((trigger) => {
+            trigger.addEventListener('click', (event) => {
+                const action = trigger.getAttribute('data-account-action');
+                const target = action === 'register' ? registerForm : loginForm;
+
+                if (!target) {
+                    return;
+                }
+
+                event.preventDefault();
+                target.scrollIntoView({ behavior: prefersReducedMotion ? 'auto' : 'smooth', block: 'center' });
+                target.classList.add('is-account-focused');
+
+                const firstInput = target.querySelector('input:not([type="hidden"]):not([type="checkbox"]), button');
+                if (firstInput) {
+                    window.setTimeout(() => firstInput.focus({ preventScroll: true }), prefersReducedMotion ? 0 : 420);
+                }
+
+                window.setTimeout(() => target.classList.remove('is-account-focused'), 1400);
+            });
+        });
+    }
+
 });

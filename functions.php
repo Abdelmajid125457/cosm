@@ -6376,6 +6376,263 @@ function theme_perso_account_security_fields() {
 add_action( 'woocommerce_login_form', 'theme_perso_account_security_fields' );
 add_action( 'woocommerce_register_form', 'theme_perso_account_security_fields' );
 
+function theme_perso_enable_woocommerce_account_registration( $value ) {
+    return 'yes';
+}
+add_filter( 'pre_option_woocommerce_enable_myaccount_registration', 'theme_perso_enable_woocommerce_account_registration' );
+add_filter( 'pre_option_woocommerce_registration_generate_password', '__return_empty_string' );
+add_filter( 'woocommerce_registration_generate_password', '__return_false' );
+add_filter( 'woocommerce_registration_generate_username', '__return_true' );
+
+function theme_perso_social_login_provider_config( $provider ) {
+    $providers = array(
+        'google' => array(
+            'label'      => esc_html__( 'Continuer avec Google', 'theme-perso' ),
+            'option'     => 'theme_perso_google_oauth_url',
+            'notice'     => esc_html__( 'La connexion Google doit être reliée à vos identifiants OAuth avant d’être activée.', 'theme-perso' ),
+            'icon_label' => 'G',
+        ),
+        'apple'  => array(
+            'label'      => esc_html__( 'Continuer avec Apple', 'theme-perso' ),
+            'option'     => 'theme_perso_apple_oauth_url',
+            'notice'     => esc_html__( 'La connexion Apple nécessite un identifiant Sign in with Apple configuré.', 'theme-perso' ),
+            'icon_label' => '',
+        ),
+    );
+
+    if ( ! isset( $providers[ $provider ] ) ) {
+        return array();
+    }
+
+    $providers[ $provider ]['oauth_url'] = trim( (string) get_option( $providers[ $provider ]['option'], '' ) );
+
+    return apply_filters( 'theme_perso_social_login_provider_config', $providers[ $provider ], $provider );
+}
+
+function theme_perso_social_login_start_url( $provider ) {
+    $account_url = function_exists( 'wc_get_page_permalink' ) ? wc_get_page_permalink( 'myaccount' ) : wp_login_url();
+
+    return wp_nonce_url(
+        add_query_arg(
+            array(
+                'cosmethique_social_login' => $provider,
+            ),
+            $account_url
+        ),
+        'cosmethique_social_login_' . $provider
+    );
+}
+
+function theme_perso_render_social_login_buttons() {
+    if ( is_user_logged_in() ) {
+        return;
+    }
+
+    $providers = array( 'google', 'apple' );
+    ?>
+    <div class="cosmethique-social-login" aria-label="<?php esc_attr_e( 'Connexion sociale', 'theme-perso' ); ?>">
+        <p><?php esc_html_e( 'Connexion rapide', 'theme-perso' ); ?></p>
+        <div class="cosmethique-social-login__buttons">
+            <?php foreach ( $providers as $provider ) : ?>
+                <?php $config = theme_perso_social_login_provider_config( $provider ); ?>
+                <a class="cosmethique-social-login__button cosmethique-social-login__button--<?php echo esc_attr( $provider ); ?>" href="<?php echo esc_url( theme_perso_social_login_start_url( $provider ) ); ?>">
+                    <span aria-hidden="true"><?php echo esc_html( $config['icon_label'] ); ?></span>
+                    <?php echo esc_html( $config['label'] ); ?>
+                </a>
+            <?php endforeach; ?>
+        </div>
+    </div>
+    <?php
+}
+add_action( 'woocommerce_login_form_start', 'theme_perso_render_social_login_buttons', 5 );
+add_action( 'woocommerce_register_form_start', 'theme_perso_render_social_login_buttons', 5 );
+
+function theme_perso_handle_social_login_start() {
+    if ( empty( $_GET['cosmethique_social_login'] ) ) {
+        return;
+    }
+
+    $provider = sanitize_key( wp_unslash( $_GET['cosmethique_social_login'] ) );
+    $config   = theme_perso_social_login_provider_config( $provider );
+    $account_url = function_exists( 'wc_get_page_permalink' ) ? wc_get_page_permalink( 'myaccount' ) : wp_login_url();
+
+    if ( empty( $config ) || ! isset( $_GET['_wpnonce'] ) || ! wp_verify_nonce( sanitize_text_field( wp_unslash( $_GET['_wpnonce'] ) ), 'cosmethique_social_login_' . $provider ) ) {
+        wp_safe_redirect( $account_url );
+        exit;
+    }
+
+    if ( ! empty( $config['oauth_url'] ) ) {
+        wp_safe_redirect( esc_url_raw( $config['oauth_url'] ) );
+        exit;
+    }
+
+    if ( function_exists( 'wc_add_notice' ) ) {
+        wc_add_notice( $config['notice'], 'notice' );
+    }
+
+    wp_safe_redirect( $account_url . '#customer_login' );
+    exit;
+}
+add_action( 'template_redirect', 'theme_perso_handle_social_login_start' );
+
+function theme_perso_account_registration_name_fields() {
+    if ( is_user_logged_in() ) {
+        return;
+    }
+
+    $first_name = isset( $_POST['billing_first_name'] ) ? sanitize_text_field( wp_unslash( $_POST['billing_first_name'] ) ) : '';
+    $last_name  = isset( $_POST['billing_last_name'] ) ? sanitize_text_field( wp_unslash( $_POST['billing_last_name'] ) ) : '';
+    ?>
+    <p class="form-row form-row-first">
+        <label for="reg_billing_first_name"><?php esc_html_e( 'Prénom', 'theme-perso' ); ?> <span class="required" aria-hidden="true">*</span></label>
+        <input type="text" class="input-text" name="billing_first_name" id="reg_billing_first_name" autocomplete="given-name" value="<?php echo esc_attr( $first_name ); ?>" required>
+    </p>
+    <p class="form-row form-row-last">
+        <label for="reg_billing_last_name"><?php esc_html_e( 'Nom', 'theme-perso' ); ?> <span class="required" aria-hidden="true">*</span></label>
+        <input type="text" class="input-text" name="billing_last_name" id="reg_billing_last_name" autocomplete="family-name" value="<?php echo esc_attr( $last_name ); ?>" required>
+    </p>
+    <div class="clear"></div>
+    <?php
+}
+add_action( 'woocommerce_register_form_start', 'theme_perso_account_registration_name_fields', 10 );
+
+function theme_perso_account_registration_extra_fields() {
+    if ( is_user_logged_in() ) {
+        return;
+    }
+
+    $newsletter_checked = ! isset( $_POST['register'] ) || ! empty( $_POST['cosmethique_newsletter_optin'] );
+    ?>
+    <p class="form-row form-row-wide">
+        <label for="reg_password_confirm"><?php esc_html_e( 'Confirmation du mot de passe', 'theme-perso' ); ?> <span class="required" aria-hidden="true">*</span></label>
+        <input type="password" class="input-text" name="password_confirm" id="reg_password_confirm" autocomplete="new-password" required>
+    </p>
+    <div class="cosmethique-register-consents">
+        <label class="woocommerce-form__label woocommerce-form__label-for-checkbox">
+            <input class="woocommerce-form__input woocommerce-form__input-checkbox" name="cosmethique_accept_terms" type="checkbox" value="1" <?php checked( ! empty( $_POST['cosmethique_accept_terms'] ) ); ?>>
+            <span><?php esc_html_e( 'J’accepte les Conditions Générales.', 'theme-perso' ); ?> <span class="required" aria-hidden="true">*</span></span>
+        </label>
+        <label class="woocommerce-form__label woocommerce-form__label-for-checkbox">
+            <input class="woocommerce-form__input woocommerce-form__input-checkbox" name="cosmethique_accept_privacy" type="checkbox" value="1" <?php checked( ! empty( $_POST['cosmethique_accept_privacy'] ) ); ?>>
+            <span><?php esc_html_e( 'J’accepte la Politique de confidentialité.', 'theme-perso' ); ?> <span class="required" aria-hidden="true">*</span></span>
+        </label>
+        <label class="woocommerce-form__label woocommerce-form__label-for-checkbox">
+            <input class="woocommerce-form__input woocommerce-form__input-checkbox" name="cosmethique_newsletter_optin" type="checkbox" value="1" <?php checked( $newsletter_checked ); ?>>
+            <span><?php esc_html_e( 'Je souhaite recevoir les nouveautés.', 'theme-perso' ); ?></span>
+        </label>
+    </div>
+    <?php
+}
+add_action( 'woocommerce_register_form', 'theme_perso_account_registration_extra_fields', 12 );
+
+function theme_perso_validate_account_registration_fields( $errors ) {
+    $first_name       = isset( $_POST['billing_first_name'] ) ? trim( sanitize_text_field( wp_unslash( $_POST['billing_first_name'] ) ) ) : '';
+    $last_name        = isset( $_POST['billing_last_name'] ) ? trim( sanitize_text_field( wp_unslash( $_POST['billing_last_name'] ) ) ) : '';
+    $password         = isset( $_POST['password'] ) ? (string) wp_unslash( $_POST['password'] ) : '';
+    $password_confirm = isset( $_POST['password_confirm'] ) ? (string) wp_unslash( $_POST['password_confirm'] ) : '';
+
+    if ( '' === $first_name ) {
+        $errors->add( 'cosmethique_first_name_required', esc_html__( 'Merci d’indiquer votre prénom.', 'theme-perso' ) );
+    }
+
+    if ( '' === $last_name ) {
+        $errors->add( 'cosmethique_last_name_required', esc_html__( 'Merci d’indiquer votre nom.', 'theme-perso' ) );
+    }
+
+    if ( strlen( $password ) < 8 || ! preg_match( '/[A-Z]/', $password ) || ! preg_match( '/[a-z]/', $password ) || ! preg_match( '/[0-9]/', $password ) ) {
+        $errors->add( 'cosmethique_password_strength', esc_html__( 'Votre mot de passe doit contenir au moins 8 caractères, une majuscule, une minuscule et un chiffre.', 'theme-perso' ) );
+    }
+
+    if ( $password !== $password_confirm ) {
+        $errors->add( 'cosmethique_password_match', esc_html__( 'La confirmation du mot de passe ne correspond pas.', 'theme-perso' ) );
+    }
+
+    if ( empty( $_POST['cosmethique_accept_terms'] ) ) {
+        $errors->add( 'cosmethique_terms_required', esc_html__( 'Vous devez accepter les Conditions Générales pour créer un compte.', 'theme-perso' ) );
+    }
+
+    if ( empty( $_POST['cosmethique_accept_privacy'] ) ) {
+        $errors->add( 'cosmethique_privacy_required', esc_html__( 'Vous devez accepter la Politique de confidentialité pour créer un compte.', 'theme-perso' ) );
+    }
+
+    return $errors;
+}
+add_filter( 'woocommerce_registration_errors', 'theme_perso_validate_account_registration_fields', 20, 1 );
+
+function theme_perso_save_account_registration_fields( $customer_id ) {
+    $first_name = isset( $_POST['billing_first_name'] ) ? sanitize_text_field( wp_unslash( $_POST['billing_first_name'] ) ) : '';
+    $last_name  = isset( $_POST['billing_last_name'] ) ? sanitize_text_field( wp_unslash( $_POST['billing_last_name'] ) ) : '';
+    $email      = isset( $_POST['email'] ) ? sanitize_email( wp_unslash( $_POST['email'] ) ) : '';
+
+    if ( $first_name ) {
+        update_user_meta( $customer_id, 'first_name', $first_name );
+        update_user_meta( $customer_id, 'billing_first_name', $first_name );
+    }
+
+    if ( $last_name ) {
+        update_user_meta( $customer_id, 'last_name', $last_name );
+        update_user_meta( $customer_id, 'billing_last_name', $last_name );
+    }
+
+    if ( $email ) {
+        update_user_meta( $customer_id, 'billing_email', $email );
+    }
+
+    update_user_meta( $customer_id, 'cosmethique_accept_terms', current_time( 'mysql' ) );
+    update_user_meta( $customer_id, 'cosmethique_accept_privacy', current_time( 'mysql' ) );
+    update_user_meta( $customer_id, 'cosmethique_newsletter_optin', empty( $_POST['cosmethique_newsletter_optin'] ) ? 'no' : 'yes' );
+
+    wp_update_user(
+        array(
+            'ID'           => $customer_id,
+            'display_name' => trim( $first_name . ' ' . $last_name ),
+            'first_name'   => $first_name,
+            'last_name'    => $last_name,
+        )
+    );
+}
+add_action( 'woocommerce_created_customer', 'theme_perso_save_account_registration_fields', 10, 1 );
+
+function theme_perso_account_form_button_labels( $translated, $text, $domain ) {
+    if ( is_admin() || 'woocommerce' !== $domain || ! function_exists( 'is_account_page' ) || ! is_account_page() ) {
+        return $translated;
+    }
+
+    if ( 'Register' === $text ) {
+        return esc_html__( 'Créer mon compte', 'theme-perso' );
+    }
+
+    if ( 'Log in' === $text ) {
+        return esc_html__( 'Se connecter', 'theme-perso' );
+    }
+
+    return $translated;
+}
+add_filter( 'gettext', 'theme_perso_account_form_button_labels', 20, 3 );
+
+function theme_perso_account_menu_labels( $items ) {
+    $labels = array(
+        'dashboard'       => esc_html__( 'Tableau de bord', 'theme-perso' ),
+        'orders'          => esc_html__( 'Mes commandes', 'theme-perso' ),
+        'edit-address'    => esc_html__( 'Mes adresses', 'theme-perso' ),
+        'edit-account'    => esc_html__( 'Mes informations personnelles', 'theme-perso' ),
+        'customer-logout' => esc_html__( 'Déconnexion', 'theme-perso' ),
+    );
+
+    foreach ( $labels as $endpoint => $label ) {
+        if ( isset( $items[ $endpoint ] ) ) {
+            $items[ $endpoint ] = $label;
+        }
+    }
+
+    if ( isset( $items['downloads'] ) ) {
+        unset( $items['downloads'] );
+    }
+
+    return $items;
+}
+add_filter( 'woocommerce_account_menu_items', 'theme_perso_account_menu_labels', 40 );
+
 function theme_perso_validate_login_security( $validation_error ) {
     if ( theme_perso_is_honeypot_triggered() || ! theme_perso_verify_recaptcha_submission( 'account' ) ) {
         $validation_error->add( 'cosmethique_security_failed', esc_html__( 'La vérification de sécurité a échoué. Merci de réessayer.', 'theme-perso' ) );

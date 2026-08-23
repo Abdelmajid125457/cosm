@@ -5841,6 +5841,109 @@ body.cookie-modal-open {
     font-weight: 700;
 }
 
+.cosmethique-social-login {
+    margin: 0 0 22px;
+    padding: 16px;
+    border: 1px solid rgba(13, 27, 61, 0.08);
+    border-radius: 20px;
+    background: linear-gradient(135deg, #ffffff 0%, #f5f7ff 100%);
+}
+
+.cosmethique-social-login > p {
+    margin: 0 0 12px;
+    color: var(--account-muted);
+    font-size: 0.85rem;
+    font-weight: 800;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+}
+
+.cosmethique-social-login__buttons {
+    display: grid;
+    gap: 10px;
+}
+
+.cosmethique-social-login__button {
+    display: inline-flex;
+    min-height: 48px;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    padding: 12px 18px;
+    border: 1px solid var(--account-line);
+    border-radius: 999px;
+    background: #ffffff;
+    color: var(--account-ink);
+    font-weight: 800;
+    text-decoration: none;
+    box-shadow: 0 12px 28px rgba(13, 27, 61, 0.06);
+    transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease, background 0.25s ease;
+}
+
+.cosmethique-social-login__button span {
+    display: inline-grid;
+    width: 28px;
+    height: 28px;
+    place-items: center;
+    border-radius: 50%;
+    background: #f5f7ff;
+    color: var(--account-ink);
+    font-weight: 900;
+}
+
+.cosmethique-social-login__button:hover,
+.cosmethique-social-login__button:focus-visible {
+    border-color: rgba(43, 125, 138, 0.35);
+    background: #ffffff;
+    color: var(--account-ink);
+    outline: none;
+    transform: translateY(-2px);
+    box-shadow: 0 16px 34px rgba(13, 27, 61, 0.12);
+}
+
+.cosmethique-register-consents {
+    display: grid;
+    gap: 10px;
+    margin: 4px 0 18px;
+}
+
+.cosmethique-register-consents label,
+.account-woocommerce-wrap .woocommerce-form-login__rememberme {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    color: var(--account-muted);
+    font-size: 0.93rem;
+    line-height: 1.55;
+}
+
+.cosmethique-register-consents input[type="checkbox"],
+.account-woocommerce-wrap .woocommerce-form-login__rememberme input[type="checkbox"] {
+    width: 18px;
+    min-width: 18px;
+    height: 18px;
+    margin-top: 2px;
+    accent-color: #2B7D8A;
+}
+
+.account-woocommerce-wrap .form-row-first,
+.account-woocommerce-wrap .form-row-last {
+    width: calc(50% - 8px);
+    float: left;
+}
+
+.account-woocommerce-wrap .form-row-first {
+    margin-right: 16px;
+}
+
+.account-woocommerce-wrap .clear {
+    clear: both;
+}
+
+.account-woocommerce-wrap .woocommerce-form.is-account-focused {
+    animation: account-form-focus 1.2s ease;
+}
+
 .account-woocommerce-wrap .woocommerce-form-login__rememberme {
     display: inline-flex;
     gap: 8px;
@@ -6269,6 +6372,17 @@ body.cookie-modal-open {
     }
 }
 
+@keyframes account-form-focus {
+    0%,
+    100% {
+        box-shadow: none;
+    }
+
+    35% {
+        box-shadow: 0 0 0 5px rgba(43, 125, 138, 0.14);
+    }
+}
+
 @media (max-width: 1180px) {
     .account-hero {
         grid-template-columns: 1fr;
@@ -6418,6 +6532,13 @@ body.cookie-modal-open {
     .account-woocommerce-wrap .u-column1,
     .account-woocommerce-wrap .u-column2 {
         max-width: none;
+    }
+
+    .account-woocommerce-wrap .form-row-first,
+    .account-woocommerce-wrap .form-row-last {
+        float: none;
+        width: 100%;
+        margin-right: 0;
     }
 
     .account-woocommerce-wrap .woocommerce-MyAccount-navigation ul {
