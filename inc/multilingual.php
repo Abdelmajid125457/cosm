@@ -2801,6 +2801,8 @@ function theme_perso_multilingual_text_map() {
         'Prénom' => array( 'en' => 'First name', 'es' => 'Nombre', 'ar' => 'الاسم الأول' ),
         'Nom' => array( 'en' => 'Last name', 'es' => 'Apellido', 'ar' => 'اسم العائلة' ),
         'Confirmation du mot de passe' => array( 'en' => 'Confirm password', 'es' => 'Confirmar contraseña', 'ar' => 'تأكيد كلمة المرور' ),
+        'Téléphone' => array( 'en' => 'Phone', 'es' => 'Teléfono', 'ar' => 'الهاتف' ),
+        'optionnel' => array( 'en' => 'optional', 'es' => 'opcional', 'ar' => 'اختياري' ),
         'J’accepte les Conditions Générales.' => array( 'en' => 'I accept the Terms and Conditions.', 'es' => 'Acepto las Condiciones Generales.', 'ar' => 'أوافق على الشروط والأحكام.' ),
         'J’accepte la Politique de confidentialité.' => array( 'en' => 'I accept the Privacy Policy.', 'es' => 'Acepto la Política de privacidad.', 'ar' => 'أوافق على سياسة الخصوصية.' ),
         'Je souhaite recevoir les nouveautés.' => array( 'en' => 'I would like to receive news and updates.', 'es' => 'Quiero recibir novedades.', 'ar' => 'أرغب في تلقي المستجدات.' ),

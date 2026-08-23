@@ -2425,6 +2425,97 @@ Thomas Bernard`,
                 window.setTimeout(() => target.classList.remove('is-account-focused'), 1400);
             });
         });
+
+        const passwordPattern = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,}$/;
+        const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+        const setFieldState = (field, valid, message = '') => {
+            if (!field || field.type === 'hidden') {
+                return;
+            }
+
+            const row = field.closest('.form-row') || field.parentElement;
+            let feedback = row ? row.querySelector('.account-field-feedback') : null;
+
+            if (!feedback && row) {
+                feedback = document.createElement('span');
+                feedback.className = 'account-field-feedback';
+                feedback.setAttribute('aria-live', 'polite');
+                row.insertAdjacentElement('afterend', feedback);
+            }
+
+            field.classList.toggle('is-valid', Boolean(valid));
+            field.classList.toggle('is-invalid', valid === false);
+
+            if (feedback) {
+                feedback.textContent = valid === false ? message : '';
+            }
+        };
+
+        const validateField = (field) => {
+            if (!field || field.disabled || field.type === 'hidden') {
+                return true;
+            }
+
+            const value = field.value.trim();
+            const isRequired = field.required || field.closest('.woocommerce-form-register') && ['billing_first_name', 'billing_last_name', 'email', 'password', 'password_confirm'].includes(field.name);
+
+            if (isRequired && !value) {
+                setFieldState(field, false, 'Ce champ est requis.');
+                return false;
+            }
+
+            if (field.type === 'email' && value && !emailPattern.test(value)) {
+                setFieldState(field, false, 'Adresse e-mail invalide.');
+                return false;
+            }
+
+            if (field.name === 'password' && field.closest('.woocommerce-form-register') && !passwordPattern.test(value)) {
+                setFieldState(field, false, '8 caractères, une majuscule, une minuscule et un chiffre.');
+                return false;
+            }
+
+            if (field.name === 'password_confirm') {
+                const password = registerForm ? registerForm.querySelector('input[name="password"]') : null;
+                if (password && value !== password.value) {
+                    setFieldState(field, false, 'Les mots de passe ne correspondent pas.');
+                    return false;
+                }
+            }
+
+            if (value || isRequired) {
+                setFieldState(field, true);
+            }
+
+            return true;
+        };
+
+        [loginForm, registerForm].filter(Boolean).forEach((form) => {
+            form.querySelectorAll('input:not([type="hidden"]):not([type="checkbox"]), textarea').forEach((field) => {
+                field.addEventListener('input', () => validateField(field));
+                field.addEventListener('blur', () => validateField(field));
+            });
+
+            form.addEventListener('submit', (event) => {
+                const fields = Array.from(form.querySelectorAll('input:not([type="hidden"]):not([type="checkbox"]), textarea'));
+                const isValid = fields.every(validateField);
+                const submitButton = form.querySelector('button[type="submit"], .woocommerce-button');
+
+                if (!isValid) {
+                    event.preventDefault();
+                    const firstInvalid = form.querySelector('.is-invalid');
+                    if (firstInvalid) {
+                        firstInvalid.focus();
+                    }
+                    return;
+                }
+
+                if (submitButton) {
+                    submitButton.classList.add('is-loading');
+                    submitButton.setAttribute('aria-busy', 'true');
+                }
+            });
+        });
     }
 
 });

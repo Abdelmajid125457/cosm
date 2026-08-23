@@ -6423,13 +6423,13 @@ function theme_perso_social_login_provider_config( $provider ) {
             'label'      => esc_html__( 'Continuer avec Google', 'theme-perso' ),
             'option'     => 'theme_perso_google_oauth_url',
             'notice'     => esc_html__( 'La connexion Google doit être reliée à vos identifiants OAuth avant d’être activée.', 'theme-perso' ),
-            'icon_label' => 'G',
+            'icon'       => 'google',
         ),
         'apple'  => array(
             'label'      => esc_html__( 'Continuer avec Apple', 'theme-perso' ),
             'option'     => 'theme_perso_apple_oauth_url',
             'notice'     => esc_html__( 'La connexion Apple nécessite un identifiant Sign in with Apple configuré.', 'theme-perso' ),
-            'icon_label' => '',
+            'icon'       => 'apple',
         ),
     );
 
@@ -6456,6 +6456,15 @@ function theme_perso_social_login_start_url( $provider ) {
     );
 }
 
+function theme_perso_social_login_icon( $icon ) {
+    $icons = array(
+        'google' => '<svg viewBox="0 0 24 24" focusable="false" aria-hidden="true"><path fill="#4285F4" d="M21.8 12.2c0-.7-.1-1.4-.2-2H12v3.8h5.5a4.7 4.7 0 0 1-2 3.1v2.6h3.2c1.9-1.8 3.1-4.4 3.1-7.5Z"></path><path fill="#34A853" d="M12 22c2.7 0 5-0.9 6.7-2.4l-3.2-2.6c-.9.6-2 .9-3.5.9-2.6 0-4.8-1.8-5.6-4.1H3.1v2.7A10 10 0 0 0 12 22Z"></path><path fill="#FBBC05" d="M6.4 13.8a6 6 0 0 1 0-3.6V7.5H3.1a10 10 0 0 0 0 9l3.3-2.7Z"></path><path fill="#EA4335" d="M12 6.1c1.5 0 2.8.5 3.8 1.5l2.9-2.9A9.7 9.7 0 0 0 12 2 10 10 0 0 0 3.1 7.5l3.3 2.7C7.2 7.9 9.4 6.1 12 6.1Z"></path></svg>',
+        'apple'  => '<svg viewBox="0 0 24 24" focusable="false" aria-hidden="true"><path fill="currentColor" d="M17.7 12.8c0-2.1 1.7-3.1 1.8-3.2-1-1.4-2.5-1.6-3-1.6-1.3-.1-2.5.8-3.1.8-.7 0-1.6-.8-2.7-.7-1.4 0-2.7.8-3.4 2.1-1.5 2.6-.4 6.4 1.1 8.5.7 1 1.6 2.2 2.7 2.1 1.1 0 1.5-.7 2.8-.7s1.7.7 2.9.7c1.2 0 2-1 2.7-2.1.8-1.2 1.2-2.4 1.2-2.5 0 0-2.3-.9-2.3-3.4ZM15.6 6.6c.6-.7 1-1.7.9-2.6-.9 0-1.9.6-2.5 1.3-.6.7-1.1 1.7-1 2.6 1 0 2-.5 2.6-1.3Z"></path></svg>',
+    );
+
+    return isset( $icons[ $icon ] ) ? $icons[ $icon ] : '';
+}
+
 function theme_perso_render_social_login_buttons() {
     if ( is_user_logged_in() ) {
         return;
@@ -6469,7 +6478,7 @@ function theme_perso_render_social_login_buttons() {
             <?php foreach ( $providers as $provider ) : ?>
                 <?php $config = theme_perso_social_login_provider_config( $provider ); ?>
                 <a class="cosmethique-social-login__button cosmethique-social-login__button--<?php echo esc_attr( $provider ); ?>" href="<?php echo esc_url( theme_perso_social_login_start_url( $provider ) ); ?>">
-                    <span aria-hidden="true"><?php echo esc_html( $config['icon_label'] ); ?></span>
+                    <span aria-hidden="true"><?php echo theme_perso_social_login_icon( $config['icon'] ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></span>
                     <?php echo esc_html( $config['label'] ); ?>
                 </a>
             <?php endforeach; ?>
@@ -6536,10 +6545,15 @@ function theme_perso_account_registration_extra_fields() {
     }
 
     $newsletter_checked = ! isset( $_POST['register'] ) || ! empty( $_POST['cosmethique_newsletter_optin'] );
+    $phone              = isset( $_POST['billing_phone'] ) ? sanitize_text_field( wp_unslash( $_POST['billing_phone'] ) ) : '';
     ?>
     <p class="form-row form-row-wide">
         <label for="reg_password_confirm"><?php esc_html_e( 'Confirmation du mot de passe', 'theme-perso' ); ?> <span class="required" aria-hidden="true">*</span></label>
         <input type="password" class="input-text" name="password_confirm" id="reg_password_confirm" autocomplete="new-password" required>
+    </p>
+    <p class="form-row form-row-wide">
+        <label for="reg_billing_phone"><?php esc_html_e( 'Téléphone', 'theme-perso' ); ?> <span class="optional"><?php esc_html_e( 'optionnel', 'theme-perso' ); ?></span></label>
+        <input type="tel" class="input-text" name="billing_phone" id="reg_billing_phone" autocomplete="tel" value="<?php echo esc_attr( $phone ); ?>">
     </p>
     <div class="cosmethique-register-consents">
         <label class="woocommerce-form__label woocommerce-form__label-for-checkbox">
@@ -6597,6 +6611,7 @@ function theme_perso_save_account_registration_fields( $customer_id ) {
     $first_name = isset( $_POST['billing_first_name'] ) ? sanitize_text_field( wp_unslash( $_POST['billing_first_name'] ) ) : '';
     $last_name  = isset( $_POST['billing_last_name'] ) ? sanitize_text_field( wp_unslash( $_POST['billing_last_name'] ) ) : '';
     $email      = isset( $_POST['email'] ) ? sanitize_email( wp_unslash( $_POST['email'] ) ) : '';
+    $phone      = isset( $_POST['billing_phone'] ) ? sanitize_text_field( wp_unslash( $_POST['billing_phone'] ) ) : '';
 
     if ( $first_name ) {
         update_user_meta( $customer_id, 'first_name', $first_name );
@@ -6610,6 +6625,10 @@ function theme_perso_save_account_registration_fields( $customer_id ) {
 
     if ( $email ) {
         update_user_meta( $customer_id, 'billing_email', $email );
+    }
+
+    if ( $phone ) {
+        update_user_meta( $customer_id, 'billing_phone', $phone );
     }
 
     update_user_meta( $customer_id, 'cosmethique_accept_terms', current_time( 'mysql' ) );

@@ -5673,15 +5673,15 @@ body.cookie-modal-open {
 .account-access-section {
     display: grid;
     place-items: center;
-    padding: clamp(42px, 6vw, 76px) clamp(22px, 5vw, 78px);
+    padding: clamp(38px, 5vw, 68px) clamp(18px, 4vw, 58px);
     background:
         linear-gradient(180deg, #ffffff 0%, #f7f9ff 100%),
         radial-gradient(circle at 12% 12%, rgba(43, 125, 138, 0.06), transparent 32%);
 }
 
 .account-login-card {
-    width: min(1480px, 100%);
-    padding: clamp(22px, 3.2vw, 52px);
+    width: min(1320px, 100%);
+    padding: clamp(20px, 2.6vw, 36px);
     border: 1px solid rgba(232, 235, 241, 0.95);
     border-radius: 34px;
     background: rgba(255, 255, 255, 0.96);
@@ -5691,12 +5691,13 @@ body.cookie-modal-open {
 .account-login-heading {
     display: grid;
     justify-items: center;
-    margin: 0 auto clamp(28px, 3vw, 44px);
+    max-width: 720px;
+    margin: 0 auto clamp(24px, 2.5vw, 34px);
     text-align: center;
 }
 
 .account-login-heading h2 {
-    margin: 14px 0 8px;
+    margin: 10px 0 8px;
     color: var(--account-ink);
     font-size: clamp(2.7rem, 4vw, 4.8rem);
     line-height: 1;
@@ -5714,14 +5715,14 @@ body.cookie-modal-open {
 }
 
 .account-woocommerce-wrap .woocommerce-notices-wrapper {
-    max-width: 980px;
+    max-width: 1040px;
     margin: 0 auto 24px;
 }
 
 .account-woocommerce-wrap .u-columns {
     display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: clamp(22px, 3vw, 38px);
+    grid-template-columns: repeat(2, minmax(0, 600px));
+    gap: clamp(18px, 2.2vw, 30px);
     justify-content: center;
     align-items: stretch;
 }
@@ -5743,7 +5744,8 @@ body.cookie-modal-open {
     flex-direction: column;
     max-width: none;
     min-height: 100%;
-    padding: clamp(28px, 3.4vw, 46px);
+    padding: clamp(28px, 3vw, 42px);
+    overflow: hidden;
 }
 
 .account-woocommerce-wrap .u-column2 {
@@ -5758,7 +5760,7 @@ body.cookie-modal-open {
 .account-woocommerce-wrap .u-column2 h2,
 .account-woocommerce-wrap .woocommerce-MyAccount-content h2,
 .account-woocommerce-wrap .woocommerce-MyAccount-content h3 {
-    margin: 0 0 24px;
+    margin: 0 0 22px;
     color: var(--account-ink);
     font-size: clamp(2.1rem, 2.6vw, 3rem);
     line-height: 1.08;
@@ -5775,7 +5777,8 @@ body.cookie-modal-open {
 }
 
 .account-woocommerce-wrap .form-row {
-    margin: 0 0 18px;
+    position: relative;
+    margin: 0 0 16px;
 }
 
 .account-woocommerce-wrap label {
@@ -5804,6 +5807,28 @@ body.cookie-modal-open {
     font-size: 1rem;
     font-weight: 650;
     transition: border-color 0.25s ease, box-shadow 0.25s ease, background-color 0.25s ease;
+}
+
+.account-woocommerce-wrap input.is-valid,
+.account-woocommerce-wrap textarea.is-valid {
+    border-color: rgba(43, 125, 138, 0.55);
+    background-color: #fbfefe;
+}
+
+.account-woocommerce-wrap input.is-invalid,
+.account-woocommerce-wrap textarea.is-invalid {
+    border-color: rgba(176, 64, 64, 0.6);
+    background-color: #fffafa;
+}
+
+.account-field-feedback {
+    display: block;
+    min-height: 18px;
+    margin: -9px 0 10px 20px;
+    color: #a04747;
+    font-size: 0.78rem;
+    font-weight: 750;
+    line-height: 1.35;
 }
 
 .account-woocommerce-wrap textarea {
@@ -5839,6 +5864,7 @@ body.cookie-modal-open {
 .account-woocommerce-wrap .woocommerce-button,
 .account-woocommerce-wrap button.button,
 .account-woocommerce-wrap a.button {
+    position: relative;
     width: 100%;
     min-height: 58px;
     justify-content: center;
@@ -5850,6 +5876,24 @@ body.cookie-modal-open {
     font-size: 1rem;
     font-weight: 850;
     transition: transform 0.25s ease, box-shadow 0.25s ease, background 0.25s ease;
+}
+
+.account-woocommerce-wrap .woocommerce-button.is-loading,
+.account-woocommerce-wrap button.button.is-loading {
+    pointer-events: none;
+    color: transparent;
+}
+
+.account-woocommerce-wrap .woocommerce-button.is-loading::after,
+.account-woocommerce-wrap button.button.is-loading::after {
+    content: "";
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    border: 2px solid rgba(255, 255, 255, 0.45);
+    border-top-color: #ffffff;
+    border-radius: 50%;
+    animation: account-button-spin 0.75s linear infinite;
 }
 
 .account-woocommerce-wrap .woocommerce-button:hover,
@@ -5890,6 +5934,7 @@ body.cookie-modal-open {
 
 .cosmethique-social-login__buttons {
     display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
     gap: 12px;
 }
 
@@ -5898,13 +5943,14 @@ body.cookie-modal-open {
     min-height: 58px;
     align-items: center;
     justify-content: center;
-    gap: 14px;
-    padding: 15px 20px;
+    gap: 12px;
+    padding: 14px 16px;
     border: 1px solid var(--account-line);
     border-radius: 999px;
     background: #ffffff;
     color: var(--account-ink);
-    font-weight: 800;
+    font-size: 0.94rem;
+    font-weight: 850;
     text-decoration: none;
     box-shadow: 0 12px 28px rgba(13, 27, 61, 0.06);
     transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease, background 0.25s ease;
@@ -5912,13 +5958,18 @@ body.cookie-modal-open {
 
 .cosmethique-social-login__button span {
     display: inline-grid;
-    width: 32px;
-    height: 32px;
+    width: 30px;
+    height: 30px;
     place-items: center;
     border-radius: 50%;
     background: #f5f7ff;
     color: var(--account-ink);
     font-weight: 900;
+}
+
+.cosmethique-social-login__button svg {
+    width: 18px;
+    height: 18px;
 }
 
 .cosmethique-social-login__button:hover,
@@ -5974,6 +6025,12 @@ body.cookie-modal-open {
     height: 18px;
     margin-top: 2px;
     accent-color: #2B7D8A;
+}
+
+.account-woocommerce-wrap .optional {
+    color: var(--account-muted);
+    font-size: 0.78rem;
+    font-weight: 700;
 }
 
 .account-woocommerce-wrap .form-row-first,
@@ -6433,6 +6490,12 @@ body.cookie-modal-open {
     }
 }
 
+@keyframes account-button-spin {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
 @media (max-width: 1180px) {
     .account-hero {
         grid-template-columns: 1fr;
@@ -6469,6 +6532,25 @@ body.cookie-modal-open {
 
     .account-stats-band {
         grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .account-login-card {
+        width: min(1120px, 100%);
+        padding: 24px;
+    }
+
+    .account-woocommerce-wrap .u-columns {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 18px;
+    }
+
+    .account-woocommerce-wrap .u-column1,
+    .account-woocommerce-wrap .u-column2 {
+        padding: 26px;
+    }
+
+    .cosmethique-social-login__buttons {
+        grid-template-columns: 1fr;
     }
 
     .cart-premium-layout,
@@ -6577,11 +6659,14 @@ body.cookie-modal-open {
 
     .account-woocommerce-wrap .u-columns {
         grid-template-columns: 1fr;
+        gap: 18px;
     }
 
     .account-woocommerce-wrap .u-column1,
     .account-woocommerce-wrap .u-column2 {
         max-width: none;
+        padding: 22px;
+        border-radius: 24px;
     }
 
     .account-woocommerce-wrap .form-row-first,
@@ -6589,6 +6674,21 @@ body.cookie-modal-open {
         float: none;
         width: 100%;
         margin-right: 0;
+    }
+
+    .account-woocommerce-wrap .woocommerce-Input,
+    .account-woocommerce-wrap input.input-text,
+    .account-woocommerce-wrap input[type="text"],
+    .account-woocommerce-wrap input[type="email"],
+    .account-woocommerce-wrap input[type="password"],
+    .account-woocommerce-wrap input[type="tel"],
+    .account-woocommerce-wrap select,
+    .account-woocommerce-wrap textarea,
+    .account-woocommerce-wrap .woocommerce-button,
+    .account-woocommerce-wrap button.button,
+    .account-woocommerce-wrap a.button,
+    .cosmethique-social-login__button {
+        min-height: 56px;
     }
 
     .account-woocommerce-wrap .woocommerce-MyAccount-navigation ul {
