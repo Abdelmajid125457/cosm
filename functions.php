@@ -3929,22 +3929,45 @@ function theme_perso_repair_catalog_product_state( $title, $term_ids, $fallback_
         return;
     }
 
+    $needs_save       = false;
     $current_term_ids = array_map( 'intval', $product->get_category_ids() );
-    $product->set_category_ids( array_values( array_unique( array_merge( $current_term_ids, $term_ids ) ) ) );
-    $product->set_status( 'publish' );
-    $product->set_catalog_visibility( 'visible' );
+    $next_term_ids    = array_values( array_unique( array_merge( $current_term_ids, $term_ids ) ) );
+    $current_sorted   = $current_term_ids;
+    $next_sorted      = $next_term_ids;
+
+    sort( $current_sorted );
+    sort( $next_sorted );
+
+    if ( $current_sorted !== $next_sorted ) {
+        $product->set_category_ids( $next_term_ids );
+        $needs_save = true;
+    }
+
+    if ( 'publish' !== $product->get_status() ) {
+        $product->set_status( 'publish' );
+        $needs_save = true;
+    }
+
+    if ( 'visible' !== $product->get_catalog_visibility() ) {
+        $product->set_catalog_visibility( 'visible' );
+        $needs_save = true;
+    }
 
     if ( empty( $product->get_regular_price() ) && ! empty( $fallback_data['price'] ) ) {
         $product->set_regular_price( $fallback_data['price'] );
         $product->set_price( ! empty( $fallback_data['sale_price'] ) ? $fallback_data['sale_price'] : $fallback_data['price'] );
+        $needs_save = true;
     }
 
     if ( ! empty( $fallback_data['sale_price'] ) ) {
-        $product->set_sale_price( $fallback_data['sale_price'] );
-        $product->set_price( $fallback_data['sale_price'] );
+        if ( (string) $product->get_sale_price() !== (string) $fallback_data['sale_price'] ) {
+            $product->set_sale_price( $fallback_data['sale_price'] );
+            $product->set_price( $fallback_data['sale_price'] );
+            $needs_save = true;
+        }
     }
 
-    $product_id    = $product->save();
+    $product_id    = $needs_save ? $product->save() : $product->get_id();
     $visuals       = theme_perso_product_visuals();
     $descriptions  = theme_perso_product_descriptions();
     $product_badge = $badge ? $badge : ( ! empty( $fallback_data['badge'] ) ? $fallback_data['badge'] : '' );
@@ -3984,6 +4007,16 @@ function theme_perso_repair_catalog_product_state( $title, $term_ids, $fallback_
 
 function theme_perso_repair_catalog_categories() {
     if ( ! class_exists( 'WooCommerce' ) || ! taxonomy_exists( 'product_cat' ) ) {
+        return;
+    }
+
+    if (
+        ! is_admin()
+        || ! current_user_can( 'manage_woocommerce' )
+        || empty( $_GET['cosmethique_repair_catalog'] )
+        || empty( $_GET['_wpnonce'] )
+        || ! wp_verify_nonce( sanitize_text_field( wp_unslash( $_GET['_wpnonce'] ) ), 'cosmethique_repair_catalog' )
+    ) {
         return;
     }
 
@@ -6441,6 +6474,7 @@ function theme_perso_render_social_login_buttons() {
                 </a>
             <?php endforeach; ?>
         </div>
+        <div class="cosmethique-social-login__divider"><span><?php esc_html_e( 'ou', 'theme-perso' ); ?></span></div>
     </div>
     <?php
 }

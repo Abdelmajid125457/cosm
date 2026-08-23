@@ -2795,6 +2795,7 @@ function theme_perso_multilingual_text_map() {
         'Continuer avec Apple' => array( 'en' => 'Continue with Apple', 'es' => 'Continuar con Apple', 'ar' => 'المتابعة باستخدام Apple' ),
         'Connexion sociale' => array( 'en' => 'Social login', 'es' => 'Inicio de sesión social', 'ar' => 'تسجيل الدخول الاجتماعي' ),
         'Connexion rapide' => array( 'en' => 'Quick login', 'es' => 'Inicio rápido', 'ar' => 'تسجيل سريع' ),
+        'ou' => array( 'en' => 'or', 'es' => 'o', 'ar' => 'أو' ),
         'La connexion Google doit être reliée à vos identifiants OAuth avant d’être activée.' => array( 'en' => 'Google login must be connected to your OAuth credentials before it can be enabled.', 'es' => 'El inicio con Google debe conectarse a tus credenciales OAuth antes de activarse.', 'ar' => 'يجب ربط تسجيل الدخول عبر Google ببيانات OAuth قبل تفعيله.' ),
         'La connexion Apple nécessite un identifiant Sign in with Apple configuré.' => array( 'en' => 'Apple login requires a configured Sign in with Apple identifier.', 'es' => 'El inicio con Apple requiere un identificador Sign in with Apple configurado.', 'ar' => 'يتطلب تسجيل الدخول عبر Apple معرف Sign in with Apple مضبوطاً.' ),
         'Prénom' => array( 'en' => 'First name', 'es' => 'Nombre', 'ar' => 'الاسم الأول' ),
