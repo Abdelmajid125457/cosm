@@ -66,44 +66,61 @@ endif;
 ?>
 
 <section class="account-premium">
-    <section class="account-hero" aria-labelledby="account-hero-title">
-        <div class="account-hero-copy">
-            <p class="eyebrow"><?php esc_html_e( 'COSM’ÉTHIQUE', 'theme-perso' ); ?></p>
-            <h1 id="account-hero-title"><?php esc_html_e( 'Mon espace beauté', 'theme-perso' ); ?></h1>
-            <p><?php esc_html_e( 'Retrouvez vos commandes, votre diagnostic personnalisé, vos favoris et profitez d’une expérience pensée pour vous.', 'theme-perso' ); ?></p>
-            <div class="account-hero-actions">
-                <a class="button button-primary" href="#customer_register" data-account-action="register"><?php esc_html_e( 'Créer un compte', 'theme-perso' ); ?></a>
-                <a class="button shop-button-secondary" href="#customer_login" data-account-action="login"><?php esc_html_e( 'Se connecter', 'theme-perso' ); ?></a>
-            </div>
-        </div>
+    <section class="account-access-section account-auth-experience" aria-labelledby="account-hero-title">
+        <div class="account-auth-shell">
+            <aside class="account-auth-brand" aria-label="<?php esc_attr_e( 'Avantages de l’espace client', 'theme-perso' ); ?>">
+                <div class="account-auth-brand-copy">
+                    <p class="eyebrow"><?php esc_html_e( 'COSM’ÉTHIQUE', 'theme-perso' ); ?></p>
+                    <h1 id="account-hero-title"><?php esc_html_e( 'Mon espace beauté', 'theme-perso' ); ?></h1>
+                    <p><?php esc_html_e( 'Retrouvez vos commandes, votre diagnostic personnalisé, vos favoris et une expérience pensée pour votre routine beauté.', 'theme-perso' ); ?></p>
+                </div>
 
-        <div class="account-hero-visual" aria-label="<?php esc_attr_e( 'Produits COSM’ÉTHIQUE', 'theme-perso' ); ?>">
-            <div class="account-orbit account-orbit--one"></div>
-            <div class="account-orbit account-orbit--two"></div>
-            <?php foreach ( $floating_products as $index => $product ) : ?>
-                <figure class="account-floating-product account-floating-product--<?php echo esc_attr( $index + 1 ); ?>">
-                    <?php if ( $product['image'] ) : ?>
-                        <img src="<?php echo esc_url( $product['image'] ); ?>" alt="<?php echo esc_attr( $product['name'] ); ?>" loading="lazy">
+                <figure class="account-auth-lifestyle">
+                    <?php if ( ! empty( $floating_products[0]['image'] ) ) : ?>
+                        <img src="<?php echo esc_url( $floating_products[0]['image'] ); ?>" alt="<?php echo esc_attr__( 'Routine beauté COSM’ÉTHIQUE', 'theme-perso' ); ?>" loading="eager">
                     <?php endif; ?>
+                    <figcaption>
+                        <span><?php echo theme_perso_account_icon( 'lock' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></span>
+                        <strong><?php esc_html_e( 'Espace sécurisé', 'theme-perso' ); ?></strong>
+                        <small><?php esc_html_e( 'Vos données et commandes restent protégées.', 'theme-perso' ); ?></small>
+                    </figcaption>
                 </figure>
-            <?php endforeach; ?>
-            <div class="account-beauty-card">
-                <span><?php echo theme_perso_account_icon( 'lock' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></span>
-                <strong><?php esc_html_e( 'Espace sécurisé', 'theme-perso' ); ?></strong>
-                <small><?php esc_html_e( 'Commandes, favoris et routine beauté', 'theme-perso' ); ?></small>
-            </div>
-        </div>
-    </section>
 
-    <section class="account-access-section" aria-label="<?php esc_attr_e( 'Connexion à l’espace client', 'theme-perso' ); ?>">
-        <div class="account-login-card">
-            <div class="account-login-heading">
-                <span><?php echo theme_perso_account_icon( 'user' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></span>
-                <h2><?php esc_html_e( 'Bienvenue', 'theme-perso' ); ?></h2>
-                <p><?php esc_html_e( 'Connectez-vous à votre espace personnel.', 'theme-perso' ); ?></p>
-            </div>
-            <div class="account-woocommerce-wrap">
-                <?php echo do_shortcode( '[woocommerce_my_account]' ); ?>
+                <div class="account-auth-trust-grid">
+                    <div>
+                        <strong>24/72h</strong>
+                        <span><?php esc_html_e( 'Suivi de livraison', 'theme-perso' ); ?></span>
+                    </div>
+                    <div>
+                        <strong>98%</strong>
+                        <span><?php esc_html_e( 'Origine naturelle', 'theme-perso' ); ?></span>
+                    </div>
+                    <div>
+                        <strong>100%</strong>
+                        <span><?php esc_html_e( 'Paiement protégé', 'theme-perso' ); ?></span>
+                    </div>
+                </div>
+
+                <ul class="account-auth-benefits">
+                    <li><?php echo theme_perso_account_icon( 'package' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?><span><?php esc_html_e( 'Commandes et factures centralisées', 'theme-perso' ); ?></span></li>
+                    <li><?php echo theme_perso_account_icon( 'sparkle' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?><span><?php esc_html_e( 'Diagnostic beauté sauvegardé', 'theme-perso' ); ?></span></li>
+                    <li><?php echo theme_perso_account_icon( 'heart' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?><span><?php esc_html_e( 'Favoris et recommandations personnalisés', 'theme-perso' ); ?></span></li>
+                </ul>
+            </aside>
+
+            <div class="account-login-card account-auth-card">
+                <div class="account-login-heading">
+                    <span><?php echo theme_perso_account_icon( 'user' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></span>
+                    <h2><?php esc_html_e( 'Bienvenue', 'theme-perso' ); ?></h2>
+                    <p><?php esc_html_e( 'Connectez-vous ou créez votre compte client en quelques instants.', 'theme-perso' ); ?></p>
+                </div>
+                <div class="account-auth-tabs" role="tablist" aria-label="<?php esc_attr_e( 'Choisir une action', 'theme-perso' ); ?>">
+                    <button type="button" class="account-auth-tab is-active" id="account-tab-login" role="tab" aria-selected="true" aria-controls="customer_login_panel" data-account-tab="login"><?php esc_html_e( 'Connexion', 'theme-perso' ); ?></button>
+                    <button type="button" class="account-auth-tab" id="account-tab-register" role="tab" aria-selected="false" aria-controls="customer_register_panel" data-account-tab="register"><?php esc_html_e( 'Créer un compte', 'theme-perso' ); ?></button>
+                </div>
+                <div class="account-woocommerce-wrap" data-account-auth>
+                    <?php echo do_shortcode( '[woocommerce_my_account]' ); ?>
+                </div>
             </div>
         </div>
     </section>

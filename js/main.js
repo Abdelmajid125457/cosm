@@ -733,7 +733,10 @@ Thomas Bernard`,
             form.dataset.demoPlaceholderSubmitBound = 'true';
             form.addEventListener('submit', () => {
                 form.querySelectorAll('.is-demo-placeholder[data-demo-placeholder-active="true"]').forEach((field) => {
-                    field.value = '';
+                    if (field.value === field.dataset.demoPlaceholderValue) {
+                        field.value = '';
+                    }
+
                     field.classList.remove('is-demo-placeholder');
                     field.dataset.demoPlaceholderActive = 'false';
                 });
@@ -2394,14 +2397,77 @@ Thomas Bernard`,
     if (accountAccess) {
         const loginForm = accountAccess.querySelector('.woocommerce-form-login');
         const registerForm = accountAccess.querySelector('.woocommerce-form-register');
+        const loginColumn = loginForm ? (loginForm.closest('.u-column1, .col-1') || loginForm) : null;
+        const registerColumn = registerForm ? (registerForm.closest('.u-column2, .col-2') || registerForm) : null;
+        const tabs = Array.from(document.querySelectorAll('[data-account-tab]'));
 
         if (loginForm && !loginForm.id) {
             loginForm.id = 'customer_login_form';
         }
 
-        if (registerForm) {
-            const registerColumn = registerForm.closest('.u-column2, .col-2') || registerForm;
-            registerColumn.id = 'customer_register';
+        if (loginColumn) {
+            loginColumn.id = 'customer_login_panel';
+            loginColumn.setAttribute('role', 'tabpanel');
+            loginColumn.setAttribute('aria-labelledby', 'account-tab-login');
+        }
+
+        if (registerColumn) {
+            registerColumn.id = 'customer_register_panel';
+            registerColumn.setAttribute('role', 'tabpanel');
+            registerColumn.setAttribute('aria-labelledby', 'account-tab-register');
+        }
+
+        const activateAccountTab = (targetTab = 'login', focusPanel = false) => {
+            const activeTab = targetTab === 'register' ? 'register' : 'login';
+            accountAccess.classList.add('is-tabbed');
+            accountAccess.dataset.activeTab = activeTab;
+
+            tabs.forEach((tab) => {
+                const isActive = tab.getAttribute('data-account-tab') === activeTab;
+                tab.classList.toggle('is-active', isActive);
+                tab.setAttribute('aria-selected', isActive ? 'true' : 'false');
+                tab.setAttribute('tabindex', isActive ? '0' : '-1');
+            });
+
+            if (loginColumn) {
+                loginColumn.hidden = activeTab !== 'login';
+            }
+
+            if (registerColumn) {
+                registerColumn.hidden = activeTab !== 'register';
+            }
+
+            const activeForm = activeTab === 'register' ? registerForm : loginForm;
+
+            if (focusPanel && activeForm) {
+                const firstInput = activeForm.querySelector('input:not([type="hidden"]):not([type="checkbox"]), button');
+                if (firstInput) {
+                    window.setTimeout(() => firstInput.focus({ preventScroll: true }), prefersReducedMotion ? 0 : 220);
+                }
+            }
+        };
+
+        if (loginForm && registerForm && tabs.length) {
+            const hasRegisterNotice = /register|inscription|compte|mot de passe|conditions|confidentialité/i.test((accountAccess.querySelector('.woocommerce-error, .woocommerce-message, .woocommerce-info') || {}).textContent || '');
+            const initialTab = window.location.hash.includes('register') || hasRegisterNotice ? 'register' : 'login';
+            activateAccountTab(initialTab);
+
+            tabs.forEach((tab) => {
+                tab.addEventListener('click', () => activateAccountTab(tab.getAttribute('data-account-tab'), true));
+                tab.addEventListener('keydown', (event) => {
+                    if (!['ArrowLeft', 'ArrowRight'].includes(event.key)) {
+                        return;
+                    }
+
+                    event.preventDefault();
+                    const nextTab = tab.getAttribute('data-account-tab') === 'login' ? 'register' : 'login';
+                    activateAccountTab(nextTab, true);
+                    const nextButton = tabs.find((item) => item.getAttribute('data-account-tab') === nextTab);
+                    if (nextButton) {
+                        nextButton.focus();
+                    }
+                });
+            });
         }
 
         document.querySelectorAll('[data-account-action]').forEach((trigger) => {
@@ -2414,6 +2480,7 @@ Thomas Bernard`,
                 }
 
                 event.preventDefault();
+                activateAccountTab(action === 'register' ? 'register' : 'login');
                 target.scrollIntoView({ behavior: prefersReducedMotion ? 'auto' : 'smooth', block: 'center' });
                 target.classList.add('is-account-focused');
 
@@ -2428,6 +2495,43 @@ Thomas Bernard`,
 
         const passwordPattern = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,}$/;
         const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        let passwordStrength = null;
+
+        if (registerForm) {
+            const registerPassword = registerForm.querySelector('input[name="password"]');
+            const passwordRow = registerPassword ? registerPassword.closest('.form-row') : null;
+
+            if (passwordRow && !passwordRow.querySelector('.account-password-strength')) {
+                passwordStrength = document.createElement('div');
+                passwordStrength.className = 'account-password-strength';
+                passwordStrength.setAttribute('aria-live', 'polite');
+                passwordStrength.innerHTML = '<span></span><small>Force du mot de passe</small>';
+                passwordRow.appendChild(passwordStrength);
+            } else if (passwordRow) {
+                passwordStrength = passwordRow.querySelector('.account-password-strength');
+            }
+        }
+
+        const getPasswordScore = (value) => {
+            let score = 0;
+            if (value.length >= 8) score += 1;
+            if (/[a-z]/.test(value)) score += 1;
+            if (/[A-Z]/.test(value)) score += 1;
+            if (/\d/.test(value)) score += 1;
+            if (/[^A-Za-z0-9]/.test(value)) score += 1;
+            return score;
+        };
+
+        const updatePasswordStrength = (value) => {
+            if (!passwordStrength) {
+                return;
+            }
+
+            const score = getPasswordScore(value);
+            const label = score >= 5 ? 'Excellent' : score >= 4 ? 'Fort' : score >= 3 ? 'Correct' : value ? 'Trop faible' : 'Force du mot de passe';
+            passwordStrength.dataset.score = String(score);
+            passwordStrength.querySelector('small').textContent = label;
+        };
 
         const setFieldState = (field, valid, message = '') => {
             if (!field || field.type === 'hidden') {
@@ -2441,7 +2545,15 @@ Thomas Bernard`,
                 feedback = document.createElement('span');
                 feedback.className = 'account-field-feedback';
                 feedback.setAttribute('aria-live', 'polite');
-                row.insertAdjacentElement('afterend', feedback);
+                row.appendChild(feedback);
+            }
+
+            if (row) {
+                row.querySelectorAll('.account-field-feedback').forEach((item, index) => {
+                    if (index > 0) {
+                        item.remove();
+                    }
+                });
             }
 
             field.classList.toggle('is-valid', Boolean(valid));
@@ -2471,8 +2583,13 @@ Thomas Bernard`,
             }
 
             if (field.name === 'password' && field.closest('.woocommerce-form-register') && !passwordPattern.test(value)) {
+                updatePasswordStrength(value);
                 setFieldState(field, false, '8 caractères, une majuscule, une minuscule et un chiffre.');
                 return false;
+            }
+
+            if (field.name === 'password' && field.closest('.woocommerce-form-register')) {
+                updatePasswordStrength(value);
             }
 
             if (field.name === 'password_confirm') {
