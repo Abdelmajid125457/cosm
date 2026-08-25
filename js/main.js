@@ -1424,6 +1424,7 @@ Thomas Bernard`,
     const cookiePanel = cookieModal?.querySelector('.cookie-modal-panel');
     const cookieToggles = Array.from(document.querySelectorAll('[data-cookie-category]'));
     const cookieSettings = window.cosmethiqueCookieSettings || {};
+    const trackingSettings = window.cosmethiqueTrackingSettings || {};
     const cookieStorageKey = 'cosmethique_cookie_consent';
     const cookieVersion = cookieSettings.version || '2026-07-rgpd';
     let cookieLastFocus = null;
@@ -1486,18 +1487,62 @@ Thomas Bernard`,
         return consent;
     };
 
-    const hasCookieConsent = (category) => {
-        const consent = readCookieConsent();
+    const hasCookieConsent = (category, consent = readCookieConsent()) => {
         return category === 'necessary' || Boolean(consent && consent[category]);
+    };
+
+    const ensureDataLayer = () => {
+        window.dataLayer = window.dataLayer || [];
+        window.gtag = window.gtag || function gtag() {
+            window.dataLayer.push(arguments);
+        };
+
+        return window.dataLayer;
+    };
+
+    const pushGtmEvent = (eventName, data = {}) => {
+        ensureDataLayer().push({
+            event: eventName,
+            ...data,
+        });
+    };
+
+    const loadGoogleTagManager = (consent = readCookieConsent()) => {
+        if (!hasCookieConsent('analytics', consent) || !trackingSettings.gtmContainerId) {
+            return;
+        }
+
+        ensureDataLayer();
+
+        if (trackingSettings.ga4MeasurementId) {
+            window.dataLayer.push({
+                event: 'cosmethique_consent_granted',
+                cosmethique_ga4_measurement_id: trackingSettings.ga4MeasurementId,
+            });
+        }
+
+        const existingGtmScript = document.querySelector(`script[src*="googletagmanager.com/gtm.js?id=${trackingSettings.gtmContainerId}"]`);
+        if (existingGtmScript || window.google_tag_manager?.[trackingSettings.gtmContainerId] || window.__cosmethiqueGtmInjected) {
+            return;
+        }
+
+        window.__cosmethiqueGtmInjected = true;
+        window.dataLayer.push({
+            'gtm.start': new Date().getTime(),
+            event: 'gtm.js',
+        });
+
+        const firstScript = document.getElementsByTagName('script')[0];
+        const gtmScript = document.createElement('script');
+        gtmScript.async = true;
+        gtmScript.src = `https://www.googletagmanager.com/gtm.js?id=${encodeURIComponent(trackingSettings.gtmContainerId)}`;
+        firstScript.parentNode.insertBefore(gtmScript, firstScript);
     };
 
     const syncGoogleConsentMode = (consent = readCookieConsent()) => {
         const preferences = consent || cookieDefaults();
 
-        window.dataLayer = window.dataLayer || [];
-        window.gtag = window.gtag || function gtag() {
-            window.dataLayer.push(arguments);
-        };
+        ensureDataLayer();
 
         window.gtag('consent', 'update', {
             ad_storage: preferences.marketing ? 'granted' : 'denied',
@@ -1524,25 +1569,32 @@ Thomas Bernard`,
         });
     };
 
-    const activateDeferredCookieScripts = () => {
+    const activateDeferredCookieScripts = (consent = readCookieConsent()) => {
         document.querySelectorAll('script[type="text/plain"][data-cookie-category]').forEach((script) => {
             const category = script.dataset.cookieCategory;
 
-            if (!hasCookieConsent(category)) {
+            if (!hasCookieConsent(category, consent) || script.dataset.cookieActivated === 'true') {
                 return;
             }
 
             const activeScript = document.createElement('script');
             Array.from(script.attributes).forEach((attribute) => {
-                if (attribute.name !== 'type' && attribute.name !== 'data-cookie-category') {
+                if (!['type', 'data-cookie-category', 'data-cookie-activated'].includes(attribute.name)) {
                     activeScript.setAttribute(attribute.name, attribute.value);
                 }
             });
+
+            if (script.src) {
+                activeScript.src = script.src;
+            }
+
             activeScript.textContent = script.textContent;
+            script.dataset.cookieActivated = 'true';
             script.replaceWith(activeScript);
         });
 
-        document.dispatchEvent(new CustomEvent('cosmethique:cookies-ready', { detail: readCookieConsent() || cookieDefaults() }));
+        loadGoogleTagManager(consent);
+        document.dispatchEvent(new CustomEvent('cosmethique:cookies-ready', { detail: consent || readCookieConsent() || cookieDefaults() }));
     };
 
     const showCookieBanner = () => {
@@ -1603,7 +1655,15 @@ Thomas Bernard`,
         hideCookieBanner();
         closeCookieModal();
         syncGoogleConsentMode(consent);
-        activateDeferredCookieScripts();
+        activateDeferredCookieScripts(consent);
+
+        if (consent.analytics) {
+            pushGtmEvent('page_view', {
+                page_title: document.title,
+                page_location: window.location.href,
+                page_path: window.location.pathname,
+            });
+        }
     };
 
     document.querySelectorAll('[data-cookie-accept-all]').forEach((button) => {
@@ -1677,18 +1737,10 @@ Thomas Bernard`,
         const storedConsent = readCookieConsent();
         syncCookieToggles(storedConsent);
         syncGoogleConsentMode(storedConsent);
-        activateDeferredCookieScripts();
+        activateDeferredCookieScripts(storedConsent);
     } else {
         showCookieBanner();
     }
-
-    const pushGtmEvent = (eventName, data = {}) => {
-        window.dataLayer = window.dataLayer || [];
-        window.dataLayer.push({
-            event: eventName,
-            ...data,
-        });
-    };
 
     pushGtmEvent('cosmethique_page_context', {
         page_title: document.title,

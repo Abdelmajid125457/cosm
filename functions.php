@@ -390,6 +390,12 @@ function theme_perso_render_google_tag_manager_head() {
     }
     ?>
     <script>
+        window.cosmethiqueTrackingSettings = {
+            gtmContainerId: '<?php echo esc_js( $container_id ); ?>',
+            ga4MeasurementId: '<?php echo esc_js( $measurement_id ); ?>'
+        };
+    </script>
+    <script>
         window.dataLayer = window.dataLayer || [];
         function gtag(){dataLayer.push(arguments);}
         gtag('consent', 'default', {
