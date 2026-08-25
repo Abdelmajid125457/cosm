@@ -6538,7 +6538,6 @@ function theme_perso_enable_woocommerce_account_registration( $value ) {
     return 'yes';
 }
 add_filter( 'pre_option_woocommerce_enable_myaccount_registration', 'theme_perso_enable_woocommerce_account_registration' );
-add_filter( 'pre_option_woocommerce_registration_generate_password', '__return_empty_string' );
 add_filter( 'woocommerce_registration_generate_password', '__return_false' );
 add_filter( 'woocommerce_registration_generate_username', '__return_true' );
 
@@ -6861,6 +6860,10 @@ function theme_perso_social_login_authenticate_customer( $provider, $profile ) {
     update_user_meta( $user_id, 'cosmethique_social_' . $provider . '_linked', current_time( 'mysql' ) );
     update_user_meta( $user_id, 'billing_email', $email );
 
+    if ( ! empty( $profile['picture'] ) && filter_var( $profile['picture'], FILTER_VALIDATE_URL ) ) {
+        update_user_meta( $user_id, 'cosmethique_social_avatar', esc_url_raw( $profile['picture'] ) );
+    }
+
     if ( $first_name ) {
         update_user_meta( $user_id, 'first_name', $first_name );
         update_user_meta( $user_id, 'billing_first_name', $first_name );
@@ -7052,9 +7055,10 @@ function theme_perso_force_account_password_field( $pre_option ) {
 }
 add_filter( 'pre_option_woocommerce_registration_generate_password', 'theme_perso_force_account_password_field', 20 );
 
-function theme_perso_validate_account_registration_fields( $errors ) {
+function theme_perso_validate_account_registration_fields( $errors, $username = '', $email = '' ) {
     $first_name       = isset( $_POST['billing_first_name'] ) ? trim( sanitize_text_field( wp_unslash( $_POST['billing_first_name'] ) ) ) : '';
     $last_name        = isset( $_POST['billing_last_name'] ) ? trim( sanitize_text_field( wp_unslash( $_POST['billing_last_name'] ) ) ) : '';
+    $email            = $email ? sanitize_email( $email ) : ( isset( $_POST['email'] ) ? sanitize_email( wp_unslash( $_POST['email'] ) ) : '' );
     $password         = isset( $_POST['password'] ) ? (string) wp_unslash( $_POST['password'] ) : '';
     $password_confirm = isset( $_POST['password_confirm'] ) ? (string) wp_unslash( $_POST['password_confirm'] ) : '';
 
@@ -7064,6 +7068,16 @@ function theme_perso_validate_account_registration_fields( $errors ) {
 
     if ( '' === $last_name ) {
         $errors->add( 'cosmethique_last_name_required', esc_html__( 'Merci d’indiquer votre nom.', 'theme-perso' ) );
+    }
+
+    if ( '' === $email || ! is_email( $email ) ) {
+        $errors->add( 'cosmethique_email_required', esc_html__( 'Merci d’indiquer une adresse e-mail valide.', 'theme-perso' ) );
+    } elseif ( email_exists( $email ) ) {
+        $errors->add( 'cosmethique_email_exists', esc_html__( 'Un compte existe déjà avec cette adresse e-mail.', 'theme-perso' ) );
+    }
+
+    if ( '' === $password ) {
+        $errors->add( 'cosmethique_password_required', esc_html__( 'Merci de choisir un mot de passe.', 'theme-perso' ) );
     }
 
     if ( strlen( $password ) < 8 || ! preg_match( '/[A-Z]/', $password ) || ! preg_match( '/[a-z]/', $password ) || ! preg_match( '/[0-9]/', $password ) ) {
@@ -7084,7 +7098,7 @@ function theme_perso_validate_account_registration_fields( $errors ) {
 
     return $errors;
 }
-add_filter( 'woocommerce_registration_errors', 'theme_perso_validate_account_registration_fields', 20, 1 );
+add_filter( 'woocommerce_registration_errors', 'theme_perso_validate_account_registration_fields', 20, 3 );
 
 function theme_perso_save_account_registration_fields( $customer_id ) {
     $first_name = isset( $_POST['billing_first_name'] ) ? sanitize_text_field( wp_unslash( $_POST['billing_first_name'] ) ) : '';
@@ -7136,6 +7150,25 @@ function theme_perso_authenticate_new_account_customer( $authenticate ) {
     return true;
 }
 add_filter( 'woocommerce_registration_auth_new_customer', 'theme_perso_authenticate_new_account_customer', 20 );
+
+function theme_perso_account_auth_redirect( $redirect = '' ) {
+    if ( function_exists( 'wc_get_page_permalink' ) ) {
+        return wc_get_page_permalink( 'myaccount' );
+    }
+
+    return $redirect ? $redirect : home_url( '/mon-compte/' );
+}
+add_filter( 'woocommerce_login_redirect', 'theme_perso_account_auth_redirect', 20, 1 );
+add_filter( 'woocommerce_registration_redirect', 'theme_perso_account_auth_redirect', 20, 1 );
+
+function theme_perso_account_lost_password_url( $lostpassword_url, $redirect ) {
+    if ( function_exists( 'wc_lostpassword_url' ) && theme_perso_is_account_registration_request() ) {
+        return wc_lostpassword_url();
+    }
+
+    return $lostpassword_url;
+}
+add_filter( 'lostpassword_url', 'theme_perso_account_lost_password_url', 20, 2 );
 
 function theme_perso_account_form_button_labels( $translated, $text, $domain ) {
     if ( is_admin() || 'woocommerce' !== $domain || ! function_exists( 'is_account_page' ) || ! is_account_page() ) {
