@@ -1491,6 +1491,31 @@ Thomas Bernard`,
         return category === 'necessary' || Boolean(consent && consent[category]);
     };
 
+    const syncGoogleConsentMode = (consent = readCookieConsent()) => {
+        const preferences = consent || cookieDefaults();
+
+        window.dataLayer = window.dataLayer || [];
+        window.gtag = window.gtag || function gtag() {
+            window.dataLayer.push(arguments);
+        };
+
+        window.gtag('consent', 'update', {
+            ad_storage: preferences.marketing ? 'granted' : 'denied',
+            ad_user_data: preferences.marketing ? 'granted' : 'denied',
+            ad_personalization: preferences.marketing ? 'granted' : 'denied',
+            analytics_storage: preferences.analytics ? 'granted' : 'denied',
+            functionality_storage: 'granted',
+            security_storage: 'granted',
+        });
+
+        window.dataLayer.push({
+            event: 'cosmethique_cookie_consent_update',
+            consent_analytics: Boolean(preferences.analytics),
+            consent_marketing: Boolean(preferences.marketing),
+            consent_personalization: Boolean(preferences.personalization),
+        });
+    };
+
     const syncCookieToggles = (consent = readCookieConsent()) => {
         const preferences = consent || cookieDefaults();
 
@@ -1577,6 +1602,7 @@ Thomas Bernard`,
         syncCookieToggles(consent);
         hideCookieBanner();
         closeCookieModal();
+        syncGoogleConsentMode(consent);
         activateDeferredCookieScripts();
     };
 
@@ -1648,11 +1674,81 @@ Thomas Bernard`,
     });
 
     if (readCookieConsent()) {
-        syncCookieToggles();
+        const storedConsent = readCookieConsent();
+        syncCookieToggles(storedConsent);
+        syncGoogleConsentMode(storedConsent);
         activateDeferredCookieScripts();
     } else {
         showCookieBanner();
     }
+
+    const pushGtmEvent = (eventName, data = {}) => {
+        window.dataLayer = window.dataLayer || [];
+        window.dataLayer.push({
+            event: eventName,
+            ...data,
+        });
+    };
+
+    pushGtmEvent('cosmethique_page_context', {
+        page_title: document.title,
+        page_location: window.location.href,
+        page_path: window.location.pathname,
+    });
+
+    const searchParams = new URLSearchParams(window.location.search);
+    const searchTerm = searchParams.get('s');
+    if (searchTerm) {
+        pushGtmEvent('view_search_results', {
+            search_term: searchTerm,
+        });
+    }
+
+    let scrollEventSent = false;
+    const trackScrollDepth = () => {
+        if (scrollEventSent) {
+            return;
+        }
+
+        const scrollable = document.documentElement.scrollHeight - window.innerHeight;
+        const depth = scrollable > 0 ? ((window.scrollY || document.documentElement.scrollTop) / scrollable) : 1;
+
+        if (depth >= 0.9) {
+            scrollEventSent = true;
+            pushGtmEvent('scroll', {
+                percent_scrolled: 90,
+            });
+            window.removeEventListener('scroll', trackScrollDepth);
+        }
+    };
+    window.addEventListener('scroll', trackScrollDepth, { passive: true });
+    trackScrollDepth();
+
+    document.addEventListener('click', (event) => {
+        const target = event.target.closest('a, button');
+
+        if (!target) {
+            return;
+        }
+
+        const linkUrl = target.href || '';
+        const label = (target.getAttribute('aria-label') || target.textContent || '').replace(/\s+/g, ' ').trim().slice(0, 120);
+        const filePattern = /\.(pdf|docx?|xlsx?|pptx?|zip|csv|png|jpe?g|webp)(\?|#|$)/i;
+
+        if (linkUrl && filePattern.test(linkUrl)) {
+            pushGtmEvent('file_download', {
+                link_url: linkUrl,
+                link_text: label,
+            });
+            return;
+        }
+
+        pushGtmEvent('click', {
+            link_url: linkUrl,
+            link_text: label,
+            element_type: target.tagName.toLowerCase(),
+        });
+    }, { passive: true });
 
     const animatedCounters = document.querySelectorAll('[data-counter-target]');
     if (animatedCounters.length) {

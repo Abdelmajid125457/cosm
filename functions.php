@@ -128,6 +128,17 @@ function theme_perso_google_analytics_measurement_id() {
     return apply_filters( 'theme_perso_google_analytics_measurement_id', $measurement_id );
 }
 
+function theme_perso_google_tag_manager_container_id() {
+    $container_id = defined( 'COSMETHIQUE_GTM_CONTAINER_ID' ) ? COSMETHIQUE_GTM_CONTAINER_ID : get_theme_mod( 'cosmethique_gtm_container_id', 'GTM-NDGB4SLC' );
+    $container_id = strtoupper( trim( (string) $container_id ) );
+
+    if ( ! $container_id || ! preg_match( '/^GTM-[A-Z0-9]+$/', $container_id ) ) {
+        return '';
+    }
+
+    return apply_filters( 'theme_perso_google_tag_manager_container_id', $container_id );
+}
+
 function theme_perso_sanitize_google_analytics_measurement_id( $value ) {
     $value = strtoupper( trim( sanitize_text_field( (string) $value ) ) );
 
@@ -138,20 +149,49 @@ function theme_perso_sanitize_google_analytics_measurement_id( $value ) {
     return preg_match( '/^[A-Z]+-[A-Z0-9_-]+$/', $value ) ? $value : '';
 }
 
+function theme_perso_sanitize_google_tag_manager_container_id( $value ) {
+    $value = strtoupper( trim( sanitize_text_field( (string) $value ) ) );
+
+    if ( '' === $value ) {
+        return '';
+    }
+
+    return preg_match( '/^GTM-[A-Z0-9]+$/', $value ) ? $value : '';
+}
+
 function theme_perso_customize_google_analytics( $wp_customize ) {
     $wp_customize->add_section(
         'cosmethique_analytics',
         array(
             'title'       => __( 'COSM’ETHIQUE - Analytics', 'theme-perso' ),
-            'description' => __( 'Renseignez l’identifiant de mesure GA4. Google Analytics reste bloqué tant que les cookies analytiques ne sont pas acceptés.', 'theme-perso' ),
+            'description' => __( 'Renseignez le conteneur GTM et l’identifiant GA4. Les tags restent bloqués tant que les cookies analytiques ne sont pas acceptés.', 'theme-perso' ),
             'priority'    => 160,
+        )
+    );
+
+    $wp_customize->add_setting(
+        'cosmethique_gtm_container_id',
+        array(
+            'default'           => 'GTM-NDGB4SLC',
+            'sanitize_callback' => 'theme_perso_sanitize_google_tag_manager_container_id',
+            'transport'         => 'refresh',
+        )
+    );
+
+    $wp_customize->add_control(
+        'cosmethique_gtm_container_id',
+        array(
+            'label'       => __( 'Identifiant Google Tag Manager', 'theme-perso' ),
+            'description' => __( 'Exemple : GTM-XXXXXXX', 'theme-perso' ),
+            'section'     => 'cosmethique_analytics',
+            'type'        => 'text',
         )
     );
 
     $wp_customize->add_setting(
         'cosmethique_ga_measurement_id',
         array(
-            'default'           => '',
+            'default'           => 'G-KDCY4CP560',
             'sanitize_callback' => 'theme_perso_sanitize_google_analytics_measurement_id',
             'transport'         => 'refresh',
         )
@@ -219,7 +259,13 @@ function theme_perso_customize_social_login( $wp_customize ) {
 add_action( 'customize_register', 'theme_perso_customize_social_login' );
 
 function theme_perso_scripts() {
-    $version = wp_get_theme()->get( 'Version' );
+    $version           = wp_get_theme()->get( 'Version' );
+    $stylesheet_path   = get_stylesheet_directory() . '/style.css';
+    $mobile_style_path = get_template_directory() . '/css/mobile-responsive.css';
+    $main_script_path  = get_template_directory() . '/js/main.js';
+    $style_version     = file_exists( $stylesheet_path ) ? (string) filemtime( $stylesheet_path ) : $version;
+    $mobile_version    = file_exists( $mobile_style_path ) ? (string) filemtime( $mobile_style_path ) : $version;
+    $script_version    = file_exists( $main_script_path ) ? (string) filemtime( $main_script_path ) : $version;
 
     wp_enqueue_style( 'theme-perso-fonts', 'https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Inter:wght@400;500;600;700;800&display=swap', array(), null );
     if ( is_page( 'devenir-franchise' ) ) {
@@ -227,9 +273,9 @@ function theme_perso_scripts() {
         wp_enqueue_script( 'leaflet', 'https://unpkg.com/leaflet@1.9.4/dist/leaflet.js', array(), '1.9.4', true );
     }
 
-    wp_enqueue_style( 'theme-perso-style', get_stylesheet_uri(), array( 'theme-perso-fonts' ), $version );
-    wp_enqueue_style( 'theme-perso-mobile-responsive', get_template_directory_uri() . '/css/mobile-responsive.css', array( 'theme-perso-style' ), $version );
-    wp_enqueue_script( 'theme-perso-script', get_template_directory_uri() . '/js/main.js', is_page( 'devenir-franchise' ) ? array( 'leaflet' ) : array(), $version, true );
+    wp_enqueue_style( 'theme-perso-style', get_stylesheet_uri(), array( 'theme-perso-fonts' ), $style_version );
+    wp_enqueue_style( 'theme-perso-mobile-responsive', get_template_directory_uri() . '/css/mobile-responsive.css', array( 'theme-perso-style' ), $mobile_version );
+    wp_enqueue_script( 'theme-perso-script', get_template_directory_uri() . '/js/main.js', is_page( 'devenir-franchise' ) ? array( 'leaflet' ) : array(), $script_version, true );
 
     if ( function_exists( 'theme_perso_multilingual_script_data' ) ) {
         wp_localize_script( 'theme-perso-script', 'cosmethiqueI18n', theme_perso_multilingual_script_data() );
@@ -331,36 +377,63 @@ function theme_perso_block_nonconsented_tracking_scripts() {
 add_action( 'wp_print_scripts', 'theme_perso_block_nonconsented_tracking_scripts', 1 );
 add_action( 'wp_print_footer_scripts', 'theme_perso_block_nonconsented_tracking_scripts', 1 );
 
-function theme_perso_render_google_analytics() {
+function theme_perso_render_google_tag_manager_head() {
     if ( is_admin() ) {
         return;
     }
 
+    $container_id   = theme_perso_google_tag_manager_container_id();
     $measurement_id = theme_perso_google_analytics_measurement_id();
 
-    if ( ! $measurement_id ) {
+    if ( ! $container_id ) {
         return;
     }
-
-    $gtag_src = add_query_arg(
-        'id',
-        rawurlencode( $measurement_id ),
-        'https://www.googletagmanager.com/gtag/js'
-    );
     ?>
-    <script type="text/plain" data-cookie-category="analytics" async src="<?php echo esc_url( $gtag_src ); ?>"></script>
-    <script type="text/plain" data-cookie-category="analytics">
+    <script>
         window.dataLayer = window.dataLayer || [];
         function gtag(){dataLayer.push(arguments);}
-        gtag('js', new Date());
-        gtag('config', '<?php echo esc_js( $measurement_id ); ?>', {
-            anonymize_ip: true,
-            cookie_flags: 'SameSite=Lax;Secure'
+        gtag('consent', 'default', {
+            ad_storage: 'denied',
+            ad_user_data: 'denied',
+            ad_personalization: 'denied',
+            analytics_storage: 'denied',
+            functionality_storage: 'granted',
+            security_storage: 'granted'
         });
+    </script>
+    <script type="text/plain" data-cookie-category="analytics">
+        window.dataLayer = window.dataLayer || [];
+        window.dataLayer.push({
+            event: 'cosmethique_consent_granted',
+            cosmethique_ga4_measurement_id: '<?php echo esc_js( $measurement_id ); ?>'
+        });
+    </script>
+    <script type="text/plain" data-cookie-category="analytics">
+        (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+        new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+        j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+        'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+        })(window,document,'script','dataLayer','<?php echo esc_js( $container_id ); ?>');
     </script>
     <?php
 }
-add_action( 'wp_footer', 'theme_perso_render_google_analytics', 5 );
+add_action( 'wp_head', 'theme_perso_render_google_tag_manager_head', 5 );
+
+function theme_perso_render_google_tag_manager_body() {
+    if ( is_admin() || ! theme_perso_cookie_category_allowed( 'analytics' ) ) {
+        return;
+    }
+
+    $container_id = theme_perso_google_tag_manager_container_id();
+
+    if ( ! $container_id ) {
+        return;
+    }
+    ?>
+    <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=<?php echo esc_attr( $container_id ); ?>" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+    <?php
+}
+add_action( 'wp_body_open', 'theme_perso_render_google_tag_manager_body', 1 );
 
 function theme_perso_redirect_notre_histoire_to_about() {
     if ( ! function_exists( 'is_page' ) || ! is_page( 'notre-histoire' ) ) {
