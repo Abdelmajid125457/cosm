@@ -291,6 +291,20 @@ function theme_perso_scripts() {
     );
 
     wp_localize_script( 'theme-perso-script', 'cosmethiqueSearch', theme_perso_smart_search_script_data() );
+    wp_localize_script(
+        'theme-perso-script',
+        'cosmethiqueAccount',
+        array(
+            'ajaxUrl'  => admin_url( 'admin-ajax.php' ),
+            'nonce'    => wp_create_nonce( 'cosmethique_account_auth' ),
+            'redirect' => function_exists( 'wc_get_page_permalink' ) ? wc_get_page_permalink( 'myaccount' ) : home_url( '/mon-compte/' ),
+            'labels'   => array(
+                'networkError' => __( 'Une erreur est survenue. Merci de réessayer.', 'theme-perso' ),
+                'loginSuccess' => __( 'Connexion réussie. Ouverture de votre espace beauté…', 'theme-perso' ),
+                'registerSuccess' => __( 'Votre compte est créé. Ouverture de votre espace beauté…', 'theme-perso' ),
+            ),
+        )
+    );
 
     if ( is_front_page() ) {
         wp_enqueue_style( 'theme-perso-aos', 'https://unpkg.com/aos@next/dist/aos.css', array(), null );
@@ -7169,6 +7183,128 @@ function theme_perso_account_lost_password_url( $lostpassword_url, $redirect ) {
     return $lostpassword_url;
 }
 add_filter( 'lostpassword_url', 'theme_perso_account_lost_password_url', 20, 2 );
+
+function theme_perso_account_json_error( $message, $code = 'cosmethique_account_error', $status = 400 ) {
+    wp_send_json_error(
+        array(
+            'code'    => $code,
+            'message' => wp_strip_all_tags( $message ),
+        ),
+        $status
+    );
+}
+
+function theme_perso_account_json_success( $message ) {
+    wp_send_json_success(
+        array(
+            'message'  => wp_strip_all_tags( $message ),
+            'redirect' => theme_perso_account_auth_redirect(),
+        )
+    );
+}
+
+function theme_perso_validate_account_ajax_request() {
+    if ( ! check_ajax_referer( 'cosmethique_account_auth', 'nonce', false ) ) {
+        theme_perso_account_json_error( esc_html__( 'Votre session a expiré. Merci de réessayer.', 'theme-perso' ), 'invalid_nonce', 403 );
+    }
+
+    if ( theme_perso_is_honeypot_triggered() || ! theme_perso_verify_recaptcha_submission( 'account' ) ) {
+        theme_perso_account_json_error( esc_html__( 'La vérification de sécurité a échoué. Merci de réessayer.', 'theme-perso' ), 'security_failed', 403 );
+    }
+}
+
+function theme_perso_ajax_account_login() {
+    theme_perso_validate_account_ajax_request();
+
+    $username = isset( $_POST['username'] ) ? trim( sanitize_text_field( wp_unslash( $_POST['username'] ) ) ) : '';
+    $password = isset( $_POST['password'] ) ? (string) wp_unslash( $_POST['password'] ) : '';
+    $remember = ! empty( $_POST['rememberme'] );
+
+    if ( '' === $username || '' === $password ) {
+        theme_perso_account_json_error( esc_html__( 'Merci d’indiquer votre e-mail et votre mot de passe.', 'theme-perso' ), 'missing_credentials' );
+    }
+
+    $user = is_email( $username ) ? get_user_by( 'email', sanitize_email( $username ) ) : get_user_by( 'login', sanitize_user( $username ) );
+
+    if ( ! $user ) {
+        theme_perso_account_json_error( esc_html__( 'Aucun compte ne correspond à ces identifiants.', 'theme-perso' ), 'invalid_user', 401 );
+    }
+
+    if ( (int) get_transient( theme_perso_login_rate_limit_key() ) >= 8 ) {
+        theme_perso_account_json_error( esc_html__( 'Trop de tentatives de connexion. Merci de patienter quelques minutes avant de réessayer.', 'theme-perso' ), 'cosmethique_login_rate_limit', 403 );
+    }
+
+    $signed_in = wp_signon(
+        array(
+            'user_login'    => $user->user_login,
+            'user_password' => $password,
+            'remember'      => $remember,
+        ),
+        is_ssl()
+    );
+
+    if ( is_wp_error( $signed_in ) ) {
+        theme_perso_account_json_error( esc_html__( 'Le mot de passe indiqué est incorrect.', 'theme-perso' ), 'invalid_password', 401 );
+    }
+
+    wp_set_current_user( $signed_in->ID );
+
+    if ( function_exists( 'wc_set_customer_auth_cookie' ) ) {
+        wc_set_customer_auth_cookie( $signed_in->ID );
+    }
+
+    do_action( 'wp_login', $signed_in->user_login, $signed_in );
+
+    theme_perso_account_json_success( esc_html__( 'Connexion réussie. Ouverture de votre espace beauté…', 'theme-perso' ) );
+}
+add_action( 'wp_ajax_nopriv_theme_perso_account_login', 'theme_perso_ajax_account_login' );
+
+function theme_perso_ajax_account_register() {
+    theme_perso_validate_account_ajax_request();
+
+    $errors = new WP_Error();
+    $email  = isset( $_POST['email'] ) ? sanitize_email( wp_unslash( $_POST['email'] ) ) : '';
+    $errors = theme_perso_validate_account_registration_fields( $errors, '', $email );
+
+    if ( $errors->has_errors() ) {
+        theme_perso_account_json_error( $errors->get_error_message(), $errors->get_error_code() );
+    }
+
+    $password = isset( $_POST['password'] ) ? (string) wp_unslash( $_POST['password'] ) : '';
+    $username = sanitize_user( current( explode( '@', $email ) ), true );
+    $username = $username ? $username : 'cosmethique_client';
+    $base     = $username;
+    $suffix   = 1;
+
+    while ( username_exists( $username ) ) {
+        $username = $base . '_' . $suffix;
+        $suffix++;
+    }
+
+    $customer_id = function_exists( 'wc_create_new_customer' )
+        ? wc_create_new_customer( $email, $username, $password )
+        : wp_create_user( $username, $password, $email );
+
+    if ( is_wp_error( $customer_id ) ) {
+        theme_perso_account_json_error( $customer_id->get_error_message(), $customer_id->get_error_code() );
+    }
+
+    theme_perso_save_account_registration_fields( $customer_id );
+    wp_set_current_user( $customer_id );
+    wp_set_auth_cookie( $customer_id, true, is_ssl() );
+
+    if ( function_exists( 'wc_set_customer_auth_cookie' ) ) {
+        wc_set_customer_auth_cookie( $customer_id );
+    }
+
+    $user = get_user_by( 'id', $customer_id );
+    if ( $user ) {
+        do_action( 'wp_login', $user->user_login, $user );
+    }
+
+    theme_perso_account_json_success( esc_html__( 'Votre compte est créé. Ouverture de votre espace beauté…', 'theme-perso' ) );
+}
+add_action( 'wp_ajax_nopriv_theme_perso_account_register', 'theme_perso_ajax_account_register' );
 
 function theme_perso_account_form_button_labels( $translated, $text, $domain ) {
     if ( is_admin() || 'woocommerce' !== $domain || ! function_exists( 'is_account_page' ) || ! is_account_page() ) {

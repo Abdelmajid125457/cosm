@@ -2755,13 +2755,114 @@ Thomas Bernard`,
             return true;
         };
 
+        const accountAjax = window.cosmethiqueAccount || {};
+
+        const showAccountNotice = (form, type, message) => {
+            if (!form || !message) {
+                return;
+            }
+
+            const wrapper = accountAccess.querySelector('.woocommerce-notices-wrapper') || accountAccess;
+            let notice = wrapper.querySelector('.cosmethique-account-ajax-notice');
+
+            if (!notice) {
+                notice = document.createElement('div');
+                notice.className = 'cosmethique-account-ajax-notice';
+                notice.setAttribute('role', type === 'error' ? 'alert' : 'status');
+                notice.setAttribute('aria-live', 'polite');
+                wrapper.prepend(notice);
+            }
+
+            notice.className = `cosmethique-account-ajax-notice woocommerce-${type === 'error' ? 'error' : 'message'}`;
+            notice.textContent = message;
+        };
+
+        const applyServerFieldError = (form, code, message) => {
+            if (!form || !code || !message) {
+                return;
+            }
+
+            const fieldMap = {
+                missing_credentials: 'username',
+                invalid_user: 'username',
+                invalid_password: 'password',
+                cosmethique_email_required: 'email',
+                cosmethique_email_exists: 'email',
+                cosmethique_password_required: 'password',
+                cosmethique_password_strength: 'password',
+                cosmethique_password_match: 'password_confirm',
+                cosmethique_first_name_required: 'billing_first_name',
+                cosmethique_last_name_required: 'billing_last_name',
+                cosmethique_terms_required: 'cosmethique_accept_terms',
+                cosmethique_privacy_required: 'cosmethique_accept_privacy'
+            };
+            const field = form.querySelector(`[name="${fieldMap[code] || ''}"]`);
+
+            if (field && field.type !== 'checkbox') {
+                setFieldState(field, false, message);
+                field.focus();
+            }
+        };
+
+        const submitAccountFormAjax = async (form) => {
+            if (!accountAjax.ajaxUrl || !accountAjax.nonce || !window.fetch) {
+                return false;
+            }
+
+            const submitButton = form.querySelector('button[type="submit"], .woocommerce-button');
+            const isRegister = form.classList.contains('woocommerce-form-register');
+            const formData = new FormData(form);
+            formData.set('action', isRegister ? 'theme_perso_account_register' : 'theme_perso_account_login');
+            formData.set('nonce', accountAjax.nonce);
+
+            if (submitButton) {
+                submitButton.classList.add('is-loading');
+                submitButton.setAttribute('aria-busy', 'true');
+                submitButton.disabled = true;
+            }
+
+            try {
+                const response = await fetch(accountAjax.ajaxUrl, {
+                    method: 'POST',
+                    credentials: 'same-origin',
+                    body: formData
+                });
+                const payload = await response.json();
+
+                if (!payload || !payload.success) {
+                    const data = payload && payload.data ? payload.data : {};
+                    const message = data.message || (accountAjax.labels && accountAjax.labels.networkError) || 'Une erreur est survenue. Merci de réessayer.';
+                    showAccountNotice(form, 'error', message);
+                    applyServerFieldError(form, data.code, message);
+                    return true;
+                }
+
+                const message = payload.data && payload.data.message ? payload.data.message : (isRegister ? accountAjax.labels.registerSuccess : accountAjax.labels.loginSuccess);
+                showAccountNotice(form, 'success', message);
+
+                window.setTimeout(() => {
+                    window.location.href = payload.data && payload.data.redirect ? payload.data.redirect : accountAjax.redirect;
+                }, prefersReducedMotion ? 0 : 450);
+                return true;
+            } catch (error) {
+                showAccountNotice(form, 'error', (accountAjax.labels && accountAjax.labels.networkError) || 'Une erreur est survenue. Merci de réessayer.');
+                return true;
+            } finally {
+                if (submitButton) {
+                    submitButton.classList.remove('is-loading');
+                    submitButton.removeAttribute('aria-busy');
+                    submitButton.disabled = false;
+                }
+            }
+        };
+
         [loginForm, registerForm].filter(Boolean).forEach((form) => {
             form.querySelectorAll('input:not([type="hidden"]):not([type="checkbox"]), textarea').forEach((field) => {
                 field.addEventListener('input', () => validateField(field));
                 field.addEventListener('blur', () => validateField(field));
             });
 
-            form.addEventListener('submit', (event) => {
+            form.addEventListener('submit', async (event) => {
                 const fields = Array.from(form.querySelectorAll('input:not([type="hidden"]):not([type="checkbox"]), textarea'));
                 const isValid = fields.every(validateField);
                 const submitButton = form.querySelector('button[type="submit"], .woocommerce-button');
@@ -2772,6 +2873,12 @@ Thomas Bernard`,
                     if (firstInvalid) {
                         firstInvalid.focus();
                     }
+                    return;
+                }
+
+                if (accountAjax.ajaxUrl && accountAjax.nonce) {
+                    event.preventDefault();
+                    await submitAccountFormAjax(form);
                     return;
                 }
 

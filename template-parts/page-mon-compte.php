@@ -66,6 +66,55 @@ endif;
 ?>
 
 <section class="account-premium">
+    <?php if ( is_user_logged_in() ) : ?>
+        <section class="account-access-section account-auth-experience" aria-labelledby="account-hero-title">
+            <div class="account-auth-shell">
+                <aside class="account-auth-brand" aria-label="<?php esc_attr_e( 'Avantages de l’espace client', 'theme-perso' ); ?>">
+                    <div class="account-auth-brand-copy">
+                        <p class="eyebrow"><?php esc_html_e( 'COSM’ÉTHIQUE', 'theme-perso' ); ?></p>
+                        <h1 id="account-hero-title"><?php esc_html_e( 'Mon espace beauté', 'theme-perso' ); ?></h1>
+                        <p><?php esc_html_e( 'Retrouvez vos commandes, votre diagnostic personnalisé, vos favoris et une expérience pensée pour votre routine beauté.', 'theme-perso' ); ?></p>
+                    </div>
+
+                    <figure class="account-auth-lifestyle">
+                        <?php if ( ! empty( $floating_products[0]['image'] ) ) : ?>
+                            <img src="<?php echo esc_url( $floating_products[0]['image'] ); ?>" alt="<?php echo esc_attr__( 'Routine beauté COSM’ÉTHIQUE', 'theme-perso' ); ?>" loading="eager">
+                        <?php endif; ?>
+                        <figcaption>
+                            <span><?php echo theme_perso_account_icon( 'lock' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></span>
+                            <strong><?php esc_html_e( 'Espace sécurisé', 'theme-perso' ); ?></strong>
+                            <small><?php esc_html_e( 'Vos données et commandes restent protégées.', 'theme-perso' ); ?></small>
+                        </figcaption>
+                    </figure>
+
+                    <div class="account-auth-trust-grid">
+                        <div>
+                            <strong>24/72h</strong>
+                            <span><?php esc_html_e( 'Suivi de livraison', 'theme-perso' ); ?></span>
+                        </div>
+                        <div>
+                            <strong>98%</strong>
+                            <span><?php esc_html_e( 'Origine naturelle', 'theme-perso' ); ?></span>
+                        </div>
+                        <div>
+                            <strong>100%</strong>
+                            <span><?php esc_html_e( 'Paiement protégé', 'theme-perso' ); ?></span>
+                        </div>
+                    </div>
+
+                    <ul class="account-auth-benefits">
+                        <li><?php echo theme_perso_account_icon( 'package' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?><span><?php esc_html_e( 'Commandes et factures centralisées', 'theme-perso' ); ?></span></li>
+                        <li><?php echo theme_perso_account_icon( 'sparkle' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?><span><?php esc_html_e( 'Diagnostic beauté sauvegardé', 'theme-perso' ); ?></span></li>
+                        <li><?php echo theme_perso_account_icon( 'heart' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?><span><?php esc_html_e( 'Favoris et recommandations personnalisés', 'theme-perso' ); ?></span></li>
+                    </ul>
+                </aside>
+
+                <div class="account-woocommerce-wrap account-dashboard-wrap" data-account-auth>
+                    <?php echo do_shortcode( '[woocommerce_my_account]' ); ?>
+                </div>
+            </div>
+        </section>
+    <?php else : ?>
     <section class="account-access-section account-auth-experience" aria-labelledby="account-hero-title">
         <div class="account-auth-shell">
             <aside class="account-auth-brand" aria-label="<?php esc_attr_e( 'Avantages de l’espace client', 'theme-perso' ); ?>">
@@ -124,6 +173,7 @@ endif;
             </div>
         </div>
     </section>
+    <?php endif; ?>
 
     <section class="account-benefits-section">
         <div class="section-heading">
