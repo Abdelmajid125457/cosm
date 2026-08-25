@@ -407,14 +407,11 @@ function theme_perso_render_google_tag_manager_head() {
             security_storage: 'granted'
         });
     </script>
-    <script type="text/plain" data-cookie-category="analytics">
+    <script>
         window.dataLayer = window.dataLayer || [];
         window.dataLayer.push({
-            event: 'cosmethique_consent_granted',
             cosmethique_ga4_measurement_id: '<?php echo esc_js( $measurement_id ); ?>'
         });
-    </script>
-    <script type="text/plain" data-cookie-category="analytics">
         (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
         new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
         j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
@@ -426,7 +423,7 @@ function theme_perso_render_google_tag_manager_head() {
 add_action( 'wp_head', 'theme_perso_render_google_tag_manager_head', 5 );
 
 function theme_perso_render_google_tag_manager_body() {
-    if ( is_admin() || ! theme_perso_cookie_category_allowed( 'analytics' ) ) {
+    if ( is_admin() ) {
         return;
     }
 
