@@ -189,6 +189,23 @@ function theme_perso_tracking_item_data( $product, $quantity = 1 ) {
     );
 }
 
+function theme_perso_tracking_item_attributes( $product, $quantity = 1 ) {
+    $item = theme_perso_tracking_item_data( $product, $quantity );
+
+    if ( empty( $item ) ) {
+        return '';
+    }
+
+    return sprintf(
+        ' data-tracking-item-id="%1$s" data-tracking-item-name="%2$s" data-tracking-item-category="%3$s" data-tracking-item-price="%4$s" data-tracking-item-quantity="%5$s"',
+        esc_attr( $item['item_id'] ),
+        esc_attr( $item['item_name'] ),
+        esc_attr( $item['category'] ),
+        esc_attr( $item['price'] ),
+        esc_attr( $item['quantity'] )
+    );
+}
+
 function theme_perso_tracking_cart_items_data() {
     if ( ! function_exists( 'WC' ) || ! WC()->cart ) {
         return array();
@@ -290,6 +307,19 @@ function theme_perso_tracking_script_data() {
 
     return $data;
 }
+
+function theme_perso_tracking_loop_add_to_cart_args( $args, $product ) {
+    if ( $product instanceof WC_Product ) {
+        $args['attributes']['data-tracking-item-id']       = (string) $product->get_id();
+        $args['attributes']['data-tracking-item-name']     = $product->get_name();
+        $args['attributes']['data-tracking-item-category'] = theme_perso_tracking_product_category_name( $product );
+        $args['attributes']['data-tracking-item-price']    = (string) (float) wc_get_price_to_display( $product );
+        $args['attributes']['data-tracking-item-quantity'] = '1';
+    }
+
+    return $args;
+}
+add_filter( 'woocommerce_loop_add_to_cart_args', 'theme_perso_tracking_loop_add_to_cart_args', 20, 2 );
 
 function theme_perso_customize_google_analytics( $wp_customize ) {
     $wp_customize->add_section(

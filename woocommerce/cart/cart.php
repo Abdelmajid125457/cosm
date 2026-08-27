@@ -76,7 +76,7 @@ $progress        = $free_threshold > 0 ? min( 100, ( $subtotal_amount / $free_th
                 $thumbnail         = apply_filters( 'woocommerce_cart_item_thumbnail', $_product->get_image( 'cosmethique-card' ), $cart_item, $cart_item_key );
                 $product_name      = apply_filters( 'woocommerce_cart_item_name', $_product->get_name(), $cart_item, $cart_item_key );
                 ?>
-                <article class="cart-product-card" data-cart-product-card>
+                <article class="cart-product-card" data-cart-product-card<?php echo theme_perso_tracking_item_attributes( $_product, $cart_item['quantity'] ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>>
                     <div class="cart-product-media">
                         <?php if ( $product_permalink ) : ?>
                             <a href="<?php echo esc_url( $product_permalink ); ?>"><?php echo wp_kses_post( $thumbnail ); ?></a>
@@ -141,11 +141,12 @@ $progress        = $free_threshold > 0 ? min( 100, ( $subtotal_amount / $free_th
                         echo apply_filters(
                             'woocommerce_cart_item_remove_link',
                             sprintf(
-                                '<a href="%s" class="remove" aria-label="%s" data-product_id="%s" data-product_sku="%s">×</a>',
+                                '<a href="%s" class="remove" aria-label="%s" data-product_id="%s" data-product_sku="%s"%s>×</a>',
                                 esc_url( wc_get_cart_remove_url( $cart_item_key ) ),
                                 esc_attr( sprintf( __( 'Supprimer %s du panier', 'theme-perso' ), wp_strip_all_tags( $product_name ) ) ),
                                 esc_attr( $product_id ),
-                                esc_attr( $_product->get_sku() )
+                                esc_attr( $_product->get_sku() ),
+                                theme_perso_tracking_item_attributes( $_product, $cart_item['quantity'] )
                             ),
                             $cart_item_key
                         );

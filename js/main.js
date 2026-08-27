@@ -10,6 +10,72 @@ document.addEventListener('DOMContentLoaded', () => {
         (formatted, value, index) => formatted.replace(new RegExp(`%${index + 1}\\$[sd]`, 'g'), value),
         text
     );
+    const trackingData = window.cosmethiqueTracking || {};
+    const trackingContext = trackingData.context || {};
+    const trackingCurrency = trackingData.currency || 'EUR';
+
+    const ensureTrackingDataLayer = () => {
+        window.dataLayer = window.dataLayer || [];
+        return window.dataLayer;
+    };
+
+    const trackingTimestamp = () => new Date().toISOString();
+
+    const getTrackingContext = () => ({
+        page_title: document.title || trackingContext.page_title || '',
+        page_location: window.location.href,
+        page_path: window.location.pathname,
+        language: document.documentElement.lang || trackingContext.language || '',
+        user_type: trackingContext.user_type || (document.body.classList.contains('logged-in') ? 'logged_in' : 'guest'),
+        timestamp: trackingTimestamp()
+    });
+
+    const pushTrackingEvent = (eventName, data = {}) => {
+        if (!eventName) {
+            return;
+        }
+
+        ensureTrackingDataLayer().push({
+            event: eventName,
+            ...getTrackingContext(),
+            ...data
+        });
+    };
+
+    const normalizeTrackingText = (text = '') => text
+        .toString()
+        .normalize('NFD')
+        .replace(/[\u0300-\u036f]/g, '')
+        .toLowerCase()
+        .trim();
+
+    const trackPageLifecycle = () => {
+        pushTrackingEvent('page_view');
+
+        try {
+            const sessionKey = trackingData.sessionKey || 'cosmethique_session_started';
+            if (!window.sessionStorage.getItem(sessionKey)) {
+                window.sessionStorage.setItem(sessionKey, '1');
+                pushTrackingEvent('session_start');
+            }
+        } catch (error) {
+            pushTrackingEvent('session_start');
+        }
+
+        try {
+            const visitKey = trackingData.visitKey || 'cosmethique_first_visit';
+            if (!window.localStorage.getItem(visitKey)) {
+                window.localStorage.setItem(visitKey, '1');
+                pushTrackingEvent('first_visit');
+            }
+        } catch (error) {
+            pushTrackingEvent('first_visit');
+        }
+
+        window.setTimeout(() => pushTrackingEvent('user_engagement'), 10000);
+    };
+
+    trackPageLifecycle();
 
     if (i18n.dir) {
         document.documentElement.setAttribute('dir', i18n.dir);
@@ -54,6 +120,191 @@ document.addEventListener('DOMContentLoaded', () => {
             });
         });
     }
+
+    const scrollMilestones = { 50: false, 90: false };
+    const trackScrollMilestones = () => {
+        const scrollable = Math.max(1, document.documentElement.scrollHeight - window.innerHeight);
+        const percent = Math.round((window.scrollY / scrollable) * 100);
+
+        [50, 90].forEach((milestone) => {
+            if (!scrollMilestones[milestone] && percent >= milestone) {
+                scrollMilestones[milestone] = true;
+                pushTrackingEvent(`scroll_${milestone}`, { scroll_percent: milestone });
+            }
+        });
+    };
+
+    window.addEventListener('scroll', trackScrollMilestones, { passive: true });
+    trackScrollMilestones();
+
+    const ctaEvents = [
+        { event: 'cta_shop', patterns: ['découvrir la boutique', 'decouvrir la boutique', 'boutique'] },
+        { event: 'cta_vision', patterns: ['notre vision', 'découvrir la marque', 'decouvrir la marque'] },
+        { event: 'cta_commitments', patterns: ['nos engagements', 'engagements'] },
+        { event: 'cta_product', patterns: ['voir le produit', 'voir l’offre', "voir l'offre"] },
+        { event: 'cta_store', patterns: ['voir la boutique'] }
+    ];
+
+    document.addEventListener('click', (event) => {
+        const link = event.target.closest('a, button');
+        if (!link) {
+            return;
+        }
+
+        if (link.closest('.site-navigation, .main-navigation, .site-footer, .topbar')) {
+            return;
+        }
+
+        const isCta = link.matches('.button, .btn, .button-primary, .wp-block-button__link, [class*="button"], [class*="btn"], [class*="cta"]');
+        if (!isCta) {
+            return;
+        }
+
+        const label = normalizeTrackingText(link.textContent || link.getAttribute('aria-label') || '');
+        const href = link.href || link.getAttribute('href') || '';
+        const match = ctaEvents.find((item) => item.patterns.some((pattern) => label.includes(normalizeTrackingText(pattern))));
+
+        if (match) {
+            pushTrackingEvent(match.event, {
+                cta_text: (link.textContent || link.getAttribute('aria-label') || '').trim(),
+                cta_url: href
+            });
+        }
+    });
+
+    const productItem = trackingData.product || {};
+    const cartData = trackingData.cart || {};
+    const purchaseData = trackingData.purchase || {};
+    const cartItemsById = Array.isArray(cartData.items)
+        ? cartData.items.reduce((items, item) => {
+            if (item && item.item_id) {
+                items[String(item.item_id)] = item;
+            }
+            return items;
+        }, {})
+        : {};
+
+    const findTrackingItem = (element) => {
+        const source = element?.closest?.('[data-tracking-item-id], [data-product_id], [name="add-to-cart"]') || element;
+        const productId = source?.dataset?.trackingItemId || source?.dataset?.product_id || source?.value || productItem.item_id || '';
+
+        if (source?.dataset?.trackingItemName) {
+            return {
+                item_id: String(productId),
+                item_name: source.dataset.trackingItemName,
+                category: source.dataset.trackingItemCategory || '',
+                price: Number(source.dataset.trackingItemPrice || 0),
+                quantity: Number(source.dataset.trackingItemQuantity || 1) || 1
+            };
+        }
+
+        if (productId && cartItemsById[String(productId)]) {
+            return cartItemsById[String(productId)];
+        }
+
+        return productItem && productItem.item_id ? productItem : {};
+    };
+
+    const getQuantityFromAction = (element, fallback = 1) => {
+        const form = element?.closest?.('form.cart, form.woocommerce-cart-form');
+        const qty = form?.querySelector?.('input.qty, input[name="quantity"]');
+        return Number(qty?.value || fallback) || fallback;
+    };
+
+    if (productItem.item_id && document.body.classList.contains('single-product')) {
+        pushTrackingEvent('view_item', {
+            currency: trackingCurrency,
+            ...productItem
+        });
+    }
+
+    if (document.body.classList.contains('woocommerce-cart')) {
+        pushTrackingEvent('view_cart', {
+            currency: cartData.currency || trackingCurrency,
+            value: Number(cartData.value || 0),
+            items: Array.isArray(cartData.items) ? cartData.items : []
+        });
+    }
+
+    if (purchaseData && purchaseData.transaction_id) {
+        try {
+            const purchaseKey = `cosmethique_purchase_${purchaseData.transaction_id}`;
+            if (!window.sessionStorage.getItem(purchaseKey)) {
+                window.sessionStorage.setItem(purchaseKey, '1');
+                pushTrackingEvent('purchase', purchaseData);
+            }
+        } catch (error) {
+            pushTrackingEvent('purchase', purchaseData);
+        }
+    }
+
+    document.addEventListener('submit', (event) => {
+        const cartForm = event.target.closest('form.cart');
+        if (cartForm) {
+            const button = cartForm.querySelector('[name="add-to-cart"], .single_add_to_cart_button');
+            const item = findTrackingItem(button || cartForm);
+            if (item.item_id) {
+                pushTrackingEvent('add_to_cart', {
+                    currency: trackingCurrency,
+                    ...item,
+                    quantity: getQuantityFromAction(cartForm, item.quantity || 1)
+                });
+            }
+        }
+
+        if (event.target.matches('.woocommerce-checkout')) {
+            pushTrackingEvent('begin_checkout', {
+                currency: cartData.currency || trackingCurrency,
+                value: Number(cartData.value || 0),
+                items: Array.isArray(cartData.items) ? cartData.items : []
+            });
+        }
+
+        if (event.target.matches('[data-demo-autofill="contact"] form, .form-card[data-demo-autofill="contact"] form, .contact-page form')) {
+            pushTrackingEvent('contact_submit');
+        }
+
+        if (event.target.matches('[data-demo-autofill="franchise"] form, .form-card[data-demo-autofill="franchise"] form, #franchise-request-form form')) {
+            pushTrackingEvent('franchise_request');
+        }
+    }, true);
+
+    document.addEventListener('click', (event) => {
+        const addToCart = event.target.closest('.ajax_add_to_cart, .add_to_cart_button');
+        if (addToCart) {
+            const item = findTrackingItem(addToCart);
+            if (item.item_id) {
+                pushTrackingEvent('add_to_cart', {
+                    currency: trackingCurrency,
+                    ...item,
+                    quantity: Number(addToCart.dataset.quantity || item.quantity || 1) || 1
+                });
+            }
+        }
+
+        const removeFromCart = event.target.closest('.woocommerce-cart-form .remove, .cart-product-remove .remove');
+        if (removeFromCart) {
+            const item = findTrackingItem(removeFromCart);
+            pushTrackingEvent('remove_from_cart', {
+                currency: trackingCurrency,
+                ...item
+            });
+        }
+
+        const checkoutButton = event.target.closest('.checkout-button, a[href*="/commande"], a[href*="/checkout"]');
+        if (checkoutButton && document.body.classList.contains('woocommerce-cart')) {
+            pushTrackingEvent('begin_checkout', {
+                currency: cartData.currency || trackingCurrency,
+                value: Number(cartData.value || 0),
+                items: Array.isArray(cartData.items) ? cartData.items : []
+            });
+        }
+
+        const logoutLink = event.target.closest('a[href*="customer-logout"]');
+        if (logoutLink) {
+            pushTrackingEvent('logout');
+        }
+    });
 
     const menuButton = document.querySelector('.mobile-menu-toggle');
     const navigation = document.querySelector('.site-navigation');
@@ -434,6 +685,11 @@ document.addEventListener('DOMContentLoaded', () => {
         form.addEventListener('submit', (event) => {
             const directUrl = findRouteUrl(input.value);
             const activeOption = activeIndex >= 0 ? resultsNode.querySelectorAll('.smart-search-item')[activeIndex] : null;
+            const searchTerm = input.value.trim();
+
+            if (searchTerm) {
+                pushTrackingEvent('search', { search_term: searchTerm });
+            }
 
             if (activeOption) {
                 event.preventDefault();
@@ -791,6 +1047,10 @@ Thomas Bernard`,
             const initialText = buttonLabel.textContent;
             form.classList.remove('is-error');
             form.classList.add('is-success');
+            pushTrackingEvent('newsletter_signup', {
+                form_id: form.id || '',
+                form_location: form.closest('footer') ? 'footer' : 'page'
+            });
             if (status) {
                 status.textContent = translateUi('newsletterConfirmed', 'Inscription confirmée');
             }
@@ -1271,6 +1531,14 @@ Thomas Bernard`,
     document.addEventListener('change', (event) => {
         if (event.target.matches('.woocommerce-checkout #payment input[name="payment_method"]')) {
             syncCheckoutPaymentAccordion();
+            const method = event.target.closest('.wc_payment_method');
+            const label = method?.querySelector('label')?.textContent?.trim() || event.target.value || '';
+            pushTrackingEvent('add_payment_info', {
+                payment_type: label,
+                currency: cartData.currency || trackingCurrency,
+                value: Number(cartData.value || 0),
+                items: Array.isArray(cartData.items) ? cartData.items : []
+            });
         }
     });
 
@@ -1656,14 +1924,6 @@ Thomas Bernard`,
         closeCookieModal();
         syncGoogleConsentMode(consent);
         activateDeferredCookieScripts(consent);
-
-        if (consent.analytics) {
-            pushGtmEvent('page_view', {
-                page_title: document.title,
-                page_location: window.location.href,
-                page_path: window.location.pathname,
-            });
-        }
     };
 
     document.querySelectorAll('[data-cookie-accept-all]').forEach((button) => {
@@ -1916,6 +2176,7 @@ Thomas Bernard`,
         const cartButton = diagnostic.querySelector('[data-diagnostic-cart]');
         let products = {};
         let currentStep = 0;
+        let diagnosticStarted = false;
 
         if (!widget || !form || !steps.length) {
             return;
@@ -2129,6 +2390,14 @@ Thomas Bernard`,
 
             form.hidden = true;
             result.hidden = false;
+            pushTrackingEvent('diagnostic_complete', {
+                diagnostic_answers: { ...answers },
+                recommended_items: routineProducts.map((product) => ({
+                    item_id: String(product.id || ''),
+                    item_name: product.title || '',
+                    price: product.price || ''
+                }))
+            });
             if (stepLabel) {
                 stepLabel.textContent = translateDiagnostic('result', 'Résultat');
             }
@@ -2142,6 +2411,11 @@ Thomas Bernard`,
             const label = event.target.closest('label');
             if (label) {
                 label.parentElement.querySelectorAll('label').forEach((item) => item.classList.toggle('is-selected', item === label));
+            }
+
+            if (!diagnosticStarted && event.target.matches('input[type="radio"]')) {
+                diagnosticStarted = true;
+                pushTrackingEvent('diagnostic_start');
             }
 
             updateStep();
@@ -2839,6 +3113,7 @@ Thomas Bernard`,
 
                 const message = payload.data && payload.data.message ? payload.data.message : (isRegister ? accountAjax.labels.registerSuccess : accountAjax.labels.loginSuccess);
                 showAccountNotice(form, 'success', message);
+                pushTrackingEvent(isRegister ? 'sign_up' : 'login');
 
                 window.setTimeout(() => {
                     window.location.href = payload.data && payload.data.redirect ? payload.data.redirect : accountAjax.redirect;
@@ -2866,6 +3141,9 @@ Thomas Bernard`,
                 const fields = Array.from(form.querySelectorAll('input:not([type="hidden"]):not([type="checkbox"]), textarea'));
                 const isValid = fields.every(validateField);
                 const submitButton = form.querySelector('button[type="submit"], .woocommerce-button');
+                const isRegisterForm = form.classList.contains('woocommerce-form-register');
+
+                pushTrackingEvent(isRegisterForm ? 'sign_up_click' : 'login_click');
 
                 if (!isValid) {
                     event.preventDefault();

@@ -83,7 +83,7 @@ $recommended_products = class_exists( 'WooCommerce' )
                     <div>
                         <h3><a href="<?php echo esc_url( get_permalink( $product_id ) ); ?>"><?php echo esc_html( $recommended_product->get_name() ); ?></a></h3>
                         <p><?php echo wp_kses_post( $recommended_product->get_price_html() ); ?></p>
-                        <a class="button button-primary ajax_add_to_cart add_to_cart_button" href="<?php echo esc_url( $recommended_product->add_to_cart_url() ); ?>" data-product_id="<?php echo esc_attr( $product_id ); ?>" data-product_sku="<?php echo esc_attr( $recommended_product->get_sku() ); ?>" aria-label="<?php echo esc_attr( sprintf( __( 'Ajouter %s au panier', 'theme-perso' ), $recommended_product->get_name() ) ); ?>">
+                        <a class="button button-primary ajax_add_to_cart add_to_cart_button" href="<?php echo esc_url( $recommended_product->add_to_cart_url() ); ?>" data-product_id="<?php echo esc_attr( $product_id ); ?>" data-product_sku="<?php echo esc_attr( $recommended_product->get_sku() ); ?>" aria-label="<?php echo esc_attr( sprintf( __( 'Ajouter %s au panier', 'theme-perso' ), $recommended_product->get_name() ) ); ?>"<?php echo theme_perso_tracking_item_attributes( $recommended_product ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>>
                             <?php esc_html_e( 'Ajouter au panier', 'theme-perso' ); ?>
                         </a>
                     </div>
