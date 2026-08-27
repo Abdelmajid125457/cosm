@@ -1,6 +1,6 @@
 {
   "exportFormatVersion": 2,
-  "exportTime": "20260827T091606Z",
+  "exportTime": "20260827T092408Z",
   "containerVersion": {
     "path": "accounts/0/containers/0/versions/0",
     "accountId": "0",
@@ -5242,72 +5242,68 @@
     ],
     "builtInVariable": [
       {
-        "type": "PAGE_URL",
+        "type": "pageUrl",
         "name": "Page URL"
       },
       {
-        "type": "PAGE_PATH",
+        "type": "pagePath",
         "name": "Page Path"
       },
       {
-        "type": "PAGE_HOSTNAME",
+        "type": "pageHostname",
         "name": "Page Hostname"
       },
       {
-        "type": "REFERRER",
+        "type": "referrer",
         "name": "Referrer"
       },
       {
-        "type": "EVENT",
+        "type": "event",
         "name": "Event"
       },
       {
-        "type": "CLICK_ELEMENT",
+        "type": "clickElement",
         "name": "Click Element"
       },
       {
-        "type": "CLICK_CLASSES",
+        "type": "clickClasses",
         "name": "Click Classes"
       },
       {
-        "type": "CLICK_ID",
+        "type": "clickId",
         "name": "Click ID"
       },
       {
-        "type": "CLICK_TEXT",
+        "type": "clickText",
         "name": "Click Text"
       },
       {
-        "type": "CLICK_URL",
+        "type": "clickUrl",
         "name": "Click URL"
       },
       {
-        "type": "FORM_ELEMENT",
+        "type": "formElement",
         "name": "Form Element"
       },
       {
-        "type": "FORM_CLASSES",
+        "type": "formClasses",
         "name": "Form Classes"
       },
       {
-        "type": "FORM_ID",
+        "type": "formId",
         "name": "Form ID"
       },
       {
-        "type": "FORM_TARGET",
+        "type": "formTarget",
         "name": "Form Target"
       },
       {
-        "type": "SCROLL_DEPTH_THRESHOLD",
+        "type": "scrollDepthThreshold",
         "name": "Scroll Depth Threshold"
       },
       {
-        "type": "SCROLL_DEPTH_UNITS",
+        "type": "scrollDepthUnits",
         "name": "Scroll Depth Units"
-      },
-      {
-        "type": "SCROLL_DIRECTION",
-        "name": "Scroll Direction"
       }
     ]
   }
