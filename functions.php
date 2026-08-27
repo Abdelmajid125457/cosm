@@ -159,6 +159,138 @@ function theme_perso_sanitize_google_tag_manager_container_id( $value ) {
     return preg_match( '/^GTM-[A-Z0-9]+$/', $value ) ? $value : '';
 }
 
+function theme_perso_tracking_product_category_name( $product ) {
+    if ( ! $product instanceof WC_Product ) {
+        return '';
+    }
+
+    $terms = get_the_terms( $product->get_id(), 'product_cat' );
+
+    if ( empty( $terms ) || is_wp_error( $terms ) ) {
+        return '';
+    }
+
+    $term = reset( $terms );
+
+    return $term && ! empty( $term->name ) ? $term->name : '';
+}
+
+function theme_perso_tracking_item_data( $product, $quantity = 1 ) {
+    if ( ! $product instanceof WC_Product ) {
+        return array();
+    }
+
+    return array(
+        'item_id'   => (string) $product->get_id(),
+        'item_name' => $product->get_name(),
+        'category'  => theme_perso_tracking_product_category_name( $product ),
+        'price'     => (float) wc_get_price_to_display( $product ),
+        'quantity'  => max( 1, (int) $quantity ),
+    );
+}
+
+function theme_perso_tracking_cart_items_data() {
+    if ( ! function_exists( 'WC' ) || ! WC()->cart ) {
+        return array();
+    }
+
+    $items = array();
+
+    foreach ( WC()->cart->get_cart() as $cart_item ) {
+        $product = isset( $cart_item['data'] ) ? $cart_item['data'] : null;
+
+        if ( $product instanceof WC_Product ) {
+            $items[] = theme_perso_tracking_item_data( $product, isset( $cart_item['quantity'] ) ? $cart_item['quantity'] : 1 );
+        }
+    }
+
+    return $items;
+}
+
+function theme_perso_tracking_order_data() {
+    if ( ! function_exists( 'is_wc_endpoint_url' ) || ! is_wc_endpoint_url( 'order-received' ) ) {
+        return array();
+    }
+
+    $order_id = absint( get_query_var( 'order-received' ) );
+
+    if ( ! $order_id ) {
+        return array();
+    }
+
+    $order = wc_get_order( $order_id );
+
+    if ( ! $order instanceof WC_Order ) {
+        return array();
+    }
+
+    $order_key = isset( $_GET['key'] ) ? wc_clean( wp_unslash( $_GET['key'] ) ) : ''; // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+
+    if ( $order_key && $order->get_order_key() !== $order_key ) {
+        return array();
+    }
+
+    $items = array();
+
+    foreach ( $order->get_items() as $item ) {
+        $product = $item->get_product();
+
+        if ( $product instanceof WC_Product ) {
+            $items[] = theme_perso_tracking_item_data( $product, $item->get_quantity() );
+        }
+    }
+
+    return array(
+        'transaction_id' => (string) $order->get_order_number(),
+        'value'          => (float) $order->get_total(),
+        'currency'       => $order->get_currency(),
+        'items'          => $items,
+    );
+}
+
+function theme_perso_tracking_page_context() {
+    return array(
+        'page_title'    => wp_get_document_title(),
+        'page_location' => home_url( add_query_arg( null, null ) ),
+        'page_path'     => isset( $_SERVER['REQUEST_URI'] ) ? strtok( sanitize_text_field( wp_unslash( $_SERVER['REQUEST_URI'] ) ), '?' ) : '/',
+        'language'      => function_exists( 'determine_locale' ) ? determine_locale() : get_locale(),
+        'user_type'     => is_user_logged_in() ? 'logged_in' : 'guest',
+        'timestamp'     => current_time( 'c' ),
+    );
+}
+
+function theme_perso_tracking_script_data() {
+    $data = array(
+        'context'     => theme_perso_tracking_page_context(),
+        'currency'    => function_exists( 'get_woocommerce_currency' ) ? get_woocommerce_currency() : 'EUR',
+        'product'     => array(),
+        'cart'        => array(),
+        'purchase'    => array(),
+        'sessionKey'  => 'cosmethique_session_started',
+        'visitKey'    => 'cosmethique_first_visit',
+    );
+
+    if ( function_exists( 'is_product' ) && is_product() ) {
+        $product = wc_get_product( get_the_ID() );
+
+        if ( $product instanceof WC_Product ) {
+            $data['product'] = theme_perso_tracking_item_data( $product );
+        }
+    }
+
+    if ( function_exists( 'is_cart' ) && ( is_cart() || is_checkout() ) ) {
+        $data['cart'] = array(
+            'value'    => function_exists( 'WC' ) && WC()->cart ? (float) WC()->cart->get_total( 'edit' ) : 0,
+            'currency' => $data['currency'],
+            'items'    => theme_perso_tracking_cart_items_data(),
+        );
+    }
+
+    $data['purchase'] = theme_perso_tracking_order_data();
+
+    return $data;
+}
+
 function theme_perso_customize_google_analytics( $wp_customize ) {
     $wp_customize->add_section(
         'cosmethique_analytics',
@@ -291,6 +423,7 @@ function theme_perso_scripts() {
     );
 
     wp_localize_script( 'theme-perso-script', 'cosmethiqueSearch', theme_perso_smart_search_script_data() );
+    wp_localize_script( 'theme-perso-script', 'cosmethiqueTracking', theme_perso_tracking_script_data() );
     wp_localize_script(
         'theme-perso-script',
         'cosmethiqueAccount',
