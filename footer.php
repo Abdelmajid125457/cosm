@@ -87,6 +87,7 @@
         $footer_help_links    = array(
             esc_html__( 'Contact', 'theme-perso' )                     => $footer_legal_links[ esc_html__( 'Contact', 'theme-perso' ) ],
             esc_html__( 'FAQ', 'theme-perso' )                         => $footer_house_links[ esc_html__( 'FAQ', 'theme-perso' ) ],
+            esc_html__( 'Plan du site', 'theme-perso' )                 => $footer_page_link( 'Plan du site', 'plan-du-site', 'Explorez l’univers Cosm’Éthique.' ),
             esc_html__( 'CGV', 'theme-perso' )                         => $footer_legal_links[ esc_html__( 'CGV', 'theme-perso' ) ],
             esc_html__( 'Mentions légales', 'theme-perso' )             => $footer_legal_links[ esc_html__( 'Mentions légales', 'theme-perso' ) ],
             esc_html__( 'Politique de confidentialité', 'theme-perso' ) => $footer_legal_links[ esc_html__( 'Politique de confidentialité', 'theme-perso' ) ],
