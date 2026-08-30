@@ -53,8 +53,8 @@ $nodes = array(
         'url'         => $shop_url,
         'icon'        => 'bottle',
         'image'       => $asset( 'products', 'photo-serum-eclat-rose.png' ),
-        'x'           => 18,
-        'y'           => 30,
+        'x'           => 15,
+        'y'           => 25,
         'subs'        => array(
             array( 'label' => __( 'Soins visage', 'theme-perso' ), 'url' => $term_url( 'soins-visage' ) ),
             array( 'label' => __( 'Soins corps', 'theme-perso' ), 'url' => $term_url( 'soins-corps' ) ),
@@ -71,7 +71,7 @@ $nodes = array(
         'icon'        => 'tablet',
         'image'       => $asset( 'products', 'photo-creme-hydratante-sauge-camomille.png' ),
         'x'           => 50,
-        'y'           => 16,
+        'y'           => 12,
         'subs'        => array(),
     ),
     array(
@@ -81,8 +81,8 @@ $nodes = array(
         'url'         => $blog_url,
         'icon'        => 'book',
         'image'       => $asset( 'blog', 'blog-serum.png' ),
-        'x'           => 79,
-        'y'           => 31,
+        'x'           => 85,
+        'y'           => 26,
         'subs'        => array(),
     ),
     array(
@@ -92,8 +92,8 @@ $nodes = array(
         'url'         => $page_url( 'contact', 'contact' ),
         'icon'        => 'mail',
         'image'       => $asset( 'products', 'photo-trousse-beaute-cosmethique.png' ),
-        'x'           => 82,
-        'y'           => 68,
+        'x'           => 86,
+        'y'           => 73,
         'subs'        => array(),
     ),
     array(
@@ -104,7 +104,7 @@ $nodes = array(
         'icon'        => 'avatar',
         'image'       => $asset( 'products', 'photo-pack-routine-visage-contenu-reel.png' ),
         'x'           => 50,
-        'y'           => 84,
+        'y'           => 88,
         'subs'        => array(
             array( 'label' => __( 'Panier', 'theme-perso' ), 'url' => $cart_url ),
             array( 'label' => __( 'Commande', 'theme-perso' ), 'url' => function_exists( 'wc_get_checkout_url' ) ? wc_get_checkout_url() : $page_url( 'commande', 'commande' ) ),
@@ -117,8 +117,8 @@ $nodes = array(
         'url'         => $page_url( 'engagements', 'engagements' ),
         'icon'        => 'leaf',
         'image'       => $asset( 'about', 'about-eco-commitment.png' ),
-        'x'           => 19,
-        'y'           => 70,
+        'x'           => 14,
+        'y'           => 74,
         'subs'        => array(
             array( 'label' => __( 'Ingrédients', 'theme-perso' ), 'url' => $page_url( 'ingredients', 'ingredients' ) ),
             array( 'label' => __( 'Qualité', 'theme-perso' ), 'url' => $page_url( 'qualite', 'qualite' ) ),
@@ -131,7 +131,7 @@ $nodes = array(
         'url'         => $page_url( 'devenir-franchise', 'devenir-franchise' ),
         'icon'        => 'store',
         'image'       => $asset( 'products', 'category-packs-hero-reel.png' ),
-        'x'           => 33,
+        'x'           => 29,
         'y'           => 50,
         'subs'        => array(
             array( 'label' => __( 'Devenir franchisé', 'theme-perso' ), 'url' => $page_url( 'devenir-franchise', 'devenir-franchise' ) ),
@@ -145,7 +145,7 @@ $nodes = array(
         'url'         => $page_url( 'faq', 'faq' ),
         'icon'        => 'sparkle',
         'image'       => $asset( 'products', 'photo-huile-seche-botanique.png' ),
-        'x'           => 67,
+        'x'           => 71,
         'y'           => 50,
         'subs'        => array(
             array( 'label' => __( 'FAQ', 'theme-perso' ), 'url' => $page_url( 'faq', 'faq' ) ),
