@@ -212,6 +212,13 @@ $quick_cards = array(
         </div>
         <div class="sitemap-orbit" data-sitemap-orbit>
             <svg class="sitemap-connections" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
+                <defs>
+                    <linearGradient id="sitemap-gold-line" x1="0%" y1="0%" x2="100%" y2="100%">
+                        <stop offset="0%" stop-color="#F8F4EE" stop-opacity="0.12"></stop>
+                        <stop offset="48%" stop-color="#C9A45C" stop-opacity="0.95"></stop>
+                        <stop offset="100%" stop-color="#2B7D8A" stop-opacity="0.42"></stop>
+                    </linearGradient>
+                </defs>
                 <?php foreach ( $nodes as $node ) : ?>
                     <line x1="50" y1="50" x2="<?php echo esc_attr( $node['x'] ); ?>" y2="<?php echo esc_attr( $node['y'] ); ?>"></line>
                 <?php endforeach; ?>
@@ -220,8 +227,8 @@ $quick_cards = array(
                 <span>COSM’ÉTHIQUE</span>
                 <strong><?php esc_html_e( 'Accueil', 'theme-perso' ); ?></strong>
             </a>
-            <?php foreach ( $nodes as $node ) : ?>
-                <article class="sitemap-node sitemap-node--<?php echo esc_attr( $node['key'] ); ?> motion-reveal motion-reveal--scale" style="--node-x: <?php echo esc_attr( $node['x'] ); ?>%; --node-y: <?php echo esc_attr( $node['y'] ); ?>%;" data-sitemap-entry="<?php echo esc_attr( strtolower( remove_accents( $node['title'] . ' ' . $node['description'] ) ) ); ?>">
+            <?php foreach ( $nodes as $node_index => $node ) : ?>
+                <article class="sitemap-node sitemap-node--<?php echo esc_attr( $node['key'] ); ?> motion-reveal motion-reveal--scale" style="--node-x: <?php echo esc_attr( $node['x'] ); ?>%; --node-y: <?php echo esc_attr( $node['y'] ); ?>%; --node-index: <?php echo esc_attr( (string) $node_index ); ?>;" data-sitemap-entry="<?php echo esc_attr( strtolower( remove_accents( $node['title'] . ' ' . $node['description'] ) ) ); ?>">
                     <a class="sitemap-node-link" href="<?php echo esc_url( $node['url'] ); ?>" aria-label="<?php echo esc_attr( sprintf( __( 'Ouvrir %s', 'theme-perso' ), $node['title'] ) ); ?>">
                         <span class="sitemap-node-glow"></span>
                         <span class="sitemap-node-object sitemap-node-object--<?php echo esc_attr( $node['icon'] ); ?>">
@@ -260,15 +267,10 @@ $quick_cards = array(
 
     <section class="sitemap-footer-panel" aria-labelledby="sitemap-footer-title">
         <div>
-            <p class="sitemap-kicker"><?php esc_html_e( 'Rester connecté', 'theme-perso' ); ?></p>
-            <h2 id="sitemap-footer-title"><?php esc_html_e( 'Recevez l’essentiel Cosm’Éthique.', 'theme-perso' ); ?></h2>
-            <p><?php esc_html_e( 'Nouveautés, conseils beauté et inspirations de routine, dans une version courte et élégante.', 'theme-perso' ); ?></p>
+            <p class="sitemap-kicker"><?php esc_html_e( 'Liens rapides', 'theme-perso' ); ?></p>
+            <h2 id="sitemap-footer-title"><?php esc_html_e( 'Continuez votre exploration.', 'theme-perso' ); ?></h2>
+            <p><?php esc_html_e( 'Rejoignez les pages essentielles de Cosm’Éthique en un clic, puis retrouvez la newsletter dans le footer global.', 'theme-perso' ); ?></p>
         </div>
-        <form class="sitemap-newsletter">
-            <label class="screen-reader-text" for="sitemap-newsletter-email"><?php esc_html_e( 'Adresse e-mail', 'theme-perso' ); ?></label>
-            <input id="sitemap-newsletter-email" type="email" placeholder="<?php esc_attr_e( 'votre@email.com', 'theme-perso' ); ?>">
-            <button type="submit"><?php esc_html_e( 'S’inscrire', 'theme-perso' ); ?></button>
-        </form>
         <div class="sitemap-footer-links" aria-label="<?php esc_attr_e( 'Liens rapides du plan du site', 'theme-perso' ); ?>">
             <a href="<?php echo esc_url( $shop_url ); ?>"><?php esc_html_e( 'Boutique', 'theme-perso' ); ?></a>
             <a href="<?php echo esc_url( $page_url( 'devenir-franchise', 'devenir-franchise' ) ); ?>"><?php esc_html_e( 'Franchise', 'theme-perso' ); ?></a>
