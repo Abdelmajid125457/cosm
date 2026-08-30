@@ -1076,6 +1076,8 @@ function theme_perso_seo_meta_description() {
 
     if ( is_front_page() ) {
         $description = "COSM’ETHIQUE, marque de cosmétiques naturels premium: soins visage, corps, cheveux et aromathérapie formulés avec exigence.";
+    } elseif ( is_page( 'plan-du-site' ) ) {
+        $description = "Explorez l’univers Cosm’Éthique avec un plan du site immersif: boutique, diagnostic beauté, blog, contact, compte client et pages essentielles.";
     } elseif ( is_singular() ) {
         $description = wp_strip_all_tags( get_the_excerpt() );
     } elseif ( is_archive() ) {
@@ -1087,6 +1089,45 @@ function theme_perso_seo_meta_description() {
     }
 }
 add_action( 'wp_head', 'theme_perso_seo_meta_description', 2 );
+
+function theme_perso_sitemap_document_title( $parts ) {
+    if ( is_admin() || ! is_page( 'plan-du-site' ) ) {
+        return $parts;
+    }
+
+    $parts['title'] = 'Plan du site premium';
+    $parts['site']  = 'COSM’ÉTHIQUE';
+
+    return $parts;
+}
+add_filter( 'document_title_parts', 'theme_perso_sitemap_document_title', 20 );
+
+function theme_perso_sitemap_page_seo() {
+    if ( is_admin() || ! is_page( 'plan-du-site' ) ) {
+        return;
+    }
+
+    remove_action( 'wp_head', 'rel_canonical' );
+
+    $canonical = get_permalink();
+    $schema    = array(
+        '@context'    => 'https://schema.org',
+        '@type'       => 'WebPage',
+        'name'        => 'Plan du site COSM’ÉTHIQUE',
+        'description' => 'Explorez l’univers Cosm’Éthique avec un plan du site immersif regroupant les pages essentielles de la boutique.',
+        'url'         => $canonical,
+        'isPartOf'    => array(
+            '@type' => 'WebSite',
+            'name'  => get_bloginfo( 'name' ),
+            'url'   => home_url( '/' ),
+        ),
+    );
+    ?>
+    <link rel="canonical" href="<?php echo esc_url( $canonical ); ?>">
+    <script type="application/ld+json"><?php echo wp_json_encode( $schema, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE ); ?></script>
+    <?php
+}
+add_action( 'wp_head', 'theme_perso_sitemap_page_seo', 3 );
 
 function theme_perso_cart_count_fragments( $fragments ) {
     if ( function_exists( 'WC' ) && WC()->cart ) {

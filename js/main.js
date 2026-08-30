@@ -3168,4 +3168,105 @@ Thomas Bernard`,
         });
     }
 
+    const sitemapPage = document.querySelector('[data-sitemap-page]');
+    if (sitemapPage) {
+        const normalizeSitemapQuery = (value = '') => value
+            .toString()
+            .normalize('NFD')
+            .replace(/[\u0300-\u036f]/g, '')
+            .toLowerCase()
+            .trim();
+
+        const sitemapSearchForm = sitemapPage.querySelector('[data-sitemap-search-form]');
+        const sitemapSearchInput = sitemapPage.querySelector('[data-sitemap-search]');
+        const sitemapSearchResults = sitemapPage.querySelector('[data-sitemap-results]');
+        const sitemapLinks = Array.from(sitemapPage.querySelectorAll('.sitemap-node-link, .sitemap-subnodes a, .sitemap-home-node, .sitemap-footer-links a'));
+
+        const sitemapEntries = sitemapLinks.map((link) => ({
+            label: link.textContent.replace(/\s+/g, ' ').trim(),
+            url: link.href,
+            search: normalizeSitemapQuery(`${link.textContent} ${link.closest('[data-sitemap-entry]')?.dataset.sitemapEntry || ''}`)
+        })).filter((entry) => entry.label && entry.url);
+
+        const renderSitemapResults = (query) => {
+            if (!sitemapSearchResults) {
+                return;
+            }
+
+            const normalizedQuery = normalizeSitemapQuery(query);
+            sitemapSearchResults.innerHTML = '';
+
+            if (!normalizedQuery) {
+                sitemapSearchResults.hidden = true;
+                return;
+            }
+
+            const matches = sitemapEntries
+                .filter((entry) => entry.search.includes(normalizedQuery))
+                .slice(0, 7);
+
+            if (!matches.length) {
+                const empty = document.createElement('span');
+                empty.className = 'sitemap-search-empty';
+                empty.textContent = 'Aucune page trouvée. Essayez Boutique, Diagnostic ou Contact.';
+                sitemapSearchResults.appendChild(empty);
+                sitemapSearchResults.hidden = false;
+                return;
+            }
+
+            matches.forEach((entry) => {
+                const result = document.createElement('a');
+                result.href = entry.url;
+                result.textContent = entry.label;
+                sitemapSearchResults.appendChild(result);
+            });
+
+            sitemapSearchResults.hidden = false;
+        };
+
+        sitemapSearchInput?.addEventListener('input', () => renderSitemapResults(sitemapSearchInput.value));
+        sitemapSearchForm?.addEventListener('submit', (event) => {
+            const firstResult = sitemapSearchResults?.querySelector('a');
+            if (firstResult && sitemapSearchInput?.value.trim()) {
+                event.preventDefault();
+                firstResult.click();
+            }
+        });
+
+        document.addEventListener('click', (event) => {
+            if (!sitemapSearchResults || sitemapPage.contains(event.target)) {
+                return;
+            }
+
+            sitemapSearchResults.hidden = true;
+        });
+
+        const sitemapStage = sitemapPage.querySelector('.sitemap-hero-stage');
+        if (sitemapStage && !prefersReducedMotion) {
+            sitemapPage.querySelector('.sitemap-hero')?.addEventListener('pointermove', (event) => {
+                const rect = event.currentTarget.getBoundingClientRect();
+                const x = (event.clientX - rect.left) / rect.width - 0.5;
+                const y = (event.clientY - rect.top) / rect.height - 0.5;
+                sitemapStage.style.setProperty('--sitemap-rotate-y', `${x * 7}deg`);
+                sitemapStage.style.setProperty('--sitemap-rotate-x', `${y * -6}deg`);
+                sitemapStage.style.setProperty('--sitemap-parallax-x', `${x * 16}px`);
+                sitemapStage.style.setProperty('--sitemap-parallax-y', `${y * 14}px`);
+            });
+        }
+
+        sitemapPage.querySelectorAll('.sitemap-node-link, .sitemap-home-node').forEach((link) => {
+            link.addEventListener('click', (event) => {
+                if (prefersReducedMotion || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) {
+                    return;
+                }
+
+                event.preventDefault();
+                link.classList.add('is-zooming');
+                window.setTimeout(() => {
+                    window.location.href = link.href;
+                }, 220);
+            });
+        });
+    }
+
 });
