@@ -42,6 +42,9 @@ $term_url = function( $slug, $fallback = '' ) {
 $shop_url = function_exists( 'wc_get_page_permalink' ) ? wc_get_page_permalink( 'shop' ) : $page_url( 'boutique', 'boutique' );
 $cart_url = function_exists( 'wc_get_cart_url' ) ? wc_get_cart_url() : $page_url( 'panier', 'panier' );
 $account_url = function_exists( 'wc_get_page_permalink' ) ? wc_get_page_permalink( 'myaccount' ) : $page_url( 'mon-compte', 'mon-compte' );
+$account_endpoint_url = function( $endpoint ) use ( $account_url ) {
+    return function_exists( 'wc_get_endpoint_url' ) ? wc_get_endpoint_url( $endpoint, '', $account_url ) : $account_url;
+};
 $posts_page_id = (int) get_option( 'page_for_posts' );
 $blog_url      = $posts_page_id ? get_permalink( $posts_page_id ) : home_url( '/blog/' );
 
@@ -104,10 +107,13 @@ $nodes = array(
         'icon'        => 'avatar',
         'image'       => $asset( 'products', 'photo-pack-routine-visage-contenu-reel.png' ),
         'x'           => 50,
-        'y'           => 88,
+        'y'           => 78,
         'subs'        => array(
+            array( 'label' => __( 'Profil', 'theme-perso' ), 'url' => $account_endpoint_url( 'edit-account' ) ),
+            array( 'label' => __( 'Commandes', 'theme-perso' ), 'url' => $account_endpoint_url( 'orders' ) ),
+            array( 'label' => __( 'Adresses', 'theme-perso' ), 'url' => $account_endpoint_url( 'edit-address' ) ),
+            array( 'label' => __( 'Suivi', 'theme-perso' ), 'url' => $account_endpoint_url( 'suivi-commande' ) ),
             array( 'label' => __( 'Panier', 'theme-perso' ), 'url' => $cart_url ),
-            array( 'label' => __( 'Commande', 'theme-perso' ), 'url' => function_exists( 'wc_get_checkout_url' ) ? wc_get_checkout_url() : $page_url( 'commande', 'commande' ) ),
         ),
     ),
     array(
