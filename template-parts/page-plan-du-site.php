@@ -170,12 +170,6 @@ $quick_cards = array(
 ?>
 
 <div class="sitemap-premium" data-sitemap-page>
-    <nav class="sitemap-breadcrumb" aria-label="<?php esc_attr_e( 'Fil d’Ariane', 'theme-perso' ); ?>">
-        <a href="<?php echo esc_url( home_url( '/' ) ); ?>"><?php esc_html_e( 'Accueil', 'theme-perso' ); ?></a>
-        <span aria-hidden="true">/</span>
-        <span><?php esc_html_e( 'Plan du site', 'theme-perso' ); ?></span>
-    </nav>
-
     <section class="sitemap-hero" aria-labelledby="sitemap-title">
         <div class="sitemap-ambient sitemap-ambient--one" aria-hidden="true"></div>
         <div class="sitemap-ambient sitemap-ambient--two" aria-hidden="true"></div>

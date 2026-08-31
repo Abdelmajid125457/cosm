@@ -105,3 +105,5 @@ if ( function_exists( 'WC' ) && WC()->cart ) {
             </div>
         </div>
     </header>
+
+    <?php theme_perso_render_custom_breadcrumb(); ?>

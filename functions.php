@@ -7604,3 +7604,220 @@ function theme_perso_validate_comment_security( $commentdata ) {
     return $commentdata;
 }
 add_filter( 'preprocess_comment', 'theme_perso_validate_comment_security' );
+
+function theme_perso_disable_default_woocommerce_breadcrumb() {
+    remove_action( 'woocommerce_before_main_content', 'woocommerce_breadcrumb', 20 );
+}
+add_action( 'init', 'theme_perso_disable_default_woocommerce_breadcrumb' );
+
+function theme_perso_breadcrumb_icon( $icon ) {
+    $paths = array(
+        'home'      => '<path d="M4 10.5 12 4l8 6.5V20a1 1 0 0 1-1 1h-5v-6h-4v6H5a1 1 0 0 1-1-1v-9.5Z"/>',
+        'shop'      => '<path d="M6 8h12l-1 13H7L6 8Zm2-4h8l2 4H6l2-4Z"/>',
+        'category'  => '<path d="M4 6h7v7H4V6Zm9 0h7v7h-7V6ZM4 15h7v5H4v-5Zm9 0h7v5h-7v-5Z"/>',
+        'product'   => '<path d="M9 3h6l1 3v14H8V6l1-3Zm-1 6h8"/>',
+        'blog'      => '<path d="M5 4h10a4 4 0 0 1 4 4v12H8a3 3 0 0 0-3-3V4Zm3 5h7M8 13h5"/>',
+        'article'   => '<path d="M6 4h12v16H6V4Zm3 5h6M9 13h6M9 17h4"/>',
+        'account'   => '<path d="M20 21a8 8 0 0 0-16 0m12-13a4 4 0 1 1-8 0 4 4 0 0 1 8 0Z"/>',
+        'cart'      => '<path d="M6 7h15l-1.5 9h-12L6 7Zm0 0 1-4H3m6 17a1 1 0 1 0 0-2 1 1 0 0 0 0 2Zm9 0a1 1 0 1 0 0-2 1 1 0 0 0 0 2Z"/>',
+        'checkout'  => '<path d="M7 11V8a5 5 0 0 1 10 0v3M6 11h12v10H6V11Z"/>',
+        'search'    => '<path d="m21 21-4.35-4.35m1.35-5.15a6.5 6.5 0 1 1-13 0 6.5 6.5 0 0 1 13 0Z"/>',
+        'page'      => '<path d="M7 3h7l4 4v14H7V3Zm7 0v5h5M10 12h5M10 16h5"/>',
+        'leaf'      => '<path d="M20 4c-8 0-14 4.5-14 11 0 3 2 5 5 5 6.5 0 9-7 9-16ZM6 18c3-5 7-8 12-10"/>',
+    );
+
+    $path = $paths[ $icon ] ?? $paths['page'];
+
+    return '<span class="cosme-breadcrumb-icon" aria-hidden="true"><svg viewBox="0 0 24 24" focusable="false">' . $path . '</svg></span>';
+}
+
+function theme_perso_breadcrumb_page_url( $slug ) {
+    $page = get_page_by_path( $slug );
+
+    return $page ? get_permalink( $page ) : home_url( '/' . trim( $slug, '/' ) . '/' );
+}
+
+function theme_perso_custom_breadcrumb_items() {
+    $items = array(
+        array(
+            'label'   => __( 'Accueil', 'theme-perso' ),
+            'url'     => home_url( '/' ),
+            'icon'    => 'home',
+            'current' => is_front_page(),
+        ),
+    );
+
+    if ( is_front_page() ) {
+        return $items;
+    }
+
+    $shop_url    = function_exists( 'wc_get_page_permalink' ) ? wc_get_page_permalink( 'shop' ) : theme_perso_breadcrumb_page_url( 'boutique' );
+    $account_url = function_exists( 'wc_get_page_permalink' ) ? wc_get_page_permalink( 'myaccount' ) : theme_perso_breadcrumb_page_url( 'mon-compte' );
+
+    if ( function_exists( 'is_shop' ) && is_shop() ) {
+        $items[] = array( 'label' => __( 'Boutique', 'theme-perso' ), 'url' => '', 'icon' => 'shop', 'current' => true );
+        return $items;
+    }
+
+    if ( function_exists( 'is_product_category' ) && is_product_category() ) {
+        $term = get_queried_object();
+        $items[] = array( 'label' => __( 'Boutique', 'theme-perso' ), 'url' => $shop_url, 'icon' => 'shop', 'current' => false );
+
+        if ( $term && ! is_wp_error( $term ) ) {
+            $ancestors = array_reverse( get_ancestors( $term->term_id, 'product_cat' ) );
+            foreach ( $ancestors as $ancestor_id ) {
+                $ancestor = get_term( $ancestor_id, 'product_cat' );
+                if ( $ancestor && ! is_wp_error( $ancestor ) ) {
+                    $items[] = array( 'label' => $ancestor->name, 'url' => get_term_link( $ancestor ), 'icon' => 'category', 'current' => false );
+                }
+            }
+            $items[] = array( 'label' => $term->name, 'url' => '', 'icon' => 'category', 'current' => true );
+        }
+
+        return $items;
+    }
+
+    if ( function_exists( 'is_product' ) && is_product() ) {
+        $items[] = array( 'label' => __( 'Boutique', 'theme-perso' ), 'url' => $shop_url, 'icon' => 'shop', 'current' => false );
+        $terms   = get_the_terms( get_the_ID(), 'product_cat' );
+
+        if ( $terms && ! is_wp_error( $terms ) ) {
+            $term = array_shift( $terms );
+            $items[] = array( 'label' => $term->name, 'url' => get_term_link( $term ), 'icon' => 'category', 'current' => false );
+        }
+
+        $items[] = array( 'label' => get_the_title(), 'url' => '', 'icon' => 'product', 'current' => true );
+        return $items;
+    }
+
+    if ( function_exists( 'is_cart' ) && is_cart() ) {
+        $items[] = array( 'label' => __( 'Panier', 'theme-perso' ), 'url' => '', 'icon' => 'cart', 'current' => true );
+        return $items;
+    }
+
+    if ( function_exists( 'is_checkout' ) && is_checkout() ) {
+        $items[] = array( 'label' => __( 'Panier', 'theme-perso' ), 'url' => function_exists( 'wc_get_cart_url' ) ? wc_get_cart_url() : theme_perso_breadcrumb_page_url( 'panier' ), 'icon' => 'cart', 'current' => false );
+        $items[] = array( 'label' => __( 'Commande', 'theme-perso' ), 'url' => '', 'icon' => 'checkout', 'current' => true );
+        return $items;
+    }
+
+    if ( function_exists( 'is_account_page' ) && is_account_page() ) {
+        $items[] = array( 'label' => __( 'Mon compte', 'theme-perso' ), 'url' => $account_url, 'icon' => 'account', 'current' => false );
+        $endpoint_labels = array(
+            'orders'          => __( 'Commandes', 'theme-perso' ),
+            'edit-address'    => __( 'Adresses', 'theme-perso' ),
+            'edit-account'    => __( 'Profil', 'theme-perso' ),
+            'lost-password'   => __( 'Mot de passe oublié', 'theme-perso' ),
+            'customer-logout' => __( 'Déconnexion', 'theme-perso' ),
+            'suivi-commande'  => __( 'Suivi de commande', 'theme-perso' ),
+        );
+        $current_endpoint = '';
+
+        foreach ( array_keys( $endpoint_labels ) as $endpoint ) {
+            if ( function_exists( 'is_wc_endpoint_url' ) && is_wc_endpoint_url( $endpoint ) ) {
+                $current_endpoint = $endpoint;
+                break;
+            }
+        }
+
+        if ( $current_endpoint ) {
+            $items[] = array( 'label' => $endpoint_labels[ $current_endpoint ], 'url' => '', 'icon' => 'account', 'current' => true );
+        } else {
+            $items[ count( $items ) - 1 ]['url']     = '';
+            $items[ count( $items ) - 1 ]['current'] = true;
+        }
+
+        return $items;
+    }
+
+    if ( is_search() ) {
+        $items[] = array( 'label' => __( 'Recherche', 'theme-perso' ), 'url' => '', 'icon' => 'search', 'current' => true );
+        return $items;
+    }
+
+    if ( is_single() ) {
+        $posts_page_id = (int) get_option( 'page_for_posts' );
+        $blog_url      = $posts_page_id ? get_permalink( $posts_page_id ) : home_url( '/blog/' );
+        $items[]       = array( 'label' => __( 'Blog', 'theme-perso' ), 'url' => $blog_url, 'icon' => 'blog', 'current' => false );
+        $category      = get_the_category();
+
+        if ( $category ) {
+            $items[] = array( 'label' => $category[0]->name, 'url' => get_category_link( $category[0] ), 'icon' => 'category', 'current' => false );
+        }
+
+        $items[] = array( 'label' => get_the_title(), 'url' => '', 'icon' => 'article', 'current' => true );
+        return $items;
+    }
+
+    if ( is_home() ) {
+        $items[] = array( 'label' => __( 'Blog', 'theme-perso' ), 'url' => '', 'icon' => 'blog', 'current' => true );
+        return $items;
+    }
+
+    if ( is_page() ) {
+        $items[] = array( 'label' => get_the_title(), 'url' => '', 'icon' => 'page', 'current' => true );
+        return $items;
+    }
+
+    if ( is_archive() ) {
+        $items[] = array( 'label' => get_the_archive_title(), 'url' => '', 'icon' => 'category', 'current' => true );
+        return $items;
+    }
+
+    if ( is_404() ) {
+        $items[] = array( 'label' => __( 'Page introuvable', 'theme-perso' ), 'url' => '', 'icon' => 'page', 'current' => true );
+    }
+
+    return $items;
+}
+
+function theme_perso_render_custom_breadcrumb() {
+    if ( is_admin() ) {
+        return;
+    }
+
+    $items = theme_perso_custom_breadcrumb_items();
+
+    if ( empty( $items ) ) {
+        return;
+    }
+
+    $current_url  = home_url( add_query_arg( array(), $GLOBALS['wp']->request ?? '' ) );
+    $schema_items = array();
+    foreach ( $items as $position => $item ) {
+        $schema_items[] = array(
+            '@type'    => 'ListItem',
+            'position' => $position + 1,
+            'name'     => wp_strip_all_tags( $item['label'] ),
+            'item'     => ! empty( $item['url'] ) ? $item['url'] : $current_url,
+        );
+    }
+    ?>
+    <nav class="cosme-breadcrumb" aria-label="<?php esc_attr_e( 'Fil d’Ariane', 'theme-perso' ); ?>">
+        <a class="cosme-breadcrumb-back" href="<?php echo esc_url( count( $items ) > 1 && ! empty( $items[ count( $items ) - 2 ]['url'] ) ? $items[ count( $items ) - 2 ]['url'] : home_url( '/' ) ); ?>">
+            <?php echo theme_perso_breadcrumb_icon( 'home' ); ?>
+            <span><?php esc_html_e( 'Retour', 'theme-perso' ); ?></span>
+        </a>
+        <ol class="cosme-breadcrumb-list" itemscope itemtype="https://schema.org/BreadcrumbList">
+            <?php foreach ( $items as $position => $item ) : ?>
+                <li class="cosme-breadcrumb-item<?php echo ! empty( $item['current'] ) ? ' is-current' : ''; ?>" itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+                    <?php if ( empty( $item['current'] ) && ! empty( $item['url'] ) ) : ?>
+                        <a class="cosme-breadcrumb-pill" href="<?php echo esc_url( $item['url'] ); ?>" itemprop="item">
+                            <?php echo theme_perso_breadcrumb_icon( $item['icon'] ?? 'page' ); ?>
+                            <span itemprop="name"><?php echo esc_html( $item['label'] ); ?></span>
+                        </a>
+                    <?php else : ?>
+                        <span class="cosme-breadcrumb-pill" aria-current="page">
+                            <?php echo theme_perso_breadcrumb_icon( $item['icon'] ?? 'page' ); ?>
+                            <span itemprop="name"><?php echo esc_html( $item['label'] ); ?></span>
+                        </span>
+                        <meta itemprop="item" content="<?php echo esc_url( $current_url ); ?>">
+                    <?php endif; ?>
+                    <meta itemprop="position" content="<?php echo esc_attr( (string) ( $position + 1 ) ); ?>">
+                </li>
+            <?php endforeach; ?>
+        </ol>
+        <script type="application/ld+json"><?php echo wp_json_encode( array( '@context' => 'https://schema.org', '@type' => 'BreadcrumbList', 'itemListElement' => $schema_items ), JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES ); ?></script>
+    </nav>
+    <?php
+}

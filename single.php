@@ -34,13 +34,6 @@ get_header();
         ?>
         <section class="blog-article-hero">
             <div class="container">
-                <nav class="blog-breadcrumb" aria-label="<?php esc_attr_e( 'Fil d’Ariane', 'theme-perso' ); ?>">
-                    <a href="<?php echo esc_url( home_url( '/' ) ); ?>"><?php esc_html_e( 'Accueil', 'theme-perso' ); ?></a>
-                    <span>›</span>
-                    <a href="<?php echo esc_url( home_url( '/blog/' ) ); ?>"><?php esc_html_e( 'Blog', 'theme-perso' ); ?></a>
-                    <span>›</span>
-                    <span><?php echo esc_html( $cat_name ); ?></span>
-                </nav>
                 <span class="blog-pill"><?php echo esc_html( $cat_name ); ?></span>
                 <h1><?php the_title(); ?></h1>
                 <div class="blog-article-meta">
