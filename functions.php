@@ -2756,6 +2756,11 @@ function theme_perso_footer_page_specs() {
             'excerpt' => 'Les retours de la communauté Cosm’Éthique.',
             'content' => '<h2>Avis clients</h2><p>Découvrez les témoignages de clientes qui ont adopté les soins Cosm’Éthique dans leur routine quotidienne.</p>',
         ),
+        'recrutement' => array(
+            'title'   => 'Recrutement',
+            'excerpt' => 'Rejoignez l’aventure Cosm’Éthique.',
+            'content' => '<h2>Recrutement</h2><p>Découvrez les métiers, la culture et les opportunités Cosm’Éthique.</p>',
+        ),
     );
 }
 
@@ -2789,6 +2794,7 @@ function theme_perso_seed_pages_and_menus() {
         array( 'Blog', 'blog', 'Conseils beauté, routines et inspirations naturelles.' ),
         array( 'Contact', 'contact', 'Notre équipe vous accompagne avec attention.' ),
         array( 'Devenir franchisé', 'devenir-franchise', 'Rejoignez le développement de la maison COSM’ETHIQUE.' ),
+        array( 'Recrutement', 'recrutement', 'Rejoignez l’aventure Cosm’Éthique.' ),
         array( 'Panier', 'panier', 'Votre panier COSM’ETHIQUE.' ),
         array( 'Commande', 'commande', 'Finalisez votre commande en toute sécurité.' ),
         array( 'Mon compte', 'mon-compte', 'Gérez vos informations et commandes.' ),

@@ -2714,6 +2714,92 @@ Thomas Bernard`,
         });
     });
 
+    document.querySelectorAll('[data-recruitment-page]').forEach((page) => {
+        const filters = Array.from(page.querySelectorAll('[data-recruitment-filter]'));
+        const openings = Array.from(page.querySelectorAll('[data-recruitment-opening]'));
+        const heroVisual = page.querySelector('[data-recruitment-parallax]');
+        const recruitmentForm = page.querySelector('[data-recruitment-form]');
+
+        filters.forEach((button) => {
+            button.addEventListener('click', () => {
+                const filter = button.dataset.recruitmentFilter || 'all';
+
+                filters.forEach((item) => {
+                    const isActive = item === button;
+                    item.classList.toggle('is-active', isActive);
+                    item.setAttribute('aria-pressed', isActive ? 'true' : 'false');
+                });
+
+                openings.forEach((card) => {
+                    const tags = (card.dataset.jobTags || '').split(/\s+/);
+                    card.classList.toggle('is-hidden', filter !== 'all' && !tags.includes(filter));
+                });
+            });
+        });
+
+        if (heroVisual && !prefersReducedMotion) {
+            page.addEventListener('pointermove', (event) => {
+                const rect = page.getBoundingClientRect();
+                const x = ((event.clientX - rect.left) / Math.max(rect.width, 1) - 0.5) * 18;
+                const y = ((event.clientY - rect.top) / Math.max(rect.height, 1) - 0.5) * 14;
+
+                heroVisual.style.setProperty('--recruitment-parallax-x', `${x.toFixed(2)}px`);
+                heroVisual.style.setProperty('--recruitment-parallax-y', `${y.toFixed(2)}px`);
+            }, { passive: true });
+
+            page.addEventListener('pointerleave', () => {
+                heroVisual.style.setProperty('--recruitment-parallax-x', '0px');
+                heroVisual.style.setProperty('--recruitment-parallax-y', '0px');
+            });
+        }
+
+        if (recruitmentForm) {
+            const status = recruitmentForm.querySelector('.recruitment-form-status');
+            const fields = Array.from(recruitmentForm.querySelectorAll('input[required], textarea[required]'));
+
+            fields.forEach((field) => {
+                field.addEventListener('input', () => {
+                    field.classList.remove('is-invalid');
+                    field.removeAttribute('aria-invalid');
+                });
+            });
+
+            recruitmentForm.addEventListener('submit', (event) => {
+                event.preventDefault();
+
+                let isValid = true;
+                fields.forEach((field) => {
+                    const value = (field.value || '').trim();
+                    const isCaptcha = field.matches('[data-recruitment-captcha]');
+                    const fieldValid = value && (!isCaptcha || value === '9');
+
+                    field.classList.toggle('is-invalid', !fieldValid);
+                    field.setAttribute('aria-invalid', fieldValid ? 'false' : 'true');
+
+                    if (!fieldValid) {
+                        isValid = false;
+                    }
+                });
+
+                if (!status) {
+                    return;
+                }
+
+                if (!isValid) {
+                    status.textContent = translateUi('form_error', 'Merci de vérifier les champs indiqués avant d’envoyer votre candidature.');
+                    status.classList.add('is-error');
+                    status.classList.remove('is-success');
+                    return;
+                }
+
+                status.textContent = translateUi('form_success', 'Votre candidature est prête à être envoyée. Merci pour votre intérêt pour Cosm’Éthique.');
+                status.classList.add('is-success');
+                status.classList.remove('is-error');
+                pushTrackingEvent('generate_lead', { form_name: 'recrutement' });
+            });
+        }
+    });
+
     const footerNavGroups = Array.from(document.querySelectorAll('.site-footer .footer-nav-group'));
     if (footerNavGroups.length) {
         const mobileFooterQuery = window.matchMedia('(max-width: 820px)');
@@ -2793,7 +2879,7 @@ Thomas Bernard`,
 
     const revealItems = document.querySelectorAll('.motion-reveal, .category-card, .product-card, .promo-card, .story-grid, .testimonial-grid figure, .blog-card, .blog-showcase-card, .blog-featured-card, .blog-sidebar-card, .shop-premium-block, .shop-promo-section, .shop-packs-section, .shop-product-card, .shop-pack-card, .about-reveal, .home-universe-card, .home-diagnostic-panel, .home-expertise-heading, .home-expertise-copy, .home-expertise-media, .home-expertise-cards article, .account-login-card, .account-benefit-card, .account-stats-band, .institutional-page section, .institutional-value-card, .ingredient-library-card, .ingredient-feature-card, .commitment-timeline-card, .institutional-stat-card, .quality-step, .quality-gallery-card, .quality-choice-card, .faq-category-card, .faq-popular-card, .faq-search-panel, .faq-contact-panel, .faq-search-copy, .faq-search-giant, .faq-suggestion-list, .faq-section-heading, .faq-category-tile, .faq-question-aside, .faq-accordion-group, .faq-popular-large-card, .faq-help-media, .faq-help-copy, .commitments-hero, .commitments-value-card, .commitments-stat-card, .commitments-action-timeline article, .commitments-priority-card, .commitments-quote-banner, .boutique-card, .review-page-card, .site-footer[data-animate]');
 
-    const revealGroups = document.querySelectorAll('.front-page .products-grid, .front-page .home-univers-grid, .front-page .testimonial-grid, .front-page .blog-showcase-grid, .front-page .home-expertise-cards, .shop-products-slider, .shop-pack-grid, .visage-product-grid, .blog-showcase-grid, .institutional-card-grid, .ingredient-library-grid, .ingredient-feature-grid, .commitment-timeline, .institutional-stats-grid, .quality-timeline, .quality-gallery-grid, .quality-choice-grid, .faq-popular-grid, .faq-category-grid, .faq-category-strip, .faq-popular-large-grid, .faq-accordion-column, .commitments-values-grid, .commitments-stats-grid, .commitments-action-timeline, .commitments-priorities-grid, .boutique-card-grid, .review-card-grid');
+    const revealGroups = document.querySelectorAll('.front-page .products-grid, .front-page .home-univers-grid, .front-page .testimonial-grid, .front-page .blog-showcase-grid, .front-page .home-expertise-cards, .shop-products-slider, .shop-pack-grid, .visage-product-grid, .blog-showcase-grid, .institutional-card-grid, .ingredient-library-grid, .ingredient-feature-grid, .commitment-timeline, .institutional-stats-grid, .quality-timeline, .quality-gallery-grid, .quality-choice-grid, .faq-popular-grid, .faq-category-grid, .faq-category-strip, .faq-popular-large-grid, .faq-accordion-column, .commitments-values-grid, .commitments-stats-grid, .commitments-action-timeline, .commitments-priorities-grid, .boutique-card-grid, .review-card-grid, .recruitment-benefit-grid, .recruitment-testimonial-track, .recruitment-opening-grid, .recruitment-timeline, .recruitment-stats');
     revealGroups.forEach((group) => {
         Array.from(group.children).forEach((item, index) => {
             item.style.setProperty('--reveal-delay', `${Math.min(index * 70, 420)}ms`);
