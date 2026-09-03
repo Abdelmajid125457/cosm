@@ -2957,6 +2957,42 @@ function theme_perso_ensure_cookie_policy_page_and_menu() {
 }
 add_action( 'init', 'theme_perso_ensure_cookie_policy_page_and_menu', 40 );
 
+function theme_perso_ensure_franchise_eligibility_page() {
+    $parent = get_page_by_path( 'franchise' );
+
+    if ( ! $parent ) {
+        $parent_id = wp_insert_post(
+            array(
+                'post_title'   => 'Franchise',
+                'post_name'    => 'franchise',
+                'post_status'  => 'publish',
+                'post_type'    => 'page',
+                'post_excerpt' => 'Parcours franchise COSM’ÉTHIQUE.',
+                'post_content' => '<h2>Franchise COSM’ÉTHIQUE</h2><p>Découvrez le parcours pour rejoindre notre réseau de boutiques engagées.</p>',
+            )
+        );
+    } else {
+        $parent_id = (int) $parent->ID;
+    }
+
+    if ( ! $parent_id || get_page_by_path( 'franchise/eligibilite' ) ) {
+        return;
+    }
+
+    wp_insert_post(
+        array(
+            'post_title'   => 'Éligibilité franchise',
+            'post_name'    => 'eligibilite',
+            'post_parent'  => $parent_id,
+            'post_status'  => 'publish',
+            'post_type'    => 'page',
+            'post_excerpt' => 'Vérifiez gratuitement votre éligibilité avant de déposer votre candidature.',
+            'post_content' => '<h2>Vérifiez votre éligibilité</h2><p>Ce diagnostic rapide vous aide à préparer votre projet avant de déposer votre candidature franchise COSM’ÉTHIQUE.</p><ul><li>Ville d’implantation identifiée</li><li>Apport personnel estimé</li><li>Expérience commerciale ou retail</li><li>Motivation pour la cosmétique naturelle premium</li></ul><p><a class="button button-primary" href="/devenir-franchise/#franchise-request-form">Déposer ma candidature</a></p>',
+        )
+    );
+}
+add_action( 'init', 'theme_perso_ensure_franchise_eligibility_page', 43 );
+
 function theme_perso_ensure_diagnostic_page_and_menu() {
     $diagnostic_id = theme_perso_create_page_if_missing(
         'Diagnostic Beauté',

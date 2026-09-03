@@ -1,3 +1,6 @@
+<?php
+$franchise_eligibility_url = home_url( '/franchise/eligibilite/' );
+?>
 <section class="franchise-network" aria-labelledby="franchise-network-title">
     <div class="franchise-network-shell">
         <div class="franchise-network-copy">
@@ -39,7 +42,14 @@
             <div id="cosmethique-franchise-map" class="franchise-map" data-franchise-map aria-label="Carte du réseau de franchises Cosm’Éthique"></div>
             <div class="franchise-map-cta">
                 <p>Vous souhaitez ouvrir une franchise dans votre ville ?</p>
-                <a class="button button-primary" href="#franchise-request-form">Devenir franchisé</a>
+                <div class="franchise-cta-actions">
+                    <a class="button button-primary" href="#franchise-request-form">Devenir franchisé</a>
+                    <a class="button franchise-eligibility-button" href="<?php echo esc_url( $franchise_eligibility_url ); ?>">
+                        <span aria-hidden="true">✓</span>
+                        Vérifier mon éligibilité
+                    </a>
+                </div>
+                <p class="franchise-eligibility-note"><span aria-hidden="true">✓</span> Évaluez gratuitement votre projet en moins de 2 minutes avant de déposer votre candidature.</p>
             </div>
         </div>
     </div>
