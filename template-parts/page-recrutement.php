@@ -34,6 +34,13 @@ $benefits = array(
     array( 'icon' => 'academy', 'title' => __( 'Formation continue', 'theme-perso' ), 'text' => __( 'Un accompagnement régulier pour développer vos compétences.', 'theme-perso' ) ),
 );
 
+$values = array(
+    array( 'icon' => 'heart', 'title' => __( 'Exigence', 'theme-perso' ), 'text' => __( 'Chaque détail compte, de la formule à l’expérience client.', 'theme-perso' ) ),
+    array( 'icon' => 'leaf', 'title' => __( 'Naturalité', 'theme-perso' ), 'text' => __( 'Nous avançons avec des actifs naturels et une approche responsable.', 'theme-perso' ) ),
+    array( 'icon' => 'team', 'title' => __( 'Écoute', 'theme-perso' ), 'text' => __( 'Les idées circulent, les talents progressent et les équipes construisent ensemble.', 'theme-perso' ) ),
+    array( 'icon' => 'growth', 'title' => __( 'Ambition', 'theme-perso' ), 'text' => __( 'Nous voulons faire grandir une maison française premium, utile et sincère.', 'theme-perso' ) ),
+);
+
 $jobs = array(
     array( 'title' => __( 'Marketing Digital', 'theme-perso' ), 'text' => __( 'Développer les campagnes, contenus et leviers d’acquisition.', 'theme-perso' ), 'salary' => '32-42 k€', 'place' => 'Paris / hybride', 'contract' => 'CDI', 'tags' => 'cdi marketing digital', 'image' => $asset( 'products', 'category-soins-visage-hero.png' ) ),
     array( 'title' => __( 'Chef de projet', 'theme-perso' ), 'text' => __( 'Coordonner les lancements produits et les temps forts e-commerce.', 'theme-perso' ), 'salary' => '35-46 k€', 'place' => 'Paris', 'contract' => 'CDI', 'tags' => 'cdi marketing', 'image' => $asset( 'products', 'category-packs-hero-reel.png' ) ),
@@ -158,9 +165,25 @@ foreach ( $jobs as $job ) {
         </div>
     </section>
 
+    <section class="recruitment-section recruitment-values" aria-labelledby="recruitment-values-title">
+        <div class="recruitment-section-heading motion-reveal">
+            <p class="recruitment-kicker"><?php esc_html_e( 'Nos valeurs', 'theme-perso' ); ?></p>
+            <h2 id="recruitment-values-title"><?php esc_html_e( 'Une maison qui avance avec sens.', 'theme-perso' ); ?></h2>
+        </div>
+        <div class="recruitment-benefit-grid recruitment-values-grid">
+            <?php foreach ( $values as $value ) : ?>
+                <article class="recruitment-benefit-card motion-reveal motion-reveal--scale">
+                    <?php echo $icon( $value['icon'] ); ?>
+                    <h3><?php echo esc_html( $value['title'] ); ?></h3>
+                    <p><?php echo esc_html( $value['text'] ); ?></p>
+                </article>
+            <?php endforeach; ?>
+        </div>
+    </section>
+
     <section id="metiers" class="recruitment-section recruitment-jobs-carousel" aria-labelledby="jobs-title">
         <div class="recruitment-section-heading motion-reveal">
-            <p class="recruitment-kicker"><?php esc_html_e( 'Les métiers', 'theme-perso' ); ?></p>
+            <p class="recruitment-kicker"><?php esc_html_e( 'Nos métiers', 'theme-perso' ); ?></p>
             <h2 id="jobs-title"><?php esc_html_e( 'Des expertises au service d’une beauté plus consciente.', 'theme-perso' ); ?></h2>
         </div>
         <div class="recruitment-carousel" aria-label="<?php esc_attr_e( 'Métiers Cosm’Éthique', 'theme-perso' ); ?>">
@@ -184,7 +207,7 @@ foreach ( $jobs as $job ) {
 
     <section class="recruitment-culture" aria-labelledby="culture-title">
         <div class="recruitment-culture-copy motion-reveal motion-reveal--left">
-            <p class="recruitment-kicker"><?php esc_html_e( 'Notre culture', 'theme-perso' ); ?></p>
+            <p class="recruitment-kicker"><?php esc_html_e( 'Notre environnement de travail', 'theme-perso' ); ?></p>
             <h2 id="culture-title"><?php esc_html_e( 'Grandir avec méthode, confiance et élégance.', 'theme-perso' ); ?></h2>
             <p><?php esc_html_e( 'Chaque parcours est accompagné avec clarté : intégration, formation, autonomie progressive et responsabilité réelle.', 'theme-perso' ); ?></p>
         </div>
@@ -209,7 +232,7 @@ foreach ( $jobs as $job ) {
 
     <section class="recruitment-section recruitment-testimonials" aria-labelledby="team-title">
         <div class="recruitment-section-heading motion-reveal">
-            <p class="recruitment-kicker"><?php esc_html_e( 'Témoignages', 'theme-perso' ); ?></p>
+            <p class="recruitment-kicker"><?php esc_html_e( 'Témoignages collaborateurs', 'theme-perso' ); ?></p>
             <h2 id="team-title"><?php esc_html_e( 'Celles et ceux qui font vivre la maison.', 'theme-perso' ); ?></h2>
         </div>
         <div class="recruitment-testimonial-track">
@@ -229,7 +252,7 @@ foreach ( $jobs as $job ) {
 
     <section id="offres" class="recruitment-section recruitment-openings" aria-labelledby="openings-title">
         <div class="recruitment-section-heading motion-reveal">
-            <p class="recruitment-kicker"><?php esc_html_e( 'Offres disponibles', 'theme-perso' ); ?></p>
+            <p class="recruitment-kicker"><?php esc_html_e( 'Les offres disponibles', 'theme-perso' ); ?></p>
             <h2 id="openings-title"><?php esc_html_e( 'Choisissez le poste qui vous ressemble.', 'theme-perso' ); ?></h2>
         </div>
         <div class="recruitment-filters" aria-label="<?php esc_attr_e( 'Filtres des offres', 'theme-perso' ); ?>">

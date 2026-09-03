@@ -5,7 +5,9 @@
  * @package Theme_Perso
  */
 
-$cart_count = 0;
+$cart_count       = 0;
+$recruitment_page = get_page_by_path( 'recrutement' );
+$recruitment_url  = $recruitment_page ? get_permalink( $recruitment_page ) : home_url( '/recrutement/' );
 
 if ( function_exists( 'WC' ) && WC()->cart ) {
     $cart_count = WC()->cart->get_cart_contents_count();
@@ -37,6 +39,7 @@ if ( function_exists( 'WC' ) && WC()->cart ) {
                     <span><strong><?php esc_html_e( 'Paiement sécurisé', 'theme-perso' ); ?></strong> <?php esc_html_e( 'SSL & solutions fiables', 'theme-perso' ); ?></span>
                     <span><strong><?php esc_html_e( 'Cruelty free', 'theme-perso' ); ?></strong> <?php esc_html_e( 'Aucun test animal', 'theme-perso' ); ?></span>
                     <span><strong><?php esc_html_e( 'Emballages recyclés', 'theme-perso' ); ?></strong> <?php esc_html_e( 'Choix responsables', 'theme-perso' ); ?></span>
+                    <span><a class="promo-link" href="<?php echo esc_url( $recruitment_url ); ?>"><span aria-hidden="true">💼</span><strong><?php esc_html_e( 'Nous recrutons', 'theme-perso' ); ?></strong></a></span>
                 <?php endfor; ?>
             </div>
         </div>
