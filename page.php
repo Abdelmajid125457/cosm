@@ -14,11 +14,13 @@ get_header();
         the_post();
 
         $slug              = get_post_field( 'post_name', get_the_ID() );
+        $page_uri          = get_page_uri( get_the_ID() );
         $is_cart_page      = function_exists( 'is_cart' ) && is_cart();
         $is_checkout_page  = function_exists( 'is_checkout' ) && is_checkout() && ( ! function_exists( 'is_order_received_page' ) || ! is_order_received_page() ) && ( ! function_exists( 'is_checkout_pay_page' ) || ! is_checkout_pay_page() );
         $institutional_slugs = array( 'engagements', 'ingredients', 'qualite', 'boutiques', 'faq', 'avis-clients' );
         $is_institutional_page = in_array( $slug, $institutional_slugs, true );
-        $has_custom_hero   = in_array( $slug, array( 'diagnostic', 'mon-compte', 'plan-du-site', 'recrutement' ), true ) || $is_cart_page || $is_checkout_page || $is_institutional_page;
+        $is_franchise_child = in_array( $page_uri, array( 'franchise/eligibilite', 'franchise/candidature', 'franchise/confirmation' ), true );
+        $has_custom_hero   = in_array( $slug, array( 'diagnostic', 'mon-compte', 'plan-du-site', 'recrutement' ), true ) || $is_franchise_child || $is_cart_page || $is_checkout_page || $is_institutional_page;
         $is_compact_hero   = in_array( $slug, array( 'contact', 'devenir-franchise' ), true );
         $hero_classes      = 'page-hero' . ( $is_compact_hero ? ' page-hero--compact' : '' );
         if ( $is_institutional_page ) {
@@ -31,6 +33,8 @@ get_header();
             $content_classes = 'page-content-wrap page-content-wrap--account';
         } elseif ( 'recrutement' === $slug ) {
             $content_classes = 'page-content-wrap page-content-wrap--recrutement';
+        } elseif ( $is_franchise_child ) {
+            $content_classes = 'page-content-wrap page-content-wrap--franchise-flow';
         } elseif ( $is_cart_page ) {
             $content_classes = 'page-content-wrap page-content-wrap--cart';
         } elseif ( $is_checkout_page ) {
@@ -63,6 +67,12 @@ get_header();
                         get_template_part( 'template-parts/page', 'plan-du-site' );
                     } elseif ( 'recrutement' === $slug ) {
                         get_template_part( 'template-parts/page', 'recrutement' );
+                    } elseif ( 'franchise/eligibilite' === $page_uri ) {
+                        get_template_part( 'template-parts/page', 'franchise-eligibilite' );
+                    } elseif ( 'franchise/candidature' === $page_uri ) {
+                        get_template_part( 'template-parts/page', 'franchise-candidature' );
+                    } elseif ( 'franchise/confirmation' === $page_uri ) {
+                        get_template_part( 'template-parts/page', 'franchise-confirmation' );
                     } elseif ( $is_institutional_page ) {
                         get_template_part( 'template-parts/page', 'institutionnel', array( 'slug' => $slug ) );
                     } elseif ( in_array( $slug, array( 'qui-sommes-nous', 'mon-compte' ), true ) ) {

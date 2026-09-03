@@ -1074,12 +1074,20 @@ function theme_perso_seo_meta_description() {
 
     $description = get_bloginfo( 'description' );
 
+    $page_uri = is_page() ? get_page_uri( get_queried_object_id() ) : '';
+
     if ( is_front_page() ) {
         $description = "COSM’ETHIQUE, marque de cosmétiques naturels premium: soins visage, corps, cheveux et aromathérapie formulés avec exigence.";
     } elseif ( is_page( 'plan-du-site' ) ) {
         $description = "Explorez l’univers Cosm’Éthique avec un plan du site immersif: boutique, diagnostic beauté, blog, contact, compte client et pages essentielles.";
     } elseif ( is_page( 'recrutement' ) ) {
         $description = "Rejoignez l’aventure Cosm’Éthique: découvrez nos métiers, nos valeurs, nos offres et envoyez votre candidature spontanée.";
+    } elseif ( 'franchise/eligibilite' === $page_uri ) {
+        $description = "Vérifiez gratuitement votre éligibilité franchise Cosm’Éthique avant de déposer votre candidature.";
+    } elseif ( 'franchise/candidature' === $page_uri ) {
+        $description = "Déposez votre candidature franchise Cosm’Éthique avec un formulaire indépendant, clair et sécurisé.";
+    } elseif ( 'franchise/confirmation' === $page_uri ) {
+        $description = "Confirmation de candidature franchise Cosm’Éthique.";
     } elseif ( is_singular() ) {
         $description = wp_strip_all_tags( get_the_excerpt() );
     } elseif ( is_archive() ) {
@@ -1097,11 +1105,22 @@ function theme_perso_sitemap_document_title( $parts ) {
         return $parts;
     }
 
+    $page_uri = is_page() ? get_page_uri( get_queried_object_id() ) : '';
+
     if ( is_page( 'plan-du-site' ) ) {
         $parts['title'] = 'Plan du site premium';
         $parts['site']  = 'COSM’ÉTHIQUE';
     } elseif ( is_page( 'recrutement' ) ) {
         $parts['title'] = 'Recrutement';
+        $parts['site']  = 'COSM’ÉTHIQUE';
+    } elseif ( 'franchise/eligibilite' === $page_uri ) {
+        $parts['title'] = 'Éligibilité franchise';
+        $parts['site']  = 'COSM’ÉTHIQUE';
+    } elseif ( 'franchise/candidature' === $page_uri ) {
+        $parts['title'] = 'Candidature franchise';
+        $parts['site']  = 'COSM’ÉTHIQUE';
+    } elseif ( 'franchise/confirmation' === $page_uri ) {
+        $parts['title'] = 'Candidature reçue';
         $parts['site']  = 'COSM’ÉTHIQUE';
     }
 
@@ -1110,7 +1129,23 @@ function theme_perso_sitemap_document_title( $parts ) {
 add_filter( 'document_title_parts', 'theme_perso_sitemap_document_title', 20 );
 
 function theme_perso_sitemap_page_seo() {
-    if ( is_admin() || ( ! is_page( 'plan-du-site' ) && ! is_page( 'recrutement' ) ) ) {
+    $page_uri = is_page() ? get_page_uri( get_queried_object_id() ) : '';
+    $seo_pages = array(
+        'franchise/eligibilite'  => array(
+            'name'        => 'Éligibilité franchise COSM’ÉTHIQUE',
+            'description' => 'Questionnaire d’éligibilité pour rejoindre le réseau de franchises Cosm’Éthique.',
+        ),
+        'franchise/candidature' => array(
+            'name'        => 'Candidature franchise COSM’ÉTHIQUE',
+            'description' => 'Formulaire indépendant de candidature franchise Cosm’Éthique.',
+        ),
+        'franchise/confirmation' => array(
+            'name'        => 'Confirmation candidature franchise COSM’ÉTHIQUE',
+            'description' => 'Confirmation d’envoi de candidature franchise Cosm’Éthique.',
+        ),
+    );
+
+    if ( is_admin() || ( ! is_page( 'plan-du-site' ) && ! is_page( 'recrutement' ) && ! isset( $seo_pages[ $page_uri ] ) ) ) {
         return;
     }
 
@@ -1120,8 +1155,8 @@ function theme_perso_sitemap_page_seo() {
     $schema    = array(
         '@context'    => 'https://schema.org',
         '@type'       => 'WebPage',
-        'name'        => is_page( 'recrutement' ) ? 'Recrutement COSM’ÉTHIQUE' : 'Plan du site COSM’ÉTHIQUE',
-        'description' => is_page( 'recrutement' ) ? 'Découvrez les métiers, les offres et la candidature spontanée de Cosm’Éthique.' : 'Explorez l’univers Cosm’Éthique avec un plan du site immersif regroupant les pages essentielles de la boutique.',
+        'name'        => isset( $seo_pages[ $page_uri ] ) ? $seo_pages[ $page_uri ]['name'] : ( is_page( 'recrutement' ) ? 'Recrutement COSM’ÉTHIQUE' : 'Plan du site COSM’ÉTHIQUE' ),
+        'description' => isset( $seo_pages[ $page_uri ] ) ? $seo_pages[ $page_uri ]['description'] : ( is_page( 'recrutement' ) ? 'Découvrez les métiers, les offres et la candidature spontanée de Cosm’Éthique.' : 'Explorez l’univers Cosm’Éthique avec un plan du site immersif regroupant les pages essentielles de la boutique.' ),
         'url'         => $canonical,
         'isPartOf'    => array(
             '@type' => 'WebSite',
@@ -2957,7 +2992,7 @@ function theme_perso_ensure_cookie_policy_page_and_menu() {
 }
 add_action( 'init', 'theme_perso_ensure_cookie_policy_page_and_menu', 40 );
 
-function theme_perso_ensure_franchise_eligibility_page() {
+function theme_perso_ensure_franchise_flow_pages() {
     $parent = get_page_by_path( 'franchise' );
 
     if ( ! $parent ) {
@@ -2975,23 +3010,57 @@ function theme_perso_ensure_franchise_eligibility_page() {
         $parent_id = (int) $parent->ID;
     }
 
-    if ( ! $parent_id || get_page_by_path( 'franchise/eligibilite' ) ) {
+    if ( is_wp_error( $parent_id ) || ! $parent_id ) {
         return;
     }
 
-    wp_insert_post(
-        array(
-            'post_title'   => 'Éligibilité franchise',
-            'post_name'    => 'eligibilite',
-            'post_parent'  => $parent_id,
-            'post_status'  => 'publish',
-            'post_type'    => 'page',
-            'post_excerpt' => 'Vérifiez gratuitement votre éligibilité avant de déposer votre candidature.',
-            'post_content' => '<h2>Vérifiez votre éligibilité</h2><p>Ce diagnostic rapide vous aide à préparer votre projet avant de déposer votre candidature franchise COSM’ÉTHIQUE.</p><ul><li>Ville d’implantation identifiée</li><li>Apport personnel estimé</li><li>Expérience commerciale ou retail</li><li>Motivation pour la cosmétique naturelle premium</li></ul><p><a class="button button-primary" href="/devenir-franchise/#franchise-request-form">Déposer ma candidature</a></p>',
-        )
+    if ( get_page_by_path( 'franchise/eligibilite' ) ) {
+        $eligibility_exists = true;
+    } else {
+        $eligibility_exists = false;
+    }
+
+    $pages = array(
+        'eligibilite'  => array(
+            'title'   => 'Éligibilité franchise',
+            'excerpt' => 'Vérifiez gratuitement votre éligibilité avant de déposer votre candidature.',
+            'content' => '<h2>Vérifiez votre éligibilité</h2><p>Répondez au questionnaire pour préparer votre projet franchise COSM’ÉTHIQUE.</p><p><a class="button button-primary" href="/franchise/candidature/">Déposer ma candidature</a></p>',
+        ),
+        'candidature' => array(
+            'title'   => 'Candidature franchise',
+            'excerpt' => 'Déposez votre candidature pour rejoindre le réseau Cosm’Éthique.',
+            'content' => '<h2>Déposer ma candidature</h2><p>Présentez votre projet franchise à l’équipe COSM’ÉTHIQUE.</p>',
+        ),
+        'confirmation' => array(
+            'title'   => 'Candidature reçue',
+            'excerpt' => 'Merci pour votre candidature franchise.',
+            'content' => '<h2>Merci pour votre candidature</h2><p>Notre équipe Franchise vous répondra sous quelques jours.</p>',
+        ),
     );
+
+    foreach ( $pages as $slug => $page ) {
+        if ( 'eligibilite' === $slug && $eligibility_exists ) {
+            continue;
+        }
+
+        if ( 'eligibilite' !== $slug && get_page_by_path( 'franchise/' . $slug ) ) {
+            continue;
+        }
+
+        wp_insert_post(
+            array(
+                'post_title'   => $page['title'],
+                'post_name'    => $slug,
+                'post_parent'  => $parent_id,
+                'post_status'  => 'publish',
+                'post_type'    => 'page',
+                'post_excerpt' => $page['excerpt'],
+                'post_content' => $page['content'],
+            )
+        );
+    }
 }
-add_action( 'init', 'theme_perso_ensure_franchise_eligibility_page', 43 );
+add_action( 'init', 'theme_perso_ensure_franchise_flow_pages', 43 );
 
 function theme_perso_ensure_diagnostic_page_and_menu() {
     $diagnostic_id = theme_perso_create_page_if_missing(

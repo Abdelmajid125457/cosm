@@ -141,7 +141,7 @@ $nodes = array(
         'y'           => 50,
         'subs'        => array(
             array( 'label' => __( 'Devenir franchisé', 'theme-perso' ), 'url' => $page_url( 'devenir-franchise', 'devenir-franchise' ) ),
-            array( 'label' => __( 'Éligibilité', 'theme-perso' ), 'url' => $page_url( 'devenir-franchise', 'devenir-franchise' ) . '#franchise-request-form' ),
+            array( 'label' => __( 'Éligibilité', 'theme-perso' ), 'url' => home_url( '/franchise/eligibilite/' ) ),
         ),
     ),
     array(

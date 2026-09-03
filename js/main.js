@@ -2800,6 +2800,96 @@ Thomas Bernard`,
         }
     });
 
+    document.querySelectorAll('[data-franchise-eligibility-form]').forEach((form) => {
+        const result = form.querySelector('[data-franchise-eligibility-result]');
+
+        form.addEventListener('submit', (event) => {
+            event.preventDefault();
+
+            const captcha = form.querySelector('[data-franchise-captcha]');
+            if (captcha) {
+                captcha.setCustomValidity(captcha.value.trim() === '9' ? '' : 'Merci d’indiquer la bonne réponse.');
+            }
+
+            if (!form.checkValidity()) {
+                captcha?.classList.toggle('is-invalid', Boolean(captcha.validationMessage));
+                form.reportValidity();
+                return;
+            }
+
+            const budget = form.querySelector('input[name="budget"]:checked')?.value || '';
+            const premises = form.querySelector('input[name="premises"]:checked')?.value || '';
+            const business = form.querySelector('input[name="business"]:checked')?.value || '';
+            const score = [budget === 'good' || budget === 'strong', premises === 'yes', business === 'yes']
+                .filter(Boolean)
+                .length;
+
+            if (result) {
+                const title = result.querySelector('h3');
+                if (title) {
+                    title.textContent = score >= 2
+                        ? title.dataset.compatibleText
+                        : title.dataset.adjustText;
+                }
+
+                result.hidden = false;
+                result.scrollIntoView({ behavior: prefersReducedMotion ? 'auto' : 'smooth', block: 'center' });
+            }
+
+            pushTrackingEvent('generate_lead', {
+                form_name: 'franchise_eligibility',
+                diagnostic_result: score >= 2 ? 'compatible' : 'adjust'
+            });
+        });
+    });
+
+    document.querySelectorAll('[data-franchise-application-form]').forEach((form) => {
+        const status = form.querySelector('.franchise-form-status');
+        const requiredFields = Array.from(form.querySelectorAll('input[required], textarea[required]'));
+
+        requiredFields.forEach((field) => {
+            field.addEventListener('input', () => {
+                if (field.matches('[data-franchise-captcha]')) {
+                    field.setCustomValidity('');
+                }
+
+                field.classList.remove('is-invalid');
+                field.removeAttribute('aria-invalid');
+            });
+        });
+
+        form.addEventListener('submit', (event) => {
+            let isValid = true;
+
+            requiredFields.forEach((field) => {
+                if (field.matches('[data-franchise-captcha]')) {
+                    field.setCustomValidity(field.value.trim() === '9' ? '' : 'Merci d’indiquer la bonne réponse.');
+                }
+
+                const valid = field.type === 'checkbox'
+                    ? field.checked
+                    : field.checkValidity() && Boolean((field.value || '').trim());
+                field.classList.toggle('is-invalid', !valid);
+                field.setAttribute('aria-invalid', valid ? 'false' : 'true');
+
+                if (!valid) {
+                    isValid = false;
+                }
+            });
+
+            if (!isValid) {
+                event.preventDefault();
+                if (status) {
+                    status.textContent = translateUi('form_error', 'Merci de vérifier les champs indiqués avant d’envoyer votre candidature.');
+                    status.classList.add('is-error');
+                }
+                return;
+            }
+
+            pushTrackingEvent('franchise_request', { form_name: 'franchise_candidature' });
+        });
+    });
+
     const footerNavGroups = Array.from(document.querySelectorAll('.site-footer .footer-nav-group'));
     if (footerNavGroups.length) {
         const mobileFooterQuery = window.matchMedia('(max-width: 820px)');
@@ -2869,7 +2959,12 @@ Thomas Bernard`,
             .commitments-priority-card,
             .commitments-quote-banner,
             .boutique-card,
-            .review-page-card
+            .review-page-card,
+            .franchise-flow > section,
+            .franchise-flow-card,
+            .franchise-quiz,
+            .franchise-application-form,
+            .franchise-application-aside
         `).forEach((item) => item.classList.add('motion-reveal'));
 
         document.querySelectorAll('.front-page .home-expertise-copy, .front-page .home-diagnostic-copy').forEach((item) => item.classList.add('motion-reveal--left'));
@@ -2879,7 +2974,7 @@ Thomas Bernard`,
 
     const revealItems = document.querySelectorAll('.motion-reveal, .category-card, .product-card, .promo-card, .story-grid, .testimonial-grid figure, .blog-card, .blog-showcase-card, .blog-featured-card, .blog-sidebar-card, .shop-premium-block, .shop-promo-section, .shop-packs-section, .shop-product-card, .shop-pack-card, .about-reveal, .home-universe-card, .home-diagnostic-panel, .home-expertise-heading, .home-expertise-copy, .home-expertise-media, .home-expertise-cards article, .account-login-card, .account-benefit-card, .account-stats-band, .institutional-page section, .institutional-value-card, .ingredient-library-card, .ingredient-feature-card, .commitment-timeline-card, .institutional-stat-card, .quality-step, .quality-gallery-card, .quality-choice-card, .faq-category-card, .faq-popular-card, .faq-search-panel, .faq-contact-panel, .faq-search-copy, .faq-search-giant, .faq-suggestion-list, .faq-section-heading, .faq-category-tile, .faq-question-aside, .faq-accordion-group, .faq-popular-large-card, .faq-help-media, .faq-help-copy, .commitments-hero, .commitments-value-card, .commitments-stat-card, .commitments-action-timeline article, .commitments-priority-card, .commitments-quote-banner, .boutique-card, .review-page-card, .site-footer[data-animate]');
 
-    const revealGroups = document.querySelectorAll('.front-page .products-grid, .front-page .home-univers-grid, .front-page .testimonial-grid, .front-page .blog-showcase-grid, .front-page .home-expertise-cards, .shop-products-slider, .shop-pack-grid, .visage-product-grid, .blog-showcase-grid, .institutional-card-grid, .ingredient-library-grid, .ingredient-feature-grid, .commitment-timeline, .institutional-stats-grid, .quality-timeline, .quality-gallery-grid, .quality-choice-grid, .faq-popular-grid, .faq-category-grid, .faq-category-strip, .faq-popular-large-grid, .faq-accordion-column, .commitments-values-grid, .commitments-stats-grid, .commitments-action-timeline, .commitments-priorities-grid, .boutique-card-grid, .review-card-grid, .recruitment-benefit-grid, .recruitment-testimonial-track, .recruitment-opening-grid, .recruitment-timeline, .recruitment-stats');
+    const revealGroups = document.querySelectorAll('.front-page .products-grid, .front-page .home-univers-grid, .front-page .testimonial-grid, .front-page .blog-showcase-grid, .front-page .home-expertise-cards, .shop-products-slider, .shop-pack-grid, .visage-product-grid, .blog-showcase-grid, .institutional-card-grid, .ingredient-library-grid, .ingredient-feature-grid, .commitment-timeline, .institutional-stats-grid, .quality-timeline, .quality-gallery-grid, .quality-choice-grid, .faq-popular-grid, .faq-category-grid, .faq-category-strip, .faq-popular-large-grid, .faq-accordion-column, .commitments-values-grid, .commitments-stats-grid, .commitments-action-timeline, .commitments-priorities-grid, .boutique-card-grid, .review-card-grid, .recruitment-benefit-grid, .recruitment-testimonial-track, .recruitment-opening-grid, .recruitment-timeline, .recruitment-stats, .franchise-flow-grid, .franchise-flow-step-grid, .franchise-flow-stats, .franchise-form-grid');
     revealGroups.forEach((group) => {
         Array.from(group.children).forEach((item, index) => {
             item.style.setProperty('--reveal-delay', `${Math.min(index * 70, 420)}ms`);
