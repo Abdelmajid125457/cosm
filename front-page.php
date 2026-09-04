@@ -23,10 +23,16 @@ $event_url   = function_exists( 'theme_perso_footer_page_url' ) ? theme_perso_fo
                 <span></span>
             <?php endfor; ?>
         </div>
+        <span class="botanica-limited-badge" aria-hidden="true">Nouveauté 2026</span>
         <div class="hero-content botanica-hero-content">
             <p class="eyebrow botanica-event-badge">✨ Événement exclusif</p>
             <h1 id="hero-title">Découvrez notre nouvelle collection Botanica</h1>
             <p>Une expérience sensorielle inédite inspirée de la nature, imaginée comme une campagne de lancement premium Cosm’Éthique.</p>
+
+            <div class="hero-actions">
+                <a class="button button-primary" href="<?php echo esc_url( $event_url ); ?>">Découvrir l’événement</a>
+                <a class="button button-light" href="<?php echo esc_url( $shop_url ); ?>">Découvrir la collection</a>
+            </div>
 
             <div class="botanica-event-meta" aria-label="<?php esc_attr_e( 'Informations de lancement Botanica', 'theme-perso' ); ?>">
                 <span><strong>15 Octobre 2026</strong><?php esc_html_e( 'Date de lancement', 'theme-perso' ); ?></span>
@@ -42,17 +48,29 @@ $event_url   = function_exists( 'theme_perso_footer_page_url' ) ? theme_perso_fo
                     <span><strong data-home-countdown-seconds>00</strong><?php esc_html_e( 'Secondes', 'theme-perso' ); ?></span>
                 </div>
             </div>
-
-            <div class="hero-actions">
-                <a class="button button-primary" href="<?php echo esc_url( $event_url ); ?>">Découvrir l’événement</a>
-                <a class="button button-light" href="<?php echo esc_url( $shop_url ); ?>">Découvrir la collection</a>
-            </div>
         </div>
+        <button class="botanica-live-product" type="button" data-home-botanica-product aria-label="<?php esc_attr_e( 'Ouvrir le pot Botanica', 'theme-perso' ); ?>">
+            <span class="botanica-product-halo" aria-hidden="true"></span>
+            <span class="botanica-product-leaf botanica-product-leaf--one" aria-hidden="true"></span>
+            <span class="botanica-product-leaf botanica-product-leaf--two" aria-hidden="true"></span>
+            <span class="botanica-product-leaf botanica-product-leaf--three" aria-hidden="true"></span>
+            <span class="botanica-product-lid" aria-hidden="true"></span>
+            <span class="botanica-product-cream" aria-hidden="true"></span>
+            <span class="botanica-product-jar" aria-hidden="true">
+                <span>Cosm’Éthique</span>
+                <strong>Botanica</strong>
+            </span>
+        </button>
         <aside class="botanica-collection-card" aria-label="<?php esc_attr_e( 'Collection Botanica', 'theme-perso' ); ?>">
-            <span><?php esc_html_e( 'Nouvelle gamme', 'theme-perso' ); ?></span>
-            <strong>Botanica</strong>
-            <p><?php esc_html_e( 'Sérum · Crème · Huile · Brume · Masque · Coffret', 'theme-perso' ); ?></p>
+            <span><?php esc_html_e( 'Édition limitée', 'theme-perso' ); ?></span>
+            <strong><?php esc_html_e( '6 nouveaux produits', 'theme-perso' ); ?></strong>
+            <p><?php esc_html_e( 'Disponible le 15 octobre', 'theme-perso' ); ?></p>
+            <a href="<?php echo esc_url( $event_url ); ?>"><?php esc_html_e( 'Découvrir', 'theme-perso' ); ?></a>
         </aside>
+        <a class="botanica-scroll-indicator" href="#home-univers-title">
+            <span><?php esc_html_e( 'Découvrir la collection', 'theme-perso' ); ?></span>
+            <i aria-hidden="true"></i>
+        </a>
     </section>
 
     <section class="home-univers-section" aria-labelledby="home-univers-title">

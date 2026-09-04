@@ -3455,6 +3455,9 @@ Thomas Bernard`,
         const homeCountdown = botanicaHomeHero.querySelector('[data-home-countdown]');
         const homeHeroBg = botanicaHomeHero.querySelector('.botanica-hero-bg');
         const homeHeroGlow = botanicaHomeHero.querySelector('.botanica-hero-glow');
+        const homeLiveProduct = botanicaHomeHero.querySelector('[data-home-botanica-product]');
+        const homeLimitedBadge = botanicaHomeHero.querySelector('.botanica-limited-badge');
+        const homeScrollIndicator = botanicaHomeHero.querySelector('.botanica-scroll-indicator');
 
         if (window.gsap && !prefersReducedMotion) {
             window.gsap.from(botanicaHomeHero.querySelectorAll('.botanica-hero-content > *'), {
@@ -3471,6 +3474,15 @@ Thomas Bernard`,
                 delay: 0.45,
                 ease: 'power3.out'
             });
+            window.gsap.from([homeLimitedBadge, homeLiveProduct, homeScrollIndicator].filter(Boolean), {
+                y: 24,
+                scale: 0.96,
+                opacity: 0,
+                duration: 0.9,
+                stagger: 0.12,
+                delay: 0.35,
+                ease: 'power3.out'
+            });
         }
 
         if (!prefersReducedMotion) {
@@ -3485,6 +3497,10 @@ Thomas Bernard`,
                 if (homeHeroGlow) {
                     homeHeroGlow.style.transform = `translate3d(${(x * 18).toFixed(2)}px, ${(y * 16).toFixed(2)}px, 0)`;
                 }
+                if (homeLiveProduct) {
+                    homeLiveProduct.style.marginRight = `${(x * -16).toFixed(2)}px`;
+                    homeLiveProduct.style.marginTop = `${(y * -12).toFixed(2)}px`;
+                }
             });
 
             botanicaHomeHero.addEventListener('pointerleave', () => {
@@ -3493,6 +3509,43 @@ Thomas Bernard`,
                 }
                 if (homeHeroGlow) {
                     homeHeroGlow.style.transform = '';
+                }
+                if (homeLiveProduct) {
+                    homeLiveProduct.style.marginRight = '';
+                    homeLiveProduct.style.marginTop = '';
+                }
+            });
+
+            const updateHomeHeroScroll = () => {
+                const rect = botanicaHomeHero.getBoundingClientRect();
+                const progress = Math.min(1, Math.max(0, Math.abs(Math.min(rect.top, 0)) / Math.max(1, rect.height * 0.72)));
+                botanicaHomeHero.style.setProperty('--botanica-scroll-scale', (1 - progress * 0.035).toFixed(3));
+                botanicaHomeHero.style.setProperty('--botanica-scroll-y', `${(-progress * 24).toFixed(1)}px`);
+                botanicaHomeHero.style.setProperty('--botanica-scroll-opacity', (1 - progress * 0.18).toFixed(3));
+            };
+            updateHomeHeroScroll();
+            window.addEventListener('scroll', updateHomeHeroScroll, { passive: true });
+        }
+
+        if (homeLiveProduct) {
+            const openHomeProduct = () => {
+                botanicaHomeHero.classList.add('is-product-open');
+                homeLiveProduct.classList.add('is-open');
+                if (window.gsap && !prefersReducedMotion) {
+                    window.gsap.fromTo(homeLiveProduct, { scale: 1 }, { scale: 1.045, duration: 0.72, yoyo: true, repeat: 1, ease: 'power2.inOut' });
+                }
+                if (typeof pushTrackingEvent === 'function') {
+                    pushTrackingEvent('view_promotion', {
+                        cta_name: 'collection_botanica_home_product_open'
+                    });
+                }
+            };
+
+            homeLiveProduct.addEventListener('click', openHomeProduct);
+            homeLiveProduct.addEventListener('keydown', (event) => {
+                if (event.key === 'Enter' || event.key === ' ') {
+                    event.preventDefault();
+                    openHomeProduct();
                 }
             });
         }
@@ -3505,6 +3558,15 @@ Thomas Bernard`,
                 minutes: homeCountdown.querySelector('[data-home-countdown-minutes]'),
                 seconds: homeCountdown.querySelector('[data-home-countdown-seconds]')
             };
+            const setHomeCountdownValue = (element, value) => {
+                if (!element) return;
+                const nextValue = String(value).padStart(2, '0');
+                if (element.textContent === nextValue) return;
+                element.textContent = nextValue;
+                element.classList.remove('is-ticking');
+                void element.offsetWidth;
+                element.classList.add('is-ticking');
+            };
 
             const updateHomeCountdown = () => {
                 const distance = Math.max(0, homeEventTime - Date.now());
@@ -3512,10 +3574,10 @@ Thomas Bernard`,
                 const hours = Math.floor((distance % 86400000) / 3600000);
                 const minutes = Math.floor((distance % 3600000) / 60000);
                 const seconds = Math.floor((distance % 60000) / 1000);
-                if (homeParts.days) homeParts.days.textContent = String(days).padStart(2, '0');
-                if (homeParts.hours) homeParts.hours.textContent = String(hours).padStart(2, '0');
-                if (homeParts.minutes) homeParts.minutes.textContent = String(minutes).padStart(2, '0');
-                if (homeParts.seconds) homeParts.seconds.textContent = String(seconds).padStart(2, '0');
+                setHomeCountdownValue(homeParts.days, days);
+                setHomeCountdownValue(homeParts.hours, hours);
+                setHomeCountdownValue(homeParts.minutes, minutes);
+                setHomeCountdownValue(homeParts.seconds, seconds);
             };
 
             updateHomeCountdown();

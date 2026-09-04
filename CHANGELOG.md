@@ -2,6 +2,33 @@
 
 Toutes les interventions sur le thème doivent être sauvegardées et documentées ici.
 
+## 2026-09-04 12:18 - Finitions premium du Hero Botanica
+
+Résumé :
+- Création d'un point de restauration avant intervention : `fb534a3`.
+- Correction de la taille et du cadrage responsive du titre du Hero d'accueil Botanica.
+- Placement des deux CTA directement sous la description : "Découvrir l'événement" et "Découvrir la collection".
+- Ajout d'un badge animé "Nouveauté 2026".
+- Ajout d'un produit Botanica interactif en CSS avec halo, particules, feuilles animées et ouverture du couvercle au clic.
+- Enrichissement de la carte collection : édition limitée, 6 nouveaux produits, disponibilité le 15 octobre et bouton "Découvrir".
+- Ajout d'une animation fluide sur les chiffres du compte à rebours.
+- Ajout d'un indicateur animé "Découvrir la collection" en bas du Hero.
+- Ajout d'une animation de scroll légère pour donner un effet de transition premium.
+
+Fichiers modifiés :
+- `front-page.php`
+- `style.css`
+- `css/mobile-responsive.css`
+- `js/main.js`
+- `CHANGELOG.md`
+
+Corrections de bugs :
+- Le titre du Hero ne déborde plus sur desktop ni sur mobile.
+- Le pot Botanica est maintenant cliquable et son animation d'ouverture s'exécute correctement.
+- Les CTA pointent vers `/evenement/` et `/boutique/`.
+- Vérification navigateur effectuée sur l'accueil local : pas de débordement horizontal causé par le Hero Botanica.
+- Les validateurs `php` et `node` ne sont pas disponibles dans ce terminal local ; la vérification a donc été faite dans le navigateur.
+
 ## 2026-09-04 11:55 - Hero d'accueil campagne Botanica
 
 Résumé :
