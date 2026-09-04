@@ -3450,4 +3450,218 @@ Thomas Bernard`,
         });
     }
 
+    const eventPage = document.querySelector('[data-event-page]');
+    if (eventPage) {
+        const eventProduct = eventPage.querySelector('[data-event-product]');
+        const eventStage = eventPage.querySelector('[data-event-stage]');
+        const countdown = eventPage.querySelector('[data-event-countdown]');
+        const slider = eventPage.querySelector('[data-event-slider]');
+        const lightbox = eventPage.querySelector('[data-event-lightbox]');
+        const lightboxContent = eventPage.querySelector('[data-event-lightbox-content]');
+        const hotspotCard = eventPage.querySelector('[data-event-hotspot-card]');
+        const hotspotTitle = eventPage.querySelector('[data-event-hotspot-title]');
+        const hotspotText = eventPage.querySelector('[data-event-hotspot-text]');
+
+        const revealEventItems = eventPage.querySelectorAll('.event-hero-copy, .event-hero-stage, .event-slider-section, .event-card, .event-timeline article, .event-experience-section, .event-gallery button, .event-reservation-card, .event-video-card');
+        revealEventItems.forEach((item, index) => {
+            item.classList.add('motion-reveal');
+            item.style.setProperty('--reveal-delay', `${Math.min(index * 55, 420)}ms`);
+        });
+
+        if ('IntersectionObserver' in window) {
+            const eventObserver = new IntersectionObserver((entries) => {
+                entries.forEach((entry) => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('is-visible');
+                        eventObserver.unobserve(entry.target);
+                    }
+                });
+            }, { threshold: 0.14 });
+
+            revealEventItems.forEach((item) => eventObserver.observe(item));
+        } else {
+            revealEventItems.forEach((item) => item.classList.add('is-visible'));
+        }
+
+        if (window.gsap && !prefersReducedMotion) {
+            window.gsap.from(eventPage.querySelectorAll('.event-hero-copy > *'), {
+                y: 34,
+                opacity: 0,
+                duration: 0.82,
+                stagger: 0.09,
+                ease: 'power3.out'
+            });
+            window.gsap.from(eventStage, {
+                scale: 0.92,
+                y: 34,
+                opacity: 0,
+                duration: 1,
+                delay: 0.15,
+                ease: 'power3.out'
+            });
+        }
+
+        const openEventProduct = () => {
+            if (!eventProduct || !eventStage) {
+                return;
+            }
+
+            eventProduct.classList.add('is-open');
+            eventStage.classList.add('is-unlocked');
+            pushTrackingEvent('view_promotion', {
+                cta_name: 'collection_botanica_3d_open'
+            });
+        };
+
+        eventProduct?.addEventListener('click', openEventProduct);
+        eventProduct?.addEventListener('keydown', (event) => {
+            if (event.key === 'Enter' || event.key === ' ') {
+                event.preventDefault();
+                openEventProduct();
+            }
+        });
+
+        if (eventStage && eventProduct && !prefersReducedMotion) {
+            eventStage.addEventListener('pointermove', (event) => {
+                const rect = eventStage.getBoundingClientRect();
+                const x = (event.clientX - rect.left) / rect.width - 0.5;
+                const y = (event.clientY - rect.top) / rect.height - 0.5;
+                eventProduct.style.setProperty('--event-rotate-y', `${x * 9}deg`);
+                eventProduct.style.setProperty('--event-rotate-x', `${y * -7}deg`);
+            });
+
+            let spin = 0;
+            window.setInterval(() => {
+                if (!eventProduct.classList.contains('is-open')) {
+                    return;
+                }
+                spin = (spin + 1.2) % 360;
+                eventProduct.style.setProperty('--event-spin', `${spin}deg`);
+            }, 80);
+        }
+
+        eventPage.querySelectorAll('[data-event-hotspot]').forEach((button) => {
+            button.addEventListener('click', () => {
+                if (!hotspotCard || !hotspotTitle || !hotspotText) {
+                    return;
+                }
+
+                hotspotTitle.textContent = button.dataset.eventHotspotTitle || button.textContent.trim();
+                hotspotText.textContent = button.dataset.eventHotspotText || '';
+                hotspotCard.hidden = false;
+            });
+        });
+
+        eventPage.querySelector('[data-event-hotspot-close]')?.addEventListener('click', () => {
+            if (hotspotCard) {
+                hotspotCard.hidden = true;
+            }
+        });
+
+        if (countdown) {
+            const eventTime = new Date(countdown.dataset.eventDate || '').getTime();
+            const parts = {
+                days: countdown.querySelector('[data-countdown-days]'),
+                hours: countdown.querySelector('[data-countdown-hours]'),
+                minutes: countdown.querySelector('[data-countdown-minutes]'),
+                seconds: countdown.querySelector('[data-countdown-seconds]')
+            };
+
+            const updateCountdown = () => {
+                const distance = Math.max(0, eventTime - Date.now());
+                const days = Math.floor(distance / 86400000);
+                const hours = Math.floor((distance % 86400000) / 3600000);
+                const minutes = Math.floor((distance % 3600000) / 60000);
+                const seconds = Math.floor((distance % 60000) / 1000);
+                if (parts.days) parts.days.textContent = String(days).padStart(2, '0');
+                if (parts.hours) parts.hours.textContent = String(hours).padStart(2, '0');
+                if (parts.minutes) parts.minutes.textContent = String(minutes).padStart(2, '0');
+                if (parts.seconds) parts.seconds.textContent = String(seconds).padStart(2, '0');
+            };
+
+            updateCountdown();
+            window.setInterval(updateCountdown, 1000);
+        }
+
+        eventPage.querySelector('[data-event-slider-prev]')?.addEventListener('click', () => {
+            slider?.scrollBy({ left: -360, behavior: prefersReducedMotion ? 'auto' : 'smooth' });
+        });
+
+        eventPage.querySelector('[data-event-slider-next]')?.addEventListener('click', () => {
+            slider?.scrollBy({ left: 360, behavior: prefersReducedMotion ? 'auto' : 'smooth' });
+        });
+
+        const openLightbox = (content) => {
+            if (!lightbox || !lightboxContent) {
+                return;
+            }
+
+            lightboxContent.innerHTML = '';
+            lightboxContent.appendChild(content);
+            lightbox.hidden = false;
+            document.body.classList.add('modal-open');
+        };
+
+        eventPage.querySelectorAll('[data-event-gallery-image]').forEach((button) => {
+            button.addEventListener('click', () => {
+                const image = document.createElement('img');
+                image.src = button.dataset.eventGalleryImage || '';
+                image.alt = '';
+                openLightbox(image);
+            });
+        });
+
+        eventPage.querySelectorAll('[data-event-video-open]').forEach((button) => {
+            button.addEventListener('click', () => {
+                const panel = document.createElement('div');
+                panel.className = 'event-lightbox-content';
+                panel.innerHTML = '<strong>Botanica</strong><span>La bande-annonce immersive sera disponible lors du lancement.</span>';
+                openLightbox(panel);
+                pushTrackingEvent('cta_product', {
+                    cta_name: 'event_trailer'
+                });
+            });
+        });
+
+        eventPage.querySelector('[data-event-lightbox-close]')?.addEventListener('click', () => {
+            if (lightbox) {
+                lightbox.hidden = true;
+                document.body.classList.remove('modal-open');
+            }
+        });
+
+        lightbox?.addEventListener('click', (event) => {
+            if (event.target === lightbox) {
+                lightbox.hidden = true;
+                document.body.classList.remove('modal-open');
+            }
+        });
+
+        eventPage.querySelector('[data-event-form]')?.addEventListener('submit', (event) => {
+            event.preventDefault();
+            const form = event.currentTarget;
+            const status = form.querySelector('.event-form-status');
+            const requiredFields = Array.from(form.querySelectorAll('input[required]'));
+            const isValid = requiredFields.every((field) => field.checkValidity());
+
+            if (!isValid) {
+                form.reportValidity();
+                if (status) {
+                    status.classList.add('is-error');
+                    status.textContent = 'Merci de compléter les champs obligatoires.';
+                }
+                return;
+            }
+
+            if (status) {
+                status.classList.remove('is-error');
+                status.textContent = 'Votre réservation est bien enregistrée pour la démonstration.';
+            }
+
+            pushTrackingEvent('generate_lead', {
+                form_name: 'event_botanica_reservation'
+            });
+        });
+    }
+
 });

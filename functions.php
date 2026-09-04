@@ -435,9 +435,21 @@ function theme_perso_scripts() {
         wp_enqueue_script( 'leaflet', 'https://unpkg.com/leaflet@1.9.4/dist/leaflet.js', array(), '1.9.4', true );
     }
 
+    if ( is_page( 'evenement' ) ) {
+        wp_enqueue_script( 'gsap', 'https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js', array(), '3.12.5', true );
+    }
+
+    $main_dependencies = array();
+    if ( is_page( 'devenir-franchise' ) ) {
+        $main_dependencies[] = 'leaflet';
+    }
+    if ( is_page( 'evenement' ) ) {
+        $main_dependencies[] = 'gsap';
+    }
+
     wp_enqueue_style( 'theme-perso-style', get_stylesheet_uri(), array( 'theme-perso-fonts' ), $style_version );
     wp_enqueue_style( 'theme-perso-mobile-responsive', get_template_directory_uri() . '/css/mobile-responsive.css', array( 'theme-perso-style' ), $mobile_version );
-    wp_enqueue_script( 'theme-perso-script', get_template_directory_uri() . '/js/main.js', is_page( 'devenir-franchise' ) ? array( 'leaflet' ) : array(), $script_version, true );
+    wp_enqueue_script( 'theme-perso-script', get_template_directory_uri() . '/js/main.js', $main_dependencies, $script_version, true );
 
     if ( function_exists( 'theme_perso_multilingual_script_data' ) ) {
         wp_localize_script( 'theme-perso-script', 'cosmethiqueI18n', theme_perso_multilingual_script_data() );
@@ -1082,6 +1094,8 @@ function theme_perso_seo_meta_description() {
         $description = "Explorez l’univers Cosm’Éthique avec un plan du site immersif: boutique, diagnostic beauté, blog, contact, compte client et pages essentielles.";
     } elseif ( is_page( 'recrutement' ) ) {
         $description = "Rejoignez l’aventure Cosm’Éthique: découvrez nos métiers, nos valeurs, nos offres et envoyez votre candidature spontanée.";
+    } elseif ( is_page( 'evenement' ) ) {
+        $description = "Lancement de la Collection Botanica: une expérience immersive Cosm’Éthique entre soin naturel, innovation sensorielle et événement exclusif.";
     } elseif ( 'franchise/eligibilite' === $page_uri ) {
         $description = "Vérifiez gratuitement votre éligibilité franchise Cosm’Éthique avant de déposer votre candidature.";
     } elseif ( 'franchise/candidature' === $page_uri ) {
@@ -1112,6 +1126,9 @@ function theme_perso_sitemap_document_title( $parts ) {
         $parts['site']  = 'COSM’ÉTHIQUE';
     } elseif ( is_page( 'recrutement' ) ) {
         $parts['title'] = 'Recrutement';
+        $parts['site']  = 'COSM’ÉTHIQUE';
+    } elseif ( is_page( 'evenement' ) ) {
+        $parts['title'] = 'Lancement Collection Botanica';
         $parts['site']  = 'COSM’ÉTHIQUE';
     } elseif ( 'franchise/eligibilite' === $page_uri ) {
         $parts['title'] = 'Éligibilité franchise';
@@ -1145,7 +1162,7 @@ function theme_perso_sitemap_page_seo() {
         ),
     );
 
-    if ( is_admin() || ( ! is_page( 'plan-du-site' ) && ! is_page( 'recrutement' ) && ! isset( $seo_pages[ $page_uri ] ) ) ) {
+    if ( is_admin() || ( ! is_page( 'plan-du-site' ) && ! is_page( 'recrutement' ) && ! is_page( 'evenement' ) && ! isset( $seo_pages[ $page_uri ] ) ) ) {
         return;
     }
 
@@ -1155,8 +1172,8 @@ function theme_perso_sitemap_page_seo() {
     $schema    = array(
         '@context'    => 'https://schema.org',
         '@type'       => 'WebPage',
-        'name'        => isset( $seo_pages[ $page_uri ] ) ? $seo_pages[ $page_uri ]['name'] : ( is_page( 'recrutement' ) ? 'Recrutement COSM’ÉTHIQUE' : 'Plan du site COSM’ÉTHIQUE' ),
-        'description' => isset( $seo_pages[ $page_uri ] ) ? $seo_pages[ $page_uri ]['description'] : ( is_page( 'recrutement' ) ? 'Découvrez les métiers, les offres et la candidature spontanée de Cosm’Éthique.' : 'Explorez l’univers Cosm’Éthique avec un plan du site immersif regroupant les pages essentielles de la boutique.' ),
+        'name'        => isset( $seo_pages[ $page_uri ] ) ? $seo_pages[ $page_uri ]['name'] : ( is_page( 'recrutement' ) ? 'Recrutement COSM’ÉTHIQUE' : ( is_page( 'evenement' ) ? 'Lancement Collection Botanica COSM’ÉTHIQUE' : 'Plan du site COSM’ÉTHIQUE' ) ),
+        'description' => isset( $seo_pages[ $page_uri ] ) ? $seo_pages[ $page_uri ]['description'] : ( is_page( 'recrutement' ) ? 'Découvrez les métiers, les offres et la candidature spontanée de Cosm’Éthique.' : ( is_page( 'evenement' ) ? 'Découvrez la page événement immersive dédiée au lancement de la Collection Botanica Cosm’Éthique.' : 'Explorez l’univers Cosm’Éthique avec un plan du site immersif regroupant les pages essentielles de la boutique.' ) ),
         'url'         => $canonical,
         'isPartOf'    => array(
             '@type' => 'WebSite',
@@ -2803,6 +2820,11 @@ function theme_perso_footer_page_specs() {
             'excerpt' => 'Rejoignez l’aventure Cosm’Éthique.',
             'content' => '<h2>Recrutement</h2><p>Découvrez les métiers, la culture et les opportunités Cosm’Éthique.</p>',
         ),
+        'evenement' => array(
+            'title'   => 'Événement',
+            'excerpt' => 'Lancement de la Collection Botanica.',
+            'content' => '<h2>Lancement de la Collection Botanica</h2><p>Découvrez l’expérience événementielle premium Cosm’Éthique.</p>',
+        ),
     );
 }
 
@@ -2835,6 +2857,7 @@ function theme_perso_seed_pages_and_menus() {
         array( 'Qui sommes-nous', 'qui-sommes-nous', 'Une maison cosmétique naturelle, élégante et responsable.' ),
         array( 'Blog', 'blog', 'Conseils beauté, routines et inspirations naturelles.' ),
         array( 'Contact', 'contact', 'Notre équipe vous accompagne avec attention.' ),
+        array( 'Événement', 'evenement', 'Lancement de la Collection Botanica.' ),
         array( 'Devenir franchisé', 'devenir-franchise', 'Rejoignez le développement de la maison COSM’ETHIQUE.' ),
         array( 'Recrutement', 'recrutement', 'Rejoignez l’aventure Cosm’Éthique.' ),
         array( 'Panier', 'panier', 'Votre panier COSM’ETHIQUE.' ),
@@ -2885,7 +2908,7 @@ function theme_perso_seed_pages_and_menus() {
     if ( empty( $menu_locations['primary'] ) ) {
         $primary_menu    = wp_get_nav_menu_object( 'Menu COSM’ETHIQUE' );
         $primary_menu_id = $primary_menu ? $primary_menu->term_id : wp_create_nav_menu( 'Menu COSM’ETHIQUE' );
-        $primary_items   = array( 'accueil', 'boutique', 'diagnostic', 'qui-sommes-nous', 'blog', 'contact', 'devenir-franchise' );
+        $primary_items   = array( 'accueil', 'boutique', 'diagnostic', 'qui-sommes-nous', 'blog', 'contact', 'evenement', 'devenir-franchise' );
 
         if ( ! is_wp_error( $primary_menu_id ) ) {
             foreach ( $primary_items as $slug ) {
@@ -3123,6 +3146,53 @@ function theme_perso_ensure_diagnostic_page_and_menu() {
 }
 add_action( 'init', 'theme_perso_ensure_diagnostic_page_and_menu', 39 );
 
+function theme_perso_ensure_event_page_and_menu() {
+    $event_id = theme_perso_create_page_if_missing(
+        'Événement',
+        'evenement',
+        'Lancement de la Collection Botanica.'
+    );
+
+    if ( ! $event_id || is_wp_error( $event_id ) ) {
+        return;
+    }
+
+    $locations = get_theme_mod( 'nav_menu_locations', array() );
+    if ( empty( $locations['primary'] ) ) {
+        return;
+    }
+
+    $menu_id = (int) $locations['primary'];
+    $items   = wp_get_nav_menu_items( $menu_id );
+
+    if ( ! $items || is_wp_error( $items ) ) {
+        return;
+    }
+
+    foreach ( $items as $item ) {
+        if ( (int) $item->object_id === (int) $event_id ) {
+            theme_perso_reorder_primary_menu_items( $menu_id );
+            return;
+        }
+    }
+
+    wp_update_nav_menu_item(
+        $menu_id,
+        0,
+        array(
+            'menu-item-object-id' => $event_id,
+            'menu-item-object'    => 'page',
+            'menu-item-type'      => 'post_type',
+            'menu-item-title'     => esc_html__( 'Événements', 'theme-perso' ),
+            'menu-item-status'    => 'publish',
+            'menu-item-position'  => 65,
+        )
+    );
+
+    theme_perso_reorder_primary_menu_items( $menu_id );
+}
+add_action( 'init', 'theme_perso_ensure_event_page_and_menu', 44 );
+
 function theme_perso_reorder_primary_menu_items( $menu_id ) {
     $items = wp_get_nav_menu_items( $menu_id );
 
@@ -3137,6 +3207,7 @@ function theme_perso_reorder_primary_menu_items( $menu_id ) {
         'qui-sommes-nous'    => 40,
         'blog'               => 50,
         'contact'            => 60,
+        'evenement'          => 65,
         'devenir-franchise'  => 70,
     );
 

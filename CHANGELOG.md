@@ -2,6 +2,30 @@
 
 Toutes les interventions sur le thème doivent être sauvegardées et documentées ici.
 
+## 2026-09-04 00:00 - Création de la page Événement Botanica
+
+Résumé :
+- Création d'un point de restauration avant intervention : `0d0b392`.
+- Ajout de la page `/evenement/` dédiée au lancement de la Collection Botanica.
+- Création d'un hero immersif pleine largeur avec compte à rebours, date, heure, lieu et CTA.
+- Création d'un pot de crème Cosm'Éthique en CSS 3D avec ouverture au clic, lumière dorée, feuilles, fleurs, particules et fumée légère.
+- Ajout de points interactifs ouvrant des fiches premium en glassmorphism.
+- Ajout d'un slider d'événements à venir, d'une timeline, d'une galerie lightbox, d'une section vidéo et d'un formulaire de réservation.
+- Chargement de GSAP uniquement sur la page Événement afin de préserver les performances du reste du site.
+- Ajout automatique du lien "Événements" dans le menu principal pour rendre la page visible depuis le site.
+
+Fichiers modifiés :
+- `functions.php`
+- `page.php`
+- `style.css`
+- `js/main.js`
+- `template-parts/page-evenement.php`
+- `CHANGELOG.md`
+
+Corrections de bugs :
+- Aucun bug détecté lors des contrôles PHP, JavaScript et diff.
+- Le test visuel local n'a pas pu être lancé car `cosmethique.local` ne répondait pas depuis le terminal.
+
 ## 2026-08-04 20:17 - Refonte immersive de la page FAQ
 
 Résumé :
