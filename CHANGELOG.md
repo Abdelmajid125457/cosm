@@ -2,6 +2,32 @@
 
 Toutes les interventions sur le thème doivent être sauvegardées et documentées ici.
 
+## 2026-09-04 11:55 - Hero d'accueil campagne Botanica
+
+Résumé :
+- Création d'un point de restauration avant intervention : `e92e059`.
+- Remplacement complet du Hero générique de la page d'accueil par une campagne de lancement Botanica.
+- Création d'un nouveau visuel de collection avec packagings Botanica inédits, distincts des anciens produits Cosm'Éthique.
+- Ajout du badge "Événement exclusif", du titre de campagne, de la date, du lieu, du compte à rebours animé et des CTA.
+- Le bouton "Découvrir l'événement" redirige vers `/evenement/`.
+- Le bouton "Découvrir la collection" redirige vers la boutique.
+- Ajout d'animations GSAP ciblées sur l'accueil, parallaxe doux, particules lumineuses et adaptations mobile dédiées.
+
+Fichiers modifiés :
+- `front-page.php`
+- `functions.php`
+- `style.css`
+- `css/mobile-responsive.css`
+- `js/main.js`
+- `assets/hero/cosmethique-botanica-home-campaign.png`
+- `CHANGELOG.md`
+
+Corrections de bugs :
+- Suppression de l'effet "simple texte remplacé" dans l'ancien Hero.
+- Le Hero d'accueil possède désormais une identité visuelle propre à la Collection Botanica.
+- Les contrôles PHP, JavaScript et diff sont passés sans erreur.
+- Le test navigateur local n'a pas pu être lancé car `cosmethique.local` ne répondait pas depuis le terminal.
+
 ## 2026-09-04 00:00 - Création de la page Événement Botanica
 
 Résumé :

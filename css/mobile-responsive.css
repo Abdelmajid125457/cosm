@@ -1699,3 +1699,98 @@
         width: 100% !important;
     }
 }
+
+@media (max-width: 1024px) {
+    .front-page .hero-section--botanica {
+        min-height: auto !important;
+        display: flex !important;
+        align-items: stretch;
+        padding: 56px 16px 360px !important;
+        color: #FFFFFF;
+    }
+
+    .front-page .botanica-hero-bg {
+        background-position: 68% bottom !important;
+        transform: none !important;
+    }
+
+    .front-page .botanica-hero-bg::after {
+        background:
+            linear-gradient(180deg, rgba(7, 26, 45, 0.96) 0%, rgba(7, 26, 45, 0.78) 42%, rgba(7, 26, 45, 0.28) 72%, rgba(7, 26, 45, 0.14) 100%),
+            linear-gradient(90deg, rgba(7, 26, 45, 0.76), rgba(7, 26, 45, 0.12));
+    }
+
+    .front-page .botanica-hero-content {
+        width: 100% !important;
+        max-width: 100% !important;
+        min-height: auto;
+        justify-content: flex-start;
+        margin: 0 !important;
+    }
+
+    .front-page .hero-section--botanica .hero-content h1 {
+        max-width: 100%;
+        font-size: clamp(3.1rem, 11vw, 5.4rem) !important;
+        line-height: 0.92;
+    }
+
+    .front-page .hero-section--botanica .hero-content p:not(.eyebrow) {
+        max-width: 100%;
+        font-size: 1rem !important;
+        line-height: 1.65;
+    }
+
+    .front-page .botanica-event-meta {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 10px;
+    }
+
+    .front-page .botanica-event-meta span {
+        min-width: 0;
+        padding: 12px 14px;
+    }
+
+    .front-page .botanica-countdown {
+        width: 100%;
+        padding: 14px 12px;
+        border-radius: 20px;
+    }
+
+    .front-page .botanica-countdown div {
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+        gap: 6px;
+    }
+
+    .front-page .botanica-countdown strong {
+        font-size: clamp(1.7rem, 8vw, 2.6rem);
+    }
+
+    .front-page .hero-section--botanica .hero-actions,
+    .front-page .hero-section--botanica .hero-actions .button {
+        width: 100%;
+    }
+
+    .front-page .botanica-collection-card {
+        right: 16px;
+        bottom: 22px;
+        width: min(340px, calc(100% - 32px));
+        padding: 18px;
+        border-radius: 22px;
+    }
+
+    .front-page .botanica-collection-card strong {
+        font-size: 2.25rem;
+    }
+}
+
+@media (max-width: 520px) {
+    .front-page .hero-section--botanica {
+        padding-bottom: 300px !important;
+    }
+
+    .front-page .botanica-event-meta,
+    .front-page .botanica-countdown div {
+        grid-template-columns: 1fr 1fr;
+    }
+}

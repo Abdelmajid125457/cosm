@@ -11,25 +11,47 @@ $shop_url    = function_exists( 'wc_get_page_permalink' ) ? wc_get_page_permalin
 $visage_url  = function_exists( 'theme_perso_get_shop_collection_url' ) ? theme_perso_get_shop_collection_url( 'visage', $shop_url ) : $shop_url;
 $corps_url   = function_exists( 'theme_perso_get_shop_collection_url' ) ? theme_perso_get_shop_collection_url( 'corps', $shop_url ) : $shop_url;
 $cheveux_url = function_exists( 'theme_perso_get_shop_collection_url' ) ? theme_perso_get_shop_collection_url( 'cheveux', $shop_url ) : $shop_url;
+$event_url   = function_exists( 'theme_perso_footer_page_url' ) ? theme_perso_footer_page_url( 'evenement' ) : home_url( '/evenement/' );
 ?>
 
 <main id="primary" class="site-main front-page">
-    <section class="hero-section" aria-labelledby="hero-title">
-        <div class="hero-media" style="background-image: url('<?php echo esc_url( get_template_directory_uri() . '/assets/hero/cosmethique-home-hero-campaign-4k.png' ); ?>');"></div>
-        <div class="hero-overlay"></div>
-        <div class="hero-content">
-            <p class="eyebrow">Cosmétiques naturels premium</p>
-            <h1 id="hero-title">Révélez la beauté naturelle de votre peau</h1>
-            <p>Des soins sensoriels, exigeants et responsables, imaginés pour les peaux qui veulent de l’efficacité sans compromis.</p>
+    <section class="hero-section hero-section--botanica" aria-labelledby="hero-title" data-home-botanica-hero>
+        <div class="botanica-hero-bg" style="background-image: url('<?php echo esc_url( get_template_directory_uri() . '/assets/hero/cosmethique-botanica-home-campaign.png' ); ?>');" aria-hidden="true"></div>
+        <div class="botanica-hero-glow" aria-hidden="true"></div>
+        <div class="botanica-hero-particles" aria-hidden="true">
+            <?php for ( $i = 0; $i < 12; $i++ ) : ?>
+                <span></span>
+            <?php endfor; ?>
+        </div>
+        <div class="hero-content botanica-hero-content">
+            <p class="eyebrow botanica-event-badge">✨ Événement exclusif</p>
+            <h1 id="hero-title">Découvrez notre nouvelle collection Botanica</h1>
+            <p>Une expérience sensorielle inédite inspirée de la nature, imaginée comme une campagne de lancement premium Cosm’Éthique.</p>
+
+            <div class="botanica-event-meta" aria-label="<?php esc_attr_e( 'Informations de lancement Botanica', 'theme-perso' ); ?>">
+                <span><strong>15 Octobre 2026</strong><?php esc_html_e( 'Date de lancement', 'theme-perso' ); ?></span>
+                <span><strong><?php esc_html_e( 'Paris & en ligne', 'theme-perso' ); ?></strong><?php esc_html_e( 'Lieu', 'theme-perso' ); ?></span>
+            </div>
+
+            <div class="botanica-countdown" data-home-countdown data-countdown-date="2026-10-15T18:00:00+02:00" aria-label="<?php esc_attr_e( 'Compte à rebours avant le lancement Botanica', 'theme-perso' ); ?>">
+                <p><?php esc_html_e( 'Lancement dans', 'theme-perso' ); ?></p>
+                <div>
+                    <span><strong data-home-countdown-days>00</strong><?php esc_html_e( 'Jours', 'theme-perso' ); ?></span>
+                    <span><strong data-home-countdown-hours>00</strong><?php esc_html_e( 'Heures', 'theme-perso' ); ?></span>
+                    <span><strong data-home-countdown-minutes>00</strong><?php esc_html_e( 'Minutes', 'theme-perso' ); ?></span>
+                    <span><strong data-home-countdown-seconds>00</strong><?php esc_html_e( 'Secondes', 'theme-perso' ); ?></span>
+                </div>
+            </div>
+
             <div class="hero-actions">
-                <a class="button button-primary" href="<?php echo esc_url( $shop_url ); ?>">Découvrir la boutique</a>
-                <a class="button button-light" href="<?php echo esc_url( home_url( '/qui-sommes-nous/' ) ); ?>">Notre vision</a>
+                <a class="button button-primary" href="<?php echo esc_url( $event_url ); ?>">Découvrir l’événement</a>
+                <a class="button button-light" href="<?php echo esc_url( $shop_url ); ?>">Découvrir la collection</a>
             </div>
         </div>
-        <aside class="floating-review" aria-label="<?php esc_attr_e( 'Avis clients', 'theme-perso' ); ?>">
-            <span class="stars" aria-hidden="true">★★★★★</span>
-            <strong>4.9/5</strong>
-            <p>Plus de 4 800 routines beauté adoptées.</p>
+        <aside class="botanica-collection-card" aria-label="<?php esc_attr_e( 'Collection Botanica', 'theme-perso' ); ?>">
+            <span><?php esc_html_e( 'Nouvelle gamme', 'theme-perso' ); ?></span>
+            <strong>Botanica</strong>
+            <p><?php esc_html_e( 'Sérum · Crème · Huile · Brume · Masque · Coffret', 'theme-perso' ); ?></p>
         </aside>
     </section>
 

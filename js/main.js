@@ -3450,6 +3450,79 @@ Thomas Bernard`,
         });
     }
 
+    const botanicaHomeHero = document.querySelector('[data-home-botanica-hero]');
+    if (botanicaHomeHero) {
+        const homeCountdown = botanicaHomeHero.querySelector('[data-home-countdown]');
+        const homeHeroBg = botanicaHomeHero.querySelector('.botanica-hero-bg');
+        const homeHeroGlow = botanicaHomeHero.querySelector('.botanica-hero-glow');
+
+        if (window.gsap && !prefersReducedMotion) {
+            window.gsap.from(botanicaHomeHero.querySelectorAll('.botanica-hero-content > *'), {
+                y: 34,
+                opacity: 0,
+                duration: 0.82,
+                stagger: 0.09,
+                ease: 'power3.out'
+            });
+            window.gsap.from(botanicaHomeHero.querySelector('.botanica-collection-card'), {
+                y: 28,
+                opacity: 0,
+                duration: 0.9,
+                delay: 0.45,
+                ease: 'power3.out'
+            });
+        }
+
+        if (!prefersReducedMotion) {
+            botanicaHomeHero.addEventListener('pointermove', (event) => {
+                const rect = botanicaHomeHero.getBoundingClientRect();
+                const x = (event.clientX - rect.left) / rect.width - 0.5;
+                const y = (event.clientY - rect.top) / rect.height - 0.5;
+
+                if (homeHeroBg) {
+                    homeHeroBg.style.transform = `scale(1.04) translate3d(${(x * -12).toFixed(2)}px, ${(y * -8).toFixed(2)}px, 0)`;
+                }
+                if (homeHeroGlow) {
+                    homeHeroGlow.style.transform = `translate3d(${(x * 18).toFixed(2)}px, ${(y * 16).toFixed(2)}px, 0)`;
+                }
+            });
+
+            botanicaHomeHero.addEventListener('pointerleave', () => {
+                if (homeHeroBg) {
+                    homeHeroBg.style.transform = '';
+                }
+                if (homeHeroGlow) {
+                    homeHeroGlow.style.transform = '';
+                }
+            });
+        }
+
+        if (homeCountdown) {
+            const homeEventTime = new Date(homeCountdown.dataset.countdownDate || '').getTime();
+            const homeParts = {
+                days: homeCountdown.querySelector('[data-home-countdown-days]'),
+                hours: homeCountdown.querySelector('[data-home-countdown-hours]'),
+                minutes: homeCountdown.querySelector('[data-home-countdown-minutes]'),
+                seconds: homeCountdown.querySelector('[data-home-countdown-seconds]')
+            };
+
+            const updateHomeCountdown = () => {
+                const distance = Math.max(0, homeEventTime - Date.now());
+                const days = Math.floor(distance / 86400000);
+                const hours = Math.floor((distance % 86400000) / 3600000);
+                const minutes = Math.floor((distance % 3600000) / 60000);
+                const seconds = Math.floor((distance % 60000) / 1000);
+                if (homeParts.days) homeParts.days.textContent = String(days).padStart(2, '0');
+                if (homeParts.hours) homeParts.hours.textContent = String(hours).padStart(2, '0');
+                if (homeParts.minutes) homeParts.minutes.textContent = String(minutes).padStart(2, '0');
+                if (homeParts.seconds) homeParts.seconds.textContent = String(seconds).padStart(2, '0');
+            };
+
+            updateHomeCountdown();
+            window.setInterval(updateHomeCountdown, 1000);
+        }
+    }
+
     const eventPage = document.querySelector('[data-event-page]');
     if (eventPage) {
         const eventProduct = eventPage.querySelector('[data-event-product]');

@@ -435,7 +435,7 @@ function theme_perso_scripts() {
         wp_enqueue_script( 'leaflet', 'https://unpkg.com/leaflet@1.9.4/dist/leaflet.js', array(), '1.9.4', true );
     }
 
-    if ( is_page( 'evenement' ) ) {
+    if ( is_page( 'evenement' ) || is_front_page() ) {
         wp_enqueue_script( 'gsap', 'https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js', array(), '3.12.5', true );
     }
 
@@ -443,7 +443,7 @@ function theme_perso_scripts() {
     if ( is_page( 'devenir-franchise' ) ) {
         $main_dependencies[] = 'leaflet';
     }
-    if ( is_page( 'evenement' ) ) {
+    if ( is_page( 'evenement' ) || is_front_page() ) {
         $main_dependencies[] = 'gsap';
     }
 
