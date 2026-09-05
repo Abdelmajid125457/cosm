@@ -1343,8 +1343,33 @@ select.is-demo-placeholder {
     position: absolute;
     inset: 0;
     background:
-        linear-gradient(90deg, rgba(7, 26, 45, 0.96) 0%, rgba(7, 26, 45, 0.78) 34%, rgba(7, 26, 45, 0.28) 62%, rgba(7, 26, 45, 0.08) 100%),
-        linear-gradient(180deg, rgba(2, 8, 20, 0.18), rgba(2, 8, 20, 0.45));
+        radial-gradient(circle at 68% 36%, rgba(245, 221, 163, 0.18), transparent 28%),
+        linear-gradient(90deg, rgba(7, 26, 45, 0.96) 0%, rgba(7, 26, 45, 0.78) 34%, rgba(7, 26, 45, 0.2) 66%, rgba(7, 26, 45, 0.08) 100%),
+        linear-gradient(180deg, rgba(2, 8, 20, 0.1), rgba(2, 8, 20, 0.46));
+}
+
+.botanica-hero-light,
+.botanica-hero-reflection {
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    pointer-events: none;
+}
+
+.botanica-hero-light {
+    background:
+        linear-gradient(112deg, transparent 0 30%, rgba(255, 232, 178, 0.12) 42%, transparent 58%),
+        radial-gradient(ellipse at 73% 52%, rgba(245, 221, 163, 0.2), transparent 36%);
+    mix-blend-mode: screen;
+    opacity: 0.85;
+    animation: botanica-volumetric-light 8s ease-in-out infinite;
+}
+
+.botanica-hero-reflection {
+    background: linear-gradient(105deg, transparent 34%, rgba(255, 255, 255, 0.1) 42%, transparent 50%);
+    transform: translateX(-34%);
+    opacity: 0.55;
+    animation: botanica-reflection-sweep 7s ease-in-out 1.2s infinite;
 }
 
 .botanica-hero-glow {
@@ -1391,6 +1416,12 @@ select.is-demo-placeholder {
 .botanica-hero-particles span:nth-child(10) { left: 92%; top: 72%; animation-delay: 5.4s; }
 .botanica-hero-particles span:nth-child(11) { left: 50%; top: 44%; animation-delay: 6s; }
 .botanica-hero-particles span:nth-child(12) { left: 70%; top: 40%; animation-delay: 6.6s; }
+.botanica-hero-particles span:nth-child(13) { left: 78%; top: 18%; animation-delay: 7.2s; width: 3px; height: 3px; }
+.botanica-hero-particles span:nth-child(14) { left: 86%; top: 48%; animation-delay: 7.8s; width: 4px; height: 4px; }
+.botanica-hero-particles span:nth-child(15) { left: 63%; top: 63%; animation-delay: 8.4s; width: 3px; height: 3px; }
+.botanica-hero-particles span:nth-child(16) { left: 38%; top: 54%; animation-delay: 9s; width: 3px; height: 3px; }
+.botanica-hero-particles span:nth-child(17) { left: 20%; top: 34%; animation-delay: 9.6s; width: 4px; height: 4px; }
+.botanica-hero-particles span:nth-child(18) { left: 94%; top: 18%; animation-delay: 10.2s; width: 3px; height: 3px; }
 
 .botanica-hero-content {
     display: flex;
@@ -1418,13 +1449,24 @@ select.is-demo-placeholder {
 }
 
 .hero-section--botanica .hero-content h1 {
-    max-width: 760px;
+    max-width: 620px;
     color: #FFFFFF;
-    font-size: clamp(3rem, 5.6vw, 6.45rem);
-    line-height: 0.96;
+    font-size: clamp(3.7rem, 7vw, 7.4rem);
+    line-height: 0.9;
     letter-spacing: 0;
     overflow-wrap: normal;
     text-wrap: balance;
+    text-transform: uppercase;
+}
+
+.hero-section--botanica .hero-content h2 {
+    max-width: 660px;
+    margin: 12px 0 0;
+    color: #F7E5B7;
+    font-family: Montserrat, sans-serif;
+    font-size: clamp(1.08rem, 1.8vw, 1.65rem);
+    font-weight: 800;
+    letter-spacing: 0.04em;
 }
 
 .hero-section--botanica .hero-content p:not(.eyebrow) {
@@ -1517,15 +1559,34 @@ select.is-demo-placeholder {
 }
 
 .hero-section--botanica .button-primary {
+    position: relative;
+    overflow: hidden;
     background: linear-gradient(135deg, #E8C77D, #B98B3A);
     color: #071A2D;
     box-shadow: 0 22px 58px rgba(185, 139, 58, 0.28);
 }
 
+.hero-section--botanica .button-primary::after {
+    content: "";
+    position: absolute;
+    inset: -45% auto -45% -35%;
+    width: 34%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.64), transparent);
+    transform: skewX(-20deg) translateX(-130%);
+    transition: transform 0.68s ease;
+}
+
 .hero-section--botanica .button-primary:hover,
 .hero-section--botanica .button-primary:focus-visible {
+    transform: translateY(-4px);
     background: linear-gradient(135deg, #F4D99A, #C99F52);
     color: #071A2D;
+    box-shadow: 0 28px 72px rgba(201, 159, 82, 0.4);
+}
+
+.hero-section--botanica .button-primary:hover::after,
+.hero-section--botanica .button-primary:focus-visible::after {
+    transform: skewX(-20deg) translateX(520%);
 }
 
 .hero-section--botanica .button-light {
@@ -1842,6 +1903,31 @@ select.is-demo-placeholder {
     50% {
         transform: scale(1.06);
         opacity: 0.88;
+    }
+}
+
+@keyframes botanica-volumetric-light {
+    0%, 100% {
+        opacity: 0.58;
+        transform: translate3d(-1.5%, 0, 0) scale(1);
+    }
+    50% {
+        opacity: 0.96;
+        transform: translate3d(1.5%, -1%, 0) scale(1.04);
+    }
+}
+
+@keyframes botanica-reflection-sweep {
+    0%, 28% {
+        transform: translateX(-44%) skewX(-12deg);
+        opacity: 0;
+    }
+    46% {
+        opacity: 0.58;
+    }
+    68%, 100% {
+        transform: translateX(48%) skewX(-12deg);
+        opacity: 0;
     }
 }
 

@@ -15,43 +15,46 @@ $asset = function( $folder, $file ) {
 
 $event_date = new DateTimeImmutable( '2026-10-15 18:00:00', wp_timezone() );
 $event_iso  = $event_date->format( DATE_ATOM );
+$botanica_suite   = $asset( 'hero', 'cosmethique-botanica-campaign-suite.png' );
+$botanica_reveal  = $asset( 'hero', 'cosmethique-botanica-cream-reveal.png' );
+$botanica_preview = $asset( 'hero', 'cosmethique-botanica-launch-preview.png' );
 
 $event_cards = array(
     array(
         'title' => __( 'Collection Botanica', 'theme-perso' ),
         'date'  => __( '15 Octobre 2026', 'theme-perso' ),
-        'image' => $asset( 'products', 'photo-pack-routine-premium-reel.png' ),
+        'image' => $botanica_reveal,
         'url'   => home_url( '/evenement/' ),
     ),
     array(
-        'title' => __( 'Atelier Beauté', 'theme-perso' ),
+        'title' => __( 'Atelier Botanica', 'theme-perso' ),
         'date'  => __( '22 Octobre 2026', 'theme-perso' ),
-        'image' => $asset( 'products', 'photo-huile-seche-botanique-lifestyle.png' ),
+        'image' => $botanica_preview,
         'url'   => home_url( '/contact/' ),
     ),
     array(
         'title' => __( 'Masterclass Botanique', 'theme-perso' ),
         'date'  => __( '29 Octobre 2026', 'theme-perso' ),
-        'image' => $asset( 'about', 'about-story-lifestyle.png' ),
+        'image' => $botanica_suite,
         'url'   => home_url( '/blog/' ),
     ),
     array(
-        'title' => __( 'Portes ouvertes', 'theme-perso' ),
+        'title' => __( 'Preview privée Botanica', 'theme-perso' ),
         'date'  => __( '05 Novembre 2026', 'theme-perso' ),
-        'image' => $asset( 'products', 'category-packs-hero-reel.png' ),
+        'image' => $botanica_preview,
         'url'   => home_url( '/boutiques/' ),
     ),
     array(
-        'title' => __( 'Rencontre Franchisés', 'theme-perso' ),
+        'title' => __( 'Rencontre Collection Botanica', 'theme-perso' ),
         'date'  => __( '12 Novembre 2026', 'theme-perso' ),
-        'image' => $asset( 'home', 'home-diagnostic-beaute.png' ),
+        'image' => $botanica_reveal,
         'url'   => home_url( '/devenir-franchise/' ),
     ),
 );
 
 $hotspots = array(
-    array( 'key' => 'sauge', 'label' => __( 'Sauge', 'theme-perso' ), 'text' => __( 'Actif botanique choisi pour son équilibre et sa fraîcheur sensorielle.', 'theme-perso' ) ),
-    array( 'key' => 'camomille', 'label' => __( 'Camomille', 'theme-perso' ), 'text' => __( 'Une note douce qui accompagne les peaux sensibles dans une routine apaisante.', 'theme-perso' ) ),
+    array( 'key' => 'sauge', 'label' => __( 'Complexe Botanica', 'theme-perso' ), 'text' => __( 'Un assemblage d’actifs naturels précieux imaginé pour signer la nouvelle routine Botanica.', 'theme-perso' ) ),
+    array( 'key' => 'camomille', 'label' => __( 'Notes florales', 'theme-perso' ), 'text' => __( 'Une signature sensorielle délicate, lumineuse et enveloppante, pensée pour l’expérience de lancement.', 'theme-perso' ) ),
     array( 'key' => 'texture', 'label' => __( 'Texture', 'theme-perso' ), 'text' => __( 'Crème onctueuse, fini confortable et absorption progressive.', 'theme-perso' ) ),
     array( 'key' => 'packaging', 'label' => __( 'Packaging', 'theme-perso' ), 'text' => __( 'Pot bleu nuit, détails dorés et identité Cosm’Éthique premium.', 'theme-perso' ) ),
     array( 'key' => 'fabrication', 'label' => __( 'Fabrication', 'theme-perso' ), 'text' => __( 'Une formulation responsable pensée pour concilier plaisir, exigence et naturalité.', 'theme-perso' ) ),
@@ -67,10 +70,10 @@ $timeline = array(
 );
 
 $gallery = array(
-    $asset( 'products', 'photo-creme-hydratante-sauge-camomille.png' ),
-    $asset( 'products', 'photo-serum-eclat-rose.png' ),
-    $asset( 'products', 'photo-huile-seche-botanique.png' ),
-    $asset( 'products', 'photo-masque-purifiant-argile-verte-lifestyle.png' ),
+    $botanica_suite,
+    $botanica_reveal,
+    $botanica_preview,
+    $botanica_suite,
 );
 ?>
 
@@ -227,7 +230,7 @@ $gallery = array(
             </form>
         </div>
         <div class="event-video-card">
-            <img src="<?php echo esc_url( $asset( 'home', 'home-savoir-faire-cosmethique.png' ) ); ?>" alt="" loading="lazy">
+            <img src="<?php echo esc_url( $botanica_preview ); ?>" alt="" loading="lazy">
             <button type="button" data-event-video-open><?php esc_html_e( 'Lire la vidéo', 'theme-perso' ); ?></button>
         </div>
     </section>

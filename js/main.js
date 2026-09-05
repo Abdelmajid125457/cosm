@@ -3528,7 +3528,9 @@ Thomas Bernard`,
         }
 
         if (homeLiveProduct) {
+            let homeProductResetTimer;
             const openHomeProduct = () => {
+                window.clearTimeout(homeProductResetTimer);
                 botanicaHomeHero.classList.add('is-product-open');
                 homeLiveProduct.classList.add('is-open');
                 if (window.gsap && !prefersReducedMotion) {
@@ -3539,6 +3541,10 @@ Thomas Bernard`,
                         cta_name: 'collection_botanica_home_product_open'
                     });
                 }
+                homeProductResetTimer = window.setTimeout(() => {
+                    botanicaHomeHero.classList.remove('is-product-open');
+                    homeLiveProduct.classList.remove('is-open');
+                }, 4300);
             };
 
             homeLiveProduct.addEventListener('click', openHomeProduct);

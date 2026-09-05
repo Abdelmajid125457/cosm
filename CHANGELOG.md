@@ -2,6 +2,36 @@
 
 Toutes les interventions sur le thème doivent être sauvegardées et documentées ici.
 
+## 2026-09-04 23:51 - Uniformisation visuelle de la campagne Botanica
+
+Résumé :
+- Création d'un point de restauration avant intervention : `72a6abc`.
+- Remplacement du visuel du Hero d'accueil par une nouvelle composition Botanica complète.
+- Refonte de la hiérarchie du Hero : "Botanica", "Nouvelle Collection Automne 2026" et accroche premium.
+- Ajout de lumière volumétrique, reflets, particules dorées et halo autour de la scène Botanica.
+- Renforcement du bouton principal avec reflet lumineux et micro-interaction au survol.
+- Ajout d'un cycle d'ouverture puis de retour automatique du pot Botanica sur le Hero d'accueil.
+- Remplacement des anciennes images de la page Événement dans le slider, la galerie et la carte vidéo par des visuels Botanica.
+- Mise à jour des points interactifs pour supprimer les références visibles aux anciens actifs de campagne.
+
+Fichiers modifiés :
+- `front-page.php`
+- `template-parts/page-evenement.php`
+- `style.css`
+- `js/main.js`
+- `CHANGELOG.md`
+- `assets/hero/cosmethique-botanica-campaign-suite.png`
+- `assets/hero/cosmethique-botanica-cream-reveal.png`
+- `assets/hero/cosmethique-botanica-launch-preview.png`
+
+Corrections de bugs :
+- Aucun ancien visuel produit n'est détecté dans les cartes, la galerie et la prévisualisation vidéo de la page Événement.
+- Le Hero d'accueil charge bien le nouveau visuel Botanica.
+- L'ouverture du pot s'exécute et revient automatiquement à l'état fermé.
+- Vérification mobile 430px : pas de débordement horizontal, titre, carte et produit contenus.
+- Vérification JavaScript : `js/main.js` valide avec `node --check`.
+- Vérification Git : `git diff --check` sans erreur.
+
 ## 2026-09-04 12:18 - Finitions premium du Hero Botanica
 
 Résumé :

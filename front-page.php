@@ -16,18 +16,21 @@ $event_url   = function_exists( 'theme_perso_footer_page_url' ) ? theme_perso_fo
 
 <main id="primary" class="site-main front-page">
     <section class="hero-section hero-section--botanica" aria-labelledby="hero-title" data-home-botanica-hero>
-        <div class="botanica-hero-bg" style="background-image: url('<?php echo esc_url( get_template_directory_uri() . '/assets/hero/cosmethique-botanica-home-campaign.png' ); ?>');" aria-hidden="true"></div>
+        <div class="botanica-hero-bg" style="background-image: url('<?php echo esc_url( get_template_directory_uri() . '/assets/hero/cosmethique-botanica-campaign-suite.png' ); ?>');" aria-hidden="true"></div>
         <div class="botanica-hero-glow" aria-hidden="true"></div>
+        <div class="botanica-hero-light" aria-hidden="true"></div>
+        <div class="botanica-hero-reflection" aria-hidden="true"></div>
         <div class="botanica-hero-particles" aria-hidden="true">
-            <?php for ( $i = 0; $i < 12; $i++ ) : ?>
+            <?php for ( $i = 0; $i < 18; $i++ ) : ?>
                 <span></span>
             <?php endfor; ?>
         </div>
-        <span class="botanica-limited-badge" aria-hidden="true">Nouveauté 2026</span>
+        <span class="botanica-limited-badge" aria-hidden="true">Lancement officiel</span>
         <div class="hero-content botanica-hero-content">
-            <p class="eyebrow botanica-event-badge">✨ Événement exclusif</p>
-            <h1 id="hero-title">Découvrez notre nouvelle collection Botanica</h1>
-            <p>Une expérience sensorielle inédite inspirée de la nature, imaginée comme une campagne de lancement premium Cosm’Éthique.</p>
+            <p class="eyebrow botanica-event-badge">Édition limitée</p>
+            <h1 id="hero-title">Botanica</h1>
+            <h2>Nouvelle Collection Automne 2026</h2>
+            <p>Une routine botanique premium inspirée des actifs naturels les plus précieux.</p>
 
             <div class="hero-actions">
                 <a class="button button-primary" href="<?php echo esc_url( $event_url ); ?>">Découvrir l’événement</a>
