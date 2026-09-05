@@ -2,6 +2,32 @@
 
 Toutes les interventions sur le thème doivent être sauvegardées et documentées ici.
 
+## 2026-09-05 10:40 - Hero d'accueil Botanica cinématique
+
+Résumé :
+- Création d'un point de restauration avant intervention : `49a2264`.
+- Suppression complète de l'effet "panneau" autour du texte pour intégrer naturellement le contenu dans le décor.
+- Remplacement des cartes Date/Lieu par deux badges compacts en glassmorphism.
+- Renforcement de la mise en scène Botanica avec fond assombri, flou cinématique, halo doré, rayon lumineux, poussières, particules et feuilles animées.
+- Recomposition du visuel produit pour donner plus de profondeur, de lumière et de présence aux packagings Botanica.
+- Conservation d'un seul CTA principal : "Découvrir le lancement", relié à la page Événement.
+- Refonte du compte à rebours en bloc premium plus léger avec contour doré discret et animation fluide.
+- Synchronisation des animations d'arrivée : décor, produits, texte, bouton, badges puis compteur.
+- Ajustement responsive ciblé du Hero sans modifier les autres sections.
+
+Fichiers modifiés :
+- `front-page.php`
+- `style.css`
+- `css/mobile-responsive.css`
+- `js/main.js`
+- `CHANGELOG.md`
+
+Corrections de bugs :
+- Plus aucune référence à l'ancien bouton "Découvrir la collection" ni au pot flottant interactif.
+- Vérification desktop : un seul CTA dans le Hero, lien correct vers `/evenement/`, aucun chevauchement entre texte et visuel.
+- Vérification JavaScript : `js/main.js` valide avec `node --check`.
+- Vérification Git : `git diff --check` sans erreur.
+
 ## 2026-09-05 10:09 - Refonte ciblée du Hero Botanica d'accueil
 
 Résumé :

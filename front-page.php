@@ -33,12 +33,12 @@ $event_url   = function_exists( 'theme_perso_footer_page_url' ) ? theme_perso_fo
             <p>Une routine botanique premium inspirée des actifs naturels les plus précieux.</p>
 
             <div class="hero-actions">
-                <a class="button button-primary" href="<?php echo esc_url( $event_url ); ?>">Découvrir l’événement</a>
+                <a class="button button-primary" href="<?php echo esc_url( $event_url ); ?>">Découvrir le lancement</a>
             </div>
 
-            <div class="botanica-event-meta" aria-label="<?php esc_attr_e( 'Informations de lancement Botanica', 'theme-perso' ); ?>">
-                <span><strong>15 Octobre 2026</strong><?php esc_html_e( 'Date de lancement', 'theme-perso' ); ?></span>
-                <span><strong><?php esc_html_e( 'Paris & en ligne', 'theme-perso' ); ?></strong><?php esc_html_e( 'Lieu', 'theme-perso' ); ?></span>
+            <div class="botanica-event-meta" aria-label="<?php esc_attr_e( 'Date et lieu du lancement Botanica', 'theme-perso' ); ?>">
+                <span><strong>15 Octobre 2026</strong></span>
+                <span><strong><?php esc_html_e( 'Paris & en ligne', 'theme-perso' ); ?></strong></span>
             </div>
 
             <div class="botanica-countdown" data-home-countdown data-countdown-date="2026-10-15T18:00:00+02:00" aria-label="<?php esc_attr_e( 'Compte à rebours avant le lancement Botanica', 'theme-perso' ); ?>">
@@ -54,6 +54,9 @@ $event_url   = function_exists( 'theme_perso_footer_page_url' ) ? theme_perso_fo
         <figure class="botanica-product-showcase" data-home-botanica-showcase aria-hidden="true">
             <span class="botanica-launch-ray"></span>
             <span class="botanica-showcase-halo"></span>
+            <span class="botanica-showcase-dust"></span>
+            <span class="botanica-showcase-leaf botanica-showcase-leaf--one"></span>
+            <span class="botanica-showcase-leaf botanica-showcase-leaf--two"></span>
             <span class="botanica-showcase-frame">
                 <img src="<?php echo esc_url( get_template_directory_uri() . '/assets/hero/cosmethique-botanica-launch-preview.png' ); ?>" alt="" loading="eager" fetchpriority="high">
                 <span class="botanica-showcase-shine"></span>

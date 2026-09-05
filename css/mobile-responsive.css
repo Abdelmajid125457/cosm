@@ -1749,15 +1749,16 @@
     }
 
     .front-page .botanica-event-meta {
-        display: grid;
-        grid-template-columns: repeat(2, minmax(0, 1fr));
+        display: flex;
+        justify-content: center;
         gap: 10px;
         width: 100%;
     }
 
     .front-page .botanica-event-meta span {
         min-width: 0;
-        padding: 12px 14px;
+        min-height: 34px;
+        padding: 7px 12px;
     }
 
     .front-page .botanica-countdown {
@@ -1833,13 +1834,12 @@
         padding-bottom: 315px !important;
     }
 
-    .front-page .botanica-event-meta,
     .front-page .botanica-countdown div {
         grid-template-columns: 1fr 1fr;
     }
 
     .front-page .botanica-event-meta span {
-        min-height: 74px;
+        min-height: 34px;
     }
 
     .front-page .hero-section--botanica .hero-actions {
