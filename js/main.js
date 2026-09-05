@@ -3457,7 +3457,6 @@ Thomas Bernard`,
         const homeHeroGlow = botanicaHomeHero.querySelector('.botanica-hero-glow');
         const homeProductShowcase = botanicaHomeHero.querySelector('[data-home-botanica-showcase]');
         const homeLimitedBadge = botanicaHomeHero.querySelector('.botanica-limited-badge');
-        const homeScrollIndicator = botanicaHomeHero.querySelector('.botanica-scroll-indicator');
 
         if (window.gsap && !prefersReducedMotion) {
             window.gsap.from(botanicaHomeHero.querySelectorAll('.botanica-hero-content > *'), {
@@ -3468,15 +3467,16 @@ Thomas Bernard`,
                 delay: 1.02,
                 ease: 'power3.out'
             });
-            window.gsap.from([homeLimitedBadge, homeScrollIndicator].filter(Boolean), {
-                y: 24,
-                scale: 0.96,
-                opacity: 0,
-                duration: 0.9,
-                stagger: 0.12,
-                delay: 1.18,
-                ease: 'power3.out'
-            });
+            if (homeLimitedBadge) {
+                window.gsap.from(homeLimitedBadge, {
+                    y: 24,
+                    scale: 0.96,
+                    opacity: 0,
+                    duration: 0.9,
+                    delay: 1.18,
+                    ease: 'power3.out'
+                });
+            }
         }
 
         if (!prefersReducedMotion) {

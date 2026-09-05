@@ -273,6 +273,65 @@ button {
     transition: background 0.32s ease, border-color 0.32s ease, box-shadow 0.32s ease, backdrop-filter 0.32s ease;
 }
 
+body.home .site-header {
+    background:
+        linear-gradient(180deg, rgba(7, 26, 45, 0.9), rgba(7, 26, 45, 0.72)),
+        rgba(7, 26, 45, 0.78);
+    border-bottom: 0;
+    box-shadow: 0 18px 70px rgba(2, 8, 20, 0.24);
+    backdrop-filter: blur(22px) saturate(1.08);
+}
+
+body.home .brand-logo,
+body.home .primary-menu a,
+body.home .header-icon,
+body.home .language-switcher-toggle {
+    color: rgba(255, 255, 255, 0.94);
+}
+
+body.home .mobile-menu-toggle span:not(.screen-reader-text) {
+    background: rgba(255, 255, 255, 0.92);
+}
+
+body.home .primary-menu a::after {
+    background: linear-gradient(90deg, #F5DDA3, #C9A45C);
+}
+
+body.home .product-search-form {
+    border-color: rgba(255, 255, 255, 0.18);
+    background: rgba(255, 255, 255, 0.12);
+    box-shadow: 0 18px 48px rgba(2, 8, 20, 0.16), inset 0 1px 0 rgba(255, 255, 255, 0.12);
+    backdrop-filter: blur(18px);
+}
+
+body.home .product-search-form input {
+    color: #FFFFFF;
+}
+
+body.home .product-search-form input::placeholder {
+    color: rgba(255, 255, 255, 0.72);
+}
+
+body.home .product-search-form button {
+    color: #071A2D;
+    background: rgba(255, 255, 255, 0.92);
+}
+
+body.home .language-switcher-toggle,
+body.home .header-icon {
+    border-color: rgba(255, 255, 255, 0.18);
+    background: rgba(255, 255, 255, 0.1);
+}
+
+body.home .language-switcher-toggle:hover,
+body.home .language-switcher-toggle:focus-visible,
+body.home .header-icon:hover,
+body.home .header-icon:focus-visible {
+    border-color: rgba(245, 221, 163, 0.34);
+    background: rgba(255, 255, 255, 0.16);
+    color: #F5DDA3;
+}
+
 #page,
 .site,
 body.admin-bar #page,
@@ -1447,6 +1506,7 @@ select.is-demo-placeholder {
     min-height: auto;
     margin-right: auto;
     margin-left: clamp(0px, 2vw, 34px);
+    margin-top: clamp(24px, 4vh, 54px);
     padding: 0;
     border: 0;
     background: transparent;
@@ -1815,32 +1875,6 @@ select.is-demo-placeholder {
     animation: botanica-packaging-shine 5.8s ease-in-out 2.4s infinite;
 }
 
-.botanica-scroll-indicator {
-    position: absolute;
-    left: 50%;
-    bottom: 22px;
-    z-index: 5;
-    display: inline-grid;
-    justify-items: center;
-    gap: 9px;
-    color: rgba(255, 255, 255, 0.82);
-    font-family: Montserrat, sans-serif;
-    font-size: 0.72rem;
-    font-weight: 800;
-    letter-spacing: 0.12em;
-    text-decoration: none;
-    text-transform: uppercase;
-    transform: translateX(-50%);
-}
-
-.botanica-scroll-indicator i {
-    width: 1px;
-    height: 42px;
-    border-radius: 999px;
-    background: linear-gradient(180deg, #F5DDA3, rgba(245, 221, 163, 0));
-    animation: botanica-scroll-line 1.9s ease-in-out infinite;
-}
-
 @media (min-width: 1025px) {
     .botanica-hero-content {
         align-items: flex-start !important;
@@ -2087,19 +2121,6 @@ select.is-demo-placeholder {
     74%, 100% {
         transform: skewX(-16deg) translateX(520%);
         opacity: 0;
-    }
-}
-
-@keyframes botanica-scroll-line {
-    0%, 100% {
-        transform: scaleY(0.42);
-        opacity: 0.45;
-        transform-origin: top;
-    }
-    50% {
-        transform: scaleY(1);
-        opacity: 1;
-        transform-origin: top;
     }
 }
 

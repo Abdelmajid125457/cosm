@@ -2,6 +2,34 @@
 
 Toutes les interventions sur le thème doivent être sauvegardées et documentées ici.
 
+## 2026-09-05 11:00 - Corrections finales du Hero Botanica et du header d'accueil
+
+Résumé :
+- Création d'un point de restauration avant intervention : `dc7ab87`.
+- Suppression complète de l'indicateur "Explorer le lancement" en bas du Hero, avec retrait du HTML, du CSS et de l'animation JavaScript associée.
+- Conservation d'un seul CTA dans le Hero : "Découvrir le lancement", relié à la page Événement.
+- Retrait du lien "Événements" de la navigation principale sans supprimer la page `/evenement/`.
+- Désactivation du fil d'Ariane uniquement sur la page d'accueil afin de supprimer la bande blanche entre le header et le Hero.
+- Correction du décalage hérité de `css/home-premium.css` qui ajoutait `margin-top:-200px` et `padding-top:200px` au Hero.
+- Ajout d'un header d'accueil plus premium : effet glass sombre, transparence légère, blur subtil et absence de bordure visible.
+- Recentrage vertical du contenu éditorial du Hero pour mieux équilibrer texte, bouton, badges et compte à rebours avec la composition produit.
+
+Fichiers modifiés :
+- `front-page.php`
+- `functions.php`
+- `style.css`
+- `css/home-premium.css`
+- `css/mobile-responsive.css`
+- `js/main.js`
+- `CHANGELOG.md`
+
+Corrections de bugs :
+- Vérification navigateur desktop : écart header/Hero à `0px`, aucun fil d'Ariane sur l'accueil, aucun lien "Événements" dans le menu principal, aucun texte "Explorer le lancement".
+- Vérification navigateur : un seul CTA dans le Hero, lien correct vers `/evenement/`, aucun débordement horizontal.
+- Vérification tablette 768px : aucun débordement horizontal et mêmes suppressions confirmées.
+- Vérification JavaScript : `js/main.js` valide avec `node --check`.
+- Vérification Git : `git diff --check` sans erreur.
+
 ## 2026-09-05 10:40 - Hero d'accueil Botanica cinématique
 
 Résumé :

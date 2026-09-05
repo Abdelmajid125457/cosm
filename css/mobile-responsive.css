@@ -1818,15 +1818,6 @@
         border-radius: 26px;
     }
 
-    .front-page .botanica-scroll-indicator {
-        bottom: 18px;
-        width: calc(100% - 32px);
-        font-size: 0.62rem;
-    }
-
-    .front-page .botanica-scroll-indicator i {
-        height: 28px;
-    }
 }
 
 @media (max-width: 520px) {

@@ -62,10 +62,6 @@ $event_url   = function_exists( 'theme_perso_footer_page_url' ) ? theme_perso_fo
                 <span class="botanica-showcase-shine"></span>
             </span>
         </figure>
-        <a class="botanica-scroll-indicator" href="#home-univers-title">
-            <span><?php esc_html_e( 'Explorer le lancement', 'theme-perso' ); ?></span>
-            <i aria-hidden="true"></i>
-        </a>
     </section>
 
     <section class="home-univers-section" aria-labelledby="home-univers-title">

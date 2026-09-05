@@ -1035,6 +1035,26 @@ function theme_perso_primary_menu_fallback() {
     echo '</ul>';
 }
 
+function theme_perso_hide_event_from_primary_menu( $items, $args ) {
+    if ( empty( $args->theme_location ) || 'primary' !== $args->theme_location ) {
+        return $items;
+    }
+
+    return array_values(
+        array_filter(
+            $items,
+            static function ( $item ) {
+                if ( 'page' !== $item->object || empty( $item->object_id ) ) {
+                    return true;
+                }
+
+                return 'evenement' !== get_post_field( 'post_name', (int) $item->object_id );
+            }
+        )
+    );
+}
+add_filter( 'wp_nav_menu_objects', 'theme_perso_hide_event_from_primary_menu', 20, 2 );
+
 function theme_perso_footer_menu_fallback() {
     $items = array(
         esc_html__( 'CGV', 'theme-perso' )                         => home_url( '/cgv/' ),
@@ -2908,7 +2928,7 @@ function theme_perso_seed_pages_and_menus() {
     if ( empty( $menu_locations['primary'] ) ) {
         $primary_menu    = wp_get_nav_menu_object( 'Menu COSM’ETHIQUE' );
         $primary_menu_id = $primary_menu ? $primary_menu->term_id : wp_create_nav_menu( 'Menu COSM’ETHIQUE' );
-        $primary_items   = array( 'accueil', 'boutique', 'diagnostic', 'qui-sommes-nous', 'blog', 'contact', 'evenement', 'devenir-franchise' );
+        $primary_items   = array( 'accueil', 'boutique', 'diagnostic', 'qui-sommes-nous', 'blog', 'contact', 'devenir-franchise' );
 
         if ( ! is_wp_error( $primary_menu_id ) ) {
             foreach ( $primary_items as $slug ) {
@@ -3147,49 +3167,11 @@ function theme_perso_ensure_diagnostic_page_and_menu() {
 add_action( 'init', 'theme_perso_ensure_diagnostic_page_and_menu', 39 );
 
 function theme_perso_ensure_event_page_and_menu() {
-    $event_id = theme_perso_create_page_if_missing(
+    theme_perso_create_page_if_missing(
         'Événement',
         'evenement',
         'Lancement de la Collection Botanica.'
     );
-
-    if ( ! $event_id || is_wp_error( $event_id ) ) {
-        return;
-    }
-
-    $locations = get_theme_mod( 'nav_menu_locations', array() );
-    if ( empty( $locations['primary'] ) ) {
-        return;
-    }
-
-    $menu_id = (int) $locations['primary'];
-    $items   = wp_get_nav_menu_items( $menu_id );
-
-    if ( ! $items || is_wp_error( $items ) ) {
-        return;
-    }
-
-    foreach ( $items as $item ) {
-        if ( (int) $item->object_id === (int) $event_id ) {
-            theme_perso_reorder_primary_menu_items( $menu_id );
-            return;
-        }
-    }
-
-    wp_update_nav_menu_item(
-        $menu_id,
-        0,
-        array(
-            'menu-item-object-id' => $event_id,
-            'menu-item-object'    => 'page',
-            'menu-item-type'      => 'post_type',
-            'menu-item-title'     => esc_html__( 'Événements', 'theme-perso' ),
-            'menu-item-status'    => 'publish',
-            'menu-item-position'  => 65,
-        )
-    );
-
-    theme_perso_reorder_primary_menu_items( $menu_id );
 }
 add_action( 'init', 'theme_perso_ensure_event_page_and_menu', 44 );
 
@@ -3207,7 +3189,6 @@ function theme_perso_reorder_primary_menu_items( $menu_id ) {
         'qui-sommes-nous'    => 40,
         'blog'               => 50,
         'contact'            => 60,
-        'evenement'          => 65,
         'devenir-franchise'  => 70,
     );
 
@@ -7827,18 +7808,18 @@ function theme_perso_breadcrumb_page_url( $slug ) {
 }
 
 function theme_perso_custom_breadcrumb_items() {
+    if ( is_front_page() ) {
+        return array();
+    }
+
     $items = array(
         array(
             'label'   => __( 'Accueil', 'theme-perso' ),
             'url'     => home_url( '/' ),
             'icon'    => 'home',
-            'current' => is_front_page(),
+            'current' => false,
         ),
     );
-
-    if ( is_front_page() ) {
-        return $items;
-    }
 
     $shop_url    = function_exists( 'wc_get_page_permalink' ) ? wc_get_page_permalink( 'shop' ) : theme_perso_breadcrumb_page_url( 'boutique' );
     $account_url = function_exists( 'wc_get_page_permalink' ) ? wc_get_page_permalink( 'myaccount' ) : theme_perso_breadcrumb_page_url( 'mon-compte' );
