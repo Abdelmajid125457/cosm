@@ -3455,7 +3455,7 @@ Thomas Bernard`,
         const homeCountdown = botanicaHomeHero.querySelector('[data-home-countdown]');
         const homeHeroBg = botanicaHomeHero.querySelector('.botanica-hero-bg');
         const homeHeroGlow = botanicaHomeHero.querySelector('.botanica-hero-glow');
-        const homeLiveProduct = botanicaHomeHero.querySelector('[data-home-botanica-product]');
+        const homeProductShowcase = botanicaHomeHero.querySelector('[data-home-botanica-showcase]');
         const homeLimitedBadge = botanicaHomeHero.querySelector('.botanica-limited-badge');
         const homeScrollIndicator = botanicaHomeHero.querySelector('.botanica-scroll-indicator');
 
@@ -3467,14 +3467,7 @@ Thomas Bernard`,
                 stagger: 0.09,
                 ease: 'power3.out'
             });
-            window.gsap.from(botanicaHomeHero.querySelector('.botanica-collection-card'), {
-                y: 28,
-                opacity: 0,
-                duration: 0.9,
-                delay: 0.45,
-                ease: 'power3.out'
-            });
-            window.gsap.from([homeLimitedBadge, homeLiveProduct, homeScrollIndicator].filter(Boolean), {
+            window.gsap.from([homeLimitedBadge, homeScrollIndicator].filter(Boolean), {
                 y: 24,
                 scale: 0.96,
                 opacity: 0,
@@ -3492,14 +3485,14 @@ Thomas Bernard`,
                 const y = (event.clientY - rect.top) / rect.height - 0.5;
 
                 if (homeHeroBg) {
-                    homeHeroBg.style.transform = `scale(1.04) translate3d(${(x * -12).toFixed(2)}px, ${(y * -8).toFixed(2)}px, 0)`;
+                    homeHeroBg.style.transform = `scale(1.08) translate3d(${(x * -12).toFixed(2)}px, ${(y * -8).toFixed(2)}px, 0)`;
                 }
                 if (homeHeroGlow) {
                     homeHeroGlow.style.transform = `translate3d(${(x * 18).toFixed(2)}px, ${(y * 16).toFixed(2)}px, 0)`;
                 }
-                if (homeLiveProduct) {
-                    homeLiveProduct.style.marginRight = `${(x * -16).toFixed(2)}px`;
-                    homeLiveProduct.style.marginTop = `${(y * -12).toFixed(2)}px`;
+                if (homeProductShowcase) {
+                    homeProductShowcase.style.setProperty('--botanica-showcase-x', `${(x * -14).toFixed(2)}px`);
+                    homeProductShowcase.style.setProperty('--botanica-showcase-y', `${(y * -10).toFixed(2)}px`);
                 }
             });
 
@@ -3510,9 +3503,9 @@ Thomas Bernard`,
                 if (homeHeroGlow) {
                     homeHeroGlow.style.transform = '';
                 }
-                if (homeLiveProduct) {
-                    homeLiveProduct.style.marginRight = '';
-                    homeLiveProduct.style.marginTop = '';
+                if (homeProductShowcase) {
+                    homeProductShowcase.style.setProperty('--botanica-showcase-x', '0px');
+                    homeProductShowcase.style.setProperty('--botanica-showcase-y', '0px');
                 }
             });
 
@@ -3522,38 +3515,13 @@ Thomas Bernard`,
                 botanicaHomeHero.style.setProperty('--botanica-scroll-scale', (1 - progress * 0.035).toFixed(3));
                 botanicaHomeHero.style.setProperty('--botanica-scroll-y', `${(-progress * 24).toFixed(1)}px`);
                 botanicaHomeHero.style.setProperty('--botanica-scroll-opacity', (1 - progress * 0.18).toFixed(3));
+                if (homeProductShowcase) {
+                    homeProductShowcase.style.setProperty('--botanica-showcase-scroll-y', `${(-progress * 22).toFixed(1)}px`);
+                    homeProductShowcase.style.setProperty('--botanica-showcase-opacity', (1 - progress * 0.28).toFixed(3));
+                }
             };
             updateHomeHeroScroll();
             window.addEventListener('scroll', updateHomeHeroScroll, { passive: true });
-        }
-
-        if (homeLiveProduct) {
-            let homeProductResetTimer;
-            const openHomeProduct = () => {
-                window.clearTimeout(homeProductResetTimer);
-                botanicaHomeHero.classList.add('is-product-open');
-                homeLiveProduct.classList.add('is-open');
-                if (window.gsap && !prefersReducedMotion) {
-                    window.gsap.fromTo(homeLiveProduct, { scale: 1 }, { scale: 1.045, duration: 0.72, yoyo: true, repeat: 1, ease: 'power2.inOut' });
-                }
-                if (typeof pushTrackingEvent === 'function') {
-                    pushTrackingEvent('view_promotion', {
-                        cta_name: 'collection_botanica_home_product_open'
-                    });
-                }
-                homeProductResetTimer = window.setTimeout(() => {
-                    botanicaHomeHero.classList.remove('is-product-open');
-                    homeLiveProduct.classList.remove('is-open');
-                }, 4300);
-            };
-
-            homeLiveProduct.addEventListener('click', openHomeProduct);
-            homeLiveProduct.addEventListener('keydown', (event) => {
-                if (event.key === 'Enter' || event.key === ' ') {
-                    event.preventDefault();
-                    openHomeProduct();
-                }
-            });
         }
 
         if (homeCountdown) {

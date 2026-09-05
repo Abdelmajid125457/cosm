@@ -1705,7 +1705,7 @@
         min-height: auto !important;
         display: flex !important;
         align-items: stretch;
-        padding: 48px 16px 420px !important;
+        padding: 54px 16px 350px !important;
         color: #FFFFFF;
     }
 
@@ -1733,11 +1733,16 @@
 
     .front-page .hero-section--botanica .hero-content h1 {
         max-width: 100%;
-        font-size: clamp(2.45rem, 9.6vw, 4.7rem) !important;
-        line-height: 1;
+        font-size: clamp(3rem, 14vw, 4.9rem) !important;
+        line-height: 0.9;
     }
 
-    .front-page .hero-section--botanica .hero-content p:not(.eyebrow) {
+    .front-page .botanica-season {
+        font-size: 0.68rem;
+        letter-spacing: 0.13em;
+    }
+
+    .front-page .hero-section--botanica .hero-content p:not(.eyebrow):not(.botanica-season) {
         max-width: 100%;
         font-size: 1rem !important;
         line-height: 1.65;
@@ -1767,25 +1772,12 @@
     }
 
     .front-page .botanica-countdown strong {
-        font-size: clamp(1.7rem, 8vw, 2.6rem);
+        font-size: clamp(1.45rem, 6vw, 2.1rem);
     }
 
     .front-page .hero-section--botanica .hero-actions,
     .front-page .hero-section--botanica .hero-actions .button {
         width: 100%;
-    }
-
-    .front-page .botanica-collection-card {
-        right: 16px;
-        bottom: 72px;
-        width: min(330px, calc(100% - 32px));
-        padding: 18px;
-        border-radius: 22px;
-        text-align: left;
-    }
-
-    .front-page .botanica-collection-card strong {
-        font-size: 1.9rem;
     }
 
     .front-page .botanica-limited-badge {
@@ -1796,13 +1788,33 @@
         font-size: 0.62rem;
     }
 
-    .front-page .botanica-live-product {
-        right: 50%;
+    .front-page .botanica-product-showcase {
+        left: 50%;
+        right: auto;
         top: auto;
-        bottom: 204px;
-        width: clamp(142px, 42vw, 210px);
-        transform: translateX(50%);
-        animation-name: botanica-product-float-mobile;
+        bottom: 78px;
+        width: min(94vw, 520px);
+        height: 245px;
+        min-height: 0;
+        transform: translate3d(calc(-50% + var(--botanica-showcase-x, 0px)), calc(var(--botanica-showcase-y, 0px) + var(--botanica-showcase-scroll-y, 0px)), 0);
+    }
+
+    .front-page .botanica-launch-ray {
+        left: 26%;
+        top: -64%;
+        width: 46%;
+        height: 155%;
+    }
+
+    .front-page .botanica-showcase-halo {
+        left: 8%;
+        right: 8%;
+        bottom: 2%;
+        height: 76%;
+    }
+
+    .front-page .botanica-showcase-frame {
+        border-radius: 26px;
     }
 
     .front-page .botanica-scroll-indicator {
@@ -1818,7 +1830,7 @@
 
 @media (max-width: 520px) {
     .front-page .hero-section--botanica {
-        padding-bottom: 410px !important;
+        padding-bottom: 315px !important;
     }
 
     .front-page .botanica-event-meta,
@@ -1835,21 +1847,9 @@
         gap: 12px;
     }
 
-    .front-page .botanica-live-product {
-        bottom: 206px;
-        width: 156px;
-    }
-
-    .front-page .botanica-collection-card {
-        bottom: 62px;
-    }
-}
-
-@keyframes botanica-product-float-mobile {
-    0%, 100% {
-        transform: translateX(50%) translateY(0) rotateZ(-1deg);
-    }
-    50% {
-        transform: translateX(50%) translateY(-8px) rotateZ(1.2deg);
+    .front-page .botanica-product-showcase {
+        bottom: 70px;
+        width: calc(100% - 24px);
+        height: 215px;
     }
 }

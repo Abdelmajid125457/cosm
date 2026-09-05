@@ -2,6 +2,33 @@
 
 Toutes les interventions sur le thème doivent être sauvegardées et documentées ici.
 
+## 2026-09-05 10:09 - Refonte ciblée du Hero Botanica d'accueil
+
+Résumé :
+- Création d'un point de restauration avant intervention : `1f101d9`.
+- Suppression du bouton secondaire "Découvrir la collection" dans le Hero.
+- Conservation d'un seul CTA principal : "Découvrir l'événement", relié à la page Événement.
+- Suppression complète du pot flottant interactif et de la carte collection à droite.
+- Remplacement par une composition premium Botanica avec rayon lumineux, halo, reflets et apparition progressive des nouveaux produits.
+- Recentrage de la hiérarchie éditoriale : "Nouvelle collection", "Édition Automne 2026", "Botanica", puis description.
+- Allègement visuel du compte à rebours avec glassmorphism, contour doré discret et animation des chiffres.
+- Correction du clipping des effets lumineux pour éviter tout débordement horizontal.
+- Adaptation responsive mobile ciblée du Hero sans modifier les autres sections.
+
+Fichiers modifiés :
+- `front-page.php`
+- `style.css`
+- `css/mobile-responsive.css`
+- `js/main.js`
+- `CHANGELOG.md`
+
+Corrections de bugs :
+- Plus aucune référence à l'ancien pot flottant ou à l'ancienne carte collection dans le HTML, le CSS ou le JavaScript.
+- Vérification desktop : un seul CTA dans le Hero, lien correct vers `/evenement/`, aucun scroll horizontal global.
+- Vérification mobile 430px : titre, compte à rebours et visuel Botanica contenus dans l'écran.
+- Vérification JavaScript : `js/main.js` valide avec `node --check`.
+- Vérification Git : `git diff --check` sans erreur.
+
 ## 2026-09-04 23:51 - Uniformisation visuelle de la campagne Botanica
 
 Résumé :
