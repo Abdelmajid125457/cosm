@@ -2,6 +2,31 @@
 
 Toutes les interventions sur le thème doivent être sauvegardées et documentées ici.
 
+## 2026-09-06 22:30 - Hero Événement Botanica premium
+
+Résumé :
+- Création d'un point de restauration avant intervention : `802eddb`.
+- Refonte ciblée du Hero de la page Événement avec les visuels HD Botanica déjà présents dans le thème.
+- Suppression du bouton "Voir la bande-annonce" dans le Hero.
+- Remplacement complet du pot dessiné en CSS par une composition photographique Botanica : pot principal, sérum, huile, brume, masque et coffret.
+- Ajout d'une mise en scène cinématique : décor assombri, halo doré, rayons lumineux, poussières, particules, reflets et sceau "Édition limitée".
+- Ajout d'une ouverture progressive du pot et d'une apparition fluide des produits autour du visuel principal.
+- Ajout de fiches interactives premium au clic sur les produits et points d'information, avec ingrédients, bénéfices et bouton "Découvrir".
+- Ajustements responsive desktop, tablette et mobile sans modifier les autres pages du site.
+
+Fichiers modifiés :
+- `template-parts/page-evenement.php`
+- `style.css`
+- `js/main.js`
+- `CHANGELOG.md`
+
+Corrections de bugs :
+- Suppression des styles et animations liés à l'ancien faux pot CSS.
+- Correction des zones cliquables des produits afin que les images internes ne captent pas le clic.
+- Vérification JavaScript : `js/main.js` valide avec `node --check`.
+- Vérification Git : `git diff --check` sans erreur.
+- Test navigateur local non exécuté : `cosmethique.local` ne répondait pas depuis l'environnement de travail au moment du contrôle.
+
 ## 2026-09-05 11:00 - Corrections finales du Hero Botanica et du header d'accueil
 
 Résumé :

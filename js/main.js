@@ -3563,16 +3563,20 @@ Thomas Bernard`,
     const eventPage = document.querySelector('[data-event-page]');
     if (eventPage) {
         const eventProduct = eventPage.querySelector('[data-event-product]');
+        const eventOpenProduct = eventPage.querySelector('[data-event-open-product]');
         const eventStage = eventPage.querySelector('[data-event-stage]');
         const countdown = eventPage.querySelector('[data-event-countdown]');
         const slider = eventPage.querySelector('[data-event-slider]');
         const lightbox = eventPage.querySelector('[data-event-lightbox]');
         const lightboxContent = eventPage.querySelector('[data-event-lightbox-content]');
         const hotspotCard = eventPage.querySelector('[data-event-hotspot-card]');
-        const hotspotTitle = eventPage.querySelector('[data-event-hotspot-title]');
-        const hotspotText = eventPage.querySelector('[data-event-hotspot-text]');
+        const hotspotTitle = hotspotCard?.querySelector('[data-event-hotspot-title]');
+        const hotspotText = hotspotCard?.querySelector('[data-event-hotspot-text]');
+        const hotspotIngredients = hotspotCard?.querySelector('[data-event-hotspot-ingredients]');
+        const hotspotBenefits = hotspotCard?.querySelector('[data-event-hotspot-benefits]');
+        const hotspotLink = hotspotCard?.querySelector('[data-event-hotspot-link]');
 
-        const revealEventItems = eventPage.querySelectorAll('.event-hero-copy, .event-hero-stage, .event-slider-section, .event-card, .event-timeline article, .event-experience-section, .event-gallery button, .event-reservation-card, .event-video-card');
+        const revealEventItems = eventPage.querySelectorAll('.event-hero-copy, .event-hero-stage, .event-collection-product, .event-slider-section, .event-card, .event-timeline article, .event-experience-section, .event-gallery button, .event-reservation-card, .event-video-card');
         revealEventItems.forEach((item, index) => {
             item.classList.add('motion-reveal');
             item.style.setProperty('--reveal-delay', `${Math.min(index * 55, 420)}ms`);
@@ -3611,24 +3615,23 @@ Thomas Bernard`,
             });
         }
 
-        const openEventProduct = () => {
+        const openEventProduct = (shouldTrack = true) => {
             if (!eventProduct || !eventStage) {
                 return;
             }
 
             eventProduct.classList.add('is-open');
             eventStage.classList.add('is-unlocked');
-            pushTrackingEvent('view_promotion', {
-                cta_name: 'collection_botanica_3d_open'
-            });
+            if (shouldTrack) {
+                pushTrackingEvent('view_promotion', {
+                    cta_name: 'collection_botanica_3d_open'
+                });
+            }
         };
 
-        eventProduct?.addEventListener('click', openEventProduct);
-        eventProduct?.addEventListener('keydown', (event) => {
-            if (event.key === 'Enter' || event.key === ' ') {
-                event.preventDefault();
-                openEventProduct();
-            }
+        eventOpenProduct?.addEventListener('click', (event) => {
+            event.stopPropagation();
+            openEventProduct(true);
         });
 
         if (eventStage && eventProduct && !prefersReducedMotion) {
@@ -3636,30 +3639,75 @@ Thomas Bernard`,
                 const rect = eventStage.getBoundingClientRect();
                 const x = (event.clientX - rect.left) / rect.width - 0.5;
                 const y = (event.clientY - rect.top) / rect.height - 0.5;
-                eventProduct.style.setProperty('--event-rotate-y', `${x * 9}deg`);
-                eventProduct.style.setProperty('--event-rotate-x', `${y * -7}deg`);
-            });
 
-            let spin = 0;
-            window.setInterval(() => {
-                if (!eventProduct.classList.contains('is-open')) {
-                    return;
-                }
-                spin = (spin + 1.2) % 360;
-                eventProduct.style.setProperty('--event-spin', `${spin}deg`);
-            }, 80);
+                eventProduct.style.setProperty('--event-rotate-y', `${x * 5}deg`);
+                eventProduct.style.setProperty('--event-rotate-x', `${y * -4}deg`);
+
+                eventPage.querySelectorAll('.event-collection-product').forEach((product, index) => {
+                    const intensity = 6 + (index * 1.5);
+                    product.style.setProperty('--event-parallax-x', `${x * intensity}px`);
+                    product.style.setProperty('--event-parallax-y', `${y * intensity * -1}px`);
+                });
+            });
         }
 
-        eventPage.querySelectorAll('[data-event-hotspot]').forEach((button) => {
-            button.addEventListener('click', () => {
-                if (!hotspotCard || !hotspotTitle || !hotspotText) {
-                    return;
-                }
+        window.setTimeout(() => {
+            openEventProduct(false);
+        }, prefersReducedMotion ? 0 : 1250);
 
-                hotspotTitle.textContent = button.dataset.eventHotspotTitle || button.textContent.trim();
-                hotspotText.textContent = button.dataset.eventHotspotText || '';
-                hotspotCard.hidden = false;
-            });
+        const showEventHotspotCard = (button) => {
+            if (!hotspotCard || !hotspotTitle || !hotspotText) {
+                return;
+            }
+
+            openEventProduct(false);
+            hotspotTitle.textContent = button.dataset.eventHotspotTitle || button.textContent.trim();
+            hotspotText.textContent = button.dataset.eventHotspotText || '';
+            if (hotspotIngredients) {
+                hotspotIngredients.textContent = button.dataset.eventHotspotIngredients || '';
+            }
+            if (hotspotBenefits) {
+                hotspotBenefits.textContent = button.dataset.eventHotspotBenefits || '';
+            }
+            if (hotspotLink && button.dataset.eventHotspotUrl) {
+                hotspotLink.setAttribute('href', button.dataset.eventHotspotUrl);
+            }
+            hotspotCard.hidden = false;
+        };
+
+        let lastEventHotspotButton = null;
+        let lastEventHotspotTime = 0;
+        const handleEventHotspotInteraction = (event, directButton = null) => {
+            const target = event.target instanceof Element ? event.target : null;
+            const button = directButton || target?.closest('[data-event-hotspot]');
+            if (!button || !eventPage.contains(button)) {
+                return;
+            }
+
+            const now = Date.now();
+            if (button === lastEventHotspotButton && now - lastEventHotspotTime < 320) {
+                if (event.cancelable) {
+                    event.preventDefault();
+                }
+                event.stopPropagation();
+                return;
+            }
+
+            lastEventHotspotButton = button;
+            lastEventHotspotTime = now;
+            if (event.cancelable) {
+                event.preventDefault();
+            }
+            event.stopPropagation();
+            showEventHotspotCard(button);
+        };
+
+        eventPage.addEventListener('pointerup', handleEventHotspotInteraction);
+        eventPage.addEventListener('click', handleEventHotspotInteraction);
+
+        eventPage.querySelectorAll('[data-event-hotspot]').forEach((button) => {
+            button.addEventListener('pointerup', (event) => handleEventHotspotInteraction(event, button));
+            button.addEventListener('click', (event) => handleEventHotspotInteraction(event, button));
         });
 
         eventPage.querySelector('[data-event-hotspot-close]')?.addEventListener('click', () => {
@@ -3683,10 +3731,26 @@ Thomas Bernard`,
                 const hours = Math.floor((distance % 86400000) / 3600000);
                 const minutes = Math.floor((distance % 3600000) / 60000);
                 const seconds = Math.floor((distance % 60000) / 1000);
-                if (parts.days) parts.days.textContent = String(days).padStart(2, '0');
-                if (parts.hours) parts.hours.textContent = String(hours).padStart(2, '0');
-                if (parts.minutes) parts.minutes.textContent = String(minutes).padStart(2, '0');
-                if (parts.seconds) parts.seconds.textContent = String(seconds).padStart(2, '0');
+                const setCountdownPart = (element, value) => {
+                    if (!element) {
+                        return;
+                    }
+
+                    const nextValue = String(value).padStart(2, '0');
+                    if (element.textContent === nextValue) {
+                        return;
+                    }
+
+                    element.textContent = nextValue;
+                    element.classList.remove('is-ticking');
+                    void element.offsetWidth;
+                    element.classList.add('is-ticking');
+                };
+
+                setCountdownPart(parts.days, days);
+                setCountdownPart(parts.hours, hours);
+                setCountdownPart(parts.minutes, minutes);
+                setCountdownPart(parts.seconds, seconds);
             };
 
             updateCountdown();
