@@ -2,6 +2,30 @@
 
 Toutes les interventions sur le thème doivent être sauvegardées et documentées ici.
 
+## 2026-09-07 15:50 - Reprise Événement Botanica : vraie interaction et CSS final
+
+Résumé :
+- Reprise stricte de la page Événement pour supprimer le système refusé basé sur image/popup.
+- Reconstruction de l’expérience du pot Botanica en éléments HTML/CSS indépendants : pot, couvercle, crème, fumée, particules, halo et lumière dorée.
+- Révélation progressive des produits Botanica autour du pot après ouverture : Sérum, Huile, Masque, Baume et Coffret.
+- Ajout d’une fiche produit premium inline au clic sur chaque produit du Hero, avec prix, description, ingrédients et bouton d’ajout au panier.
+- Remplacement de l’ancienne section "Expérience 3D" par une boutique Botanica réelle avec 6 produits, prix, badges, découverte produit et ajout panier.
+- Correction des règles CSS mal fermées qui empêchaient la grille responsive et l’affichage des produits révélés de fonctionner correctement.
+
+Fichiers modifiés :
+- `template-parts/page-evenement.php`
+- `style.css`
+- `js/main.js`
+- `CHANGELOG.md`
+
+Corrections de bugs :
+- Suppression confirmée des anciens sélecteurs liés à l’image géante, au drawer/popup et à la lightbox.
+- Correction de l’opacité des produits révélés autour du pot.
+- Correction de la grille Botanica : 4 colonnes desktop, 2 tablette, 1 mobile.
+- Vérification PHP : `template-parts/page-evenement.php` sans erreur de syntaxe.
+- Vérification JavaScript : `js/main.js` valide avec `node --check`.
+- Vérification navigateur : pot ouvrable, produits révélés, panneau produit fonctionnel, ajout au panier testé, aucun débordement horizontal.
+
 ## 2026-09-07 01:07 - Page Événement Botanica : interaction, boutique et panier
 
 Résumé :

@@ -3567,31 +3567,32 @@ Thomas Bernard`,
         const eventStage = eventPage.querySelector('[data-event-stage]');
         const countdown = eventPage.querySelector('[data-event-countdown]');
         const slider = eventPage.querySelector('[data-event-slider]');
-        const lightbox = eventPage.querySelector('[data-event-lightbox]');
-        const lightboxContent = eventPage.querySelector('[data-event-lightbox-content]');
-        const hotspotCard = eventPage.querySelector('[data-event-hotspot-card]');
-        const hotspotTitle = hotspotCard?.querySelector('[data-event-hotspot-title]');
-        const hotspotText = hotspotCard?.querySelector('[data-event-hotspot-text]');
-        const hotspotIngredients = hotspotCard?.querySelector('[data-event-hotspot-ingredients]');
-        const hotspotBenefits = hotspotCard?.querySelector('[data-event-hotspot-benefits]');
-        const hotspotLink = hotspotCard?.querySelector('[data-event-hotspot-link]');
-        const productModal = eventPage.querySelector('[data-event-product-modal]');
-        const productModalImage = productModal?.querySelector('[data-event-product-modal-image]');
-        const productModalGallery = productModal?.querySelector('[data-event-product-modal-gallery]');
-        const productModalBadge = productModal?.querySelector('[data-event-product-modal-badge]');
-        const productModalTitle = productModal?.querySelector('[data-event-product-modal-title]');
-        const productModalDescription = productModal?.querySelector('[data-event-product-modal-description]');
-        const productModalIngredients = productModal?.querySelector('[data-event-product-modal-ingredients]');
-        const productModalBenefits = productModal?.querySelector('[data-event-product-modal-benefits]');
-        const productModalUsage = productModal?.querySelector('[data-event-product-modal-usage]');
-        const productModalPrice = productModal?.querySelector('[data-event-product-modal-price]');
-        const productModalQuantity = productModal?.querySelector('[data-event-product-quantity]');
-        const productModalAdd = productModal?.querySelector('[data-event-product-add]');
-        const eventCollectionItems = eventPage.querySelectorAll('.event-collection-product');
+        const heroProductCard = eventPage.querySelector('[data-event-hero-product-card]');
+        const heroProductImage = heroProductCard?.querySelector('[data-event-hero-product-image]');
+        const heroProductBadge = heroProductCard?.querySelector('[data-event-hero-product-badge]');
+        const heroProductTitle = heroProductCard?.querySelector('[data-event-hero-product-title]');
+        const heroProductDescription = heroProductCard?.querySelector('[data-event-hero-product-description]');
+        const heroProductIngredients = heroProductCard?.querySelector('[data-event-hero-product-ingredients]');
+        const heroProductBenefits = heroProductCard?.querySelector('[data-event-hero-product-benefits]');
+        const heroProductPrice = heroProductCard?.querySelector('[data-event-hero-product-price]');
+        const heroProductAdd = heroProductCard?.querySelector('[data-event-hero-product-add]');
+        const productPanel = eventPage.querySelector('[data-event-product-panel]');
+        const productPanelImage = productPanel?.querySelector('[data-event-product-panel-image]');
+        const productPanelGallery = productPanel?.querySelector('[data-event-product-panel-gallery]');
+        const productPanelBadge = productPanel?.querySelector('[data-event-product-panel-badge]');
+        const productPanelTitle = productPanel?.querySelector('[data-event-product-panel-title]');
+        const productPanelDescription = productPanel?.querySelector('[data-event-product-panel-description]');
+        const productPanelIngredients = productPanel?.querySelector('[data-event-product-panel-ingredients]');
+        const productPanelBenefits = productPanel?.querySelector('[data-event-product-panel-benefits]');
+        const productPanelUsage = productPanel?.querySelector('[data-event-product-panel-usage]');
+        const productPanelPrice = productPanel?.querySelector('[data-event-product-panel-price]');
+        const productPanelQuantity = productPanel?.querySelector('[data-event-product-quantity]');
+        const productPanelAdd = productPanel?.querySelector('[data-event-product-add]');
+        const eventCollectionItems = eventPage.querySelectorAll('.event-orbit-product');
         let activeEventProductCard = null;
         let eventProductOpeningTimer = null;
 
-        const revealEventItems = eventPage.querySelectorAll('.event-hero-copy, .event-hero-stage, .event-slider-section, .event-card, .event-timeline article, .event-botanica-shop-section, .event-botanica-card, .event-gallery button, .event-reservation-card, .event-video-card');
+        const revealEventItems = eventPage.querySelectorAll('.event-hero-copy, .event-hero-stage, .event-slider-section, .event-card, .event-timeline article, .event-botanica-shop-section, .event-botanica-card, .event-gallery figure, .event-reservation-card, .event-reservation-note');
         revealEventItems.forEach((item, index) => {
             item.classList.add('motion-reveal');
             item.style.setProperty('--reveal-delay', `${Math.min(index * 55, 420)}ms`);
@@ -3648,68 +3649,30 @@ Thomas Bernard`,
                 eventStage.classList.add('is-unlocked');
                 eventCollectionItems.forEach((product) => {
                     product.classList.add('is-revealed');
-                    product.style.opacity = '1';
-                    product.style.pointerEvents = 'auto';
-                    product.style.transform = 'translate3d(var(--event-parallax-x, 0px), var(--event-parallax-y, 0px), var(--event-depth, 0px)) rotateY(var(--event-product-rotate, 0deg)) scale(1)';
                 });
                 return;
             }
-
-            const mainProduct = eventProduct.querySelector('.event-main-product');
-            const closedLayer = eventProduct.querySelector('.event-main-product-closed');
-            const openLayer = eventProduct.querySelector('.event-main-product-open');
 
             window.clearTimeout(eventProductOpeningTimer);
             if (replay) {
                 eventProduct.classList.remove('is-open', 'is-opening');
                 eventCollectionItems.forEach((product) => {
                     product.classList.remove('is-revealed');
-                    product.style.opacity = '';
-                    product.style.pointerEvents = '';
-                    product.style.transform = '';
                 });
-                if (closedLayer) {
-                    closedLayer.style.opacity = '';
-                    closedLayer.style.transform = '';
-                }
-                if (openLayer) {
-                    openLayer.style.opacity = '';
-                    openLayer.style.transform = '';
-                }
-                if (mainProduct) {
-                    mainProduct.style.pointerEvents = '';
-                }
                 void eventProduct.offsetWidth;
             }
 
             eventProduct.classList.add('is-opening');
             eventStage.classList.add('is-unlocked');
-            if (mainProduct) {
-                mainProduct.style.opacity = '1';
-            }
             eventProductOpeningTimer = window.setTimeout(() => {
                 eventProduct.classList.add('is-open');
                 eventProduct.classList.remove('is-opening');
-                if (closedLayer) {
-                    closedLayer.style.opacity = '0';
-                    closedLayer.style.transform = 'translate3d(-60px, -70px, -120px) rotateZ(-9deg) scale(0.68)';
-                }
-                if (openLayer) {
-                    openLayer.style.opacity = '1';
-                    openLayer.style.transform = 'translate3d(0, 0, 130px) rotateX(0deg) scale(1.04)';
-                }
-                if (mainProduct) {
-                    mainProduct.style.pointerEvents = 'none';
-                }
                 eventCollectionItems.forEach((product, index) => {
                     window.setTimeout(() => {
                         product.classList.add('is-revealed');
-                        product.style.opacity = '1';
-                        product.style.pointerEvents = 'auto';
-                        product.style.transform = 'translate3d(var(--event-parallax-x, 0px), var(--event-parallax-y, 0px), var(--event-depth, 0px)) rotateY(var(--event-product-rotate, 0deg)) scale(1)';
                     }, prefersReducedMotion ? 0 : index * 90);
                 });
-            }, prefersReducedMotion ? 0 : 1050);
+            }, prefersReducedMotion ? 0 : 900);
 
             if (shouldTrack) {
                 pushTrackingEvent('view_promotion', {
@@ -3733,7 +3696,7 @@ Thomas Bernard`,
                 eventProduct.style.setProperty('--event-rotate-y', `${x * 5}deg`);
                 eventProduct.style.setProperty('--event-rotate-x', `${y * -4}deg`);
 
-                eventPage.querySelectorAll('.event-collection-product').forEach((product, index) => {
+                eventPage.querySelectorAll('.event-orbit-product').forEach((product, index) => {
                     const intensity = 6 + (index * 1.5);
                     product.style.setProperty('--event-parallax-x', `${x * intensity}px`);
                     product.style.setProperty('--event-parallax-y', `${y * intensity * -1}px`);
@@ -3741,37 +3704,86 @@ Thomas Bernard`,
             });
         }
 
-        const showEventHotspotCard = (button) => {
-            if (!hotspotCard || !hotspotTitle || !hotspotText) {
+        const fillEventProductLink = (link, card, quantity = 1) => {
+            if (!link || !card) {
+                return;
+            }
+
+            const productId = card.dataset.eventProductId || '';
+            const addUrl = card.dataset.eventAddUrl || card.dataset.eventProductUrl || '#';
+            const price = card.dataset.eventProductPrice || '';
+
+            link.dataset.baseAddUrl = addUrl;
+            link.dataset.product_id = productId;
+            link.dataset.quantity = String(quantity);
+            link.dataset.trackingItemQuantity = String(quantity);
+            link.dataset.trackingItemId = productId;
+            link.dataset.trackingItemName = card.dataset.eventProductTitle || '';
+            link.dataset.trackingItemCategory = 'Collection Botanica';
+            link.dataset.trackingItemPrice = price.replace(/[^\d.,]/g, '').replace(',', '.');
+            link.setAttribute('href', addUrl);
+            link.classList.toggle('ajax_add_to_cart', Boolean(productId));
+            link.classList.toggle('add_to_cart_button', Boolean(productId));
+        };
+
+        const showHeroProductCard = (card) => {
+            if (!heroProductCard || !card) {
                 return;
             }
 
             openEventProduct(false);
-            hotspotTitle.textContent = button.dataset.eventHotspotTitle || button.textContent.trim();
-            hotspotText.textContent = button.dataset.eventHotspotText || '';
-            if (hotspotIngredients) {
-                hotspotIngredients.textContent = button.dataset.eventHotspotIngredients || '';
+            if (heroProductImage) {
+                heroProductImage.src = card.dataset.eventProductImage || '';
+                heroProductImage.alt = card.dataset.eventProductTitle || '';
             }
-            if (hotspotBenefits) {
-                hotspotBenefits.textContent = button.dataset.eventHotspotBenefits || '';
+            if (heroProductBadge) {
+                heroProductBadge.textContent = card.dataset.eventProductBadge || '';
             }
-            if (hotspotLink && button.dataset.eventHotspotUrl) {
-                hotspotLink.setAttribute('href', button.dataset.eventHotspotUrl);
+            if (heroProductTitle) {
+                heroProductTitle.textContent = card.dataset.eventProductTitle || '';
             }
-            hotspotCard.hidden = false;
+            if (heroProductDescription) {
+                heroProductDescription.textContent = card.dataset.eventProductDescription || '';
+            }
+            if (heroProductIngredients) {
+                heroProductIngredients.textContent = card.dataset.eventProductIngredients || '';
+            }
+            if (heroProductBenefits) {
+                heroProductBenefits.textContent = card.dataset.eventProductBenefits || '';
+            }
+            if (heroProductPrice) {
+                heroProductPrice.textContent = card.dataset.eventProductPrice || '';
+            }
+            fillEventProductLink(heroProductAdd, card);
+            heroProductCard.hidden = false;
+            heroProductCard.classList.add('is-visible');
+            heroProductCard.querySelector('[data-event-hero-product-close]')?.focus?.();
+
+            pushTrackingEvent('view_item', {
+                item_id: card.dataset.eventProductId || '',
+                item_name: card.dataset.eventProductTitle || '',
+                category: 'Collection Botanica',
+                price: Number((card.dataset.eventProductPrice || '').replace(/[^\d.,]/g, '').replace(',', '.')) || 0,
+                currency: trackingCurrency
+            });
         };
 
-        let lastEventHotspotButton = null;
-        let lastEventHotspotTime = 0;
-        const handleEventHotspotInteraction = (event, directButton = null) => {
+        let lastHeroProductButton = null;
+        let lastHeroProductOpenTime = 0;
+        const handleHeroProductOpen = (event, directButton = null) => {
+            if (event.type === 'keydown' && !['Enter', ' '].includes(event.key)) {
+                return;
+            }
+
             const target = event.target instanceof Element ? event.target : null;
-            const button = directButton || target?.closest('[data-event-hotspot]');
+            const button = directButton || target?.closest('[data-event-hero-product-open]');
+
             if (!button || !eventPage.contains(button)) {
                 return;
             }
 
             const now = Date.now();
-            if (button === lastEventHotspotButton && now - lastEventHotspotTime < 320) {
+            if (button === lastHeroProductButton && now - lastHeroProductOpenTime < 320) {
                 if (event.cancelable) {
                     event.preventDefault();
                 }
@@ -3779,27 +3791,22 @@ Thomas Bernard`,
                 return;
             }
 
-            lastEventHotspotButton = button;
-            lastEventHotspotTime = now;
-            if (event.cancelable) {
-                event.preventDefault();
-            }
+            lastHeroProductButton = button;
+            lastHeroProductOpenTime = now;
+            event.preventDefault();
             event.stopPropagation();
-            showEventHotspotCard(button);
+            showHeroProductCard(button);
         };
 
-        eventPage.addEventListener('pointerup', handleEventHotspotInteraction);
-        eventPage.addEventListener('click', handleEventHotspotInteraction);
-
-        eventPage.querySelectorAll('[data-event-hotspot]').forEach((button) => {
-            button.addEventListener('pointerup', (event) => handleEventHotspotInteraction(event, button));
-            button.addEventListener('click', (event) => handleEventHotspotInteraction(event, button));
+        eventPage.addEventListener('click', handleHeroProductOpen, true);
+        eventPage.addEventListener('pointerup', handleHeroProductOpen, true);
+        eventPage.querySelectorAll('[data-event-hero-product-open]').forEach((button) => {
+            button.addEventListener('keydown', (event) => handleHeroProductOpen(event, button));
         });
 
-        eventPage.querySelector('[data-event-hotspot-close]')?.addEventListener('click', () => {
-            if (hotspotCard) {
-                hotspotCard.hidden = true;
-            }
+        heroProductCard?.querySelector('[data-event-hero-product-close]')?.addEventListener('click', () => {
+            heroProductCard.hidden = true;
+            heroProductCard.classList.remove('is-visible');
         });
 
         const buildEventAddUrl = (baseUrl, quantity) => {
@@ -3818,33 +3825,32 @@ Thomas Bernard`,
 
         const setEventProductQuantity = (quantity) => {
             const nextQuantity = Math.max(1, Math.min(12, Number(quantity) || 1));
-            if (productModalQuantity) {
-                productModalQuantity.value = String(nextQuantity);
+            if (productPanelQuantity) {
+                productPanelQuantity.value = String(nextQuantity);
             }
-            if (productModalAdd) {
-                productModalAdd.dataset.quantity = String(nextQuantity);
-                productModalAdd.dataset.trackingItemQuantity = String(nextQuantity);
-                productModalAdd.setAttribute('href', buildEventAddUrl(productModalAdd.dataset.baseAddUrl || productModalAdd.href, nextQuantity));
+            if (productPanelAdd) {
+                productPanelAdd.dataset.quantity = String(nextQuantity);
+                productPanelAdd.dataset.trackingItemQuantity = String(nextQuantity);
+                productPanelAdd.setAttribute('href', buildEventAddUrl(productPanelAdd.dataset.baseAddUrl || productPanelAdd.href, nextQuantity));
             }
         };
 
-        const closeEventProductModal = () => {
-            if (!productModal) {
+        const closeEventProductPanel = () => {
+            if (!productPanel) {
                 return;
             }
 
-            productModal.hidden = true;
-            productModal.setAttribute('aria-hidden', 'true');
-            document.body.classList.remove('event-modal-open');
+            productPanel.hidden = true;
+            productPanel.classList.remove('is-visible');
             activeEventProductCard = null;
         };
 
         const renderEventProductGallery = (images = [], title = '') => {
-            if (!productModalGallery || !productModalImage) {
+            if (!productPanelGallery || !productPanelImage) {
                 return;
             }
 
-            productModalGallery.innerHTML = '';
+            productPanelGallery.innerHTML = '';
             images.filter(Boolean).slice(0, 3).forEach((imageUrl) => {
                 const thumbButton = document.createElement('button');
                 const thumbImage = document.createElement('img');
@@ -3855,14 +3861,14 @@ Thomas Bernard`,
                 thumbImage.loading = 'lazy';
                 thumbButton.appendChild(thumbImage);
                 thumbButton.addEventListener('click', () => {
-                    productModalImage.src = imageUrl;
+                    productPanelImage.src = imageUrl;
                 });
-                productModalGallery.appendChild(thumbButton);
+                productPanelGallery.appendChild(thumbButton);
             });
         };
 
-        const openEventProductModal = (card) => {
-            if (!card || !productModal) {
+        const openEventProductPanel = (card) => {
+            if (!card || !productPanel) {
                 return;
             }
 
@@ -3883,52 +3889,42 @@ Thomas Bernard`,
                 gallery = [image];
             }
 
-            if (productModalTitle) {
-                productModalTitle.textContent = title;
+            if (productPanelTitle) {
+                productPanelTitle.textContent = title;
             }
-            if (productModalDescription) {
-                productModalDescription.textContent = card.dataset.eventProductDescription || '';
+            if (productPanelDescription) {
+                productPanelDescription.textContent = card.dataset.eventProductDescription || '';
             }
-            if (productModalIngredients) {
-                productModalIngredients.textContent = card.dataset.eventProductIngredients || '';
+            if (productPanelIngredients) {
+                productPanelIngredients.textContent = card.dataset.eventProductIngredients || '';
             }
-            if (productModalBenefits) {
-                productModalBenefits.textContent = card.dataset.eventProductBenefits || '';
+            if (productPanelBenefits) {
+                productPanelBenefits.textContent = card.dataset.eventProductBenefits || '';
             }
-            if (productModalUsage) {
-                productModalUsage.textContent = card.dataset.eventProductUsage || '';
+            if (productPanelUsage) {
+                productPanelUsage.textContent = card.dataset.eventProductUsage || '';
             }
-            if (productModalPrice) {
-                productModalPrice.textContent = price;
+            if (productPanelPrice) {
+                productPanelPrice.textContent = price;
             }
-            if (productModalBadge) {
-                productModalBadge.textContent = card.dataset.eventProductBadge || '';
+            if (productPanelBadge) {
+                productPanelBadge.textContent = card.dataset.eventProductBadge || '';
             }
-            if (productModalImage) {
-                productModalImage.src = image;
-                productModalImage.alt = title;
+            if (productPanelImage) {
+                productPanelImage.src = image;
+                productPanelImage.alt = title;
             }
 
             renderEventProductGallery(gallery, title);
 
-            if (productModalAdd) {
-                const addUrl = card.dataset.eventAddUrl || card.dataset.eventProductUrl || '#';
-                productModalAdd.dataset.baseAddUrl = addUrl;
-                productModalAdd.dataset.product_id = productId;
-                productModalAdd.dataset.trackingItemId = productId;
-                productModalAdd.dataset.trackingItemName = title;
-                productModalAdd.dataset.trackingItemCategory = 'Collection Botanica';
-                productModalAdd.dataset.trackingItemPrice = price.replace(/[^\d.,]/g, '').replace(',', '.');
-                productModalAdd.classList.toggle('ajax_add_to_cart', Boolean(productId));
-                productModalAdd.classList.toggle('add_to_cart_button', Boolean(productId));
-            }
+            fillEventProductLink(productPanelAdd, card);
 
             setEventProductQuantity(1);
-            productModal.hidden = false;
-            productModal.setAttribute('aria-hidden', 'false');
-            document.body.classList.add('event-modal-open');
+            productPanel.hidden = false;
+            productPanel.classList.add('is-visible');
+            productPanel.scrollIntoView({ behavior: prefersReducedMotion ? 'auto' : 'smooth', block: 'center' });
 
-            const focusTarget = productModal.querySelector('.event-product-close');
+            const focusTarget = productPanel.querySelector('.event-product-close');
             focusTarget?.focus?.();
 
             pushTrackingEvent('view_item', {
@@ -3948,24 +3944,24 @@ Thomas Bernard`,
                 }
 
                 event.preventDefault();
-                openEventProductModal(card);
+                openEventProductPanel(card);
             });
         });
 
-        productModal?.querySelectorAll('[data-event-product-modal-close]').forEach((button) => {
-            button.addEventListener('click', closeEventProductModal);
+        productPanel?.querySelectorAll('[data-event-product-panel-close]').forEach((button) => {
+            button.addEventListener('click', closeEventProductPanel);
         });
 
-        productModal?.querySelector('[data-event-product-qty-minus]')?.addEventListener('click', () => {
-            setEventProductQuantity(Number(productModalQuantity?.value || 1) - 1);
+        productPanel?.querySelector('[data-event-product-qty-minus]')?.addEventListener('click', () => {
+            setEventProductQuantity(Number(productPanelQuantity?.value || 1) - 1);
         });
 
-        productModal?.querySelector('[data-event-product-qty-plus]')?.addEventListener('click', () => {
-            setEventProductQuantity(Number(productModalQuantity?.value || 1) + 1);
+        productPanel?.querySelector('[data-event-product-qty-plus]')?.addEventListener('click', () => {
+            setEventProductQuantity(Number(productPanelQuantity?.value || 1) + 1);
         });
 
-        productModalQuantity?.addEventListener('input', () => {
-            setEventProductQuantity(productModalQuantity.value);
+        productPanelQuantity?.addEventListener('input', () => {
+            setEventProductQuantity(productPanelQuantity.value);
         });
 
         const updateEventCartBadges = (quantity) => {
@@ -3996,7 +3992,7 @@ Thomas Bernard`,
             const productId = link?.dataset?.product_id || '';
             const quantity = Math.max(1, Number(link?.dataset?.quantity || 1) || 1);
 
-            if (!productId) {
+            if (!productId || productId === '0') {
                 return;
             }
 
@@ -4052,15 +4048,19 @@ Thomas Bernard`,
                 return;
             }
 
+            if (!link.dataset.product_id || link.dataset.product_id === '0') {
+                return;
+            }
+
             event.preventDefault();
             event.stopPropagation();
             addEventProductToCart(link);
         }, true);
 
         document.addEventListener('keydown', (event) => {
-            if (event.key === 'Escape' && productModal && !productModal.hidden) {
+            if (event.key === 'Escape' && productPanel && !productPanel.hidden) {
                 const previousCard = activeEventProductCard;
-                closeEventProductModal();
+                closeEventProductPanel();
                 previousCard?.querySelector('[data-event-product-open]')?.focus?.();
             }
         });
@@ -4112,52 +4112,6 @@ Thomas Bernard`,
 
         eventPage.querySelector('[data-event-slider-next]')?.addEventListener('click', () => {
             slider?.scrollBy({ left: 360, behavior: prefersReducedMotion ? 'auto' : 'smooth' });
-        });
-
-        const openLightbox = (content) => {
-            if (!lightbox || !lightboxContent) {
-                return;
-            }
-
-            lightboxContent.innerHTML = '';
-            lightboxContent.appendChild(content);
-            lightbox.hidden = false;
-            document.body.classList.add('modal-open');
-        };
-
-        eventPage.querySelectorAll('[data-event-gallery-image]').forEach((button) => {
-            button.addEventListener('click', () => {
-                const image = document.createElement('img');
-                image.src = button.dataset.eventGalleryImage || '';
-                image.alt = '';
-                openLightbox(image);
-            });
-        });
-
-        eventPage.querySelectorAll('[data-event-video-open]').forEach((button) => {
-            button.addEventListener('click', () => {
-                const panel = document.createElement('div');
-                panel.className = 'event-lightbox-content';
-                panel.innerHTML = '<strong>Botanica</strong><span>La bande-annonce immersive sera disponible lors du lancement.</span>';
-                openLightbox(panel);
-                pushTrackingEvent('cta_product', {
-                    cta_name: 'event_trailer'
-                });
-            });
-        });
-
-        eventPage.querySelector('[data-event-lightbox-close]')?.addEventListener('click', () => {
-            if (lightbox) {
-                lightbox.hidden = true;
-                document.body.classList.remove('modal-open');
-            }
-        });
-
-        lightbox?.addEventListener('click', (event) => {
-            if (event.target === lightbox) {
-                lightbox.hidden = true;
-                document.body.classList.remove('modal-open');
-            }
         });
 
         eventPage.querySelector('[data-event-form]')?.addEventListener('submit', (event) => {

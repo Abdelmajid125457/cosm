@@ -53,56 +53,7 @@ $event_cards = array(
     ),
 );
 
-$hotspots = array(
-    array( 'key' => 'sauge', 'label' => __( 'Complexe Botanica', 'theme-perso' ), 'text' => __( 'Un assemblage d’actifs naturels précieux imaginé pour signer la nouvelle routine Botanica.', 'theme-perso' ) ),
-    array( 'key' => 'camomille', 'label' => __( 'Notes florales', 'theme-perso' ), 'text' => __( 'Une signature sensorielle délicate, lumineuse et enveloppante, pensée pour l’expérience de lancement.', 'theme-perso' ) ),
-    array( 'key' => 'texture', 'label' => __( 'Texture', 'theme-perso' ), 'text' => __( 'Crème onctueuse, fini confortable et absorption progressive.', 'theme-perso' ) ),
-    array( 'key' => 'packaging', 'label' => __( 'Packaging', 'theme-perso' ), 'text' => __( 'Pot bleu nuit, détails dorés et identité Cosm’Éthique premium.', 'theme-perso' ) ),
-    array( 'key' => 'fabrication', 'label' => __( 'Fabrication', 'theme-perso' ), 'text' => __( 'Une formulation responsable pensée pour concilier plaisir, exigence et naturalité.', 'theme-perso' ) ),
-);
-
-$collection_products = array(
-    array(
-        'key'         => 'serum',
-        'name'        => __( 'Sérum Botanica', 'theme-perso' ),
-        'description' => __( 'Un concentré lumineux imaginé pour révéler l’éclat de la peau.', 'theme-perso' ),
-        'ingredients' => __( 'Sauge, complexe floral, vitamine E.', 'theme-perso' ),
-        'benefits'    => __( 'Éclat, confort et peau visiblement plus uniforme.', 'theme-perso' ),
-        'image'       => $botanica_suite,
-    ),
-    array(
-        'key'         => 'huile',
-        'name'        => __( 'Huile Botanica', 'theme-perso' ),
-        'description' => __( 'Une huile précieuse au fini satiné pour nourrir sans alourdir.', 'theme-perso' ),
-        'ingredients' => __( 'Huiles botaniques, jojoba, amande douce.', 'theme-perso' ),
-        'benefits'    => __( 'Nutrition, souplesse et reflets délicats.', 'theme-perso' ),
-        'image'       => $botanica_suite,
-    ),
-    array(
-        'key'         => 'brume',
-        'name'        => __( 'Brume Botanica', 'theme-perso' ),
-        'description' => __( 'Une brume fraîche pour envelopper la peau d’un voile botanique.', 'theme-perso' ),
-        'ingredients' => __( 'Camomille, eau florale, actifs apaisants.', 'theme-perso' ),
-        'benefits'    => __( 'Fraîcheur, apaisement et rituel sensoriel.', 'theme-perso' ),
-        'image'       => $botanica_suite,
-    ),
-    array(
-        'key'         => 'masque',
-        'name'        => __( 'Masque Botanica', 'theme-perso' ),
-        'description' => __( 'Un masque onctueux pour offrir un moment de soin profond.', 'theme-perso' ),
-        'ingredients' => __( 'Argile fine, calendula, beurre de cacao.', 'theme-perso' ),
-        'benefits'    => __( 'Peau douce, ressourcée et lumineuse.', 'theme-perso' ),
-        'image'       => $botanica_suite,
-    ),
-    array(
-        'key'         => 'coffret',
-        'name'        => __( 'Coffret Botanica', 'theme-perso' ),
-        'description' => __( 'La routine complète Botanica réunie dans un coffret édition limitée.', 'theme-perso' ),
-        'ingredients' => __( 'Routine visage, corps et rituel sensoriel.', 'theme-perso' ),
-        'benefits'    => __( 'Découverte complète, cadeau premium et expérience de lancement.', 'theme-perso' ),
-        'image'       => $botanica_preview,
-    ),
-);
+$hero_product_keys = array( 'serum', 'huile', 'masque', 'baume', 'coffret' );
 
 $botanica_shop_products = array();
 $botanica_catalog       = function_exists( 'theme_perso_botanica_collection_products' ) ? theme_perso_botanica_collection_products() : array();
@@ -131,6 +82,15 @@ foreach ( $botanica_catalog as $product_title => $product_data ) {
         )
     );
 }
+
+$hero_collection_products = array_values(
+    array_filter(
+        $botanica_shop_products,
+        static function( $product ) use ( $hero_product_keys ) {
+            return in_array( $product['key'], $hero_product_keys, true );
+        }
+    )
+);
 
 $timeline = array(
     __( 'Inscription', 'theme-perso' ),
@@ -185,54 +145,69 @@ $gallery = array(
         </div>
 
         <div class="event-hero-stage" data-event-stage>
-            <div class="event-collection-scene" data-event-product aria-label="<?php esc_attr_e( 'Scène interactive de la Collection Botanica', 'theme-perso' ); ?>">
+            <div class="event-collection-scene event-collection-scene--interactive" data-event-product aria-label="<?php esc_attr_e( 'Scène interactive de la Collection Botanica', 'theme-perso' ); ?>">
                 <span class="event-cinematic-ray event-cinematic-ray--one" aria-hidden="true"></span>
                 <span class="event-cinematic-ray event-cinematic-ray--two" aria-hidden="true"></span>
                 <span class="event-cinematic-glow" aria-hidden="true"></span>
                 <span class="event-cinematic-dust" aria-hidden="true"></span>
                 <span class="event-edition-seal" aria-hidden="true"><?php esc_html_e( 'Édition limitée', 'theme-perso' ); ?></span>
 
-                <button class="event-main-product" type="button" data-event-open-product aria-label="<?php esc_attr_e( 'Ouvrir le pot de crème Botanica', 'theme-perso' ); ?>">
-                    <span class="event-main-product-closed" aria-hidden="true">
-                        <img src="<?php echo esc_url( $botanica_suite ); ?>" alt="" loading="eager" fetchpriority="high">
+                <button class="event-real-pot" type="button" data-event-open-product aria-label="<?php esc_attr_e( 'Ouvrir le pot de crème Botanica', 'theme-perso' ); ?>">
+                    <span class="event-real-pot-shadow" aria-hidden="true"></span>
+                    <span class="event-real-pot-lid" aria-hidden="true">
+                        <span class="event-real-pot-lid-top"></span>
+                        <span class="event-real-pot-lid-rim"></span>
+                        <span class="event-real-pot-lid-mark">BOTANICA</span>
                     </span>
-                    <span class="event-main-product-open">
-                        <img src="<?php echo esc_url( $botanica_reveal ); ?>" alt="<?php esc_attr_e( 'Pot de crème Botanica ouvert avec couvercle métallique doré', 'theme-perso' ); ?>" loading="eager" fetchpriority="high">
+                    <span class="event-real-pot-cream" aria-hidden="true">
+                        <span></span>
                     </span>
-                    <span class="event-main-product-shine" aria-hidden="true"></span>
-                    <span class="event-main-product-lid-glow" aria-hidden="true"></span>
-                    <span class="event-main-product-cream-light" aria-hidden="true"></span>
-                    <span class="event-main-product-smoke" aria-hidden="true">
+                    <span class="event-real-pot-jar" aria-hidden="true">
+                        <span class="event-real-pot-glass"></span>
+                        <span class="event-real-pot-label">
+                            <small><?php esc_html_e( 'COSM’ÉTHIQUE', 'theme-perso' ); ?></small>
+                            <strong>BOTANICA</strong>
+                            <em><?php esc_html_e( 'Crème botanique', 'theme-perso' ); ?></em>
+                        </span>
+                        <span class="event-real-pot-reflection"></span>
+                    </span>
+                    <span class="event-real-pot-light" aria-hidden="true"></span>
+                    <span class="event-real-pot-particles" aria-hidden="true">
+                        <?php for ( $i = 0; $i < 10; $i++ ) : ?>
+                            <i></i>
+                        <?php endfor; ?>
+                    </span>
+                    <span class="event-real-pot-smoke" aria-hidden="true">
                         <i></i>
                         <i></i>
                         <i></i>
                     </span>
                 </button>
 
-                <div class="event-collection-products" aria-label="<?php esc_attr_e( 'Produits de la Collection Botanica', 'theme-perso' ); ?>">
-                    <?php foreach ( $collection_products as $product ) : ?>
+                <div class="event-orbit-products" aria-label="<?php esc_attr_e( 'Produits de la Collection Botanica', 'theme-perso' ); ?>">
+                    <?php foreach ( $hero_collection_products as $product ) : ?>
+                        <?php $gallery_json = wp_json_encode( array_values( $product['gallery'] ) ); ?>
                         <button
-                            class="event-collection-product event-collection-product--<?php echo esc_attr( $product['key'] ); ?>"
+                            class="event-orbit-product event-orbit-product--<?php echo esc_attr( $product['key'] ); ?>"
                             type="button"
-                            data-event-hotspot
-                            data-event-hotspot-title="<?php echo esc_attr( $product['name'] ); ?>"
-                            data-event-hotspot-text="<?php echo esc_attr( $product['description'] ); ?>"
-                            data-event-hotspot-ingredients="<?php echo esc_attr( $product['ingredients'] ); ?>"
-                            data-event-hotspot-benefits="<?php echo esc_attr( $product['benefits'] ); ?>"
-                            data-event-hotspot-url="<?php echo esc_url( home_url( '/boutique/' ) ); ?>"
+                            data-event-product-card
+                            data-event-hero-product-open
+                            data-event-product-title="<?php echo esc_attr( $product['title'] ); ?>"
+                            data-event-product-description="<?php echo esc_attr( $product['description'] ); ?>"
+                            data-event-product-ingredients="<?php echo esc_attr( $product['ingredients'] ); ?>"
+                            data-event-product-benefits="<?php echo esc_attr( $product['benefits'] ); ?>"
+                            data-event-product-usage="<?php echo esc_attr( $product['usage'] ); ?>"
+                            data-event-product-price="<?php echo esc_attr( wp_strip_all_tags( $product['price_html'] ) ); ?>"
+                            data-event-product-badge="<?php echo esc_attr( $product['badge'] ); ?>"
+                            data-event-product-image="<?php echo esc_url( $product['image'] ); ?>"
+                            data-event-product-gallery="<?php echo esc_attr( $gallery_json ); ?>"
+                            data-event-add-url="<?php echo esc_url( $product['add_url'] ); ?>"
+                            data-event-product-id="<?php echo esc_attr( (string) $product['product_id'] ); ?>"
                         >
-                            <span class="event-collection-product-media">
-                                <img src="<?php echo esc_url( $product['image'] ); ?>" alt="<?php echo esc_attr( $product['name'] ); ?>" loading="eager">
+                            <span class="event-orbit-product-media">
+                                <img src="<?php echo esc_url( $product['image'] ); ?>" alt="<?php echo esc_attr( $product['title'] ); ?>" loading="eager">
                             </span>
-                            <span class="event-collection-product-label"><?php echo esc_html( $product['name'] ); ?></span>
-                        </button>
-                    <?php endforeach; ?>
-                </div>
-
-                <div class="event-hotspots" aria-label="<?php esc_attr_e( 'Détails interactifs de la Collection Botanica', 'theme-perso' ); ?>">
-                    <?php foreach ( $hotspots as $index => $hotspot ) : ?>
-                        <button class="event-hotspot event-hotspot--<?php echo esc_attr( $hotspot['key'] ); ?>" type="button" data-event-hotspot="<?php echo esc_attr( (string) $index ); ?>" data-event-hotspot-title="<?php echo esc_attr( $hotspot['label'] ); ?>" data-event-hotspot-text="<?php echo esc_attr( $hotspot['text'] ); ?>" data-event-hotspot-ingredients="<?php esc_attr_e( 'Actifs botaniques sélectionnés', 'theme-perso' ); ?>" data-event-hotspot-benefits="<?php esc_attr_e( 'Expérience sensorielle, naturalité et exigence premium.', 'theme-perso' ); ?>" data-event-hotspot-url="<?php echo esc_url( home_url( '/boutique/' ) ); ?>">
-                            <span>+</span><?php echo esc_html( $hotspot['label'] ); ?>
+                            <span class="event-orbit-product-label"><?php echo esc_html( $product['title'] ); ?></span>
                         </button>
                     <?php endforeach; ?>
                 </div>
@@ -240,15 +215,18 @@ $gallery = array(
 
             <p class="event-discover-hint"><?php esc_html_e( 'Cliquez sur le pot pour révéler la collection', 'theme-perso' ); ?></p>
 
-            <article class="event-hotspot-card" data-event-hotspot-card hidden>
-                <button type="button" data-event-hotspot-close aria-label="<?php esc_attr_e( 'Fermer la fiche', 'theme-perso' ); ?>">×</button>
-                <p class="event-kicker" data-event-hotspot-title></p>
-                <p data-event-hotspot-text></p>
+            <article class="event-hero-product-card" data-event-hero-product-card hidden>
+                <button type="button" data-event-hero-product-close aria-label="<?php esc_attr_e( 'Fermer la fiche produit', 'theme-perso' ); ?>">×</button>
+                <span data-event-hero-product-badge></span>
+                <img src="" alt="" loading="lazy" data-event-hero-product-image>
+                <h2 data-event-hero-product-title></h2>
+                <strong data-event-hero-product-price></strong>
+                <p data-event-hero-product-description></p>
                 <dl>
-                    <div><dt><?php esc_html_e( 'Ingrédients', 'theme-perso' ); ?></dt><dd data-event-hotspot-ingredients></dd></div>
-                    <div><dt><?php esc_html_e( 'Bénéfices', 'theme-perso' ); ?></dt><dd data-event-hotspot-benefits></dd></div>
+                    <div><dt><?php esc_html_e( 'Ingrédients', 'theme-perso' ); ?></dt><dd data-event-hero-product-ingredients></dd></div>
+                    <div><dt><?php esc_html_e( 'Bénéfices', 'theme-perso' ); ?></dt><dd data-event-hero-product-benefits></dd></div>
                 </dl>
-                <a class="button button-primary" href="<?php echo esc_url( home_url( '/boutique/' ) ); ?>" data-event-hotspot-link><?php esc_html_e( 'Découvrir', 'theme-perso' ); ?></a>
+                <a class="button button-primary add_to_cart_button ajax_add_to_cart" href="<?php echo esc_url( home_url( '/boutique/' ) ); ?>" data-event-hero-product-add data-product_id="" data-quantity="1"><?php esc_html_e( 'Ajouter au panier', 'theme-perso' ); ?></a>
             </article>
         </div>
     </section>
@@ -350,35 +328,32 @@ $gallery = array(
                 </article>
             <?php endforeach; ?>
         </div>
-    </section>
 
-    <aside class="event-product-drawer" data-event-product-modal hidden aria-hidden="true">
-        <button class="event-product-drawer-overlay" type="button" data-event-product-modal-close aria-label="<?php esc_attr_e( 'Fermer la fiche produit', 'theme-perso' ); ?>"></button>
-        <article class="event-product-panel" role="dialog" aria-modal="true" aria-labelledby="event-product-panel-title">
-            <button class="event-product-close" type="button" data-event-product-modal-close aria-label="<?php esc_attr_e( 'Fermer', 'theme-perso' ); ?>">×</button>
+        <article class="event-product-panel" data-event-product-panel hidden aria-labelledby="event-product-panel-title">
+            <button class="event-product-close" type="button" data-event-product-panel-close aria-label="<?php esc_attr_e( 'Fermer la fiche produit', 'theme-perso' ); ?>">×</button>
             <div class="event-product-panel-media">
-                <span data-event-product-modal-badge></span>
-                <img src="<?php echo esc_url( $botanica_reveal ); ?>" alt="" loading="lazy" data-event-product-modal-image>
-                <div class="event-product-panel-gallery" data-event-product-modal-gallery></div>
+                <span data-event-product-panel-badge></span>
+                <img src="<?php echo esc_url( $botanica_reveal ); ?>" alt="" loading="lazy" data-event-product-panel-image>
+                <div class="event-product-panel-gallery" data-event-product-panel-gallery></div>
             </div>
             <div class="event-product-panel-content">
                 <p class="event-kicker"><?php esc_html_e( 'Collection Botanica', 'theme-perso' ); ?></p>
-                <h2 id="event-product-panel-title" data-event-product-modal-title></h2>
-                <p class="event-product-panel-description" data-event-product-modal-description></p>
-                <strong class="event-product-panel-price" data-event-product-modal-price></strong>
+                <h2 id="event-product-panel-title" data-event-product-panel-title></h2>
+                <p class="event-product-panel-description" data-event-product-panel-description></p>
+                <strong class="event-product-panel-price" data-event-product-panel-price></strong>
 
                 <dl class="event-product-panel-details">
                     <div>
                         <dt><?php esc_html_e( 'Ingrédients clés', 'theme-perso' ); ?></dt>
-                        <dd data-event-product-modal-ingredients></dd>
+                        <dd data-event-product-panel-ingredients></dd>
                     </div>
                     <div>
                         <dt><?php esc_html_e( 'Bénéfices', 'theme-perso' ); ?></dt>
-                        <dd data-event-product-modal-benefits></dd>
+                        <dd data-event-product-panel-benefits></dd>
                     </div>
                     <div>
                         <dt><?php esc_html_e( 'Conseils d’utilisation', 'theme-perso' ); ?></dt>
-                        <dd data-event-product-modal-usage></dd>
+                        <dd data-event-product-panel-usage></dd>
                     </div>
                 </dl>
 
@@ -394,7 +369,7 @@ $gallery = array(
                 </div>
             </div>
         </article>
-    </aside>
+    </section>
 
     <section class="event-gallery-section" aria-labelledby="event-gallery-title">
         <div class="event-section-heading">
@@ -403,9 +378,9 @@ $gallery = array(
         </div>
         <div class="event-gallery">
             <?php foreach ( $gallery as $image ) : ?>
-                <button type="button" data-event-gallery-image="<?php echo esc_url( $image ); ?>">
+                <figure>
                     <img src="<?php echo esc_url( $image ); ?>" alt="" loading="lazy">
-                </button>
+                </figure>
             <?php endforeach; ?>
         </div>
     </section>
@@ -426,14 +401,13 @@ $gallery = array(
                 <p class="event-form-status" aria-live="polite"></p>
             </form>
         </div>
-        <div class="event-video-card">
+        <div class="event-reservation-note" aria-label="<?php esc_attr_e( 'Informations événement Botanica', 'theme-perso' ); ?>">
             <img src="<?php echo esc_url( $botanica_preview ); ?>" alt="" loading="lazy">
-            <button type="button" data-event-video-open><?php esc_html_e( 'Lire la vidéo', 'theme-perso' ); ?></button>
+            <div>
+                <p class="event-kicker"><?php esc_html_e( 'Accès privilégié', 'theme-perso' ); ?></p>
+                <h2><?php esc_html_e( 'Une immersion privée dans l’univers Botanica.', 'theme-perso' ); ?></h2>
+                <p><?php esc_html_e( 'Découvrez les textures, les actifs et les rituels de la collection dans un cadre confidentiel pensé pour une expérience sensorielle complète.', 'theme-perso' ); ?></p>
+            </div>
         </div>
     </section>
-
-    <div class="event-lightbox" data-event-lightbox hidden>
-        <button type="button" data-event-lightbox-close aria-label="<?php esc_attr_e( 'Fermer', 'theme-perso' ); ?>">×</button>
-        <div data-event-lightbox-content></div>
-    </div>
 </div>
