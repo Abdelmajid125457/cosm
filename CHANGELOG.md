@@ -859,3 +859,23 @@ Corrections de bugs :
 
 Archive :
 - `.cosmethique-backups/snapshots/v2026-08-03_23-06-53.tar.gz`
+
+## 2026-09-07 22:03:11 CEST - Expérience cinématique Botanica accueil vers événement
+
+Fichiers modifiés :
+- `front-page.php`
+- `template-parts/page-evenement.php`
+- `js/main.js`
+- `style.css`
+- `css/mobile-responsive.css`
+
+Changements réalisés :
+- Remplacement du visuel image du Hero accueil par un pot Botanica interactif construit avec des éléments animables séparés.
+- Ajout d'une séquence au clic : montée du pot, ouverture du couvercle, apparition de la crème, fumée, particules dorées, lumière plein écran puis transition vers la page Événement.
+- Ajout d'une arrivée dédiée sur la page Événement avec pot déjà ouvert et produits Botanica révélés, sans rejouer l'animation d'ouverture.
+- Suppression du fond image multi-produits sur le Hero accueil afin que le pot soit le seul produit visible.
+- Ajustement responsive mobile du Hero Botanica pour éviter les chevauchements et conserver un bloc produit dans le flux normal.
+
+Corrections de bugs :
+- Correction du risque de transition trop brutale entre l'accueil et la page Événement.
+- Correction du chevauchement mobile entre le pot Botanica et le compte à rebours.

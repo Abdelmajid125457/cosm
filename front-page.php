@@ -12,11 +12,12 @@ $visage_url  = function_exists( 'theme_perso_get_shop_collection_url' ) ? theme_
 $corps_url   = function_exists( 'theme_perso_get_shop_collection_url' ) ? theme_perso_get_shop_collection_url( 'corps', $shop_url ) : $shop_url;
 $cheveux_url = function_exists( 'theme_perso_get_shop_collection_url' ) ? theme_perso_get_shop_collection_url( 'cheveux', $shop_url ) : $shop_url;
 $event_url   = function_exists( 'theme_perso_footer_page_url' ) ? theme_perso_footer_page_url( 'evenement' ) : home_url( '/evenement/' );
+$event_transition_url = add_query_arg( 'botanica', 'reveal', $event_url );
 ?>
 
 <main id="primary" class="site-main front-page">
     <section class="hero-section hero-section--botanica" aria-labelledby="hero-title" data-home-botanica-hero>
-        <div class="botanica-hero-bg" style="background-image: url('<?php echo esc_url( get_template_directory_uri() . '/assets/hero/cosmethique-botanica-campaign-suite.png' ); ?>');" aria-hidden="true"></div>
+        <div class="botanica-hero-bg" aria-hidden="true"></div>
         <div class="botanica-hero-glow" aria-hidden="true"></div>
         <div class="botanica-hero-light" aria-hidden="true"></div>
         <div class="botanica-hero-reflection" aria-hidden="true"></div>
@@ -33,7 +34,7 @@ $event_url   = function_exists( 'theme_perso_footer_page_url' ) ? theme_perso_fo
             <p>Une routine botanique premium inspirée des actifs naturels les plus précieux.</p>
 
             <div class="hero-actions">
-                <a class="button button-primary" href="<?php echo esc_url( $event_url ); ?>">Découvrir le lancement</a>
+                <a class="button button-primary" href="<?php echo esc_url( $event_transition_url ); ?>" data-botanica-launch-trigger data-botanica-target="<?php echo esc_url( $event_transition_url ); ?>">Découvrir le lancement</a>
             </div>
 
             <div class="botanica-event-meta" aria-label="<?php esc_attr_e( 'Date et lieu du lancement Botanica', 'theme-perso' ); ?>">
@@ -51,17 +52,48 @@ $event_url   = function_exists( 'theme_perso_footer_page_url' ) ? theme_perso_fo
                 </div>
             </div>
         </div>
-        <figure class="botanica-product-showcase" data-home-botanica-showcase aria-hidden="true">
+        <div class="botanica-product-showcase botanica-product-showcase--pot" data-home-botanica-showcase>
             <span class="botanica-launch-ray"></span>
             <span class="botanica-showcase-halo"></span>
             <span class="botanica-showcase-dust"></span>
             <span class="botanica-showcase-leaf botanica-showcase-leaf--one"></span>
             <span class="botanica-showcase-leaf botanica-showcase-leaf--two"></span>
-            <span class="botanica-showcase-frame">
-                <img src="<?php echo esc_url( get_template_directory_uri() . '/assets/hero/cosmethique-botanica-launch-preview.png' ); ?>" alt="" loading="eager" fetchpriority="high">
-                <span class="botanica-showcase-shine"></span>
-            </span>
-        </figure>
+            <div class="event-collection-scene botanica-home-pot-scene" data-botanica-home-pot-scene aria-label="<?php esc_attr_e( 'Pot de crème Botanica interactif', 'theme-perso' ); ?>">
+                <button class="event-real-pot botanica-home-pot" type="button" data-botanica-launch-trigger data-botanica-target="<?php echo esc_url( $event_transition_url ); ?>" aria-label="<?php esc_attr_e( 'Ouvrir le pot Botanica et découvrir le lancement', 'theme-perso' ); ?>">
+                    <span class="event-real-pot-shadow" aria-hidden="true"></span>
+                    <span class="event-real-pot-lid" aria-hidden="true">
+                        <span class="event-real-pot-lid-top"></span>
+                        <span class="event-real-pot-lid-rim"></span>
+                        <span class="event-real-pot-lid-mark">BOTANICA</span>
+                    </span>
+                    <span class="event-real-pot-cream" aria-hidden="true">
+                        <span></span>
+                    </span>
+                    <span class="event-real-pot-jar" aria-hidden="true">
+                        <span class="event-real-pot-glass"></span>
+                        <span class="event-real-pot-label">
+                            <small><?php esc_html_e( 'COSM’ÉTHIQUE', 'theme-perso' ); ?></small>
+                            <strong>BOTANICA</strong>
+                            <em><?php esc_html_e( 'Crème botanique', 'theme-perso' ); ?></em>
+                        </span>
+                        <span class="event-real-pot-reflection"></span>
+                    </span>
+                    <span class="event-real-pot-light" aria-hidden="true"></span>
+                    <span class="event-real-pot-particles" aria-hidden="true">
+                        <?php for ( $i = 0; $i < 10; $i++ ) : ?>
+                            <i></i>
+                        <?php endfor; ?>
+                    </span>
+                    <span class="event-real-pot-smoke" aria-hidden="true">
+                        <i></i>
+                        <i></i>
+                        <i></i>
+                    </span>
+                </button>
+                <span class="botanica-pot-hint" aria-hidden="true"><?php esc_html_e( 'Cliquez pour révéler Botanica', 'theme-perso' ); ?></span>
+            </div>
+            <span class="botanica-portal-light" data-botanica-portal aria-hidden="true"></span>
+        </div>
     </section>
 
     <section class="home-univers-section" aria-labelledby="home-univers-title">

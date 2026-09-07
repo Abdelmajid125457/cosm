@@ -1704,8 +1704,10 @@
     .front-page .hero-section--botanica {
         min-height: auto !important;
         display: flex !important;
+        flex-direction: column !important;
         align-items: stretch;
-        padding: 54px 16px 350px !important;
+        gap: 30px;
+        padding: 54px 16px 46px !important;
         color: #FFFFFF;
     }
 
@@ -1790,14 +1792,44 @@
     }
 
     .front-page .botanica-product-showcase {
-        left: 50%;
+        position: relative;
+        left: auto;
         right: auto;
         top: auto;
-        bottom: 78px;
+        bottom: auto;
         width: min(94vw, 520px);
-        height: 245px;
+        height: 392px;
         min-height: 0;
-        transform: translate3d(calc(-50% + var(--botanica-showcase-x, 0px)), calc(var(--botanica-showcase-y, 0px) + var(--botanica-showcase-scroll-y, 0px)), 0);
+        flex: 0 0 auto;
+        margin: 4px auto 0;
+        transform: translate3d(var(--botanica-showcase-x, 0px), calc(var(--botanica-showcase-y, 0px) + var(--botanica-showcase-scroll-y, 0px)), 0);
+    }
+
+    .front-page .hero-section--botanica.is-cinematic .botanica-product-showcase--pot {
+        transform: translate3d(var(--botanica-showcase-x, 0px), calc(var(--botanica-showcase-y, 0px) + var(--botanica-showcase-scroll-y, 0px) - 12px), 0) scale(1.03);
+    }
+
+    .front-page .hero-section--botanica.is-portal .botanica-product-showcase--pot {
+        transform: translate3d(var(--botanica-showcase-x, 0px), calc(var(--botanica-showcase-y, 0px) + var(--botanica-showcase-scroll-y, 0px) - 18px), 0) scale(1.1);
+    }
+
+    .front-page .botanica-home-pot-scene {
+        min-height: 100%;
+        transform: rotateX(var(--event-rotate-x, 0deg)) rotateY(var(--event-rotate-y, 0deg));
+    }
+
+    .front-page .botanica-home-pot-scene .event-real-pot {
+        left: 50%;
+        bottom: 2%;
+        width: min(78vw, 340px);
+    }
+
+    .front-page .botanica-pot-hint {
+        left: 50%;
+        bottom: -2px;
+        max-width: calc(100vw - 42px);
+        font-size: 0.56rem;
+        white-space: nowrap;
     }
 
     .front-page .botanica-launch-ray {
@@ -1822,11 +1854,24 @@
 
 @media (max-width: 520px) {
     .front-page .hero-section--botanica {
-        padding-bottom: 315px !important;
+        padding-bottom: 42px !important;
     }
 
     .front-page .botanica-countdown div {
-        grid-template-columns: 1fr 1fr;
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+        gap: 4px;
+    }
+
+    .front-page .botanica-countdown {
+        padding: 12px 8px;
+    }
+
+    .front-page .botanica-countdown span {
+        font-size: 0.55rem;
+    }
+
+    .front-page .botanica-countdown strong {
+        font-size: clamp(1.12rem, 5vw, 1.55rem);
     }
 
     .front-page .botanica-event-meta span {
@@ -1839,8 +1884,18 @@
     }
 
     .front-page .botanica-product-showcase {
-        bottom: 70px;
+        bottom: auto;
         width: calc(100% - 24px);
-        height: 215px;
+        height: 368px;
+    }
+
+    .front-page .botanica-home-pot-scene .event-real-pot {
+        width: min(74vw, 270px);
+        bottom: 4%;
+    }
+
+    .front-page .botanica-pot-hint {
+        bottom: -6px;
+        transform: translateX(-50%) scale(0.92);
     }
 }

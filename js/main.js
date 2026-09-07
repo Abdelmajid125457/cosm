@@ -3456,7 +3456,72 @@ Thomas Bernard`,
         const homeHeroBg = botanicaHomeHero.querySelector('.botanica-hero-bg');
         const homeHeroGlow = botanicaHomeHero.querySelector('.botanica-hero-glow');
         const homeProductShowcase = botanicaHomeHero.querySelector('[data-home-botanica-showcase]');
+        const homePotScene = botanicaHomeHero.querySelector('[data-botanica-home-pot-scene]');
+        const homeLaunchTriggers = botanicaHomeHero.querySelectorAll('[data-botanica-launch-trigger]');
         const homeLimitedBadge = botanicaHomeHero.querySelector('.botanica-limited-badge');
+        let homeLaunchStarted = false;
+
+        const resolveBotanicaLaunchUrl = (rawUrl = '') => {
+            try {
+                const url = new URL(rawUrl || botanicaHomeHero.dataset.homeEventUrl || '/evenement/', window.location.href);
+                url.searchParams.set('botanica', 'reveal');
+                return url.toString();
+            } catch (error) {
+                return rawUrl || '/evenement/?botanica=reveal';
+            }
+        };
+
+        const startBotanicaJourney = (event, trigger) => {
+            if (event && event.type === 'click') {
+                if (event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) {
+                    return;
+                }
+                event.preventDefault();
+            }
+
+            if (homeLaunchStarted) {
+                return;
+            }
+
+            homeLaunchStarted = true;
+            const targetUrl = resolveBotanicaLaunchUrl(trigger?.dataset.botanicaTarget || trigger?.getAttribute?.('href'));
+
+            pushTrackingEvent('view_promotion', {
+                cta_name: 'botanica_home_reveal'
+            });
+
+            try {
+                window.sessionStorage.setItem('cosmethiqueBotanicaArrival', 'home');
+            } catch (error) {
+                // Session storage can be blocked in private contexts; the URL flag still carries the state.
+            }
+
+            if (prefersReducedMotion) {
+                botanicaHomeHero.classList.add('is-portal');
+                window.setTimeout(() => {
+                    window.location.assign(targetUrl);
+                }, 260);
+                return;
+            }
+
+            botanicaHomeHero.classList.add('is-cinematic');
+            homeProductShowcase?.classList.add('is-cinematic');
+            homePotScene?.classList.add('is-opening');
+
+            window.setTimeout(() => {
+                homePotScene?.classList.add('is-open');
+                homePotScene?.classList.remove('is-opening');
+            }, 820);
+
+            window.setTimeout(() => {
+                botanicaHomeHero.classList.add('is-portal');
+                homeProductShowcase?.classList.add('is-portal');
+            }, 1260);
+
+            window.setTimeout(() => {
+                window.location.assign(targetUrl);
+            }, 1980);
+        };
 
         if (window.gsap && !prefersReducedMotion) {
             window.gsap.from(botanicaHomeHero.querySelectorAll('.botanica-hero-content > *'), {
@@ -3495,6 +3560,10 @@ Thomas Bernard`,
                     homeProductShowcase.style.setProperty('--botanica-showcase-x', `${(x * -14).toFixed(2)}px`);
                     homeProductShowcase.style.setProperty('--botanica-showcase-y', `${(y * -10).toFixed(2)}px`);
                 }
+                if (homePotScene) {
+                    homePotScene.style.setProperty('--event-rotate-y', `${(x * 4).toFixed(2)}deg`);
+                    homePotScene.style.setProperty('--event-rotate-x', `${(y * -3).toFixed(2)}deg`);
+                }
             });
 
             botanicaHomeHero.addEventListener('pointerleave', () => {
@@ -3507,6 +3576,10 @@ Thomas Bernard`,
                 if (homeProductShowcase) {
                     homeProductShowcase.style.setProperty('--botanica-showcase-x', '0px');
                     homeProductShowcase.style.setProperty('--botanica-showcase-y', '0px');
+                }
+                if (homePotScene) {
+                    homePotScene.style.setProperty('--event-rotate-y', '0deg');
+                    homePotScene.style.setProperty('--event-rotate-x', '0deg');
                 }
             });
 
@@ -3524,6 +3597,10 @@ Thomas Bernard`,
             updateHomeHeroScroll();
             window.addEventListener('scroll', updateHomeHeroScroll, { passive: true });
         }
+
+        homeLaunchTriggers.forEach((trigger) => {
+            trigger.addEventListener('click', (event) => startBotanicaJourney(event, trigger));
+        });
 
         if (homeCountdown) {
             const homeEventTime = new Date(homeCountdown.dataset.countdownDate || '').getTime();
@@ -3565,6 +3642,7 @@ Thomas Bernard`,
         const eventProduct = eventPage.querySelector('[data-event-product]');
         const eventOpenProduct = eventPage.querySelector('[data-event-open-product]');
         const eventStage = eventPage.querySelector('[data-event-stage]');
+        const eventArrival = eventPage.dataset.eventArrival || '';
         const countdown = eventPage.querySelector('[data-event-countdown]');
         const slider = eventPage.querySelector('[data-event-slider]');
         const heroProductCard = eventPage.querySelector('[data-event-hero-product-card]');
@@ -3680,6 +3758,41 @@ Thomas Bernard`,
                 });
             }
         };
+
+        const hydrateBotanicaArrival = () => {
+            let cameFromHome = eventArrival === 'home';
+            try {
+                cameFromHome = cameFromHome || window.sessionStorage.getItem('cosmethiqueBotanicaArrival') === 'home';
+                window.sessionStorage.removeItem('cosmethiqueBotanicaArrival');
+            } catch (error) {
+                // The query parameter is enough when session storage is unavailable.
+            }
+
+            if (!cameFromHome || !eventProduct || !eventStage) {
+                return;
+            }
+
+            window.clearTimeout(eventProductOpeningTimer);
+            eventPage.classList.add('is-arriving-from-home');
+            eventProduct.classList.remove('is-opening');
+            eventProduct.classList.add('is-open', 'is-unlocked', 'is-arrived-open');
+            eventStage.classList.add('is-unlocked', 'is-visible');
+            eventCollectionItems.forEach((product) => {
+                product.classList.add('is-revealed');
+            });
+
+            try {
+                const url = new URL(window.location.href);
+                if (url.searchParams.get('botanica') === 'reveal') {
+                    url.searchParams.delete('botanica');
+                    window.history.replaceState({}, document.title, `${url.pathname}${url.search}${url.hash}`);
+                }
+            } catch (error) {
+                // Keeping the query string is harmless if URL parsing fails.
+            }
+        };
+
+        hydrateBotanicaArrival();
 
         eventOpenProduct?.addEventListener('click', (event) => {
             event.preventDefault();

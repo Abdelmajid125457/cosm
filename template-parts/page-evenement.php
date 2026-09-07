@@ -15,6 +15,8 @@ $asset = function( $folder, $file ) {
 
 $event_date = new DateTimeImmutable( '2026-10-15 18:00:00', wp_timezone() );
 $event_iso  = $event_date->format( DATE_ATOM );
+$botanica_arrival = isset( $_GET['botanica'] ) && ! is_array( $_GET['botanica'] ) ? sanitize_key( wp_unslash( $_GET['botanica'] ) ) : '';
+$arrive_from_home = 'reveal' === $botanica_arrival;
 $botanica_home    = $asset( 'hero', 'cosmethique-botanica-home-campaign.png' );
 $botanica_suite   = $asset( 'hero', 'cosmethique-botanica-campaign-suite.png' );
 $botanica_reveal  = $asset( 'hero', 'cosmethique-botanica-cream-reveal.png' );
@@ -109,7 +111,7 @@ $gallery = array(
 );
 ?>
 
-<div class="event-page" data-event-page>
+<div class="event-page<?php echo $arrive_from_home ? ' event-page--from-home' : ''; ?>" data-event-page data-event-arrival="<?php echo esc_attr( $arrive_from_home ? 'home' : 'direct' ); ?>">
     <section class="event-hero" aria-labelledby="event-title" style="--event-hero-bg: url('<?php echo esc_url( $botanica_home ); ?>');">
         <div class="event-hero-backdrop" aria-hidden="true"></div>
         <div class="event-particles" aria-hidden="true">
@@ -145,7 +147,7 @@ $gallery = array(
         </div>
 
         <div class="event-hero-stage" data-event-stage>
-            <div class="event-collection-scene event-collection-scene--interactive" data-event-product aria-label="<?php esc_attr_e( 'Scène interactive de la Collection Botanica', 'theme-perso' ); ?>">
+            <div class="event-collection-scene event-collection-scene--interactive<?php echo $arrive_from_home ? ' is-open is-unlocked is-arrived-open' : ''; ?>" data-event-product aria-label="<?php esc_attr_e( 'Scène interactive de la Collection Botanica', 'theme-perso' ); ?>">
                 <span class="event-cinematic-ray event-cinematic-ray--one" aria-hidden="true"></span>
                 <span class="event-cinematic-ray event-cinematic-ray--two" aria-hidden="true"></span>
                 <span class="event-cinematic-glow" aria-hidden="true"></span>
@@ -188,7 +190,7 @@ $gallery = array(
                     <?php foreach ( $hero_collection_products as $product ) : ?>
                         <?php $gallery_json = wp_json_encode( array_values( $product['gallery'] ) ); ?>
                         <button
-                            class="event-orbit-product event-orbit-product--<?php echo esc_attr( $product['key'] ); ?>"
+                            class="event-orbit-product event-orbit-product--<?php echo esc_attr( $product['key'] ); ?><?php echo $arrive_from_home ? ' is-revealed' : ''; ?>"
                             type="button"
                             data-event-product-card
                             data-event-hero-product-open
