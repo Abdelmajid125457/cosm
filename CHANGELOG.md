@@ -2,6 +2,29 @@
 
 Toutes les interventions sur le thème doivent être sauvegardées et documentées ici.
 
+## 2026-09-07 23:39 - Hero Accueil Botanica : pot premium interactif
+
+Résumé :
+- Refonte ciblée du Hero de la page d'accueil pour placer le pot Botanica au centre de l'expérience de lancement.
+- Réutilisation de l'asset HD Botanica déjà présent dans le thème afin de garder le même rendu premium que les pages produits.
+- Reconstruction du pot en calques indépendants : corps, couvercle, crème, reflets, halo, fumée et particules.
+- Ajout d'une séquence cinématique au clic : ouverture du couvercle, apparition de la crème, lumière dorée, effet portail puis transition vers la page Événement.
+- Préparation de la page Événement pour recevoir l'utilisateur avec le pot déjà ouvert et la collection révélée, sans rejouer l'ouverture.
+
+Fichiers modifiés :
+- `front-page.php`
+- `template-parts/page-evenement.php`
+- `style.css`
+- `CHANGELOG.md`
+
+Corrections de bugs :
+- Suppression de l'ancien pot simplifié dans le Hero d'accueil et dans le Hero Événement.
+- Correction de l'état initial du pot : fermé au chargement, crème masquée.
+- Vérification JavaScript : `js/main.js` valide avec `node --check`.
+- Vérification Git : `git diff --check` sans erreur.
+- Vérification navigateur : pot cliquable, animation déclenchée, redirection fluide vers `/evenement/`, page Événement chargée avec pot ouvert et 5 produits révélés.
+- Vérification responsive ciblée : iPhone 14 Pro Max, iPhone SE et iPad Mini sans débordement horizontal sur le Hero d'accueil.
+
 ## 2026-09-07 15:50 - Reprise Événement Botanica : vraie interaction et CSS final
 
 Résumé :

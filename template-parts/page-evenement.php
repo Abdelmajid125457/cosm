@@ -147,32 +147,21 @@ $gallery = array(
         </div>
 
         <div class="event-hero-stage" data-event-stage>
-            <div class="event-collection-scene event-collection-scene--interactive<?php echo $arrive_from_home ? ' is-open is-unlocked is-arrived-open' : ''; ?>" data-event-product aria-label="<?php esc_attr_e( 'Scène interactive de la Collection Botanica', 'theme-perso' ); ?>">
+            <div class="event-collection-scene event-collection-scene--interactive<?php echo $arrive_from_home ? ' is-open is-unlocked is-arrived-open' : ''; ?>" data-event-product style="--botanica-pot-asset: url('<?php echo esc_url( $botanica_reveal ); ?>');" aria-label="<?php esc_attr_e( 'Scène interactive de la Collection Botanica', 'theme-perso' ); ?>">
                 <span class="event-cinematic-ray event-cinematic-ray--one" aria-hidden="true"></span>
                 <span class="event-cinematic-ray event-cinematic-ray--two" aria-hidden="true"></span>
                 <span class="event-cinematic-glow" aria-hidden="true"></span>
                 <span class="event-cinematic-dust" aria-hidden="true"></span>
                 <span class="event-edition-seal" aria-hidden="true"><?php esc_html_e( 'Édition limitée', 'theme-perso' ); ?></span>
 
-                <button class="event-real-pot" type="button" data-event-open-product aria-label="<?php esc_attr_e( 'Ouvrir le pot de crème Botanica', 'theme-perso' ); ?>">
+                <button class="event-real-pot botanica-asset-pot" type="button" data-event-open-product aria-label="<?php esc_attr_e( 'Ouvrir le pot de crème Botanica', 'theme-perso' ); ?>">
                     <span class="event-real-pot-shadow" aria-hidden="true"></span>
-                    <span class="event-real-pot-lid" aria-hidden="true">
-                        <span class="event-real-pot-lid-top"></span>
-                        <span class="event-real-pot-lid-rim"></span>
-                        <span class="event-real-pot-lid-mark">BOTANICA</span>
-                    </span>
+                    <span class="event-real-pot-lid" aria-hidden="true"></span>
                     <span class="event-real-pot-cream" aria-hidden="true">
                         <span></span>
                     </span>
-                    <span class="event-real-pot-jar" aria-hidden="true">
-                        <span class="event-real-pot-glass"></span>
-                        <span class="event-real-pot-label">
-                            <small><?php esc_html_e( 'COSM’ÉTHIQUE', 'theme-perso' ); ?></small>
-                            <strong>BOTANICA</strong>
-                            <em><?php esc_html_e( 'Crème botanique', 'theme-perso' ); ?></em>
-                        </span>
-                        <span class="event-real-pot-reflection"></span>
-                    </span>
+                    <span class="event-real-pot-jar" aria-hidden="true"></span>
+                    <span class="event-real-pot-reflection" aria-hidden="true"></span>
                     <span class="event-real-pot-light" aria-hidden="true"></span>
                     <span class="event-real-pot-particles" aria-hidden="true">
                         <?php for ( $i = 0; $i < 10; $i++ ) : ?>

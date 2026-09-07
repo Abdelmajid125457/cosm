@@ -13,10 +13,11 @@ $corps_url   = function_exists( 'theme_perso_get_shop_collection_url' ) ? theme_
 $cheveux_url = function_exists( 'theme_perso_get_shop_collection_url' ) ? theme_perso_get_shop_collection_url( 'cheveux', $shop_url ) : $shop_url;
 $event_url   = function_exists( 'theme_perso_footer_page_url' ) ? theme_perso_footer_page_url( 'evenement' ) : home_url( '/evenement/' );
 $event_transition_url = add_query_arg( 'botanica', 'reveal', $event_url );
+$botanica_pot_asset = get_template_directory_uri() . '/assets/hero/cosmethique-botanica-cream-reveal.png';
 ?>
 
 <main id="primary" class="site-main front-page">
-    <section class="hero-section hero-section--botanica" aria-labelledby="hero-title" data-home-botanica-hero>
+    <section class="hero-section hero-section--botanica" aria-labelledby="hero-title" data-home-botanica-hero data-home-event-url="<?php echo esc_url( $event_transition_url ); ?>">
         <div class="botanica-hero-bg" aria-hidden="true"></div>
         <div class="botanica-hero-glow" aria-hidden="true"></div>
         <div class="botanica-hero-light" aria-hidden="true"></div>
@@ -58,26 +59,15 @@ $event_transition_url = add_query_arg( 'botanica', 'reveal', $event_url );
             <span class="botanica-showcase-dust"></span>
             <span class="botanica-showcase-leaf botanica-showcase-leaf--one"></span>
             <span class="botanica-showcase-leaf botanica-showcase-leaf--two"></span>
-            <div class="event-collection-scene botanica-home-pot-scene" data-botanica-home-pot-scene aria-label="<?php esc_attr_e( 'Pot de crème Botanica interactif', 'theme-perso' ); ?>">
-                <button class="event-real-pot botanica-home-pot" type="button" data-botanica-launch-trigger data-botanica-target="<?php echo esc_url( $event_transition_url ); ?>" aria-label="<?php esc_attr_e( 'Ouvrir le pot Botanica et découvrir le lancement', 'theme-perso' ); ?>">
+            <div class="event-collection-scene botanica-home-pot-scene" data-botanica-home-pot-scene style="--botanica-pot-asset: url('<?php echo esc_url( $botanica_pot_asset ); ?>');" aria-label="<?php esc_attr_e( 'Pot de crème Botanica interactif', 'theme-perso' ); ?>">
+                <button class="event-real-pot botanica-asset-pot botanica-home-pot" type="button" data-botanica-launch-trigger data-botanica-target="<?php echo esc_url( $event_transition_url ); ?>" aria-label="<?php esc_attr_e( 'Ouvrir le pot Botanica et découvrir le lancement', 'theme-perso' ); ?>">
                     <span class="event-real-pot-shadow" aria-hidden="true"></span>
-                    <span class="event-real-pot-lid" aria-hidden="true">
-                        <span class="event-real-pot-lid-top"></span>
-                        <span class="event-real-pot-lid-rim"></span>
-                        <span class="event-real-pot-lid-mark">BOTANICA</span>
-                    </span>
+                    <span class="event-real-pot-lid" aria-hidden="true"></span>
                     <span class="event-real-pot-cream" aria-hidden="true">
                         <span></span>
                     </span>
-                    <span class="event-real-pot-jar" aria-hidden="true">
-                        <span class="event-real-pot-glass"></span>
-                        <span class="event-real-pot-label">
-                            <small><?php esc_html_e( 'COSM’ÉTHIQUE', 'theme-perso' ); ?></small>
-                            <strong>BOTANICA</strong>
-                            <em><?php esc_html_e( 'Crème botanique', 'theme-perso' ); ?></em>
-                        </span>
-                        <span class="event-real-pot-reflection"></span>
-                    </span>
+                    <span class="event-real-pot-jar" aria-hidden="true"></span>
+                    <span class="event-real-pot-reflection" aria-hidden="true"></span>
                     <span class="event-real-pot-light" aria-hidden="true"></span>
                     <span class="event-real-pot-particles" aria-hidden="true">
                         <?php for ( $i = 0; $i < 10; $i++ ) : ?>
