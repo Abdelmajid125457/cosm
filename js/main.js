@@ -3575,8 +3575,23 @@ Thomas Bernard`,
         const hotspotIngredients = hotspotCard?.querySelector('[data-event-hotspot-ingredients]');
         const hotspotBenefits = hotspotCard?.querySelector('[data-event-hotspot-benefits]');
         const hotspotLink = hotspotCard?.querySelector('[data-event-hotspot-link]');
+        const productModal = eventPage.querySelector('[data-event-product-modal]');
+        const productModalImage = productModal?.querySelector('[data-event-product-modal-image]');
+        const productModalGallery = productModal?.querySelector('[data-event-product-modal-gallery]');
+        const productModalBadge = productModal?.querySelector('[data-event-product-modal-badge]');
+        const productModalTitle = productModal?.querySelector('[data-event-product-modal-title]');
+        const productModalDescription = productModal?.querySelector('[data-event-product-modal-description]');
+        const productModalIngredients = productModal?.querySelector('[data-event-product-modal-ingredients]');
+        const productModalBenefits = productModal?.querySelector('[data-event-product-modal-benefits]');
+        const productModalUsage = productModal?.querySelector('[data-event-product-modal-usage]');
+        const productModalPrice = productModal?.querySelector('[data-event-product-modal-price]');
+        const productModalQuantity = productModal?.querySelector('[data-event-product-quantity]');
+        const productModalAdd = productModal?.querySelector('[data-event-product-add]');
+        const eventCollectionItems = eventPage.querySelectorAll('.event-collection-product');
+        let activeEventProductCard = null;
+        let eventProductOpeningTimer = null;
 
-        const revealEventItems = eventPage.querySelectorAll('.event-hero-copy, .event-hero-stage, .event-collection-product, .event-slider-section, .event-card, .event-timeline article, .event-experience-section, .event-gallery button, .event-reservation-card, .event-video-card');
+        const revealEventItems = eventPage.querySelectorAll('.event-hero-copy, .event-hero-stage, .event-slider-section, .event-card, .event-timeline article, .event-botanica-shop-section, .event-botanica-card, .event-gallery button, .event-reservation-card, .event-video-card');
         revealEventItems.forEach((item, index) => {
             item.classList.add('motion-reveal');
             item.style.setProperty('--reveal-delay', `${Math.min(index * 55, 420)}ms`);
@@ -3611,17 +3626,91 @@ Thomas Bernard`,
                 opacity: 0,
                 duration: 1,
                 delay: 0.15,
-                ease: 'power3.out'
+                ease: 'power3.out',
+                clearProps: 'opacity,transform'
             });
         }
 
-        const openEventProduct = (shouldTrack = true) => {
+        if (eventStage) {
+            window.setTimeout(() => {
+                eventStage.style.opacity = '';
+                eventStage.style.transform = '';
+                eventStage.classList.add('is-visible');
+            }, prefersReducedMotion ? 0 : 1450);
+        }
+
+        const openEventProduct = (shouldTrack = true, replay = false) => {
             if (!eventProduct || !eventStage) {
                 return;
             }
 
-            eventProduct.classList.add('is-open');
+            if (eventProduct.classList.contains('is-open') && !replay) {
+                eventStage.classList.add('is-unlocked');
+                eventCollectionItems.forEach((product) => {
+                    product.classList.add('is-revealed');
+                    product.style.opacity = '1';
+                    product.style.pointerEvents = 'auto';
+                    product.style.transform = 'translate3d(var(--event-parallax-x, 0px), var(--event-parallax-y, 0px), var(--event-depth, 0px)) rotateY(var(--event-product-rotate, 0deg)) scale(1)';
+                });
+                return;
+            }
+
+            const mainProduct = eventProduct.querySelector('.event-main-product');
+            const closedLayer = eventProduct.querySelector('.event-main-product-closed');
+            const openLayer = eventProduct.querySelector('.event-main-product-open');
+
+            window.clearTimeout(eventProductOpeningTimer);
+            if (replay) {
+                eventProduct.classList.remove('is-open', 'is-opening');
+                eventCollectionItems.forEach((product) => {
+                    product.classList.remove('is-revealed');
+                    product.style.opacity = '';
+                    product.style.pointerEvents = '';
+                    product.style.transform = '';
+                });
+                if (closedLayer) {
+                    closedLayer.style.opacity = '';
+                    closedLayer.style.transform = '';
+                }
+                if (openLayer) {
+                    openLayer.style.opacity = '';
+                    openLayer.style.transform = '';
+                }
+                if (mainProduct) {
+                    mainProduct.style.pointerEvents = '';
+                }
+                void eventProduct.offsetWidth;
+            }
+
+            eventProduct.classList.add('is-opening');
             eventStage.classList.add('is-unlocked');
+            if (mainProduct) {
+                mainProduct.style.opacity = '1';
+            }
+            eventProductOpeningTimer = window.setTimeout(() => {
+                eventProduct.classList.add('is-open');
+                eventProduct.classList.remove('is-opening');
+                if (closedLayer) {
+                    closedLayer.style.opacity = '0';
+                    closedLayer.style.transform = 'translate3d(-60px, -70px, -120px) rotateZ(-9deg) scale(0.68)';
+                }
+                if (openLayer) {
+                    openLayer.style.opacity = '1';
+                    openLayer.style.transform = 'translate3d(0, 0, 130px) rotateX(0deg) scale(1.04)';
+                }
+                if (mainProduct) {
+                    mainProduct.style.pointerEvents = 'none';
+                }
+                eventCollectionItems.forEach((product, index) => {
+                    window.setTimeout(() => {
+                        product.classList.add('is-revealed');
+                        product.style.opacity = '1';
+                        product.style.pointerEvents = 'auto';
+                        product.style.transform = 'translate3d(var(--event-parallax-x, 0px), var(--event-parallax-y, 0px), var(--event-depth, 0px)) rotateY(var(--event-product-rotate, 0deg)) scale(1)';
+                    }, prefersReducedMotion ? 0 : index * 90);
+                });
+            }, prefersReducedMotion ? 0 : 1050);
+
             if (shouldTrack) {
                 pushTrackingEvent('view_promotion', {
                     cta_name: 'collection_botanica_3d_open'
@@ -3630,8 +3719,9 @@ Thomas Bernard`,
         };
 
         eventOpenProduct?.addEventListener('click', (event) => {
+            event.preventDefault();
             event.stopPropagation();
-            openEventProduct(true);
+            openEventProduct(true, true);
         });
 
         if (eventStage && eventProduct && !prefersReducedMotion) {
@@ -3650,10 +3740,6 @@ Thomas Bernard`,
                 });
             });
         }
-
-        window.setTimeout(() => {
-            openEventProduct(false);
-        }, prefersReducedMotion ? 0 : 1250);
 
         const showEventHotspotCard = (button) => {
             if (!hotspotCard || !hotspotTitle || !hotspotText) {
@@ -3713,6 +3799,269 @@ Thomas Bernard`,
         eventPage.querySelector('[data-event-hotspot-close]')?.addEventListener('click', () => {
             if (hotspotCard) {
                 hotspotCard.hidden = true;
+            }
+        });
+
+        const buildEventAddUrl = (baseUrl, quantity) => {
+            if (!baseUrl) {
+                return '#';
+            }
+
+            try {
+                const url = new URL(baseUrl, window.location.href);
+                url.searchParams.set('quantity', String(quantity));
+                return url.toString();
+            } catch (error) {
+                return baseUrl;
+            }
+        };
+
+        const setEventProductQuantity = (quantity) => {
+            const nextQuantity = Math.max(1, Math.min(12, Number(quantity) || 1));
+            if (productModalQuantity) {
+                productModalQuantity.value = String(nextQuantity);
+            }
+            if (productModalAdd) {
+                productModalAdd.dataset.quantity = String(nextQuantity);
+                productModalAdd.dataset.trackingItemQuantity = String(nextQuantity);
+                productModalAdd.setAttribute('href', buildEventAddUrl(productModalAdd.dataset.baseAddUrl || productModalAdd.href, nextQuantity));
+            }
+        };
+
+        const closeEventProductModal = () => {
+            if (!productModal) {
+                return;
+            }
+
+            productModal.hidden = true;
+            productModal.setAttribute('aria-hidden', 'true');
+            document.body.classList.remove('event-modal-open');
+            activeEventProductCard = null;
+        };
+
+        const renderEventProductGallery = (images = [], title = '') => {
+            if (!productModalGallery || !productModalImage) {
+                return;
+            }
+
+            productModalGallery.innerHTML = '';
+            images.filter(Boolean).slice(0, 3).forEach((imageUrl) => {
+                const thumbButton = document.createElement('button');
+                const thumbImage = document.createElement('img');
+                thumbButton.type = 'button';
+                thumbButton.className = 'event-product-panel-thumb';
+                thumbImage.src = imageUrl;
+                thumbImage.alt = title;
+                thumbImage.loading = 'lazy';
+                thumbButton.appendChild(thumbImage);
+                thumbButton.addEventListener('click', () => {
+                    productModalImage.src = imageUrl;
+                });
+                productModalGallery.appendChild(thumbButton);
+            });
+        };
+
+        const openEventProductModal = (card) => {
+            if (!card || !productModal) {
+                return;
+            }
+
+            activeEventProductCard = card;
+            const title = card.dataset.eventProductTitle || '';
+            const productId = card.dataset.eventProductId || '';
+            const price = card.dataset.eventProductPrice || '';
+            const image = card.dataset.eventProductImage || '';
+            let gallery = [];
+
+            try {
+                gallery = JSON.parse(card.dataset.eventProductGallery || '[]');
+            } catch (error) {
+                gallery = [];
+            }
+
+            if (!gallery.length && image) {
+                gallery = [image];
+            }
+
+            if (productModalTitle) {
+                productModalTitle.textContent = title;
+            }
+            if (productModalDescription) {
+                productModalDescription.textContent = card.dataset.eventProductDescription || '';
+            }
+            if (productModalIngredients) {
+                productModalIngredients.textContent = card.dataset.eventProductIngredients || '';
+            }
+            if (productModalBenefits) {
+                productModalBenefits.textContent = card.dataset.eventProductBenefits || '';
+            }
+            if (productModalUsage) {
+                productModalUsage.textContent = card.dataset.eventProductUsage || '';
+            }
+            if (productModalPrice) {
+                productModalPrice.textContent = price;
+            }
+            if (productModalBadge) {
+                productModalBadge.textContent = card.dataset.eventProductBadge || '';
+            }
+            if (productModalImage) {
+                productModalImage.src = image;
+                productModalImage.alt = title;
+            }
+
+            renderEventProductGallery(gallery, title);
+
+            if (productModalAdd) {
+                const addUrl = card.dataset.eventAddUrl || card.dataset.eventProductUrl || '#';
+                productModalAdd.dataset.baseAddUrl = addUrl;
+                productModalAdd.dataset.product_id = productId;
+                productModalAdd.dataset.trackingItemId = productId;
+                productModalAdd.dataset.trackingItemName = title;
+                productModalAdd.dataset.trackingItemCategory = 'Collection Botanica';
+                productModalAdd.dataset.trackingItemPrice = price.replace(/[^\d.,]/g, '').replace(',', '.');
+                productModalAdd.classList.toggle('ajax_add_to_cart', Boolean(productId));
+                productModalAdd.classList.toggle('add_to_cart_button', Boolean(productId));
+            }
+
+            setEventProductQuantity(1);
+            productModal.hidden = false;
+            productModal.setAttribute('aria-hidden', 'false');
+            document.body.classList.add('event-modal-open');
+
+            const focusTarget = productModal.querySelector('.event-product-close');
+            focusTarget?.focus?.();
+
+            pushTrackingEvent('view_item', {
+                item_id: productId,
+                item_name: title,
+                category: 'Collection Botanica',
+                price: Number((price || '').replace(/[^\d.,]/g, '').replace(',', '.')) || 0,
+                currency: trackingCurrency
+            });
+        };
+
+        eventPage.querySelectorAll('[data-event-product-open]').forEach((button) => {
+            button.addEventListener('click', (event) => {
+                const card = event.currentTarget.closest('[data-event-product-card]');
+                if (!card) {
+                    return;
+                }
+
+                event.preventDefault();
+                openEventProductModal(card);
+            });
+        });
+
+        productModal?.querySelectorAll('[data-event-product-modal-close]').forEach((button) => {
+            button.addEventListener('click', closeEventProductModal);
+        });
+
+        productModal?.querySelector('[data-event-product-qty-minus]')?.addEventListener('click', () => {
+            setEventProductQuantity(Number(productModalQuantity?.value || 1) - 1);
+        });
+
+        productModal?.querySelector('[data-event-product-qty-plus]')?.addEventListener('click', () => {
+            setEventProductQuantity(Number(productModalQuantity?.value || 1) + 1);
+        });
+
+        productModalQuantity?.addEventListener('input', () => {
+            setEventProductQuantity(productModalQuantity.value);
+        });
+
+        const updateEventCartBadges = (quantity) => {
+            document.querySelectorAll('.cart-count, .header-cart-count, .cart-contents-count, [class*="cart-count"], [class*="cart-badge"]').forEach((badge) => {
+                const currentValue = Number((badge.textContent || '').replace(/[^\d]/g, '')) || 0;
+                badge.textContent = String(currentValue + quantity);
+            });
+        };
+
+        const applyEventCartFragments = (fragments) => {
+            if (!fragments || typeof fragments !== 'object') {
+                return false;
+            }
+
+            let applied = false;
+            Object.keys(fragments).forEach((selector) => {
+                const html = fragments[selector];
+                document.querySelectorAll(selector).forEach((element) => {
+                    element.outerHTML = html;
+                    applied = true;
+                });
+            });
+
+            return applied;
+        };
+
+        const addEventProductToCart = (link) => {
+            const productId = link?.dataset?.product_id || '';
+            const quantity = Math.max(1, Number(link?.dataset?.quantity || 1) || 1);
+
+            if (!productId) {
+                return;
+            }
+
+            link.classList.add('is-loading');
+            link.setAttribute('aria-busy', 'true');
+
+            const body = `product_id=${encodeURIComponent(productId)}&quantity=${encodeURIComponent(quantity)}`;
+            const request = new XMLHttpRequest();
+            request.open('POST', `${window.location.origin}/?wc-ajax=add_to_cart`, true);
+            request.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded; charset=UTF-8');
+            request.onload = () => {
+                link.classList.remove('is-loading', 'loading');
+                link.removeAttribute('aria-busy');
+
+                if (request.status < 200 || request.status >= 300) {
+                    window.location.href = link.href;
+                    return;
+                }
+
+                let response = {};
+                try {
+                    response = JSON.parse(request.responseText || '{}');
+                } catch (error) {
+                    response = {};
+                }
+
+                const fragmentsApplied = applyEventCartFragments(response.fragments);
+                if (!fragmentsApplied) {
+                    updateEventCartBadges(quantity);
+                }
+
+                link.classList.add('added');
+                const originalText = link.dataset.originalText || link.textContent;
+                link.dataset.originalText = originalText;
+                link.textContent = 'Ajouté au panier';
+                window.setTimeout(() => {
+                    link.textContent = originalText;
+                    link.classList.remove('added');
+                }, 1600);
+            };
+            request.onerror = () => {
+                link.classList.remove('is-loading', 'loading');
+                link.removeAttribute('aria-busy');
+                window.location.href = link.href;
+            };
+            request.send(body);
+        };
+
+        eventPage.addEventListener('click', (event) => {
+            const link = event.target.closest('.event-botanica-cart-button, [data-event-product-add]');
+
+            if (!link || !eventPage.contains(link)) {
+                return;
+            }
+
+            event.preventDefault();
+            event.stopPropagation();
+            addEventProductToCart(link);
+        }, true);
+
+        document.addEventListener('keydown', (event) => {
+            if (event.key === 'Escape' && productModal && !productModal.hidden) {
+                const previousCard = activeEventProductCard;
+                closeEventProductModal();
+                previousCard?.querySelector('[data-event-product-open]')?.focus?.();
             }
         });
 

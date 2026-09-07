@@ -104,6 +104,34 @@ $collection_products = array(
     ),
 );
 
+$botanica_shop_products = array();
+$botanica_catalog       = function_exists( 'theme_perso_botanica_collection_products' ) ? theme_perso_botanica_collection_products() : array();
+
+foreach ( $botanica_catalog as $product_title => $product_data ) {
+    $product_post = function_exists( 'theme_perso_get_seed_product' ) ? theme_perso_get_seed_product( $product_title ) : get_page_by_title( $product_title, OBJECT, 'product' );
+    $wc_product   = $product_post && function_exists( 'wc_get_product' ) ? wc_get_product( $product_post->ID ) : null;
+    $price_html   = function_exists( 'wc_price' ) ? wc_price( (float) $product_data['price'] ) : esc_html( $product_data['price'] . ' €' );
+    $product_url  = $wc_product instanceof WC_Product ? get_permalink( $wc_product->get_id() ) : home_url( '/boutique/' );
+    $add_url      = $wc_product instanceof WC_Product ? $wc_product->add_to_cart_url() : $product_url;
+
+    if ( $wc_product instanceof WC_Product && $wc_product->get_price_html() ) {
+        $price_html = $wc_product->get_price_html();
+    }
+
+    $botanica_shop_products[] = array_merge(
+        $product_data,
+        array(
+            'title'          => $product_title,
+            'product_id'     => $wc_product instanceof WC_Product ? $wc_product->get_id() : 0,
+            'product_url'    => $product_url,
+            'add_url'        => $add_url,
+            'price_html'     => $price_html,
+            'purchasable'    => $wc_product instanceof WC_Product && $wc_product->is_purchasable() && $wc_product->is_in_stock(),
+            'tracking_attrs' => $wc_product instanceof WC_Product && function_exists( 'theme_perso_tracking_item_attributes' ) ? theme_perso_tracking_item_attributes( $wc_product ) : '',
+        )
+    );
+}
+
 $timeline = array(
     __( 'Inscription', 'theme-perso' ),
     __( 'Découverte', 'theme-perso' ),
@@ -172,6 +200,13 @@ $gallery = array(
                         <img src="<?php echo esc_url( $botanica_reveal ); ?>" alt="<?php esc_attr_e( 'Pot de crème Botanica ouvert avec couvercle métallique doré', 'theme-perso' ); ?>" loading="eager" fetchpriority="high">
                     </span>
                     <span class="event-main-product-shine" aria-hidden="true"></span>
+                    <span class="event-main-product-lid-glow" aria-hidden="true"></span>
+                    <span class="event-main-product-cream-light" aria-hidden="true"></span>
+                    <span class="event-main-product-smoke" aria-hidden="true">
+                        <i></i>
+                        <i></i>
+                        <i></i>
+                    </span>
                 </button>
 
                 <div class="event-collection-products" aria-label="<?php esc_attr_e( 'Produits de la Collection Botanica', 'theme-perso' ); ?>">
@@ -256,18 +291,110 @@ $gallery = array(
         </div>
     </section>
 
-    <section class="event-experience-section" aria-labelledby="event-experience-title">
-        <div>
-            <p class="event-kicker"><?php esc_html_e( 'Expérience 3D', 'theme-perso' ); ?></p>
-            <h2 id="event-experience-title"><?php esc_html_e( 'Explorez la formule sous tous les angles.', 'theme-perso' ); ?></h2>
-            <p><?php esc_html_e( 'Ouvrez le pot, activez les points lumineux et découvrez les détails sensoriels de la Collection Botanica.', 'theme-perso' ); ?></p>
+    <section id="collection-botanica" class="event-botanica-shop-section" aria-labelledby="event-botanica-shop-title" data-event-shop>
+        <div class="event-section-heading event-shop-heading">
+            <p class="event-kicker"><?php esc_html_e( 'Boutique Collection Botanica', 'theme-perso' ); ?></p>
+            <h2 id="event-botanica-shop-title"><?php esc_html_e( 'Découvrez les soins du lancement.', 'theme-perso' ); ?></h2>
+            <p><?php esc_html_e( 'Une sélection pensée comme une routine complète, entre textures sensorielles, actifs botaniques et packagings bleu nuit.', 'theme-perso' ); ?></p>
         </div>
-        <ul>
-            <li><?php esc_html_e( 'Rotation 360° après ouverture', 'theme-perso' ); ?></li>
-            <li><?php esc_html_e( 'Zoom doux au clic', 'theme-perso' ); ?></li>
-            <li><?php esc_html_e( 'Fiches ingrédients en glassmorphism', 'theme-perso' ); ?></li>
-        </ul>
+
+        <div class="event-botanica-grid">
+            <?php foreach ( $botanica_shop_products as $product ) : ?>
+                <?php
+                $gallery_json = wp_json_encode( array_values( $product['gallery'] ) );
+                $button_class = 'button button-primary event-botanica-cart-button';
+
+                if ( $product['purchasable'] ) {
+                    $button_class .= ' ajax_add_to_cart add_to_cart_button';
+                }
+                ?>
+                <article
+                    class="event-botanica-card event-botanica-card--<?php echo esc_attr( $product['key'] ); ?>"
+                    data-event-product-card
+                    data-event-product-title="<?php echo esc_attr( $product['title'] ); ?>"
+                    data-event-product-description="<?php echo esc_attr( $product['description'] ); ?>"
+                    data-event-product-ingredients="<?php echo esc_attr( $product['ingredients'] ); ?>"
+                    data-event-product-benefits="<?php echo esc_attr( $product['benefits'] ); ?>"
+                    data-event-product-usage="<?php echo esc_attr( $product['usage'] ); ?>"
+                    data-event-product-price="<?php echo esc_attr( wp_strip_all_tags( $product['price_html'] ) ); ?>"
+                    data-event-product-badge="<?php echo esc_attr( $product['badge'] ); ?>"
+                    data-event-product-image="<?php echo esc_url( $product['image'] ); ?>"
+                    data-event-product-gallery="<?php echo esc_attr( $gallery_json ); ?>"
+                    data-event-product-url="<?php echo esc_url( $product['product_url'] ); ?>"
+                    data-event-add-url="<?php echo esc_url( $product['add_url'] ); ?>"
+                    data-event-product-id="<?php echo esc_attr( (string) $product['product_id'] ); ?>"
+                >
+                    <span class="event-botanica-badge"><?php echo esc_html( $product['badge'] ); ?></span>
+                    <button class="event-botanica-image-button" type="button" data-event-product-open aria-label="<?php echo esc_attr( sprintf( __( 'Découvrir %s', 'theme-perso' ), $product['title'] ) ); ?>">
+                        <img src="<?php echo esc_url( $product['image'] ); ?>" alt="<?php echo esc_attr( $product['title'] ); ?>" loading="lazy">
+                    </button>
+                    <div class="event-botanica-card-body">
+                        <p class="event-botanica-category"><?php echo esc_html( $product['category'] ); ?></p>
+                        <h3><?php echo esc_html( $product['title'] ); ?></h3>
+                        <p><?php echo esc_html( $product['description'] ); ?></p>
+                        <div class="event-botanica-card-footer">
+                            <strong><?php echo wp_kses_post( $product['price_html'] ); ?></strong>
+                            <button class="button button-outline" type="button" data-event-product-open><?php esc_html_e( 'Découvrir', 'theme-perso' ); ?></button>
+                            <a
+                                class="<?php echo esc_attr( $button_class ); ?>"
+                                href="<?php echo esc_url( $product['add_url'] ); ?>"
+                                data-product_id="<?php echo esc_attr( (string) $product['product_id'] ); ?>"
+                                data-product_sku="<?php echo esc_attr( $product['sku'] ); ?>"
+                                data-quantity="1"
+                                <?php echo $product['tracking_attrs']; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
+                            >
+                                <?php esc_html_e( 'Ajouter au panier', 'theme-perso' ); ?>
+                            </a>
+                        </div>
+                    </div>
+                </article>
+            <?php endforeach; ?>
+        </div>
     </section>
+
+    <aside class="event-product-drawer" data-event-product-modal hidden aria-hidden="true">
+        <button class="event-product-drawer-overlay" type="button" data-event-product-modal-close aria-label="<?php esc_attr_e( 'Fermer la fiche produit', 'theme-perso' ); ?>"></button>
+        <article class="event-product-panel" role="dialog" aria-modal="true" aria-labelledby="event-product-panel-title">
+            <button class="event-product-close" type="button" data-event-product-modal-close aria-label="<?php esc_attr_e( 'Fermer', 'theme-perso' ); ?>">×</button>
+            <div class="event-product-panel-media">
+                <span data-event-product-modal-badge></span>
+                <img src="<?php echo esc_url( $botanica_reveal ); ?>" alt="" loading="lazy" data-event-product-modal-image>
+                <div class="event-product-panel-gallery" data-event-product-modal-gallery></div>
+            </div>
+            <div class="event-product-panel-content">
+                <p class="event-kicker"><?php esc_html_e( 'Collection Botanica', 'theme-perso' ); ?></p>
+                <h2 id="event-product-panel-title" data-event-product-modal-title></h2>
+                <p class="event-product-panel-description" data-event-product-modal-description></p>
+                <strong class="event-product-panel-price" data-event-product-modal-price></strong>
+
+                <dl class="event-product-panel-details">
+                    <div>
+                        <dt><?php esc_html_e( 'Ingrédients clés', 'theme-perso' ); ?></dt>
+                        <dd data-event-product-modal-ingredients></dd>
+                    </div>
+                    <div>
+                        <dt><?php esc_html_e( 'Bénéfices', 'theme-perso' ); ?></dt>
+                        <dd data-event-product-modal-benefits></dd>
+                    </div>
+                    <div>
+                        <dt><?php esc_html_e( 'Conseils d’utilisation', 'theme-perso' ); ?></dt>
+                        <dd data-event-product-modal-usage></dd>
+                    </div>
+                </dl>
+
+                <div class="event-product-panel-actions">
+                    <div class="event-product-quantity" aria-label="<?php esc_attr_e( 'Quantité', 'theme-perso' ); ?>">
+                        <button type="button" data-event-product-qty-minus aria-label="<?php esc_attr_e( 'Réduire la quantité', 'theme-perso' ); ?>">-</button>
+                        <input type="number" min="1" max="12" value="1" data-event-product-quantity>
+                        <button type="button" data-event-product-qty-plus aria-label="<?php esc_attr_e( 'Augmenter la quantité', 'theme-perso' ); ?>">+</button>
+                    </div>
+                    <a class="button button-primary event-product-panel-add add_to_cart_button ajax_add_to_cart" href="<?php echo esc_url( home_url( '/boutique/' ) ); ?>" data-event-product-add data-product_id="" data-quantity="1">
+                        <?php esc_html_e( 'Ajouter au panier', 'theme-perso' ); ?>
+                    </a>
+                </div>
+            </div>
+        </article>
+    </aside>
 
     <section class="event-gallery-section" aria-labelledby="event-gallery-title">
         <div class="event-section-heading">

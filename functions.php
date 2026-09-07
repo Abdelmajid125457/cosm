@@ -1364,6 +1364,99 @@ function theme_perso_is_fallback_product_image( $image_url ) {
     return is_string( $image_url ) && false !== strpos( $image_url, 'cosmethique-product-placeholder.svg' );
 }
 
+function theme_perso_botanica_asset_url( $file ) {
+    return get_template_directory_uri() . '/assets/hero/' . ltrim( $file, '/' );
+}
+
+function theme_perso_botanica_collection_products() {
+    $hero_scene    = theme_perso_botanica_asset_url( 'cosmethique-botanica-home-campaign.png' );
+    $collection    = theme_perso_botanica_asset_url( 'cosmethique-botanica-campaign-suite.png' );
+    $cream_reveal  = theme_perso_botanica_asset_url( 'cosmethique-botanica-cream-reveal.png' );
+    $launch_detail = theme_perso_botanica_asset_url( 'cosmethique-botanica-launch-preview.png' );
+
+    return array(
+        'Crème Hydratante Botanica' => array(
+            'key'         => 'creme',
+            'sku'         => 'COSM-BOT-CREME',
+            'price'       => '42.90',
+            'badge'       => 'Nouveau',
+            'category'    => 'Collection Botanica',
+            'description' => 'Une crème fondante aux actifs botaniques pour hydrater, lisser et illuminer la peau.',
+            'ingredients' => 'Sauge, camomille, acide hyaluronique végétal, vitamine E.',
+            'benefits'    => 'Hydratation longue durée, confort immédiat, éclat naturel.',
+            'usage'       => 'Appliquer matin et soir sur peau propre, après le sérum Botanica.',
+            'image'       => $cream_reveal,
+            'gallery'     => array( $cream_reveal, $hero_scene, $collection ),
+        ),
+        'Sérum Botanica'            => array(
+            'key'         => 'serum',
+            'sku'         => 'COSM-BOT-SERUM',
+            'price'       => '39.90',
+            'badge'       => 'Nouveau',
+            'category'    => 'Collection Botanica',
+            'description' => 'Un sérum concentré pour réveiller l’éclat et renforcer la barrière cutanée.',
+            'ingredients' => 'Extrait de sauge, niacinamide, aloe vera, rose botanique.',
+            'benefits'    => 'Éclat, hydratation, grain de peau plus lisse.',
+            'usage'       => 'Déposer quelques gouttes avant la crème, matin ou soir.',
+            'image'       => $collection,
+            'gallery'     => array( $collection, $cream_reveal, $launch_detail ),
+        ),
+        'Huile Botanica'            => array(
+            'key'         => 'huile',
+            'sku'         => 'COSM-BOT-HUILE',
+            'price'       => '34.90',
+            'badge'       => 'Nouveau',
+            'category'    => 'Collection Botanica',
+            'description' => 'Une huile sèche satinée qui nourrit la peau sans fini gras.',
+            'ingredients' => 'Huile de jojoba, amande douce, vitamine E, fleurs séchées.',
+            'benefits'    => 'Nutrition, souplesse, toucher velours.',
+            'usage'       => 'Chauffer quelques gouttes dans les mains puis masser le visage, le cou ou le corps.',
+            'image'       => $collection,
+            'gallery'     => array( $collection, $hero_scene, $cream_reveal ),
+        ),
+        'Masque Botanica'           => array(
+            'key'         => 'masque',
+            'sku'         => 'COSM-BOT-MASQUE',
+            'price'       => '36.90',
+            'badge'       => 'Bestseller',
+            'category'    => 'Collection Botanica',
+            'description' => 'Un masque crème sensoriel pour repulper et apaiser les peaux en quête de lumière.',
+            'ingredients' => 'Camomille, calendula, argile blanche, complexe floral.',
+            'benefits'    => 'Peau apaisée, texture affinée, éclat ravivé.',
+            'usage'       => 'Laisser poser dix minutes une à deux fois par semaine, puis rincer.',
+            'image'       => $cream_reveal,
+            'gallery'     => array( $cream_reveal, $launch_detail, $collection ),
+        ),
+        'Baume Botanica'            => array(
+            'key'         => 'baume',
+            'sku'         => 'COSM-BOT-BAUME',
+            'price'       => '32.90',
+            'badge'       => 'Nouveau',
+            'category'    => 'Collection Botanica',
+            'description' => 'Un baume enveloppant pour nourrir intensément les zones sèches.',
+            'ingredients' => 'Karité, beurre de cacao, huile d’amande douce, sauge.',
+            'benefits'    => 'Réconfort, nutrition, protection contre le dessèchement.',
+            'usage'       => 'Appliquer localement sur les zones sèches ou en soin de nuit.',
+            'image'       => $launch_detail,
+            'gallery'     => array( $launch_detail, $cream_reveal, $collection ),
+        ),
+        'Coffret Botanica'          => array(
+            'key'         => 'coffret',
+            'sku'         => 'COSM-BOT-COFFRET',
+            'price'       => '99.90',
+            'regular'     => '119.90',
+            'badge'       => 'Edition limitée',
+            'category'    => 'Collection Botanica',
+            'description' => 'La routine complète Botanica réunie dans un coffret premium en édition limitée.',
+            'ingredients' => 'Crème, sérum, huile, masque et baume Botanica.',
+            'benefits'    => 'Routine complète, rituel sensoriel, avantage coffret.',
+            'usage'       => 'Suivre le rituel Botanica complet : sérum, crème, huile et masque hebdomadaire.',
+            'image'       => $hero_scene,
+            'gallery'     => array( $hero_scene, $collection, $cream_reveal ),
+        ),
+    );
+}
+
 function theme_perso_featured_blog_cards() {
     return array(
         array(
@@ -3728,6 +3821,93 @@ function theme_perso_get_seed_product( $title ) {
 
     return get_page_by_path( sanitize_title( $title ), OBJECT, 'product' );
 }
+
+function theme_perso_seed_botanica_collection() {
+    if ( ! class_exists( 'WooCommerce' ) || ! class_exists( 'WC_Product_Simple' ) || ! taxonomy_exists( 'product_cat' ) ) {
+        return;
+    }
+
+    if ( '20260906' === get_option( 'theme_perso_botanica_collection_seeded' ) ) {
+        return;
+    }
+
+    $term = term_exists( 'Collection Botanica', 'product_cat' );
+
+    if ( ! $term ) {
+        $term = wp_insert_term(
+            'Collection Botanica',
+            'product_cat',
+            array(
+                'slug'        => 'collection-botanica',
+                'description' => 'La collection événementielle Botanica de Cosm’Éthique.',
+            )
+        );
+    }
+
+    $term_id = is_array( $term ) && ! is_wp_error( $term ) ? (int) $term['term_id'] : 0;
+
+    foreach ( theme_perso_botanica_collection_products() as $title => $data ) {
+        $existing = theme_perso_get_seed_product( $title );
+        $product  = $existing ? wc_get_product( $existing->ID ) : new WC_Product_Simple();
+
+        if ( ! $product ) {
+            continue;
+        }
+
+        $regular_price = ! empty( $data['regular'] ) ? $data['regular'] : $data['price'];
+
+        $product->set_name( $title );
+        $product->set_status( 'publish' );
+        $product->set_catalog_visibility( 'visible' );
+        $product->set_regular_price( $regular_price );
+        $product->set_price( $data['price'] );
+
+        if ( ! empty( $data['regular'] ) ) {
+            $product->set_sale_price( $data['price'] );
+        } else {
+            $product->set_sale_price( '' );
+        }
+
+        if ( ! empty( $data['sku'] ) && function_exists( 'wc_get_product_id_by_sku' ) ) {
+            $sku_product_id = wc_get_product_id_by_sku( $data['sku'] );
+
+            if ( ! $sku_product_id || (int) $sku_product_id === (int) $product->get_id() ) {
+                try {
+                    $product->set_sku( $data['sku'] );
+                } catch ( Exception $exception ) {
+                    // Keep the product valid if WooCommerce detects a duplicate SKU.
+                }
+            }
+        }
+
+        $description  = '<p>' . esc_html( $data['description'] ) . '</p>';
+        $description .= '<h3>Ingrédients clés</h3><p>' . esc_html( $data['ingredients'] ) . '</p>';
+        $description .= '<h3>Bénéfices</h3><p>' . esc_html( $data['benefits'] ) . '</p>';
+        $description .= '<h3>Conseils d’utilisation</h3><p>' . esc_html( $data['usage'] ) . '</p>';
+
+        $product->set_short_description( $data['description'] );
+        $product->set_description( $description );
+        $product->set_manage_stock( true );
+        $product->set_stock_quantity( 60 );
+        $product->set_stock_status( 'instock' );
+
+        if ( $term_id ) {
+            $product->set_category_ids( array( $term_id ) );
+        }
+
+        $product_id = $product->save();
+
+        if ( $product_id ) {
+            update_post_meta( $product_id, '_cosmethique_image_url', esc_url_raw( $data['image'] ) );
+            update_post_meta( $product_id, '_cosmethique_gallery_images', array_map( 'esc_url_raw', $data['gallery'] ) );
+            update_post_meta( $product_id, '_cosmethique_badge', sanitize_text_field( $data['badge'] ) );
+            update_post_meta( $product_id, '_cosmethique_botanica_product', '1' );
+        }
+    }
+
+    update_option( 'theme_perso_botanica_collection_seeded', '20260906', false );
+}
+add_action( 'init', 'theme_perso_seed_botanica_collection', 36 );
 
 function theme_perso_visage_collection_products() {
     return array(

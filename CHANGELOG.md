@@ -2,6 +2,32 @@
 
 Toutes les interventions sur le thème doivent être sauvegardées et documentées ici.
 
+## 2026-09-07 01:07 - Page Événement Botanica : interaction, boutique et panier
+
+Résumé :
+- Création d'un point de restauration avant intervention : `5d17b00`.
+- Correction de l'ouverture interactive du pot Botanica avec fumée, lumière dorée, particules et révélation progressive des produits.
+- Suppression complète de l'ancienne section "Expérience 3D / Explorez la formule sous tous les angles".
+- Création d'une section "Boutique Collection Botanica" avec 6 produits WooCommerce réels, prix, badges, boutons Découvrir et Ajouter au panier.
+- Création d'un panneau produit premium avec grande image, galerie, ingrédients, bénéfices, conseils d'utilisation, prix, quantité et ajout panier.
+- Ajout d'une logique AJAX dédiée à la page Événement pour garantir l'ajout au panier sans navigation ni conflit WooCommerce.
+- Ajustements responsive de la grille Botanica : 4 colonnes desktop, 2 tablette, 1 mobile.
+
+Fichiers modifiés :
+- `functions.php`
+- `template-parts/page-evenement.php`
+- `style.css`
+- `js/main.js`
+- `CHANGELOG.md`
+
+Corrections de bugs :
+- Correction du conflit qui gardait le pot ouvert et les produits révélés invisibles dans certains états d'animation.
+- Correction des miniatures du panneau produit afin qu'elles soient générées et stylées correctement.
+- Vérification PHP : `functions.php` et `template-parts/page-evenement.php` sans erreur de syntaxe.
+- Vérification JavaScript : `js/main.js` valide avec `node --check`.
+- Vérification navigateur : pot ouvrable, 6 produits Botanica affichés, panneau produit ouvrable, ajout au panier fonctionnel.
+- Vérification responsive : desktop, iPad Mini, iPhone 14 Pro Max et iPhone SE sans débordement horizontal.
+
 ## 2026-09-06 22:30 - Hero Événement Botanica premium
 
 Résumé :

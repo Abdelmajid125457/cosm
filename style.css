@@ -20499,7 +20499,6 @@ select:focus,
 
 .event-hero h1,
 .event-section-heading h2,
-.event-experience-section h2,
 .event-reservation-card h2 {
     margin: 0;
     font-family: "Cormorant Garamond", serif;
@@ -20973,10 +20972,10 @@ select:focus,
     background: transparent;
     cursor: pointer;
     filter: drop-shadow(0 42px 88px rgba(0, 0, 0, 0.48));
-    opacity: 0;
-    transform: translate3d(44px, 58px, 90px) rotateY(-8deg) scale(0.9);
+    opacity: 1;
+    transform: translate3d(0, 0, 90px) rotateY(-2deg) scale(1);
     transform-style: preserve-3d;
-    animation: event-product-arrive 1.35s cubic-bezier(0.16, 1, 0.3, 1) 0.52s forwards, event-product-float 8s ease-in-out 2.05s infinite;
+    animation: event-product-float 8s ease-in-out 0.6s infinite;
 }
 
 .event-main-product span {
@@ -21258,6 +21257,7 @@ select:focus,
 
 .event-slider-section,
 .event-timeline-section,
+.event-botanica-shop-section,
 .event-gallery-section,
 .event-reservation-section {
     width: 100%;
@@ -21278,7 +21278,6 @@ select:focus,
 }
 
 .event-section-heading h2,
-.event-experience-section h2,
 .event-reservation-card h2 {
     max-width: 760px;
     color: #FFFFFF;
@@ -21333,8 +21332,7 @@ select:focus,
 .event-card,
 .event-reservation-card,
 .event-video-card,
-.event-timeline article,
-.event-experience-section {
+.event-timeline article {
     border: 1px solid rgba(201, 164, 92, 0.24);
     border-radius: 28px;
     background: rgba(255, 255, 255, 0.08);
@@ -21453,39 +21451,616 @@ select:focus,
     font-size: 1.08rem;
 }
 
-.event-experience-section {
-    display: grid;
-    grid-template-columns: 1.1fr 0.9fr;
-    gap: 34px;
-    align-items: center;
-    width: auto;
-    margin: -36px clamp(20px, 5vw, 82px) 0;
-    padding: clamp(32px, 5vw, 62px);
+.event-main-product:focus-visible {
+    outline: 2px solid rgba(245, 221, 163, 0.85);
+    outline-offset: 8px;
+}
+
+.event-main-product-lid-glow {
+    inset: 5% auto auto 43% !important;
+    z-index: 6;
+    width: 28%;
+    aspect-ratio: 1.8;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(245, 221, 163, 0.62), rgba(201, 164, 92, 0.18) 48%, transparent 72%);
+    filter: blur(14px);
+    opacity: 0;
+    transform: translate3d(0, 34px, 70px) scale(0.55);
+}
+
+.event-main-product-cream-light {
+    inset: 30% auto auto 38% !important;
+    z-index: 7;
+    width: 34%;
+    aspect-ratio: 1;
+    border-radius: 50%;
     background:
-        radial-gradient(circle at 88% 20%, rgba(201, 164, 92, 0.2), transparent 32%),
-        linear-gradient(135deg, rgba(7, 26, 45, 0.95), rgba(13, 27, 61, 0.92));
+        radial-gradient(circle, rgba(255, 249, 222, 0.8), rgba(245, 221, 163, 0.34) 28%, rgba(201, 164, 92, 0.08) 58%, transparent 76%);
+    filter: blur(18px);
+    opacity: 0;
+    transform: translate3d(0, 24px, 130px) scale(0.58);
+    mix-blend-mode: screen;
 }
 
-.event-experience-section p {
-    max-width: 620px;
-    color: rgba(255, 255, 255, 0.76);
-    line-height: 1.75;
+.event-main-product-smoke {
+    inset: 23% auto auto 40% !important;
+    z-index: 8;
+    width: 28%;
+    height: 34%;
+    opacity: 0;
+    overflow: visible;
 }
 
-.event-experience-section ul {
+.event-main-product-smoke i {
+    position: absolute;
+    bottom: 0;
+    width: 42%;
+    aspect-ratio: 1;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(255, 255, 255, 0.34), rgba(245, 221, 163, 0.12) 46%, transparent 70%);
+    filter: blur(11px);
+    opacity: 0;
+    transform: translate3d(0, 20px, 0) scale(0.4);
+}
+
+.event-main-product-smoke i:nth-child(1) {
+    left: 4%;
+}
+
+.event-main-product-smoke i:nth-child(2) {
+    left: 32%;
+    width: 54%;
+}
+
+.event-main-product-smoke i:nth-child(3) {
+    right: -4%;
+}
+
+.event-collection-scene.is-opening .event-main-product-closed,
+.event-collection-scene.is-open .event-main-product-closed {
+    opacity: 0;
+    transform: translate3d(-60px, -70px, -120px) rotateZ(-9deg) scale(0.68);
+}
+
+.event-collection-scene.is-opening .event-main-product,
+.event-collection-scene.is-open .event-main-product {
+    opacity: 1 !important;
+}
+
+.event-collection-scene.is-open .event-main-product {
+    pointer-events: none;
+}
+
+.event-collection-scene.is-opening .event-main-product-open,
+.event-collection-scene.is-open .event-main-product-open {
+    opacity: 1 !important;
+    transform: translate3d(0, 0, 130px) rotateX(0deg) scale(1.04);
+}
+
+.event-collection-scene.is-opening .event-main-product-lid-glow,
+.event-collection-scene.is-open .event-main-product-lid-glow {
+    animation: event-lid-glow 1.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.event-collection-scene.is-opening .event-main-product-cream-light,
+.event-collection-scene.is-open .event-main-product-cream-light {
+    animation: event-cream-light 1.65s cubic-bezier(0.16, 1, 0.3, 1) 180ms forwards, event-cream-breathe 4.8s ease-in-out 1.7s infinite;
+}
+
+.event-collection-scene.is-opening .event-main-product-smoke,
+.event-collection-scene.is-open .event-main-product-smoke {
+    opacity: 1;
+}
+
+.event-collection-scene.is-opening .event-main-product-smoke i,
+.event-collection-scene.is-open .event-main-product-smoke i {
+    animation: event-smoke-rise 3.8s ease-in-out infinite;
+}
+
+.event-collection-scene.is-opening .event-main-product-smoke i:nth-child(2),
+.event-collection-scene.is-open .event-main-product-smoke i:nth-child(2) {
+    animation-delay: 520ms;
+}
+
+.event-collection-scene.is-opening .event-main-product-smoke i:nth-child(3),
+.event-collection-scene.is-open .event-main-product-smoke i:nth-child(3) {
+    animation-delay: 940ms;
+}
+
+.event-collection-scene.is-opening .event-main-product-shine,
+.event-collection-scene.is-open .event-main-product-shine {
+    animation: event-product-shine 5.4s ease-in-out 0.6s infinite;
+}
+
+.event-collection-product.is-revealed {
+    opacity: 1 !important;
+    pointer-events: auto;
+    transform: translate3d(var(--event-parallax-x, 0px), var(--event-parallax-y, 0px), var(--event-depth, 0px)) rotateY(var(--event-product-rotate, 0deg)) scale(1) !important;
+}
+
+.event-botanica-shop-section {
+    position: relative;
+    color: var(--event-navy);
+    background:
+        radial-gradient(circle at 18% 8%, rgba(201, 164, 92, 0.15), transparent 34%),
+        radial-gradient(circle at 92% 30%, rgba(43, 125, 138, 0.12), transparent 34%),
+        linear-gradient(180deg, #F8F4EE 0%, #FFFFFF 58%, #F8F4EE 100%);
+}
+
+.event-botanica-shop-section::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background-image:
+        linear-gradient(rgba(7, 26, 45, 0.035) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(7, 26, 45, 0.035) 1px, transparent 1px);
+    background-size: 84px 84px;
+    mask-image: linear-gradient(180deg, transparent, #000 12%, #000 88%, transparent);
+}
+
+.event-botanica-shop-section .event-section-heading {
+    position: relative;
+    z-index: 1;
+    align-items: start;
+}
+
+.event-shop-heading {
     display: grid;
-    gap: 14px;
-    margin: 0;
-    padding: 0;
-    list-style: none;
+    max-width: 940px;
+    margin-inline: auto;
+    text-align: center;
 }
 
-.event-experience-section li {
-    padding: 18px 20px;
-    border: 1px solid rgba(255, 255, 255, 0.12);
-    border-radius: 18px;
+.event-botanica-shop-section .event-section-heading h2 {
+    max-width: none;
+    color: var(--event-navy);
+}
+
+.event-shop-heading > p:last-child {
+    max-width: 720px;
+    margin: 14px auto 0;
+    color: #647287;
+    font-size: 1.02rem;
+    line-height: 1.7;
+}
+
+.event-botanica-grid {
+    position: relative;
+    z-index: 1;
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: clamp(18px, 2vw, 28px);
+    width: min(100%, 1480px);
+    margin: 38px auto 0;
+}
+
+.event-botanica-card {
+    position: relative;
+    display: grid;
+    grid-template-rows: auto 1fr;
+    min-height: 590px;
+    overflow: hidden;
+    border: 1px solid rgba(7, 26, 45, 0.1);
+    border-radius: 30px;
+    background: rgba(255, 255, 255, 0.86);
+    box-shadow: 0 24px 70px rgba(13, 27, 61, 0.12);
+    backdrop-filter: blur(18px);
+    transition: transform 320ms ease, box-shadow 320ms ease, border-color 320ms ease;
+}
+
+.event-botanica-card::after {
+    content: "";
+    position: absolute;
+    inset: -40% auto -40% -46%;
+    width: 32%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.58), transparent);
+    transform: skewX(-18deg) translateX(-140%);
+    opacity: 0;
+    pointer-events: none;
+}
+
+.event-botanica-card:hover,
+.event-botanica-card:focus-within {
+    transform: translateY(-8px);
+    border-color: rgba(201, 164, 92, 0.46);
+    box-shadow: 0 34px 90px rgba(13, 27, 61, 0.18), 0 0 38px rgba(43, 125, 138, 0.08);
+}
+
+.event-botanica-card:hover::after,
+.event-botanica-card:focus-within::after {
+    animation: event-card-shine 900ms ease forwards;
+}
+
+.event-botanica-badge {
+    position: absolute;
+    top: 18px;
+    left: 18px;
+    z-index: 3;
+    padding: 9px 13px;
+    border: 1px solid rgba(245, 221, 163, 0.46);
+    border-radius: 999px;
+    color: #F5DDA3;
+    background: rgba(7, 26, 45, 0.86);
+    box-shadow: 0 14px 34px rgba(7, 26, 45, 0.22);
+    font-family: Montserrat, sans-serif;
+    font-size: 0.66rem;
+    font-weight: 800;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+}
+
+.event-botanica-image-button {
+    position: relative;
+    display: block;
+    width: 100%;
+    aspect-ratio: 1.02;
+    min-height: 290px;
+    overflow: hidden;
+    padding: 0;
+    border: 0;
+    border-radius: 0 0 28px 28px;
+    background: #071A2D;
+    cursor: pointer;
+}
+
+.event-botanica-image-button::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background:
+        radial-gradient(circle at 72% 20%, rgba(245, 221, 163, 0.28), transparent 36%),
+        linear-gradient(180deg, transparent 48%, rgba(7, 26, 45, 0.18));
+    pointer-events: none;
+}
+
+.event-botanica-image-button img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    filter: saturate(1.06) contrast(1.04);
+    transform: scale(1.08);
+    transition: transform 650ms ease, filter 650ms ease;
+}
+
+.event-botanica-card:hover .event-botanica-image-button img,
+.event-botanica-card:focus-within .event-botanica-image-button img {
+    filter: saturate(1.12) contrast(1.08) brightness(1.04);
+    transform: scale(1.14);
+}
+
+.event-botanica-card--serum .event-botanica-image-button img {
+    object-position: 60% 52%;
+    transform: scale(1.34);
+}
+
+.event-botanica-card--huile .event-botanica-image-button img {
+    object-position: 19% 52%;
+    transform: scale(1.32);
+}
+
+.event-botanica-card--masque .event-botanica-image-button img {
+    object-position: 52% 55%;
+    transform: scale(1.08);
+}
+
+.event-botanica-card--baume .event-botanica-image-button img {
+    object-position: 54% 53%;
+    transform: scale(1.2);
+}
+
+.event-botanica-card--coffret .event-botanica-image-button img {
+    object-position: 68% 50%;
+    transform: scale(1.16);
+}
+
+.event-botanica-card--serum:hover .event-botanica-image-button img,
+.event-botanica-card--huile:hover .event-botanica-image-button img,
+.event-botanica-card--serum:focus-within .event-botanica-image-button img,
+.event-botanica-card--huile:focus-within .event-botanica-image-button img {
+    transform: scale(1.42);
+}
+
+.event-botanica-card-body {
+    display: grid;
+    align-content: start;
+    gap: 14px;
+    padding: 24px;
+}
+
+.event-botanica-category {
+    margin: 0;
+    color: var(--event-petrol);
+    font-family: Montserrat, sans-serif;
+    font-size: 0.68rem;
+    font-weight: 800;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+}
+
+.event-botanica-card h3 {
+    margin: 0;
+    color: var(--event-navy);
+    font-family: "Cormorant Garamond", serif;
+    font-size: clamp(1.8rem, 2.4vw, 2.45rem);
+    line-height: 0.98;
+}
+
+.event-botanica-card-body > p:not(.event-botanica-category) {
+    margin: 0;
+    color: #647287;
+    line-height: 1.62;
+}
+
+.event-botanica-card-footer {
+    display: grid;
+    gap: 12px;
+    margin-top: auto;
+    padding-top: 8px;
+}
+
+.event-botanica-card-footer strong {
+    color: var(--event-navy);
+    font-family: Montserrat, sans-serif;
+    font-size: 1.2rem;
+    font-weight: 800;
+}
+
+.event-botanica-card-footer .button {
+    width: 100%;
+    min-height: 48px;
+    border-radius: 999px;
+    font-size: 0.9rem;
+}
+
+.event-botanica-card-footer .button-outline {
+    border: 1px solid rgba(7, 26, 45, 0.14);
+    color: var(--event-navy);
+    background: rgba(255, 255, 255, 0.74);
+}
+
+.event-botanica-cart-button {
     color: #FFFFFF;
-    background: rgba(255, 255, 255, 0.08);
+    text-decoration: none;
+    background: var(--event-blue);
+}
+
+.event-product-drawer {
+    position: fixed;
+    inset: 0;
+    z-index: 10000;
+    display: grid;
+    place-items: center;
+    padding: 24px;
+}
+
+.event-product-drawer[hidden] {
+    display: none;
+}
+
+.event-product-drawer-overlay {
+    position: fixed;
+    inset: 0;
+    border: 0;
+    background: rgba(2, 8, 20, 0.68);
+    backdrop-filter: blur(14px);
+    cursor: pointer;
+}
+
+.event-product-panel {
+    position: relative;
+    z-index: 1;
+    display: grid;
+    grid-template-columns: minmax(320px, 0.92fr) minmax(360px, 1.08fr);
+    width: min(1080px, calc(100vw - 32px));
+    max-height: calc(100svh - 48px);
+    overflow: auto;
+    border: 1px solid rgba(201, 164, 92, 0.3);
+    border-radius: 34px;
+    color: var(--event-navy);
+    background: rgba(255, 255, 255, 0.94);
+    box-shadow: 0 40px 130px rgba(2, 8, 20, 0.42);
+    animation: event-product-panel-in 360ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.event-modal-open {
+    overflow: hidden;
+}
+
+.event-product-close {
+    position: absolute;
+    top: 18px;
+    right: 18px;
+    z-index: 4;
+    display: grid;
+    place-items: center;
+    width: 44px;
+    height: 44px;
+    border: 1px solid rgba(7, 26, 45, 0.12);
+    border-radius: 50%;
+    color: var(--event-navy);
+    background: rgba(255, 255, 255, 0.82);
+    box-shadow: 0 12px 30px rgba(13, 27, 61, 0.1);
+    font-size: 1.45rem;
+    cursor: pointer;
+}
+
+.event-product-panel-media {
+    position: relative;
+    display: grid;
+    align-content: end;
+    min-height: 560px;
+    padding: 24px;
+    overflow: hidden;
+    background:
+        radial-gradient(circle at 64% 24%, rgba(245, 221, 163, 0.34), transparent 36%),
+        linear-gradient(145deg, #071A2D, #0D1B3D 62%, #173448);
+}
+
+.event-product-panel-media > span {
+    position: absolute;
+    left: 24px;
+    top: 24px;
+    z-index: 2;
+    padding: 9px 13px;
+    border: 1px solid rgba(245, 221, 163, 0.38);
+    border-radius: 999px;
+    color: #F5DDA3;
+    background: rgba(7, 26, 45, 0.55);
+    font-size: 0.68rem;
+    font-weight: 800;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+}
+
+.event-product-panel-media > img {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    opacity: 0.92;
+}
+
+.event-product-panel-gallery {
+    position: relative;
+    z-index: 2;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+}
+
+.event-product-panel-gallery button {
+    overflow: hidden;
+    min-height: 82px;
+    padding: 0;
+    border: 1px solid rgba(245, 221, 163, 0.24);
+    border-radius: 16px;
+    background: rgba(255, 255, 255, 0.12);
+    cursor: pointer;
+}
+
+.event-product-panel-gallery img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.event-product-panel-content {
+    display: grid;
+    align-content: start;
+    gap: 18px;
+    padding: clamp(34px, 4vw, 58px);
+}
+
+.event-product-panel-content h2 {
+    margin: 0;
+    color: var(--event-navy);
+    font-family: "Cormorant Garamond", serif;
+    font-size: clamp(2.5rem, 4vw, 4.4rem);
+    line-height: 0.94;
+}
+
+.event-product-panel-description {
+    margin: 0;
+    color: #647287;
+    font-size: 1.02rem;
+    line-height: 1.72;
+}
+
+.event-product-panel-price {
+    color: var(--event-navy);
+    font-family: Montserrat, sans-serif;
+    font-size: 1.45rem;
+    font-weight: 800;
+}
+
+.event-product-panel-details {
+    display: grid;
+    gap: 12px;
+    margin: 4px 0 0;
+}
+
+.event-product-panel-details div {
+    padding: 16px 18px;
+    border: 1px solid #E8EBF1;
+    border-radius: 18px;
+    background: #FFFFFF;
+}
+
+.event-product-panel-details dt {
+    margin: 0 0 5px;
+    color: var(--event-petrol);
+    font-family: Montserrat, sans-serif;
+    font-size: 0.72rem;
+    font-weight: 800;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+}
+
+.event-product-panel-details dd {
+    margin: 0;
+    color: #647287;
+    line-height: 1.55;
+}
+
+.event-product-panel-actions {
+    display: grid;
+    grid-template-columns: 140px 1fr;
+    gap: 14px;
+    align-items: center;
+    margin-top: 8px;
+}
+
+.event-product-quantity {
+    display: grid;
+    grid-template-columns: 38px 1fr 38px;
+    align-items: center;
+    min-height: 54px;
+    overflow: hidden;
+    border: 1px solid #E8EBF1;
+    border-radius: 999px;
+    background: #FFFFFF;
+}
+
+.event-product-quantity button {
+    height: 100%;
+    border: 0;
+    color: var(--event-navy);
+    background: transparent;
+    font-size: 1.1rem;
+    font-weight: 800;
+    cursor: pointer;
+}
+
+.event-product-quantity input {
+    width: 100%;
+    border: 0;
+    color: var(--event-navy);
+    background: transparent;
+    font-weight: 800;
+    text-align: center;
+}
+
+.event-product-quantity input:focus {
+    outline: none;
+}
+
+.event-product-panel-add {
+    min-height: 54px;
+    text-decoration: none;
+}
+
+.event-botanica-cart-button.is-loading,
+.event-product-panel-add.is-loading {
+    opacity: 0.72;
+    pointer-events: none;
+}
+
+.event-botanica-cart-button.added,
+.event-product-panel-add.added {
+    background: var(--event-petrol);
+    box-shadow: 0 18px 44px rgba(43, 125, 138, 0.22);
 }
 
 .event-gallery {
@@ -21785,9 +22360,43 @@ select:focus,
     100% { transform: translateY(0); opacity: 1; }
 }
 
+@keyframes event-lid-glow {
+    0% { opacity: 0; transform: translate3d(0, 34px, 70px) scale(0.55); }
+    42% { opacity: 0.9; transform: translate3d(-8px, -30px, 120px) scale(1); }
+    100% { opacity: 0.38; transform: translate3d(-22px, -58px, 135px) scale(1.12); }
+}
+
+@keyframes event-cream-light {
+    0% { opacity: 0; transform: translate3d(0, 24px, 130px) scale(0.58); }
+    56% { opacity: 0.95; transform: translate3d(0, -4px, 150px) scale(1.08); }
+    100% { opacity: 0.72; transform: translate3d(0, -8px, 150px) scale(1); }
+}
+
+@keyframes event-cream-breathe {
+    0%, 100% { opacity: 0.55; transform: translate3d(0, -8px, 150px) scale(0.94); }
+    50% { opacity: 0.82; transform: translate3d(0, -14px, 160px) scale(1.08); }
+}
+
+@keyframes event-smoke-rise {
+    0% { opacity: 0; transform: translate3d(0, 22px, 0) scale(0.45); }
+    22% { opacity: 0.46; }
+    70% { opacity: 0.22; transform: translate3d(10px, -52px, 0) scale(1.08); }
+    100% { opacity: 0; transform: translate3d(18px, -86px, 0) scale(1.3); }
+}
+
+@keyframes event-card-shine {
+    0% { opacity: 0; transform: skewX(-18deg) translateX(-140%); }
+    32% { opacity: 1; }
+    100% { opacity: 0; transform: skewX(-18deg) translateX(520%); }
+}
+
+@keyframes event-product-panel-in {
+    from { opacity: 0; transform: translate3d(0, 26px, 0) scale(0.97); }
+    to { opacity: 1; transform: translate3d(0, 0, 0) scale(1); }
+}
+
 @media (max-width: 1120px) {
     .event-hero,
-    .event-experience-section,
     .event-reservation-section {
         grid-template-columns: 1fr;
     }
@@ -21817,6 +22426,14 @@ select:focus,
 
     .event-gallery {
         grid-template-columns: 1fr 1fr;
+    }
+
+    .event-botanica-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .event-product-panel {
+        grid-template-columns: 0.95fr 1.05fr;
     }
 }
 
@@ -21973,13 +22590,36 @@ select:focus,
     .event-reservation-section,
     .event-slider-section,
     .event-timeline-section,
+    .event-botanica-shop-section,
     .event-gallery-section {
         padding: 48px 18px;
     }
 
-    .event-experience-section {
-        margin: 0 18px;
-        padding: 32px 20px;
+    .event-botanica-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .event-product-drawer {
+        padding: 12px;
+        align-items: end;
+    }
+
+    .event-product-panel {
+        grid-template-columns: 1fr;
+        max-height: calc(100svh - 24px);
+        border-radius: 28px;
+    }
+
+    .event-product-panel-media {
+        min-height: 310px;
+    }
+
+    .event-product-panel-content {
+        padding: 24px 20px 22px;
+    }
+
+    .event-product-panel-actions {
+        grid-template-columns: 1fr;
     }
 }
 
@@ -21992,7 +22632,12 @@ select:focus,
     .event-cinematic-dust,
     .event-edition-seal,
     .event-main-product,
-    .event-main-product-shine {
+    .event-main-product-shine,
+    .event-main-product-lid-glow,
+    .event-main-product-cream-light,
+    .event-main-product-smoke i,
+    .event-botanica-card::after,
+    .event-product-panel {
         animation: none !important;
     }
 
