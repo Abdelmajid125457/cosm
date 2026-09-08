@@ -21436,15 +21436,16 @@ select:focus,
 .event-real-pot.botanica-asset-pot {
     --botanica-asset-pot-width: clamp(330px, 36vw, 560px);
     --botanica-lid-x: 0%;
-    --botanica-lid-y: 31%;
-    --botanica-lid-z: 190px;
+    --botanica-lid-y: 32%;
+    --botanica-lid-z: 216px;
     --botanica-lid-rotate-x: 0deg;
     --botanica-lid-rotate-z: 0deg;
-    --botanica-lid-scale: 1;
+    --botanica-lid-scale-x: 0.88;
+    --botanica-lid-scale-y: 0.46;
     --botanica-cream-opacity: 0;
-    --botanica-cream-y: 18%;
+    --botanica-cream-y: 10%;
     --botanica-cream-z: 146px;
-    --botanica-cream-scale: 0.9;
+    --botanica-cream-scale: 0.82;
     width: var(--botanica-asset-pot-width);
     aspect-ratio: 1.5;
     filter: drop-shadow(0 54px 104px rgba(0, 0, 0, 0.5));
@@ -21468,9 +21469,9 @@ select:focus,
 .event-real-pot.botanica-asset-pot::after {
     content: "";
     position: absolute;
-    inset: 11% 22% 10% 26%;
+    inset: 46% 24% 12% 27%;
     z-index: 14;
-    border-radius: 34% 40% 22% 24% / 34% 38% 18% 20%;
+    border-radius: 28% 31% 18% 20% / 24% 26% 18% 20%;
     background: linear-gradient(105deg, transparent 16%, rgba(255, 255, 255, 0.3) 42%, transparent 58%);
     filter: blur(2px);
     opacity: 0;
@@ -21493,7 +21494,7 @@ select:focus,
 .event-real-pot.botanica-asset-pot .event-real-pot-shadow {
     left: 18%;
     right: 18%;
-    bottom: 6%;
+    bottom: 5%;
     height: 16%;
     background: radial-gradient(ellipse, rgba(0, 0, 0, 0.58), rgba(201, 164, 92, 0.2) 44%, transparent 76%);
     filter: blur(18px);
@@ -21515,7 +21516,7 @@ select:focus,
     overflow: hidden;
     border: 0;
     border-radius: 0;
-    clip-path: inset(43% 23% 9% 25% round 17% 17% 8% 8%);
+    clip-path: inset(51% 24% 10% 27% round 18% 18% 8% 8%);
     box-shadow:
         inset 0 18px 36px rgba(255, 255, 255, 0.05),
         inset 0 -28px 52px rgba(2, 8, 20, 0.35),
@@ -21530,7 +21531,7 @@ select:focus,
 .event-real-pot.botanica-asset-pot .event-real-pot-jar::after {
     content: "";
     position: absolute;
-    inset: 42% auto 8% 31%;
+    inset: 52% auto 10% 32%;
     width: 9%;
     background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.24), transparent);
     filter: blur(1.5px);
@@ -21544,11 +21545,11 @@ select:focus,
     height: auto;
     overflow: hidden;
     border-radius: 0;
-    clip-path: inset(8% 21% 50% 28% round 22% 28% 16% 18%);
+    clip-path: inset(9% 23% 68% 32% round 24% 30% 19% 20%);
     box-shadow: 0 20px 48px rgba(0, 0, 0, 0.42);
-    transform: translate3d(var(--botanica-lid-x), var(--botanica-lid-y), var(--botanica-lid-z)) rotateX(var(--botanica-lid-rotate-x)) rotateZ(var(--botanica-lid-rotate-z)) scale(var(--botanica-lid-scale));
-    transform-origin: 50% 43%;
-    transition: filter 980ms ease, transform 1080ms cubic-bezier(0.16, 1, 0.3, 1);
+    transform: translate3d(var(--botanica-lid-x), var(--botanica-lid-y), var(--botanica-lid-z)) rotateX(var(--botanica-lid-rotate-x)) rotateZ(var(--botanica-lid-rotate-z)) scale(var(--botanica-lid-scale-x), var(--botanica-lid-scale-y));
+    transform-origin: 51% 40%;
+    transition: filter 980ms ease, transform 1180ms cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .event-real-pot.botanica-asset-pot .event-real-pot-lid::after {
@@ -21568,7 +21569,7 @@ select:focus,
     overflow: hidden;
     border-radius: 0;
     border: 0;
-    clip-path: inset(30% 25% 48% 28% round 50%);
+    clip-path: inset(30% 27% 49% 30% round 50%);
     box-shadow: 0 0 42px rgba(245, 221, 163, 0.42), inset 0 -7px 14px rgba(185, 139, 58, 0.18);
     opacity: var(--botanica-cream-opacity);
     transform: translate3d(0, var(--botanica-cream-y), var(--botanica-cream-z)) scale(var(--botanica-cream-scale));
@@ -21576,14 +21577,14 @@ select:focus,
 }
 
 .event-real-pot.botanica-asset-pot .event-real-pot-cream span {
-    inset: 29% 26% 48% 28%;
+    inset: 30% 28% 49% 30%;
     border-radius: 50%;
     background: radial-gradient(ellipse at 50% 38%, rgba(255, 255, 255, 0.5), rgba(245, 221, 163, 0.14) 38%, transparent 72%);
     mix-blend-mode: screen;
 }
 
 .event-real-pot.botanica-asset-pot .event-real-pot-reflection {
-    inset: 39% 28% 9% auto;
+    inset: 49% 29% 10% auto;
     z-index: 10;
     width: 10%;
     border-radius: 999px;
@@ -21594,21 +21595,21 @@ select:focus,
 }
 
 .event-real-pot.botanica-asset-pot .event-real-pot-light {
-    left: 27%;
-    right: 23%;
-    bottom: 33%;
-    height: 40%;
+    left: 30%;
+    right: 27%;
+    bottom: 40%;
+    height: 36%;
     z-index: 12;
 }
 
 .event-real-pot.botanica-asset-pot .event-real-pot-particles {
-    inset: 12% 18% 17%;
+    inset: 14% 20% 22%;
 }
 
 .event-real-pot.botanica-asset-pot .event-real-pot-smoke {
-    left: 30%;
-    right: 27%;
-    bottom: 45%;
+    left: 32%;
+    right: 29%;
+    bottom: 47%;
 }
 
 .botanica-home-pot-scene .event-real-pot.botanica-asset-pot {
@@ -21617,20 +21618,22 @@ select:focus,
 
 .event-collection-scene.is-opening .event-real-pot.botanica-asset-pot,
 .event-collection-scene.is-open .event-real-pot.botanica-asset-pot {
-    --botanica-lid-x: 8%;
-    --botanica-lid-y: -18%;
+    --botanica-lid-x: 5%;
+    --botanica-lid-y: -15%;
     --botanica-lid-z: 304px;
-    --botanica-lid-rotate-x: 14deg;
+    --botanica-lid-rotate-x: 13deg;
     --botanica-lid-rotate-z: 3deg;
-    --botanica-lid-scale: 1.01;
+    --botanica-lid-scale-x: 1.02;
+    --botanica-lid-scale-y: 1;
     --botanica-cream-opacity: 1;
-    --botanica-cream-y: 0%;
+    --botanica-cream-y: 1%;
     --botanica-cream-z: 154px;
     --botanica-cream-scale: 1;
 }
 
 .event-collection-scene.is-opening .event-real-pot.botanica-asset-pot .event-real-pot-lid,
 .event-collection-scene.is-open .event-real-pot.botanica-asset-pot .event-real-pot-lid {
+    clip-path: inset(9% 23% 66% 32% round 24% 30% 19% 20%);
     filter: drop-shadow(0 28px 48px rgba(245, 221, 163, 0.22));
 }
 

@@ -2,6 +2,32 @@
 
 Toutes les interventions sur le thème doivent être sauvegardées et documentées ici.
 
+## 2026-09-08 04:15 - Hero Botanica : pot fermé réaliste et transition immersive
+
+Résumé :
+- Recalibrage du Hero Botanica de la page d'accueil pour éviter l'effet de deux pots superposés.
+- Conservation de l'asset haute qualité de la fiche produit Botanica comme source visuelle commune du composant interactif.
+- Ajustement des calques du pot : corps recadré sous la zone crème, couvercle posé sur le col en état fermé, crème masquée au chargement.
+- Ajout d'une ouverture plus naturelle : le couvercle reprend son volume, pivote, se soulève, puis la crème, la fumée, les particules et la lumière dorée apparaissent.
+- Ralentissement de la séquence avant redirection afin que l'animation se termine avant le passage vers la page Événement.
+- Redirection finale nettoyée vers `/evenement/`, avec continuité de l'état ouvert via la session navigateur.
+
+Fichiers modifiés :
+- `front-page.php`
+- `style.css`
+- `js/main.js`
+- `CHANGELOG.md`
+
+Corrections de bugs :
+- Correction du couvercle trop bas ou trop haut selon l'état du Hero.
+- Correction de la crème visible dans l'état fermé.
+- Correction de la transition qui utilisait auparavant un paramètre visible dans l'URL.
+- Vérification JavaScript : `js/main.js` valide avec `node --check`.
+- Vérification PHP : `front-page.php`, `functions.php` et `template-parts/page-evenement.php` sans erreur de syntaxe.
+- Vérification Git : `git diff --check` sans erreur.
+- Contrôle visuel temporaire du compositing fermé à partir de l'asset Botanica réel.
+- Test navigateur WordPress non finalisé : `cosmethique.local` ne répondait pas depuis l'environnement de travail au moment du contrôle.
+
 ## 2026-09-08 02:42 - Hero Botanica : asset produit unique et ouverture synchronisée
 
 Résumé :

@@ -3460,23 +3460,24 @@ Thomas Bernard`,
 
         if (isOpen) {
             pot.classList.add('is-visually-open');
-            pot.style.setProperty('--botanica-lid-x', '8%');
-            pot.style.setProperty('--botanica-lid-y', '-18%');
+            pot.style.setProperty('--botanica-lid-x', '5%');
+            pot.style.setProperty('--botanica-lid-y', '-15%');
             pot.style.setProperty('--botanica-lid-z', '304px');
-            pot.style.setProperty('--botanica-lid-rotate-x', '14deg');
+            pot.style.setProperty('--botanica-lid-rotate-x', '13deg');
             pot.style.setProperty('--botanica-lid-rotate-z', '3deg');
-            pot.style.setProperty('--botanica-lid-scale', '1.01');
+            pot.style.setProperty('--botanica-lid-scale-x', '1.02');
+            pot.style.setProperty('--botanica-lid-scale-y', '1');
             pot.style.setProperty('--botanica-cream-opacity', '1');
-            pot.style.setProperty('--botanica-cream-y', '0%');
+            pot.style.setProperty('--botanica-cream-y', '1%');
             pot.style.setProperty('--botanica-cream-z', '154px');
             pot.style.setProperty('--botanica-cream-scale', '1');
 
             if (lid) {
-                lid.style.transform = 'translate3d(8%, -18%, 304px) rotateX(14deg) rotateZ(3deg) scale(1.01)';
+                lid.style.transform = 'translate3d(5%, -15%, 304px) rotateX(13deg) rotateZ(3deg) scale(1.02, 1)';
             }
             if (cream) {
                 cream.style.opacity = '1';
-                cream.style.transform = 'translate3d(0, 0%, 154px) scale(1)';
+                cream.style.transform = 'translate3d(0, 1%, 154px) scale(1)';
             }
             return;
         }
@@ -3488,7 +3489,8 @@ Thomas Bernard`,
             '--botanica-lid-z',
             '--botanica-lid-rotate-x',
             '--botanica-lid-rotate-z',
-            '--botanica-lid-scale',
+            '--botanica-lid-scale-x',
+            '--botanica-lid-scale-y',
             '--botanica-cream-opacity',
             '--botanica-cream-y',
             '--botanica-cream-z',
@@ -3519,10 +3521,10 @@ Thomas Bernard`,
         const resolveBotanicaLaunchUrl = (rawUrl = '') => {
             try {
                 const url = new URL(rawUrl || botanicaHomeHero.dataset.homeEventUrl || '/evenement/', window.location.href);
-                url.searchParams.set('botanica', 'reveal');
+                url.searchParams.delete('botanica');
                 return url.toString();
             } catch (error) {
-                return rawUrl || '/evenement/?botanica=reveal';
+                return rawUrl || '/evenement/';
             }
         };
 
@@ -3571,16 +3573,16 @@ Thomas Bernard`,
                 homeInteractivePot?.classList.add('is-open');
                 homeInteractivePot?.classList.remove('is-opening');
                 applyBotanicaPotVisualState(homeInteractivePot, true);
-            }, 980);
+            }, 1240);
 
             window.setTimeout(() => {
                 botanicaHomeHero.classList.add('is-portal');
                 homeProductShowcase?.classList.add('is-portal');
-            }, 1540);
+            }, 1880);
 
             window.setTimeout(() => {
                 window.location.assign(targetUrl);
-            }, 2240);
+            }, 2920);
         };
 
         if (window.gsap && !prefersReducedMotion) {

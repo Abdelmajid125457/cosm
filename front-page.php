@@ -12,7 +12,7 @@ $visage_url  = function_exists( 'theme_perso_get_shop_collection_url' ) ? theme_
 $corps_url   = function_exists( 'theme_perso_get_shop_collection_url' ) ? theme_perso_get_shop_collection_url( 'corps', $shop_url ) : $shop_url;
 $cheveux_url = function_exists( 'theme_perso_get_shop_collection_url' ) ? theme_perso_get_shop_collection_url( 'cheveux', $shop_url ) : $shop_url;
 $event_url   = function_exists( 'theme_perso_footer_page_url' ) ? theme_perso_footer_page_url( 'evenement' ) : home_url( '/evenement/' );
-$event_transition_url = add_query_arg( 'botanica', 'reveal', $event_url );
+$event_transition_url = $event_url;
 $botanica_pot_asset = function_exists( 'theme_perso_botanica_primary_pot_asset_url' ) ? theme_perso_botanica_primary_pot_asset_url() : get_template_directory_uri() . '/assets/hero/cosmethique-botanica-cream-reveal.png';
 ?>
 
