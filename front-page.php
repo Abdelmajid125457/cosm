@@ -13,7 +13,6 @@ $corps_url   = function_exists( 'theme_perso_get_shop_collection_url' ) ? theme_
 $cheveux_url = function_exists( 'theme_perso_get_shop_collection_url' ) ? theme_perso_get_shop_collection_url( 'cheveux', $shop_url ) : $shop_url;
 $event_url   = function_exists( 'theme_perso_footer_page_url' ) ? theme_perso_footer_page_url( 'evenement' ) : home_url( '/evenement/' );
 $event_transition_url = $event_url;
-$botanica_pot_asset = function_exists( 'theme_perso_botanica_primary_pot_asset_url' ) ? theme_perso_botanica_primary_pot_asset_url() : get_template_directory_uri() . '/assets/hero/cosmethique-botanica-cream-reveal.png';
 ?>
 
 <main id="primary" class="site-main front-page">
@@ -36,8 +35,14 @@ $botanica_pot_asset = function_exists( 'theme_perso_botanica_primary_pot_asset_u
             <p class="botanica-pot-instruction"><?php esc_html_e( 'Cliquez sur le pot pour ouvrir le lancement.', 'theme-perso' ); ?></p>
         </div>
         <div class="botanica-product-stage">
-            <button class="botanica-single-product" type="button" data-botanica-launch-trigger data-botanica-target="<?php echo esc_url( $event_transition_url ); ?>" aria-label="<?php esc_attr_e( 'Ouvrir le pot Botanica et découvrir le lancement', 'theme-perso' ); ?>">
-                <img src="<?php echo esc_url( $botanica_pot_asset ); ?>" alt="<?php esc_attr_e( 'Pot de crème Botanica Cosm’Éthique', 'theme-perso' ); ?>" loading="eager" decoding="async" fetchpriority="high">
+            <button class="botanica-cream-pot" type="button" data-botanica-launch-trigger data-botanica-target="<?php echo esc_url( $event_transition_url ); ?>" aria-label="<?php esc_attr_e( 'Ouvrir le pot Botanica et découvrir le lancement', 'theme-perso' ); ?>">
+                <span class="botanica-pot-body" aria-hidden="true">
+                    <span class="botanica-pot-brand">Cosm’Éthique</span>
+                    <span class="botanica-pot-name">Botanica</span>
+                    <span class="botanica-pot-detail">Crème régénérante</span>
+                </span>
+                <span class="botanica-pot-cream" aria-hidden="true"></span>
+                <span class="botanica-pot-lid" aria-hidden="true"></span>
             </button>
         </div>
     </section>
