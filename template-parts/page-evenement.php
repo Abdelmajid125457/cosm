@@ -19,7 +19,7 @@ $botanica_arrival = isset( $_GET['botanica'] ) && ! is_array( $_GET['botanica'] 
 $arrive_from_home = 'reveal' === $botanica_arrival;
 $botanica_home    = $asset( 'hero', 'cosmethique-botanica-home-campaign.png' );
 $botanica_suite   = $asset( 'hero', 'cosmethique-botanica-campaign-suite.png' );
-$botanica_reveal  = $asset( 'hero', 'cosmethique-botanica-cream-reveal.png' );
+$botanica_reveal  = function_exists( 'theme_perso_botanica_primary_pot_asset_url' ) ? theme_perso_botanica_primary_pot_asset_url() : $asset( 'hero', 'cosmethique-botanica-cream-reveal.png' );
 $botanica_preview = $asset( 'hero', 'cosmethique-botanica-launch-preview.png' );
 
 $event_cards = array(
@@ -69,6 +69,24 @@ foreach ( $botanica_catalog as $product_title => $product_data ) {
 
     if ( $wc_product instanceof WC_Product && $wc_product->get_price_html() ) {
         $price_html = $wc_product->get_price_html();
+    }
+
+    if ( $wc_product instanceof WC_Product && function_exists( 'theme_perso_product_gallery_images' ) ) {
+        $product_gallery = theme_perso_product_gallery_images( $wc_product );
+        $primary_image    = function_exists( 'theme_perso_product_primary_gallery_image_url' ) ? theme_perso_product_primary_gallery_image_url( $wc_product ) : '';
+
+        if ( $primary_image ) {
+            $product_data['image'] = $primary_image;
+        }
+
+        if ( ! empty( $product_gallery ) ) {
+            if ( $primary_image ) {
+                array_unshift( $product_gallery, $primary_image );
+                $product_gallery = array_values( array_unique( array_filter( $product_gallery ) ) );
+            }
+
+            $product_data['gallery'] = $product_gallery;
+        }
     }
 
     $botanica_shop_products[] = array_merge(

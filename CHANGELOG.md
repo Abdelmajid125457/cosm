@@ -2,6 +2,31 @@
 
 Toutes les interventions sur le thème doivent être sauvegardées et documentées ici.
 
+## 2026-09-08 02:42 - Hero Botanica : asset produit unique et ouverture synchronisée
+
+Résumé :
+- Raccordement du Hero Botanica de la page d'accueil à la même source d'image que la fiche produit WooCommerce "Crème Hydratante Botanica".
+- Ajout d'un helper global qui récupère l'image primaire réelle du produit dans le même ordre que la galerie produit : galerie Cosm'Éthique, image produit, puis image mise en avant.
+- Synchronisation de la page Événement avec cette même source afin d'éviter toute version différente du pot Botanica.
+- Ajustement du pot interactif en calques animables issus d'un seul asset : corps, couvercle, crème, halo, fumée, particules et reflets.
+- Correction de l'état visuel au clic pour garantir l'ouverture du couvercle, l'apparition de la crème et la transition lumineuse vers `/evenement/`.
+
+Fichiers modifiés :
+- `functions.php`
+- `front-page.php`
+- `template-parts/page-evenement.php`
+- `style.css`
+- `js/main.js`
+- `CHANGELOG.md`
+
+Corrections de bugs :
+- Suppression du risque de divergence entre le pot du Hero et le pot réellement affiché sur la fiche produit.
+- Correction de la priorité d'image pour suivre la galerie produit réelle au lieu d'une image codée à part.
+- Vérification JavaScript : `js/main.js` valide avec `node --check`.
+- Vérification PHP : `functions.php`, `front-page.php` et `template-parts/page-evenement.php` sans erreur de syntaxe.
+- Vérification Git : `git diff --check` sans erreur.
+- Test navigateur non finalisé : `cosmethique.local` ne répondait pas depuis l'environnement de travail au moment du contrôle.
+
 ## 2026-09-07 23:39 - Hero Accueil Botanica : pot premium interactif
 
 Résumé :

@@ -1457,6 +1457,86 @@ function theme_perso_botanica_collection_products() {
     );
 }
 
+function theme_perso_product_primary_gallery_image_url( $product ) {
+    if ( ! class_exists( 'WC_Product' ) || ! $product instanceof WC_Product ) {
+        return '';
+    }
+
+    $gallery = get_post_meta( $product->get_id(), '_cosmethique_gallery_images', true );
+
+    if ( is_array( $gallery ) && ! empty( $gallery ) ) {
+        $gallery = array_values( array_filter( $gallery ) );
+
+        if ( ! empty( $gallery[0] ) ) {
+            return $gallery[0];
+        }
+    }
+
+    $image_url = get_post_meta( $product->get_id(), '_cosmethique_image_url', true );
+
+    if ( $image_url ) {
+        return $image_url;
+    }
+
+    if ( $product->get_image_id() ) {
+        $thumbnail = wp_get_attachment_image_url( $product->get_image_id(), 'full' );
+
+        if ( $thumbnail ) {
+            return $thumbnail;
+        }
+    }
+
+    return '';
+}
+
+function theme_perso_botanica_primary_pot_asset_url() {
+    $catalog  = theme_perso_botanica_collection_products();
+    $fallback = isset( $catalog['Crème Hydratante Botanica']['image'] ) ? $catalog['Crème Hydratante Botanica']['image'] : theme_perso_botanica_asset_url( 'cosmethique-botanica-cream-reveal.png' );
+    $product  = theme_perso_get_seed_product( 'Crème Hydratante Botanica' );
+
+    if ( ! $product ) {
+        return $fallback;
+    }
+
+    if ( function_exists( 'wc_get_product' ) ) {
+        $wc_product = wc_get_product( $product->ID );
+
+        if ( $wc_product instanceof WC_Product && function_exists( 'theme_perso_product_primary_gallery_image_url' ) ) {
+            $primary_image = theme_perso_product_primary_gallery_image_url( $wc_product );
+
+            if ( $primary_image ) {
+                return $primary_image;
+            }
+        }
+    }
+
+    $gallery = get_post_meta( $product->ID, '_cosmethique_gallery_images', true );
+
+    if ( is_array( $gallery ) && ! empty( $gallery ) ) {
+        $gallery = array_values( array_filter( $gallery ) );
+
+        if ( ! empty( $gallery[0] ) ) {
+            return $gallery[0];
+        }
+    }
+
+    $image_url = get_post_meta( $product->ID, '_cosmethique_image_url', true );
+
+    if ( $image_url ) {
+        return $image_url;
+    }
+
+    if ( has_post_thumbnail( $product->ID ) ) {
+        $thumbnail = get_the_post_thumbnail_url( $product->ID, 'full' );
+
+        if ( $thumbnail ) {
+            return $thumbnail;
+        }
+    }
+
+    return $fallback;
+}
+
 function theme_perso_featured_blog_cards() {
     return array(
         array(
