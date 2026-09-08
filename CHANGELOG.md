@@ -2,6 +2,30 @@
 
 Toutes les interventions sur le thème doivent être sauvegardées et documentées ici.
 
+## 2026-09-08 12:17 CEST - Hero Botanica : suppression du montage et pot unique
+
+Résumé :
+- Suppression complète du montage visuel du Hero d'accueil qui pouvait donner l'impression de deux pots superposés.
+- Retrait des calques HTML décoratifs liés au pot : ombre séparée, rayons, halo, poussières, particules, fumée, reflet et lumière en spans indépendants.
+- Reconstruction du produit interactif d'accueil comme un composant unique composé uniquement de trois éléments animables : corps du pot, couvercle et crème.
+- Raccordement de ces trois éléments à la même source Botanica haute qualité que la fiche produit, sans afficher d'image complète ou de second pot.
+- Conservation de la séquence cinématique au clic : ouverture du couvercle, apparition de la crème, lumière chaude, puis transition fluide vers `/evenement/`.
+- Déplacement du fondu lumineux de transition vers un pseudo-élément CSS du Hero pour éviter tout calque HTML supplémentaire dans la scène produit.
+
+Fichiers modifiés :
+- `front-page.php`
+- `style.css`
+- `js/main.js`
+- `CHANGELOG.md`
+
+Corrections de bugs :
+- Suppression de l'effet visuel de double produit dans le Hero d'accueil.
+- Suppression des anciens styles d'accueil destinés au pot en image fragmentée.
+- Vérification PHP : `front-page.php` sans erreur de syntaxe.
+- Vérification JavaScript : `js/main.js` valide avec `node --check`.
+- Vérification Git : `git diff --check` sans erreur.
+- Test navigateur non finalisé : `cosmethique.local` ne répondait pas depuis l'environnement au moment du contrôle.
+
 ## 2026-09-08 04:15 - Hero Botanica : pot fermé réaliste et transition immersive
 
 Résumé :

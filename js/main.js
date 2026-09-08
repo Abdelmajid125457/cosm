@@ -3458,6 +3458,11 @@ Thomas Bernard`,
         const lid = pot.querySelector('.event-real-pot-lid');
         const cream = pot.querySelector('.event-real-pot-cream');
 
+        if (pot.classList.contains('botanica-single-pot')) {
+            pot.classList.toggle('is-visually-open', isOpen);
+            return;
+        }
+
         if (isOpen) {
             pot.classList.add('is-visually-open');
             pot.style.setProperty('--botanica-lid-x', '5%');

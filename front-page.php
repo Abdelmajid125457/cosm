@@ -54,35 +54,13 @@ $botanica_pot_asset = function_exists( 'theme_perso_botanica_primary_pot_asset_u
             </div>
         </div>
         <div class="botanica-product-showcase botanica-product-showcase--pot" data-home-botanica-showcase>
-            <span class="botanica-launch-ray"></span>
-            <span class="botanica-showcase-halo"></span>
-            <span class="botanica-showcase-dust"></span>
-            <span class="botanica-showcase-leaf botanica-showcase-leaf--one"></span>
-            <span class="botanica-showcase-leaf botanica-showcase-leaf--two"></span>
             <div class="event-collection-scene botanica-home-pot-scene" data-botanica-home-pot-scene style="--botanica-pot-asset: url('<?php echo esc_url( $botanica_pot_asset ); ?>');" aria-label="<?php esc_attr_e( 'Pot de crème Botanica interactif', 'theme-perso' ); ?>">
-                <button class="event-real-pot botanica-asset-pot botanica-home-pot" type="button" data-botanica-launch-trigger data-botanica-target="<?php echo esc_url( $event_transition_url ); ?>" aria-label="<?php esc_attr_e( 'Ouvrir le pot Botanica et découvrir le lancement', 'theme-perso' ); ?>">
-                    <span class="event-real-pot-shadow" aria-hidden="true"></span>
-                    <span class="event-real-pot-lid" aria-hidden="true"></span>
-                    <span class="event-real-pot-cream" aria-hidden="true">
-                        <span></span>
-                    </span>
-                    <span class="event-real-pot-jar" aria-hidden="true"></span>
-                    <span class="event-real-pot-reflection" aria-hidden="true"></span>
-                    <span class="event-real-pot-light" aria-hidden="true"></span>
-                    <span class="event-real-pot-particles" aria-hidden="true">
-                        <?php for ( $i = 0; $i < 10; $i++ ) : ?>
-                            <i></i>
-                        <?php endfor; ?>
-                    </span>
-                    <span class="event-real-pot-smoke" aria-hidden="true">
-                        <i></i>
-                        <i></i>
-                        <i></i>
-                    </span>
+                <button class="event-real-pot botanica-single-pot botanica-home-pot" type="button" data-botanica-launch-trigger data-botanica-target="<?php echo esc_url( $event_transition_url ); ?>" aria-label="<?php esc_attr_e( 'Ouvrir le pot Botanica et découvrir le lancement', 'theme-perso' ); ?>">
+                    <span class="event-real-pot-jar botanica-pot-body" aria-hidden="true"></span>
+                    <span class="event-real-pot-lid botanica-pot-lid" aria-hidden="true"></span>
+                    <span class="event-real-pot-cream botanica-pot-cream" aria-hidden="true"></span>
                 </button>
-                <span class="botanica-pot-hint" aria-hidden="true"><?php esc_html_e( 'Cliquez pour révéler Botanica', 'theme-perso' ); ?></span>
             </div>
-            <span class="botanica-portal-light" data-botanica-portal aria-hidden="true"></span>
         </div>
     </section>
 
