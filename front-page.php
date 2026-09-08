@@ -19,10 +19,27 @@ $botanica_pot_asset = function_exists( 'theme_perso_botanica_primary_pot_asset_u
 <main id="primary" class="site-main front-page">
     <section class="hero-section hero-section--botanica-single" aria-labelledby="hero-title" data-home-botanica-hero data-home-event-url="<?php echo esc_url( $event_transition_url ); ?>">
         <div class="botanica-single-hero-bg" aria-hidden="true"></div>
-        <h1 id="hero-title" class="screen-reader-text"><?php esc_html_e( 'Botanica - lancement de la nouvelle collection Cosm’Éthique', 'theme-perso' ); ?></h1>
-        <button class="botanica-single-product" type="button" data-botanica-launch-trigger data-botanica-target="<?php echo esc_url( $event_transition_url ); ?>" aria-label="<?php esc_attr_e( 'Ouvrir le pot Botanica et découvrir le lancement', 'theme-perso' ); ?>">
-            <img src="<?php echo esc_url( $botanica_pot_asset ); ?>" alt="<?php esc_attr_e( 'Pot de crème Botanica Cosm’Éthique', 'theme-perso' ); ?>" loading="eager" decoding="async" fetchpriority="high">
-        </button>
+        <div class="botanica-hero-particles" aria-hidden="true">
+            <?php for ( $i = 0; $i < 12; $i++ ) : ?>
+                <span></span>
+            <?php endfor; ?>
+        </div>
+        <div class="hero-content botanica-hero-content">
+            <p class="eyebrow botanica-event-badge">Nouvelle collection</p>
+            <p class="botanica-season">Édition Automne 2026</p>
+            <h1 id="hero-title">Botanica</h1>
+            <p>Une routine botanique premium inspirée des actifs naturels les plus précieux.</p>
+            <div class="botanica-event-meta" aria-label="<?php esc_attr_e( 'Date et lieu du lancement Botanica', 'theme-perso' ); ?>">
+                <span><strong>15 Octobre 2026</strong></span>
+                <span><strong><?php esc_html_e( 'Paris & en ligne', 'theme-perso' ); ?></strong></span>
+            </div>
+            <p class="botanica-pot-instruction"><?php esc_html_e( 'Cliquez sur le pot pour ouvrir le lancement.', 'theme-perso' ); ?></p>
+        </div>
+        <div class="botanica-product-stage">
+            <button class="botanica-single-product" type="button" data-botanica-launch-trigger data-botanica-target="<?php echo esc_url( $event_transition_url ); ?>" aria-label="<?php esc_attr_e( 'Ouvrir le pot Botanica et découvrir le lancement', 'theme-perso' ); ?>">
+                <img src="<?php echo esc_url( $botanica_pot_asset ); ?>" alt="<?php esc_attr_e( 'Pot de crème Botanica Cosm’Éthique', 'theme-perso' ); ?>" loading="eager" decoding="async" fetchpriority="high">
+            </button>
+        </div>
     </section>
 
     <section class="home-univers-section" aria-labelledby="home-univers-title">
