@@ -1375,529 +1375,279 @@ select.is-demo-placeholder {
     animation: hero-copy-reveal 0.78s ease 0.62s forwards, luxe-soft-float 7s ease-in-out 1.55s infinite;
 }
 
-.hero-section--botanica {
-    min-height: clamp(780px, 94vh, 1020px);
+.hero-section--botanica-single {
+    position: relative;
+    display: grid;
     place-items: center;
-    padding: clamp(104px, 9vw, 150px) clamp(22px, 6vw, 110px);
+    min-height: clamp(680px, 92vh, 980px);
+    padding: clamp(54px, 7vw, 110px) 20px;
     isolation: isolate;
-    background: #071A2D;
     overflow: hidden;
     overflow: clip;
-    --botanica-scroll-scale: 1;
-    --botanica-scroll-y: 0px;
-    --botanica-scroll-opacity: 1;
+    background: #071A2D;
 }
 
-.botanica-hero-bg {
+.botanica-single-hero-bg {
     position: absolute;
     inset: 0;
     z-index: -3;
+    overflow: hidden;
     background:
-        radial-gradient(circle at 76% 46%, rgba(245, 221, 163, 0.2), transparent 26%),
-        radial-gradient(circle at 62% 62%, rgba(43, 125, 138, 0.24), transparent 34%),
-        radial-gradient(circle at 16% 46%, rgba(8, 30, 54, 0.9), transparent 42%),
-        linear-gradient(135deg, #020814 0%, #071A2D 44%, #0B2844 100%);
-    background-position: center right;
-    background-size: cover;
-    filter: blur(7px) saturate(0.86) brightness(0.52);
-    transform: scale(1.12);
-    animation: botanica-bg-reveal 1.05s ease both, botanica-hero-breathe 12s ease-in-out 1.1s infinite;
+        radial-gradient(circle at 50% 42%, rgba(245, 221, 163, 0.28), transparent 24%),
+        radial-gradient(circle at 50% 64%, rgba(43, 125, 138, 0.22), transparent 36%),
+        radial-gradient(circle at 50% 78%, rgba(2, 8, 20, 0.9), transparent 46%),
+        linear-gradient(145deg, #020814 0%, #071A2D 48%, #0B2844 100%);
 }
 
-.hero-section--botanica::before {
+.botanica-single-hero-bg::before,
+.botanica-single-hero-bg::after {
     content: "";
     position: absolute;
     inset: 0;
-    z-index: 8;
     pointer-events: none;
-    background: rgba(2, 8, 20, 0.46);
-    animation: botanica-launch-dim 1.45s ease 0.1s forwards;
 }
 
-.hero-section--botanica::after {
+.botanica-single-hero-bg::before {
+    background:
+        linear-gradient(115deg, transparent 26%, rgba(255, 233, 184, 0.2) 47%, transparent 66%),
+        radial-gradient(circle at 50% 52%, rgba(255, 244, 213, 0.22), transparent 30%),
+        linear-gradient(180deg, rgba(2, 8, 20, 0.08), rgba(2, 8, 20, 0.72));
+    mix-blend-mode: screen;
+    opacity: 0.72;
+    animation: botanica-single-light 8s ease-in-out infinite;
+}
+
+.botanica-single-hero-bg::after {
+    background:
+        radial-gradient(circle at 16% 24%, rgba(245, 221, 163, 0.62) 0 2px, transparent 3px),
+        radial-gradient(circle at 31% 70%, rgba(245, 221, 163, 0.44) 0 1px, transparent 3px),
+        radial-gradient(circle at 46% 18%, rgba(255, 255, 255, 0.3) 0 1px, transparent 3px),
+        radial-gradient(circle at 64% 30%, rgba(245, 221, 163, 0.52) 0 2px, transparent 4px),
+        radial-gradient(circle at 74% 72%, rgba(245, 221, 163, 0.4) 0 1px, transparent 3px),
+        radial-gradient(circle at 86% 46%, rgba(255, 255, 255, 0.24) 0 1px, transparent 3px);
+    opacity: 0.68;
+    filter: blur(0.15px);
+    animation: botanica-single-dust 9s ease-in-out infinite;
+}
+
+.hero-section--botanica-single::before {
+    content: "";
+    position: absolute;
+    left: 50%;
+    bottom: clamp(38px, 7vh, 90px);
+    z-index: -1;
+    width: min(62vw, 760px);
+    height: clamp(150px, 18vw, 250px);
+    border-radius: 50%;
+    background:
+        radial-gradient(ellipse, rgba(245, 221, 163, 0.32), rgba(43, 125, 138, 0.14) 42%, transparent 74%);
+    filter: blur(24px);
+    transform: translateX(-50%);
+    pointer-events: none;
+}
+
+.hero-section--botanica-single::after {
     content: "";
     position: fixed;
-    inset: -22vmax;
+    inset: -24vmax;
     z-index: 999;
     border-radius: 50%;
-    pointer-events: none;
+    background:
+        radial-gradient(circle at 50% 50%, rgba(255, 253, 235, 1) 0 10%, rgba(245, 221, 163, 0.94) 22%, rgba(201, 164, 92, 0.55) 40%, rgba(43, 125, 138, 0.14) 62%, transparent 82%);
+    opacity: 0;
     visibility: hidden;
-    opacity: 0;
-    transform: scale(0.08);
-    transform-origin: 68% 52%;
-    background:
-        radial-gradient(circle at 68% 52%, rgba(255, 253, 235, 0.98) 0 8%, rgba(245, 221, 163, 0.9) 21%, rgba(201, 164, 92, 0.5) 40%, rgba(43, 125, 138, 0.18) 58%, rgba(7, 26, 45, 0.06) 72%, transparent 84%),
-        radial-gradient(circle at 52% 48%, rgba(255, 255, 255, 0.82), transparent 26%);
-    filter: blur(1px);
+    transform: scale(0.06);
+    pointer-events: none;
     mix-blend-mode: screen;
 }
 
-.hero-section--botanica.is-cinematic::before {
+.hero-section--botanica-single.is-portal::after {
     visibility: visible;
-    opacity: 0.46;
-    animation: botanica-cinematic-dim 1.1s ease forwards;
+    animation: botanica-portal-fill 0.86s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
 
-.hero-section--botanica.is-portal::after {
-    visibility: visible;
-    animation: botanica-portal-fill 0.88s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-}
-
-.botanica-hero-bg::after {
-    content: "";
-    position: absolute;
-    inset: 0;
-    background:
-        radial-gradient(circle at 70% 52%, rgba(245, 221, 163, 0.28), transparent 30%),
-        radial-gradient(circle at 18% 48%, rgba(2, 8, 20, 0.46), transparent 42%),
-        linear-gradient(90deg, rgba(7, 26, 45, 0.86) 0%, rgba(7, 26, 45, 0.58) 30%, rgba(7, 26, 45, 0.18) 58%, rgba(7, 26, 45, 0.08) 100%),
-        linear-gradient(180deg, rgba(2, 8, 20, 0.34), rgba(2, 8, 20, 0.66));
-}
-
-.botanica-hero-light,
-.botanica-hero-reflection {
-    position: absolute;
-    inset: 0;
-    z-index: -1;
-    pointer-events: none;
-}
-
-.botanica-hero-light {
-    background:
-        linear-gradient(112deg, transparent 0 28%, rgba(255, 232, 178, 0.16) 43%, transparent 60%),
-        radial-gradient(ellipse at 73% 52%, rgba(245, 221, 163, 0.28), transparent 38%);
-    mix-blend-mode: screen;
-    opacity: 0.85;
-    animation: botanica-volumetric-light 8s ease-in-out infinite;
-}
-
-.botanica-hero-reflection {
-    background: linear-gradient(105deg, transparent 34%, rgba(255, 255, 255, 0.1) 42%, transparent 50%);
-    transform: translateX(-34%);
-    opacity: 0.55;
-    animation: botanica-reflection-sweep 7s ease-in-out 1.2s infinite;
-}
-
-.botanica-hero-glow {
-    position: absolute;
-    right: 4%;
-    top: 12%;
-    z-index: -2;
-    width: min(60vw, 900px);
-    aspect-ratio: 1;
-    border-radius: 50%;
-    background: radial-gradient(circle, rgba(201, 164, 92, 0.42), rgba(43, 125, 138, 0.2) 34%, transparent 70%);
-    filter: blur(24px);
-    opacity: 0.9;
-    animation: botanica-glow 9s ease-in-out infinite;
-}
-
-.botanica-hero-particles {
-    position: absolute;
-    inset: 0;
-    z-index: -1;
-    pointer-events: none;
-}
-
-.botanica-hero-particles span {
-    position: absolute;
-    width: 4px;
-    height: 4px;
-    border-radius: 50%;
-    background: #D8B46C;
-    box-shadow: 0 0 22px rgba(216, 180, 108, 0.9);
-    opacity: 0;
-    animation: botanica-particle-drift 9.5s ease-in-out infinite;
-}
-
-.botanica-hero-particles span:nth-child(1) { left: 9%; top: 18%; animation-delay: 0s; }
-.botanica-hero-particles span:nth-child(2) { left: 26%; top: 12%; animation-delay: 0.6s; }
-.botanica-hero-particles span:nth-child(3) { left: 42%; top: 22%; animation-delay: 1.2s; }
-.botanica-hero-particles span:nth-child(4) { left: 64%; top: 15%; animation-delay: 1.8s; }
-.botanica-hero-particles span:nth-child(5) { left: 84%; top: 28%; animation-delay: 2.4s; }
-.botanica-hero-particles span:nth-child(6) { left: 75%; top: 55%; animation-delay: 3s; }
-.botanica-hero-particles span:nth-child(7) { left: 56%; top: 74%; animation-delay: 3.6s; }
-.botanica-hero-particles span:nth-child(8) { left: 34%; top: 80%; animation-delay: 4.2s; }
-.botanica-hero-particles span:nth-child(9) { left: 16%; top: 68%; animation-delay: 4.8s; }
-.botanica-hero-particles span:nth-child(10) { left: 92%; top: 72%; animation-delay: 5.4s; }
-.botanica-hero-particles span:nth-child(11) { left: 50%; top: 44%; animation-delay: 6s; }
-.botanica-hero-particles span:nth-child(12) { left: 70%; top: 40%; animation-delay: 6.6s; }
-.botanica-hero-particles span:nth-child(13) { left: 78%; top: 18%; animation-delay: 7.2s; width: 3px; height: 3px; }
-.botanica-hero-particles span:nth-child(14) { left: 86%; top: 48%; animation-delay: 7.8s; width: 4px; height: 4px; }
-.botanica-hero-particles span:nth-child(15) { left: 63%; top: 63%; animation-delay: 8.4s; width: 3px; height: 3px; }
-.botanica-hero-particles span:nth-child(16) { left: 38%; top: 54%; animation-delay: 9s; width: 3px; height: 3px; }
-.botanica-hero-particles span:nth-child(17) { left: 20%; top: 34%; animation-delay: 9.6s; width: 4px; height: 4px; }
-.botanica-hero-particles span:nth-child(18) { left: 94%; top: 18%; animation-delay: 10.2s; width: 3px; height: 3px; }
-
-.botanica-hero-content {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: flex-start;
-    z-index: 4;
-    width: min(510px, 40vw);
-    min-height: auto;
-    margin-right: auto;
-    margin-left: clamp(0px, 2vw, 34px);
-    margin-top: clamp(24px, 4vh, 54px);
+.botanica-single-product {
+    --botanica-pot-tilt-x: 0deg;
+    --botanica-pot-tilt-y: 0deg;
+    --botanica-pot-scale: 1;
+    position: relative;
+    z-index: 3;
+    display: block;
+    width: clamp(290px, 48vw, 720px);
+    aspect-ratio: 1 / 1;
     padding: 0;
     border: 0;
+    border-radius: 50%;
     background: transparent;
-    box-shadow: none;
-    text-align: left;
-    text-shadow: 0 18px 52px rgba(0, 0, 0, 0.46);
-    backdrop-filter: none;
-    transform: translateY(var(--botanica-scroll-y)) scale(var(--botanica-scroll-scale));
-    transform-origin: left center;
-    opacity: var(--botanica-scroll-opacity);
-    transition: opacity 0.2s ease, transform 0.2s ease;
-}
-
-.botanica-event-badge {
-    width: fit-content;
-    padding: 10px 16px;
-    border: 1px solid rgba(201, 164, 92, 0.42);
-    border-radius: 999px;
-    color: #F3D9A1;
-    background: rgba(7, 26, 45, 0.18);
-    box-shadow: 0 16px 44px rgba(0, 0, 0, 0.22);
-    backdrop-filter: blur(18px);
-}
-
-.botanica-season {
-    margin: 0 0 8px;
-    color: rgba(255, 255, 255, 0.78);
-    font-family: Montserrat, sans-serif;
-    font-size: clamp(0.76rem, 1vw, 0.92rem);
-    font-weight: 800;
-    letter-spacing: 0.18em;
-    text-transform: uppercase;
-}
-
-.hero-section--botanica .hero-content h1 {
-    max-width: 540px;
-    color: #FFFFFF;
-    font-size: clamp(3.8rem, 6vw, 6.4rem);
-    line-height: 0.9;
-    letter-spacing: 0;
-    overflow-wrap: normal;
-    text-wrap: balance;
-    text-transform: uppercase;
-}
-
-.hero-section--botanica .hero-content p:not(.eyebrow):not(.botanica-season) {
-    max-width: 500px;
-    color: rgba(255, 255, 255, 0.84);
-    font-size: clamp(1rem, 1.2vw, 1.18rem);
-    line-height: 1.7;
-}
-
-.botanica-event-meta {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: flex-start;
-    gap: 9px;
-    margin-top: 22px;
-}
-
-.botanica-event-meta span {
-    display: inline-flex;
-    align-items: center;
-    min-width: 0;
-    min-height: 34px;
-    padding: 7px 13px;
-    border: 1px solid rgba(201, 164, 92, 0.38);
-    border-radius: 999px;
-    color: rgba(255, 255, 255, 0.76);
-    background: rgba(7, 26, 45, 0.28);
-    box-shadow: 0 12px 34px rgba(0, 0, 0, 0.18);
-    backdrop-filter: blur(18px);
-}
-
-.botanica-event-meta strong {
-    color: rgba(255, 255, 255, 0.9);
-    font-family: Montserrat, sans-serif;
-    font-size: 0.76rem;
-    font-weight: 800;
-    letter-spacing: 0.04em;
-}
-
-.botanica-countdown {
-    width: min(100%, 410px);
-    margin-top: 18px;
-    padding: 12px 14px;
-    border: 1px solid rgba(245, 221, 163, 0.38);
-    border-radius: 24px;
-    background: rgba(255, 255, 255, 0.075);
-    box-shadow: 0 22px 70px rgba(0, 0, 0, 0.22), inset 0 1px 0 rgba(255, 255, 255, 0.08);
-    backdrop-filter: blur(24px);
-}
-
-.botanica-countdown p {
-    margin: 0 0 10px;
-    color: #F0D39A;
-    font-family: Montserrat, sans-serif;
-    font-size: 0.74rem;
-    font-weight: 800;
-    letter-spacing: 0.16em;
-    text-align: left;
-    text-transform: uppercase;
-}
-
-.botanica-countdown div {
-    display: grid;
-    grid-template-columns: repeat(4, minmax(0, 1fr));
-    gap: 6px;
-}
-
-.botanica-countdown span {
-    display: grid;
-    gap: 4px;
-    padding: 4px 2px;
-    color: rgba(255, 255, 255, 0.62);
-    font-size: 0.66rem;
-    font-weight: 700;
-    text-align: center;
-    text-transform: uppercase;
-}
-
-.botanica-countdown strong {
-    color: #FFFFFF;
-    font-family: var(--serif);
-    font-size: clamp(1.35rem, 2.1vw, 2rem);
-    line-height: 1;
-    display: inline-block;
-    min-width: 1.7ch;
-    will-change: transform, opacity;
-}
-
-.botanica-countdown strong.is-ticking {
-    animation: botanica-count-tick 0.42s ease both;
-}
-
-.hero-section--botanica .botanica-event-badge,
-.hero-section--botanica .botanica-season,
-.hero-section--botanica .hero-content h1,
-.hero-section--botanica .hero-content p:not(.eyebrow):not(.botanica-season),
-.hero-section--botanica .hero-actions,
-.hero-section--botanica .botanica-event-meta,
-.hero-section--botanica .botanica-countdown {
-    opacity: 0;
-    transform: translate3d(0, 18px, 0);
-    animation: botanica-copy-campaign 0.84s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-}
-
-.hero-section--botanica .botanica-event-badge {
-    animation-delay: 1.04s;
-}
-
-.hero-section--botanica .botanica-season {
-    animation-delay: 1.16s;
-}
-
-.hero-section--botanica .hero-content h1 {
-    animation-delay: 1.28s;
-}
-
-.hero-section--botanica .hero-content p:not(.eyebrow):not(.botanica-season) {
-    animation-delay: 1.44s;
-}
-
-.hero-section--botanica .hero-actions {
-    animation-delay: 1.62s;
-}
-
-.hero-section--botanica .botanica-event-meta {
-    animation-delay: 1.76s;
-}
-
-.hero-section--botanica .botanica-countdown {
-    animation-delay: 1.92s;
-}
-
-.hero-section--botanica .hero-actions {
-    justify-content: flex-start;
-    margin-top: 28px;
-}
-
-.hero-section--botanica .button-primary {
-    position: relative;
-    overflow: hidden;
-    min-height: 60px;
-    padding-inline: 38px;
-    background: linear-gradient(135deg, #F0D28F, #B98B3A);
-    color: #071A2D;
-    box-shadow: 0 24px 64px rgba(185, 139, 58, 0.34), 0 0 42px rgba(245, 221, 163, 0.2);
-}
-
-.hero-section--botanica .button-primary::after {
-    content: "";
-    position: absolute;
-    inset: -45% auto -45% -35%;
-    width: 34%;
-    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.64), transparent);
-    transform: skewX(-20deg) translateX(-130%);
-    transition: transform 0.68s ease;
-}
-
-.hero-section--botanica .button-primary:hover,
-.hero-section--botanica .button-primary:focus-visible {
-    transform: translateY(-4px);
-    background: linear-gradient(135deg, #F4D99A, #C99F52);
-    color: #071A2D;
-    box-shadow: 0 28px 72px rgba(201, 159, 82, 0.4);
-}
-
-.hero-section--botanica .button-primary:hover::after,
-.hero-section--botanica .button-primary:focus-visible::after {
-    transform: skewX(-20deg) translateX(520%);
-}
-
-.botanica-product-showcase {
-    position: absolute;
-    right: clamp(-170px, -8vw, -90px);
-    top: 53%;
-    z-index: 2;
-    width: min(60vw, 960px);
-    height: min(74vh, 730px);
-    min-height: 510px;
-    margin: 0;
-    pointer-events: auto;
-    perspective: 1400px;
-    opacity: var(--botanica-showcase-opacity, 1);
-    transform: translate3d(var(--botanica-showcase-x, 0px), calc(-50% + var(--botanica-showcase-y, 0px) + var(--botanica-showcase-scroll-y, 0px)), 0);
-    transition: opacity 0.22s ease, transform 0.22s ease;
-}
-
-.botanica-product-showcase--pot {
-    display: block;
-    overflow: visible;
+    cursor: pointer;
+    isolation: isolate;
     transform-style: preserve-3d;
+    transform: translate3d(0, 0, 0) rotateX(var(--botanica-pot-tilt-x)) rotateY(var(--botanica-pot-tilt-y)) scale(var(--botanica-pot-scale));
+    transition: transform 420ms cubic-bezier(0.16, 1, 0.3, 1), filter 420ms ease;
+    animation: botanica-single-arrive 1.1s cubic-bezier(0.16, 1, 0.3, 1) both, botanica-single-float 7.5s ease-in-out 1.15s infinite;
+    -webkit-tap-highlight-color: transparent;
 }
 
-.hero-section--botanica.is-cinematic .botanica-product-showcase--pot {
-    transform: translate3d(var(--botanica-showcase-x, 0px), calc(-50% + var(--botanica-showcase-y, 0px) + var(--botanica-showcase-scroll-y, 0px) - 18px), 0) scale(1.035);
+.botanica-single-product:focus-visible {
+    outline: 2px solid rgba(245, 221, 163, 0.9);
+    outline-offset: 10px;
 }
 
-.hero-section--botanica.is-portal .botanica-product-showcase--pot {
-    transform: translate3d(var(--botanica-showcase-x, 0px), calc(-50% + var(--botanica-showcase-y, 0px) + var(--botanica-showcase-scroll-y, 0px) - 26px), 0) scale(1.12);
-    filter: brightness(1.16) saturate(1.08);
+.botanica-single-product:hover {
+    --botanica-pot-tilt-y: 3deg;
+    --botanica-pot-scale: 1.025;
+    filter: drop-shadow(0 0 34px rgba(245, 221, 163, 0.24));
 }
 
-.botanica-home-pot-scene {
+.botanica-single-product img {
     position: absolute;
-    inset: 0;
-    width: 100%;
-    min-height: 100%;
+    left: 50%;
+    top: 51%;
+    z-index: 2;
+    display: block;
+    width: 142%;
+    max-width: none;
+    height: auto;
+    transform: translate3d(-50%, -44%, 0) scale(1.04);
+    clip-path: inset(28% 8% 4% 8% round 2%);
+    filter: saturate(1.03) contrast(1.04) drop-shadow(0 54px 100px rgba(0, 0, 0, 0.54));
     pointer-events: none;
-    transform: translate3d(0, 0, 0) rotateX(var(--event-rotate-x, 0deg)) rotateY(var(--event-rotate-y, 0deg));
+    user-select: none;
 }
 
-.botanica-home-pot-scene::before {
-    right: 10%;
-    bottom: 4%;
-    width: 72%;
-    height: 32%;
-    opacity: 0.92;
-    animation: botanica-home-stage-shadow 1.15s ease 0.38s both, event-ray-breathe 7s ease-in-out 1.5s infinite;
-}
-
-.botanica-home-pot-scene .event-real-pot {
-    left: 52%;
-    bottom: 8%;
-    width: clamp(330px, 32vw, 510px);
-    pointer-events: auto;
-    transform: translate3d(-50%, 0, 190px) rotateX(7deg) rotateY(var(--event-rotate-y, -2deg));
-    animation-delay: 0.8s;
-}
-
-.botanica-home-pot-scene .event-real-pot:hover,
-.botanica-home-pot-scene .event-real-pot:focus-visible {
-    transform: translate3d(-50%, -12px, 210px) rotateX(8deg) rotateY(calc(var(--event-rotate-y, 0deg) + 4deg)) scale(1.025);
-}
-
-.hero-section--botanica.is-cinematic .botanica-home-pot-scene .event-real-pot,
-.hero-section--botanica.is-portal .botanica-home-pot-scene .event-real-pot {
-    transform: translate3d(-50%, -34px, 230px) rotateX(7deg) rotateY(0deg) scale(1.045);
-    filter: drop-shadow(0 60px 118px rgba(0, 0, 0, 0.5)) drop-shadow(0 0 46px rgba(245, 221, 163, 0.2));
-}
-
-.botanica-home-pot-scene .event-real-pot-lid-mark,
-.botanica-home-pot-scene .event-real-pot-label strong {
-    letter-spacing: 0.2em;
-}
-
-.botanica-limited-badge {
-    position: absolute;
-    right: clamp(28px, 6vw, 92px);
-    top: clamp(34px, 5vw, 74px);
-    z-index: 4;
-    display: inline-flex;
-    align-items: center;
-    min-height: 42px;
-    padding: 0 18px;
-    border: 1px solid rgba(245, 221, 163, 0.46);
-    border-radius: 999px;
-    color: #F7E5B7;
-    font-family: Montserrat, sans-serif;
-    font-size: 0.74rem;
-    font-weight: 900;
-    letter-spacing: 0.13em;
-    text-transform: uppercase;
-    background: rgba(255, 255, 255, 0.09);
-    box-shadow: 0 24px 70px rgba(0, 0, 0, 0.28), 0 0 30px rgba(216, 180, 108, 0.16);
-    backdrop-filter: blur(18px);
-    animation: botanica-badge-pulse 3.8s ease-in-out infinite;
-}
-
-.botanica-product-showcase--pot::before,
-.botanica-product-showcase--pot::after {
+.botanica-single-product::before,
+.botanica-single-product::after {
     content: "";
     position: absolute;
+    left: 50%;
     pointer-events: none;
 }
 
-.botanica-product-showcase--pot::before {
-    left: 11%;
-    right: 4%;
-    bottom: 3%;
-    z-index: 0;
-    height: 74%;
+.botanica-single-product::before {
+    top: 39.4%;
+    z-index: 5;
+    width: 43%;
+    height: 15.5%;
+    border: 1px solid rgba(245, 221, 163, 0.52);
+    border-radius: 50% / 42%;
+    background:
+        linear-gradient(180deg, rgba(255, 238, 188, 0.9), rgba(184, 139, 65, 0.94) 36%, #071A2D 56%, #020814 100%),
+        radial-gradient(ellipse at 50% 22%, rgba(255, 255, 255, 0.5), transparent 62%);
+    box-shadow:
+        inset 0 7px 18px rgba(255, 243, 209, 0.28),
+        inset 0 -14px 22px rgba(2, 8, 20, 0.7),
+        0 18px 36px rgba(0, 0, 0, 0.32),
+        0 0 22px rgba(245, 221, 163, 0.15);
+    transform: translate3d(-50%, 0, 96px) rotateX(0deg) rotateZ(-1deg);
+    transform-origin: 50% 84%;
+    transition: transform 1150ms cubic-bezier(0.16, 1, 0.3, 1), box-shadow 700ms ease, filter 700ms ease;
+}
+
+.botanica-single-product::after {
+    top: 45%;
+    z-index: 4;
+    width: 38%;
+    height: 34%;
     border-radius: 50%;
     background:
-        linear-gradient(180deg, rgba(255, 237, 190, 0.22), rgba(255, 237, 190, 0.08) 42%, transparent 82%),
-        radial-gradient(circle at 52% 56%, rgba(245, 221, 163, 0.42), rgba(43, 125, 138, 0.18) 42%, transparent 72%);
-    clip-path: ellipse(48% 50% at 52% 50%);
-    filter: blur(26px);
+        radial-gradient(circle at 50% 50%, rgba(255, 253, 229, 0.95), rgba(245, 221, 163, 0.38) 34%, rgba(201, 164, 92, 0.16) 58%, transparent 78%);
+    filter: blur(20px);
     opacity: 0;
-    animation: botanica-showcase-halo-in 1.1s ease 0.7s forwards, botanica-product-halo 5.6s ease-in-out 1.9s infinite;
-}
-
-.botanica-product-showcase--pot::after {
-    inset: 2% 4% 6% 0;
-    z-index: 5;
-    opacity: 0;
-    background:
-        radial-gradient(circle at 18% 24%, rgba(245, 221, 163, 0.76) 0 2px, transparent 3px),
-        radial-gradient(circle at 42% 16%, rgba(245, 221, 163, 0.52) 0 1px, transparent 3px),
-        radial-gradient(circle at 61% 35%, rgba(245, 221, 163, 0.68) 0 2px, transparent 4px),
-        radial-gradient(circle at 78% 58%, rgba(245, 221, 163, 0.56) 0 1px, transparent 3px),
-        radial-gradient(circle at 34% 68%, rgba(255, 255, 255, 0.34) 0 1px, transparent 3px),
-        radial-gradient(circle at 88% 26%, rgba(245, 221, 163, 0.44) 0 1px, transparent 3px);
-    filter: blur(0.2px);
     mix-blend-mode: screen;
-    animation: botanica-dust-arrive 1.3s ease 0.28s forwards, botanica-dust-drift 8s ease-in-out 1.6s infinite;
+    transform: translate3d(-50%, 18px, 70px) scale(0.45);
 }
 
-@media (min-width: 1025px) {
-    .botanica-hero-content {
-        align-items: flex-start !important;
-        text-align: left !important;
+.botanica-single-product.is-opening,
+.botanica-single-product.is-open {
+    --botanica-pot-scale: 1.045;
+    animation-play-state: paused;
+}
+
+.botanica-single-product.is-opening::before,
+.botanica-single-product.is-open::before {
+    filter: brightness(1.12) saturate(1.1);
+    box-shadow:
+        inset 0 8px 20px rgba(255, 243, 209, 0.34),
+        inset 0 -14px 22px rgba(2, 8, 20, 0.64),
+        0 34px 62px rgba(0, 0, 0, 0.4),
+        0 0 36px rgba(245, 221, 163, 0.34);
+    transform: translate3d(-50%, -128%, 160px) rotateX(58deg) rotateZ(-8deg) scale(1.025);
+}
+
+.botanica-single-product.is-opening::after,
+.botanica-single-product.is-open::after {
+    animation: event-pot-light 1.38s cubic-bezier(0.16, 1, 0.3, 1) forwards, event-pot-light-breathe 4.8s ease-in-out 1.38s infinite;
+}
+
+.hero-section--botanica-single.is-opening .botanica-single-hero-bg::before {
+    animation: botanica-single-light 2s ease-in-out infinite;
+}
+
+@keyframes botanica-single-arrive {
+    from {
+        opacity: 0;
+        transform: translate3d(0, 28px, 0) rotateX(3deg) scale(0.96);
+    }
+    to {
+        opacity: 1;
+        transform: translate3d(0, 0, 0) rotateX(var(--botanica-pot-tilt-x)) rotateY(var(--botanica-pot-tilt-y)) scale(var(--botanica-pot-scale));
+    }
+}
+
+@keyframes botanica-single-float {
+    0%,
+    100% {
+        transform: translate3d(0, 0, 0) rotateX(var(--botanica-pot-tilt-x)) rotateY(var(--botanica-pot-tilt-y)) scale(var(--botanica-pot-scale));
+    }
+    50% {
+        transform: translate3d(0, -10px, 0) rotateX(var(--botanica-pot-tilt-x)) rotateY(var(--botanica-pot-tilt-y)) scale(var(--botanica-pot-scale));
+    }
+}
+
+@keyframes botanica-single-light {
+    0%,
+    100% {
+        opacity: 0.58;
+        transform: translate3d(-1%, 0, 0) scale(1);
+    }
+    50% {
+        opacity: 0.9;
+        transform: translate3d(1%, -1%, 0) scale(1.04);
+    }
+}
+
+@keyframes botanica-single-dust {
+    0%,
+    100% {
+        opacity: 0.42;
+        transform: translate3d(0, 0, 0);
+    }
+    50% {
+        opacity: 0.82;
+        transform: translate3d(16px, -20px, 0);
+    }
+}
+
+@media (max-width: 782px) {
+    .hero-section--botanica-single {
+        min-height: clamp(560px, 82vh, 740px);
+        padding: 40px 16px;
     }
 
-    .botanica-event-meta,
-    .hero-section--botanica .hero-actions {
-        justify-content: flex-start !important;
+    .botanica-single-product {
+        width: min(88vw, 420px);
+    }
+
+    .botanica-single-product img {
+        width: 154%;
+        top: 51%;
+        clip-path: inset(29% 8% 3% 8% round 2%);
+    }
+
+    .botanica-single-product::before {
+        top: 39.2%;
+        width: 47%;
+        height: 16%;
     }
 }
 
@@ -21482,10 +21232,6 @@ select:focus,
     bottom: 47%;
 }
 
-.botanica-home-pot-scene .event-real-pot.botanica-asset-pot {
-    --botanica-asset-pot-width: clamp(420px, 42vw, 680px);
-}
-
 .event-collection-scene.is-opening .event-real-pot.botanica-asset-pot,
 .event-collection-scene.is-open .event-real-pot.botanica-asset-pot {
     --botanica-lid-x: 5%;
@@ -21511,213 +21257,6 @@ select:focus,
 .event-collection-scene.is-open .event-real-pot.botanica-asset-pot .event-real-pot-cream {
     opacity: var(--botanica-cream-opacity);
     transform: translate3d(0, var(--botanica-cream-y), var(--botanica-cream-z)) scale(var(--botanica-cream-scale));
-}
-
-.front-page .botanica-home-pot-scene .botanica-single-pot {
-    --botanica-pot-width: clamp(360px, 40vw, 640px);
-    --botanica-lid-lift: clamp(72px, 7.8vw, 112px);
-    --botanica-lid-tilt: -7deg;
-    --botanica-lid-turn: -1.5deg;
-    --botanica-cream-opacity: 0;
-    --botanica-cream-rise: 34px;
-    width: var(--botanica-pot-width);
-    aspect-ratio: 1.36;
-    border: 0;
-    background: transparent;
-    cursor: pointer;
-    filter: drop-shadow(0 48px 92px rgba(0, 0, 0, 0.52));
-    transform-style: preserve-3d;
-}
-
-.front-page .botanica-home-pot-scene .botanica-single-pot::before,
-.front-page .botanica-home-pot-scene .botanica-single-pot::after {
-    content: "";
-    position: absolute;
-    pointer-events: none;
-    opacity: 0;
-}
-
-.front-page .botanica-home-pot-scene .botanica-single-pot::before {
-    left: 6%;
-    right: 6%;
-    bottom: -5%;
-    height: 34%;
-    border-radius: 50%;
-    background:
-        radial-gradient(ellipse, rgba(245, 221, 163, 0.3), rgba(43, 125, 138, 0.16) 38%, transparent 72%);
-    filter: blur(18px);
-    opacity: 0.58;
-    transform: rotateX(68deg) translateZ(-110px);
-    transition: opacity 420ms ease, transform 420ms ease;
-}
-
-.front-page .botanica-home-pot-scene .botanica-single-pot::after {
-    left: 24%;
-    right: 24%;
-    bottom: 35%;
-    height: 44%;
-    border-radius: 50%;
-    background:
-        radial-gradient(circle at 50% 58%, rgba(255, 253, 230, 0.94), rgba(245, 221, 163, 0.42) 30%, rgba(201, 164, 92, 0.12) 56%, transparent 74%),
-        radial-gradient(ellipse at 32% 22%, rgba(255, 255, 255, 0.18), transparent 48%),
-        radial-gradient(ellipse at 68% 18%, rgba(255, 247, 224, 0.14), transparent 52%);
-    filter: blur(20px);
-    mix-blend-mode: screen;
-    transform: translate3d(0, 28px, 155px) scale(0.48);
-}
-
-.front-page .botanica-home-pot-scene .botanica-single-pot:hover,
-.front-page .botanica-home-pot-scene .botanica-single-pot:focus-visible {
-    filter: drop-shadow(0 52px 102px rgba(0, 0, 0, 0.52)) drop-shadow(0 0 34px rgba(245, 221, 163, 0.18));
-}
-
-.front-page .botanica-home-pot-scene .botanica-single-pot:hover::before,
-.front-page .botanica-home-pot-scene .botanica-single-pot:focus-visible::before {
-    opacity: 0.82;
-    transform: rotateX(68deg) translateZ(-104px) scale(1.04);
-}
-
-.front-page .botanica-home-pot-scene .botanica-single-pot .event-real-pot-jar,
-.front-page .botanica-home-pot-scene .botanica-single-pot .event-real-pot-lid,
-.front-page .botanica-home-pot-scene .botanica-single-pot .event-real-pot-cream {
-    display: block;
-    position: absolute;
-    inset: 0;
-    background-image: var(--botanica-pot-asset, url("assets/hero/cosmethique-botanica-cream-reveal.png"));
-    background-repeat: no-repeat;
-    background-size: auto 100%;
-    background-position: center center;
-    pointer-events: none;
-    transform-style: preserve-3d;
-}
-
-.front-page .botanica-home-pot-scene .botanica-single-pot .event-real-pot-jar {
-    z-index: 4;
-    clip-path: inset(45% 22% 8% 23% round 5% 5% 10% 10%);
-    filter: saturate(1.05) contrast(1.05) brightness(1.02) drop-shadow(0 32px 62px rgba(0, 0, 0, 0.34));
-    transform: translate3d(0, 0, 104px) scale(1.012);
-}
-
-.front-page .botanica-home-pot-scene .botanica-single-pot .event-real-pot-jar::before,
-.front-page .botanica-home-pot-scene .botanica-single-pot .event-real-pot-jar::after {
-    content: "";
-    position: absolute;
-    pointer-events: none;
-}
-
-.front-page .botanica-home-pot-scene .botanica-single-pot .event-real-pot-jar::before {
-    left: 29%;
-    right: 29%;
-    top: 45%;
-    height: 8%;
-    border-radius: 50%;
-    background: linear-gradient(90deg, transparent, rgba(245, 221, 163, 0.42), transparent);
-    filter: blur(2px);
-    mix-blend-mode: screen;
-}
-
-.front-page .botanica-home-pot-scene .botanica-single-pot .event-real-pot-jar::after {
-    inset: 49% 24% 11%;
-    border-radius: 48%;
-    background: linear-gradient(104deg, rgba(255, 255, 255, 0.18), transparent 17%, transparent 74%, rgba(245, 221, 163, 0.12));
-    mix-blend-mode: screen;
-}
-
-.front-page .botanica-home-pot-scene .botanica-single-pot .event-real-pot-lid {
-    z-index: 8;
-    clip-path: inset(9% 24% 58% 24% round 18% 18% 24% 24%);
-    filter: saturate(1.05) contrast(1.05) brightness(1.06) drop-shadow(0 26px 48px rgba(2, 8, 20, 0.32));
-    transform: translate3d(0, var(--botanica-lid-lift), 190px) rotateX(var(--botanica-lid-tilt)) rotateZ(var(--botanica-lid-turn)) scale(1.015);
-    transform-origin: 50% 82%;
-    transition: filter 900ms ease, transform 1180ms cubic-bezier(0.16, 1, 0.3, 1);
-}
-
-.front-page .botanica-home-pot-scene .botanica-single-pot .event-real-pot-lid::before,
-.front-page .botanica-home-pot-scene .botanica-single-pot .event-real-pot-lid::after {
-    content: "";
-    position: absolute;
-    pointer-events: none;
-}
-
-.front-page .botanica-home-pot-scene .botanica-single-pot .event-real-pot-lid::before {
-    inset: 12% 28% 61%;
-    border-radius: 50%;
-    background: radial-gradient(ellipse, rgba(255, 255, 255, 0.18), transparent 66%);
-    mix-blend-mode: screen;
-}
-
-.front-page .botanica-home-pot-scene .botanica-single-pot .event-real-pot-lid::after {
-    left: 34%;
-    top: 26%;
-    width: 28%;
-    height: 2px;
-    border-radius: 999px;
-    background: linear-gradient(90deg, transparent, rgba(245, 221, 163, 0.78), transparent);
-    transform: rotate(-5deg);
-}
-
-.front-page .botanica-home-pot-scene .botanica-single-pot .event-real-pot-cream {
-    z-index: 6;
-    clip-path: inset(29% 27% 43% 27% round 48% 48% 42% 42%);
-    filter: saturate(1.06) contrast(1.04) brightness(1.08) drop-shadow(0 0 42px rgba(245, 221, 163, 0.34));
-    opacity: var(--botanica-cream-opacity);
-    transform: translate3d(0, var(--botanica-cream-rise), 130px) scale(0.92);
-    transition: opacity 720ms ease 320ms, transform 980ms cubic-bezier(0.16, 1, 0.3, 1) 320ms;
-}
-
-.front-page .botanica-home-pot-scene .botanica-single-pot .event-real-pot-cream::before,
-.front-page .botanica-home-pot-scene .botanica-single-pot .event-real-pot-cream::after {
-    content: "";
-    position: absolute;
-    pointer-events: none;
-}
-
-.front-page .botanica-home-pot-scene .botanica-single-pot .event-real-pot-cream::before {
-    inset: 30% 32% 47%;
-    border-radius: 50%;
-    background: radial-gradient(ellipse, rgba(255, 253, 230, 0.5), transparent 70%);
-    filter: blur(8px);
-    mix-blend-mode: screen;
-}
-
-.front-page .botanica-home-pot-scene .botanica-single-pot .event-real-pot-cream::after {
-    left: 34%;
-    top: 28%;
-    width: 30%;
-    height: 24%;
-    border-radius: 50%;
-    background:
-        radial-gradient(circle at 24% 36%, rgba(255, 255, 255, 0.34) 0 2px, transparent 4px),
-        radial-gradient(circle at 68% 28%, rgba(245, 221, 163, 0.34) 0 2px, transparent 4px),
-        radial-gradient(circle at 48% 68%, rgba(255, 247, 224, 0.22) 0 1px, transparent 3px);
-    filter: blur(0.2px);
-    mix-blend-mode: screen;
-    opacity: 0.9;
-}
-
-.front-page .botanica-home-pot-scene.is-opening .botanica-single-pot,
-.front-page .botanica-home-pot-scene.is-open .botanica-single-pot {
-    --botanica-lid-lift: -8px;
-    --botanica-lid-tilt: 0deg;
-    --botanica-lid-turn: 0deg;
-    --botanica-cream-opacity: 1;
-    --botanica-cream-rise: 0px;
-}
-
-.front-page .botanica-home-pot-scene.is-opening .botanica-single-pot::after,
-.front-page .botanica-home-pot-scene.is-open .botanica-single-pot::after {
-    animation: event-pot-light 1.4s cubic-bezier(0.16, 1, 0.3, 1) forwards, event-pot-light-breathe 4.8s ease-in-out 1.4s infinite;
-}
-
-.front-page .botanica-home-pot-scene.is-opening .botanica-single-pot .event-real-pot-lid,
-.front-page .botanica-home-pot-scene.is-open .botanica-single-pot .event-real-pot-lid {
-    filter: drop-shadow(0 30px 54px rgba(245, 221, 163, 0.24));
-}
-
-.front-page .botanica-home-pot-scene.is-opening .botanica-single-pot .event-real-pot-cream,
-.front-page .botanica-home-pot-scene.is-open .botanica-single-pot .event-real-pot-cream {
-    opacity: 1;
-    transform: translate3d(0, 0, 130px) scale(1);
 }
 
 .event-orbit-products {

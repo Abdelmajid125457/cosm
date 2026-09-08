@@ -3458,11 +3458,6 @@ Thomas Bernard`,
         const lid = pot.querySelector('.event-real-pot-lid');
         const cream = pot.querySelector('.event-real-pot-cream');
 
-        if (pot.classList.contains('botanica-single-pot')) {
-            pot.classList.toggle('is-visually-open', isOpen);
-            return;
-        }
-
         if (isOpen) {
             pot.classList.add('is-visually-open');
             pot.style.setProperty('--botanica-lid-x', '5%');
@@ -3513,14 +3508,7 @@ Thomas Bernard`,
 
     const botanicaHomeHero = document.querySelector('[data-home-botanica-hero]');
     if (botanicaHomeHero) {
-        const homeCountdown = botanicaHomeHero.querySelector('[data-home-countdown]');
-        const homeHeroBg = botanicaHomeHero.querySelector('.botanica-hero-bg');
-        const homeHeroGlow = botanicaHomeHero.querySelector('.botanica-hero-glow');
-        const homeProductShowcase = botanicaHomeHero.querySelector('[data-home-botanica-showcase]');
-        const homePotScene = botanicaHomeHero.querySelector('[data-botanica-home-pot-scene]');
-        const homeInteractivePot = homePotScene?.querySelector('.botanica-home-pot');
         const homeLaunchTriggers = botanicaHomeHero.querySelectorAll('[data-botanica-launch-trigger]');
-        const homeLimitedBadge = botanicaHomeHero.querySelector('.botanica-limited-badge');
         let homeLaunchStarted = false;
 
         const resolveBotanicaLaunchUrl = (rawUrl = '') => {
@@ -3534,19 +3522,21 @@ Thomas Bernard`,
         };
 
         const startBotanicaJourney = (event, trigger) => {
-            if (event && event.type === 'click') {
-                if (event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) {
-                    return;
-                }
-                event.preventDefault();
+            if (event?.metaKey || event?.ctrlKey || event?.shiftKey || event?.altKey) {
+                return;
             }
+
+            event?.preventDefault();
 
             if (homeLaunchStarted) {
                 return;
             }
 
             homeLaunchStarted = true;
-            const targetUrl = resolveBotanicaLaunchUrl(trigger?.dataset.botanicaTarget || trigger?.getAttribute?.('href'));
+            const targetUrl = resolveBotanicaLaunchUrl(trigger?.dataset.botanicaTarget);
+            const completeBotanicaRedirect = () => {
+                window.location.href = targetUrl;
+            };
 
             pushTrackingEvent('view_promotion', {
                 cta_name: 'botanica_home_reveal'
@@ -3560,148 +3550,51 @@ Thomas Bernard`,
 
             if (prefersReducedMotion) {
                 botanicaHomeHero.classList.add('is-portal');
+                trigger?.classList.add('is-open');
                 window.setTimeout(() => {
-                    window.location.assign(targetUrl);
-                }, 260);
+                    completeBotanicaRedirect();
+                }, 360);
                 return;
             }
 
-            botanicaHomeHero.classList.add('is-cinematic');
-            homeProductShowcase?.classList.add('is-cinematic');
-            homePotScene?.classList.add('is-opening');
-            homeInteractivePot?.classList.add('is-opening');
-            window.requestAnimationFrame(() => applyBotanicaPotVisualState(homeInteractivePot, true));
+            botanicaHomeHero.classList.add('is-opening');
+            trigger?.classList.add('is-opening');
 
             window.setTimeout(() => {
-                homePotScene?.classList.add('is-open');
-                homePotScene?.classList.remove('is-opening');
-                homeInteractivePot?.classList.add('is-open');
-                homeInteractivePot?.classList.remove('is-opening');
-                applyBotanicaPotVisualState(homeInteractivePot, true);
-            }, 1240);
+                trigger?.classList.add('is-open');
+                trigger?.classList.remove('is-opening');
+            }, 1150);
 
             window.setTimeout(() => {
                 botanicaHomeHero.classList.add('is-portal');
-                homeProductShowcase?.classList.add('is-portal');
-            }, 1880);
+            }, 1650);
 
             window.setTimeout(() => {
-                window.location.assign(targetUrl);
-            }, 2920);
+                completeBotanicaRedirect();
+            }, 2360);
         };
-
-        if (window.gsap && !prefersReducedMotion) {
-            window.gsap.from(botanicaHomeHero.querySelectorAll('.botanica-hero-content > *'), {
-                y: 28,
-                opacity: 0,
-                duration: 0.78,
-                stagger: 0.08,
-                delay: 1.02,
-                ease: 'power3.out'
-            });
-            if (homeLimitedBadge) {
-                window.gsap.from(homeLimitedBadge, {
-                    y: 24,
-                    scale: 0.96,
-                    opacity: 0,
-                    duration: 0.9,
-                    delay: 1.18,
-                    ease: 'power3.out'
-                });
-            }
-        }
 
         if (!prefersReducedMotion) {
             botanicaHomeHero.addEventListener('pointermove', (event) => {
                 const rect = botanicaHomeHero.getBoundingClientRect();
                 const x = (event.clientX - rect.left) / rect.width - 0.5;
                 const y = (event.clientY - rect.top) / rect.height - 0.5;
-
-                if (homeHeroBg) {
-                    homeHeroBg.style.transform = `scale(1.12) translate3d(${(x * -12).toFixed(2)}px, ${(y * -8).toFixed(2)}px, 0)`;
-                }
-                if (homeHeroGlow) {
-                    homeHeroGlow.style.transform = `translate3d(${(x * 18).toFixed(2)}px, ${(y * 16).toFixed(2)}px, 0)`;
-                }
-                if (homeProductShowcase) {
-                    homeProductShowcase.style.setProperty('--botanica-showcase-x', `${(x * -14).toFixed(2)}px`);
-                    homeProductShowcase.style.setProperty('--botanica-showcase-y', `${(y * -10).toFixed(2)}px`);
-                }
-                if (homePotScene) {
-                    homePotScene.style.setProperty('--event-rotate-y', `${(x * 4).toFixed(2)}deg`);
-                    homePotScene.style.setProperty('--event-rotate-x', `${(y * -3).toFixed(2)}deg`);
-                }
+                const activeTrigger = botanicaHomeHero.querySelector('[data-botanica-launch-trigger]:not(.is-opening):not(.is-open)');
+                activeTrigger?.style.setProperty('--botanica-pot-tilt-y', `${(x * 5).toFixed(2)}deg`);
+                activeTrigger?.style.setProperty('--botanica-pot-tilt-x', `${(y * -3).toFixed(2)}deg`);
             });
 
             botanicaHomeHero.addEventListener('pointerleave', () => {
-                if (homeHeroBg) {
-                    homeHeroBg.style.transform = '';
-                }
-                if (homeHeroGlow) {
-                    homeHeroGlow.style.transform = '';
-                }
-                if (homeProductShowcase) {
-                    homeProductShowcase.style.setProperty('--botanica-showcase-x', '0px');
-                    homeProductShowcase.style.setProperty('--botanica-showcase-y', '0px');
-                }
-                if (homePotScene) {
-                    homePotScene.style.setProperty('--event-rotate-y', '0deg');
-                    homePotScene.style.setProperty('--event-rotate-x', '0deg');
-                }
+                homeLaunchTriggers.forEach((trigger) => {
+                    trigger.style.removeProperty('--botanica-pot-tilt-y');
+                    trigger.style.removeProperty('--botanica-pot-tilt-x');
+                });
             });
-
-            const updateHomeHeroScroll = () => {
-                const rect = botanicaHomeHero.getBoundingClientRect();
-                const progress = Math.min(1, Math.max(0, Math.abs(Math.min(rect.top, 0)) / Math.max(1, rect.height * 0.72)));
-                botanicaHomeHero.style.setProperty('--botanica-scroll-scale', (1 - progress * 0.035).toFixed(3));
-                botanicaHomeHero.style.setProperty('--botanica-scroll-y', `${(-progress * 24).toFixed(1)}px`);
-                botanicaHomeHero.style.setProperty('--botanica-scroll-opacity', (1 - progress * 0.18).toFixed(3));
-                if (homeProductShowcase) {
-                    homeProductShowcase.style.setProperty('--botanica-showcase-scroll-y', `${(-progress * 22).toFixed(1)}px`);
-                    homeProductShowcase.style.setProperty('--botanica-showcase-opacity', (1 - progress * 0.28).toFixed(3));
-                }
-            };
-            updateHomeHeroScroll();
-            window.addEventListener('scroll', updateHomeHeroScroll, { passive: true });
         }
 
         homeLaunchTriggers.forEach((trigger) => {
             trigger.addEventListener('click', (event) => startBotanicaJourney(event, trigger));
         });
-
-        if (homeCountdown) {
-            const homeEventTime = new Date(homeCountdown.dataset.countdownDate || '').getTime();
-            const homeParts = {
-                days: homeCountdown.querySelector('[data-home-countdown-days]'),
-                hours: homeCountdown.querySelector('[data-home-countdown-hours]'),
-                minutes: homeCountdown.querySelector('[data-home-countdown-minutes]'),
-                seconds: homeCountdown.querySelector('[data-home-countdown-seconds]')
-            };
-            const setHomeCountdownValue = (element, value) => {
-                if (!element) return;
-                const nextValue = String(value).padStart(2, '0');
-                if (element.textContent === nextValue) return;
-                element.textContent = nextValue;
-                element.classList.remove('is-ticking');
-                void element.offsetWidth;
-                element.classList.add('is-ticking');
-            };
-
-            const updateHomeCountdown = () => {
-                const distance = Math.max(0, homeEventTime - Date.now());
-                const days = Math.floor(distance / 86400000);
-                const hours = Math.floor((distance % 86400000) / 3600000);
-                const minutes = Math.floor((distance % 3600000) / 60000);
-                const seconds = Math.floor((distance % 60000) / 1000);
-                setHomeCountdownValue(homeParts.days, days);
-                setHomeCountdownValue(homeParts.hours, hours);
-                setHomeCountdownValue(homeParts.minutes, minutes);
-                setHomeCountdownValue(homeParts.seconds, seconds);
-            };
-
-            updateHomeCountdown();
-            window.setInterval(updateHomeCountdown, 1000);
-        }
     }
 
     const eventPage = document.querySelector('[data-event-page]');
