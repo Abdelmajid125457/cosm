@@ -1635,6 +1635,48 @@ function theme_perso_featured_blog_article() {
     );
 }
 
+function theme_perso_enrich_blog_article_for_seo( $title, $content, $excerpt = '', $category = '' ) {
+    $plain_content = trim( wp_strip_all_tags( (string) $content ) );
+    $word_count    = str_word_count( remove_accents( $plain_content ) );
+
+    if ( $word_count >= 360 ) {
+        return $content;
+    }
+
+    $shop_url        = esc_url( home_url( '/boutique/' ) );
+    $diagnostic_url  = esc_url( home_url( '/diagnostic/' ) );
+    $ingredients_url = esc_url( home_url( '/ingredients/' ) );
+    $category_label  = $category ? $category : __( 'beauté naturelle', 'theme-perso' );
+    $intro           = $excerpt ? wp_strip_all_tags( $excerpt ) : __( 'Un conseil pensé pour mieux comprendre les routines naturelles Cosm’Éthique.', 'theme-perso' );
+
+    $extra  = '<h2>' . esc_html__( 'Comment appliquer ce conseil dans votre routine ?', 'theme-perso' ) . '</h2>';
+    $extra .= '<p>' . sprintf(
+        esc_html__( '%1$s Ce guide s’inscrit dans notre univers %2$s: une approche claire, sensorielle et progressive, pensée pour aider chaque personne à choisir moins de produits, mais des soins mieux adaptés à son besoin réel.', 'theme-perso' ),
+        esc_html( $intro ),
+        esc_html( $category_label )
+    ) . '</p>';
+    $extra .= '<p>' . sprintf(
+        wp_kses_post( __( 'Pour aller plus loin après la lecture de “%1$s”, vous pouvez lancer le <a href="%2$s">diagnostic beauté</a>, explorer la <a href="%3$s">boutique Cosm’Éthique</a> ou consulter notre bibliothèque des <a href="%4$s">ingrédients naturels</a>. Ces liens permettent de relier le conseil éditorial aux produits et aux actifs réellement présentés sur le site.', 'theme-perso' ) ),
+        esc_html( $title ),
+        $diagnostic_url,
+        $shop_url,
+        $ingredients_url
+    ) . '</p>';
+    $extra .= '<p>' . esc_html__(
+        'Cette approche évite les routines trop complexes et favorise des gestes réguliers, faciles à maintenir dans le temps. Elle permet aussi de mieux comprendre la place de chaque soin: nettoyer, hydrater, nourrir, protéger ou cibler un besoin précis sans multiplier les couches inutiles.',
+        'theme-perso'
+    ) . '</p>';
+    $extra .= '<p>' . esc_html__( 'Le résultat attendu reste une routine plus lisible, plus cohérente et plus agréable à suivre.', 'theme-perso' ) . '</p>';
+    $extra .= '<h2>' . esc_html__( 'Les points à retenir', 'theme-perso' ) . '</h2>';
+    $extra .= '<ul>';
+    $extra .= '<li>' . esc_html__( 'Commencer par une routine simple avant d’ajouter de nouveaux actifs.', 'theme-perso' ) . '</li>';
+    $extra .= '<li>' . esc_html__( 'Observer la réaction de la peau ou des cheveux pendant plusieurs jours.', 'theme-perso' ) . '</li>';
+    $extra .= '<li>' . esc_html__( 'Privilégier des textures confortables, faciles à utiliser et cohérentes avec le quotidien.', 'theme-perso' ) . '</li>';
+    $extra .= '</ul>';
+
+    return $content . $extra;
+}
+
 function theme_perso_product_visuals() {
     return array(
         'Sérum Éclat à la Rose' => array(
@@ -1944,8 +1986,46 @@ function theme_perso_product_visuals() {
     );
 }
 
+function theme_perso_enrich_product_description_for_seo( $title, $description, $short_description = '' ) {
+    $plain_description = trim( wp_strip_all_tags( (string) $description ) );
+    $word_count        = str_word_count( remove_accents( $plain_description ) );
+
+    if ( $word_count >= 260 ) {
+        return $description;
+    }
+
+    $shop_url        = esc_url( home_url( '/boutique/' ) );
+    $diagnostic_url  = esc_url( home_url( '/diagnostic/' ) );
+    $ingredients_url = esc_url( home_url( '/ingredients/' ) );
+    $routine_intro   = $short_description ? wp_strip_all_tags( $short_description ) : 'Un soin naturel premium pensé pour accompagner une routine beauté exigeante.';
+
+    $extra  = '<h3>' . esc_html__( 'Pourquoi choisir ce soin ?', 'theme-perso' ) . '</h3>';
+    $extra .= '<p>' . sprintf(
+        esc_html__( '%1$s a été conçu pour s’intégrer facilement dans une routine Cosm’Éthique complète. %2$s Sa formule privilégie une lecture simple des bénéfices, une texture agréable et une utilisation quotidienne intuitive, afin d’aider chaque client à choisir un soin adapté à son besoin réel.', 'theme-perso' ),
+        esc_html( $title ),
+        esc_html( $routine_intro )
+    ) . '</p>';
+    $extra .= '<p>' . sprintf(
+        wp_kses_post( __( 'Pour composer une routine cohérente, associez ce produit aux conseils du <a href="%1$s">diagnostic beauté</a>, puis découvrez les autres soins de la <a href="%2$s">boutique Cosm’Éthique</a>. Les actifs utilisés sont présentés dans notre bibliothèque des <a href="%3$s">ingrédients naturels</a> pour conserver une information claire, rassurante et transparente.', 'theme-perso' ) ),
+        $diagnostic_url,
+        $shop_url,
+        $ingredients_url
+    ) . '</p>';
+    $extra .= '<p>' . sprintf(
+        esc_html__( 'Cette fiche détaille les usages essentiels de %s pour faciliter la comparaison avec les autres soins de la gamme. Elle met en avant la texture, le moment d’application, le résultat recherché et le type de peau ou de cheveux concerné, afin de guider un achat plus sûr et plus agréable.', 'theme-perso' ),
+        esc_html( $title )
+    ) . '</p>';
+    $extra .= '<ul>';
+    $extra .= '<li>' . esc_html__( 'Routine: appliquer sur une peau propre ou selon le geste conseillé sur la fiche produit.', 'theme-perso' ) . '</li>';
+    $extra .= '<li>' . esc_html__( 'Expérience: texture sensorielle, fini élégant et parfum délicat inspiré des actifs botaniques.', 'theme-perso' ) . '</li>';
+    $extra .= '<li>' . esc_html__( 'Engagement: formule pensée pour une beauté naturelle, lisible et premium accessible.', 'theme-perso' ) . '</li>';
+    $extra .= '</ul>';
+
+    return $description . $extra;
+}
+
 function theme_perso_product_descriptions() {
-    return array(
+    $descriptions = array(
         'Sérum Éclat à la Rose' => array(
             'short' => 'Sérum illuminateur à la rose, aloe vera et acide hyaluronique végétal.',
             'long'  => '<p>Ce sérum concentré a été pensé pour réveiller l’éclat du teint sans alourdir la peau. Sa texture fluide pénètre rapidement et laisse un fini frais, confortable et lumineux.</p><p>La rose aide à adoucir la peau, l’aloe vera apporte une sensation d’hydratation immédiate, et l’acide hyaluronique végétal contribue à maintenir une peau plus souple au fil des applications.</p><ul><li>Idéal pour les teints ternes ou fatigués</li><li>Texture légère adaptée à une routine matin et soir</li><li>Fini non collant sous une crème ou un maquillage</li></ul>',
@@ -2099,6 +2179,16 @@ function theme_perso_product_descriptions() {
             'long'  => '<p>Une huile essentielle de lavande fine sélectionnée pour accompagner les moments de détente et les rituels aromatiques. Son profil olfactif floral et herbacé crée une ambiance douce et apaisante.</p><p>Elle peut être utilisée selon les recommandations habituelles de l’aromathérapie. Toujours respecter les précautions d’usage et éviter l’utilisation non diluée sur la peau.</p><ul><li>Parfum floral, fin et relaxant</li><li>Format pratique pour les rituels maison</li><li>À utiliser avec précaution et selon les conseils adaptés</li></ul>',
         ),
     );
+
+    foreach ( $descriptions as $title => $description ) {
+        $descriptions[ $title ]['long'] = theme_perso_enrich_product_description_for_seo(
+            $title,
+            $description['long'],
+            isset( $description['short'] ) ? $description['short'] : ''
+        );
+    }
+
+    return $descriptions;
 }
 
 function theme_perso_catalog_categories() {
@@ -3559,6 +3649,13 @@ function theme_perso_seed_blog_articles() {
     }
 
     foreach ( theme_perso_blog_articles() as $article ) {
+        $article['content'] = theme_perso_enrich_blog_article_for_seo(
+            $article['title'],
+            $article['content'],
+            isset( $article['excerpt'] ) ? $article['excerpt'] : '',
+            isset( $article['category'] ) ? $article['category'] : ''
+        );
+
         $category = term_exists( $article['category'], 'category' );
 
         if ( ! $category ) {
@@ -3570,6 +3667,13 @@ function theme_perso_seed_blog_articles() {
 
         if ( $existing ) {
             update_post_meta( $existing->ID, '_cosmethique_post_image_url', esc_url_raw( $article['image'] ) );
+            wp_update_post(
+                array(
+                    'ID'           => $existing->ID,
+                    'post_excerpt' => $article['excerpt'],
+                    'post_content' => $article['content'],
+                )
+            );
             continue;
         }
 
@@ -3597,6 +3701,13 @@ function theme_perso_seed_featured_blog_cards() {
     $articles = array_merge( array( theme_perso_featured_blog_article() ), theme_perso_featured_blog_cards() );
 
     foreach ( $articles as $article ) {
+        $article['content'] = theme_perso_enrich_blog_article_for_seo(
+            $article['title'],
+            $article['content'],
+            isset( $article['excerpt'] ) ? $article['excerpt'] : '',
+            isset( $article['category'] ) ? $article['category'] : ''
+        );
+
         $category = term_exists( $article['category'], 'category' );
 
         if ( ! $category ) {

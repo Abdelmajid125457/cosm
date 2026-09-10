@@ -26,7 +26,7 @@ get_header();
             <div class="container">
                 <p class="eyebrow">COSM’ETHIQUE</p>
                 <?php if ( is_product() ) : ?>
-                <h1><?php the_title(); ?></h1>
+                <p class="archive-product-title"><?php the_title(); ?></p>
                 <p><?php esc_html_e( 'Découvrez la description, les images, le prix, le code promo et l’ajout au panier.', 'theme-perso' ); ?></p>
                 <?php else : ?>
                     <h1><?php woocommerce_page_title(); ?></h1>
