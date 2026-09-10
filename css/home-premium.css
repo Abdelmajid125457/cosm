@@ -1338,3 +1338,13 @@ body.admin-bar .promo-bar {
 .text-gold {
     color: var(--color-gold);
 }
+
+@media (min-width: 700px) and (max-width: 1024px) {
+    .front-page .home-botanica-essentials .products-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    }
+
+    .front-page .home-botanica-essentials .product-card {
+        min-height: auto !important;
+    }
+}

@@ -22436,3 +22436,260 @@ select:focus,
         opacity: 1;
     }
 }
+
+/* Home Botanica collection section */
+.front-page .home-botanica-essentials.featured-products {
+    position: relative;
+    overflow: hidden;
+    background:
+        radial-gradient(circle at 12% 14%, rgba(200, 169, 106, 0.16), transparent 34%),
+        linear-gradient(180deg, #ffffff 0%, #fbf7ef 58%, #ffffff 100%);
+}
+
+.front-page .home-botanica-essentials.featured-products::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background:
+        linear-gradient(90deg, transparent, rgba(200, 169, 106, 0.14), transparent),
+        radial-gradient(circle at 82% 28%, rgba(13, 27, 61, 0.08), transparent 30%);
+    opacity: 0.72;
+}
+
+.front-page .home-botanica-essentials.featured-products > .container {
+    position: relative;
+    z-index: 1;
+}
+
+.home-botanica-essentials-heading {
+    max-width: 980px;
+    margin-bottom: clamp(46px, 6vw, 78px);
+    animation: homeBotanicaSectionIn 760ms ease both;
+}
+
+.home-botanica-essentials-heading .eyebrow {
+    color: #8a6a2e;
+    letter-spacing: 0.18em;
+}
+
+.home-botanica-essentials-heading h2 {
+    display: grid;
+    gap: 0.08em;
+    margin-bottom: 22px;
+    color: #0d1b3d;
+    font-size: clamp(3rem, 6.4vw, 6.8rem);
+    line-height: 0.88;
+}
+
+.home-botanica-essentials-heading h2 span,
+.home-botanica-essentials-heading h2 strong {
+    display: block;
+}
+
+.home-botanica-essentials-heading h2 span {
+    font-style: italic;
+    font-weight: 600;
+}
+
+.home-botanica-essentials-heading h2 strong {
+    font-family: var(--sans);
+    font-size: clamp(1.6rem, 3vw, 3rem);
+    font-weight: 800;
+    letter-spacing: 0.22em;
+}
+
+.home-botanica-divider {
+    display: block;
+    width: min(150px, 42vw);
+    height: 1px;
+    margin: 0 auto 24px;
+    background: linear-gradient(90deg, transparent, #c8a96a 22%, #f0d99b 50%, #c8a96a 78%, transparent);
+}
+
+.home-botanica-essentials-heading p:not(.eyebrow) {
+    max-width: 900px;
+    margin: 0 auto;
+    color: #506875;
+    font-size: clamp(1rem, 1.35vw, 1.18rem);
+    line-height: 1.85;
+}
+
+.home-botanica-essentials .products-grid {
+    gap: clamp(28px, 3.8vw, 52px);
+    margin-bottom: 0;
+}
+
+.home-botanica-product-card {
+    min-height: 100%;
+    border: 1px solid rgba(13, 27, 61, 0.12);
+    border-radius: 30px;
+    background: rgba(255, 255, 255, 0.86);
+    box-shadow: 0 24px 70px rgba(13, 27, 61, 0.1);
+    backdrop-filter: blur(16px);
+}
+
+.home-botanica-product-card:hover,
+.home-botanica-product-card:focus-within {
+    border-color: rgba(200, 169, 106, 0.5);
+    box-shadow: 0 32px 86px rgba(13, 27, 61, 0.16);
+}
+
+.home-botanica-product-card .product-image {
+    height: auto;
+    aspect-ratio: 1 / 1.05;
+    padding: 16px;
+    background:
+        radial-gradient(circle at 50% 32%, rgba(200, 169, 106, 0.12), transparent 44%),
+        #fbf7ef;
+}
+
+.home-botanica-product-card .product-image img {
+    border-radius: 22px;
+    object-fit: contain;
+}
+
+.home-botanica-product-card .product-body {
+    display: flex;
+    min-height: 260px;
+    flex-direction: column;
+}
+
+.home-botanica-product-card .product-body h3 {
+    min-height: 2.8em;
+    margin-bottom: 14px;
+}
+
+.home-botanica-product-card .product-price {
+    margin-top: auto;
+    color: #0d1b3d;
+    font-size: 1.08rem;
+}
+
+.home-botanica-essentials .product-badge {
+    top: 18px;
+    left: 18px;
+    right: auto;
+    border: 1px solid rgba(200, 169, 106, 0.46);
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.88);
+    color: #0d1b3d;
+    box-shadow: 0 12px 30px rgba(13, 27, 61, 0.12);
+    backdrop-filter: blur(14px);
+}
+
+.home-botanica-essentials .product-badge--nouveau {
+    background: #0d1b3d;
+    color: #ffffff;
+}
+
+.home-botanica-essentials .product-badge--edition-automne,
+.home-botanica-essentials .product-badge--coffret {
+    background: #f7efe1;
+    color: #735521;
+}
+
+.home-botanica-essentials .product-badge--soin-visage,
+.home-botanica-essentials .product-badge--hydratation {
+    background: rgba(255, 255, 255, 0.94);
+    color: #0d1b3d;
+}
+
+.home-botanica-collection-button {
+    position: relative;
+    overflow: hidden;
+    border-color: rgba(200, 169, 106, 0.56);
+    background: #0d1b3d;
+    color: #ffffff;
+    box-shadow: 0 18px 42px rgba(13, 27, 61, 0.18);
+}
+
+.home-botanica-collection-button::after {
+    content: "";
+    position: absolute;
+    top: -50%;
+    left: -35%;
+    width: 34%;
+    height: 200%;
+    transform: rotate(22deg);
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.45), transparent);
+    transition: left 620ms ease;
+}
+
+.home-botanica-collection-button:hover,
+.home-botanica-collection-button:focus-visible {
+    transform: translateY(-3px);
+    border-color: rgba(240, 217, 155, 0.8);
+    background: #0d1b3d;
+    color: #ffffff;
+    box-shadow: 0 24px 56px rgba(13, 27, 61, 0.26);
+}
+
+.home-botanica-collection-button:hover::after,
+.home-botanica-collection-button:focus-visible::after {
+    left: 118%;
+}
+
+@keyframes homeBotanicaSectionIn {
+    from {
+        opacity: 0;
+        transform: translateY(26px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@media (max-width: 920px) {
+    .home-botanica-essentials .products-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+}
+
+@media (max-width: 640px) {
+    .front-page .home-botanica-essentials.featured-products {
+        padding: 64px 0;
+    }
+
+    .home-botanica-essentials-heading {
+        text-align: left;
+    }
+
+    .home-botanica-essentials-heading h2 {
+        font-size: clamp(2.65rem, 15vw, 4.35rem);
+    }
+
+    .home-botanica-essentials-heading h2 strong {
+        font-size: clamp(1.25rem, 8vw, 2rem);
+        letter-spacing: 0.16em;
+    }
+
+    .home-botanica-divider,
+    .home-botanica-essentials-heading p:not(.eyebrow) {
+        margin-left: 0;
+        margin-right: 0;
+    }
+
+    .home-botanica-essentials .products-grid {
+        grid-template-columns: 1fr;
+        gap: 22px;
+    }
+
+    .home-botanica-product-card .product-body {
+        min-height: auto;
+    }
+
+    .home-botanica-product-card .product-body h3 {
+        min-height: auto;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .home-botanica-essentials-heading,
+    .home-botanica-collection-button::after {
+        animation: none !important;
+        transition: none !important;
+    }
+}

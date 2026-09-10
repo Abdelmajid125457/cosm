@@ -13,6 +13,32 @@ $corps_url   = function_exists( 'theme_perso_get_shop_collection_url' ) ? theme_
 $cheveux_url = function_exists( 'theme_perso_get_shop_collection_url' ) ? theme_perso_get_shop_collection_url( 'cheveux', $shop_url ) : $shop_url;
 $event_url   = function_exists( 'theme_perso_footer_page_url' ) ? theme_perso_footer_page_url( 'evenement' ) : home_url( '/evenement/' );
 $event_transition_url = $event_url;
+
+if ( ! function_exists( 'theme_perso_home_collection_badge' ) ) {
+    function theme_perso_home_collection_badge( $product_id = 0, $slugs = array(), $fallback_title = '' ) {
+        $title = $product_id ? get_the_title( $product_id ) : $fallback_title;
+        $title = function_exists( 'remove_accents' ) ? strtolower( remove_accents( $title ) ) : strtolower( $title );
+        $slugs = array_map( 'sanitize_title', (array) $slugs );
+
+        if ( false !== strpos( $title, 'coffret' ) || false !== strpos( $title, 'pack' ) || array_intersect( $slugs, array( 'pack', 'packs', 'coffret', 'coffrets', 'packs-coffrets' ) ) ) {
+            return array( 'label' => __( 'Coffret', 'theme-perso' ), 'modifier' => 'coffret' );
+        }
+
+        if ( false !== strpos( $title, 'creme' ) || false !== strpos( $title, 'hydrat' ) ) {
+            return array( 'label' => __( 'Hydratation', 'theme-perso' ), 'modifier' => 'hydratation' );
+        }
+
+        if ( false !== strpos( $title, 'serum' ) || false !== strpos( $title, 'masque' ) || false !== strpos( $title, 'lotion' ) || array_intersect( $slugs, array( 'visage', 'soins-visage', 'soins-du-visage' ) ) ) {
+            return array( 'label' => __( 'Soin Visage', 'theme-perso' ), 'modifier' => 'soin-visage' );
+        }
+
+        if ( false !== strpos( $title, 'botanica' ) ) {
+            return array( 'label' => __( 'Nouveau', 'theme-perso' ), 'modifier' => 'nouveau' );
+        }
+
+        return array( 'label' => __( 'Édition Automne', 'theme-perso' ), 'modifier' => 'edition-automne' );
+    }
+}
 ?>
 
 <main id="primary" class="site-main front-page">
@@ -107,11 +133,13 @@ $event_transition_url = $event_url;
         </div>
     </section>
 
-    <section class="section featured-products" id="boutique">
+    <section class="section featured-products home-botanica-essentials" id="boutique">
         <div class="container">
-            <div class="section-heading">
-                <p class="eyebrow">Best sellers</p>
-                <h2>Les essentiels COSM’ETHIQUE</h2>
+            <div class="section-heading home-botanica-essentials-heading">
+                <p class="eyebrow">Nouvelle collection</p>
+                <h2><span>Les essentiels</span><strong>BOTANICA</strong></h2>
+                <span class="home-botanica-divider" aria-hidden="true"></span>
+                <p>Découvrez notre première sélection de soins d'exception formulés à partir d'ingrédients naturels. Une collection pensée pour révéler l'éclat de votre peau grâce à des actifs performants, des textures sensorielles et un savoir-faire inspiré de la nature.</p>
             </div>
             <div class="products-grid filterable-products" aria-live="polite">
                 <?php
@@ -137,8 +165,9 @@ $event_transition_url = $event_url;
                             $terms     = get_the_terms( get_the_ID(), 'product_cat' );
                             $slugs     = $terms && ! is_wp_error( $terms ) ? wp_list_pluck( $terms, 'slug' ) : array();
                             $image_url = get_post_meta( get_the_ID(), '_cosmethique_image_url', true );
+                            $badge     = theme_perso_home_collection_badge( get_the_ID(), $slugs );
                             ?>
-                            <article <?php wc_product_class( 'product-card', $product ); ?> data-product-categories="<?php echo esc_attr( implode( ' ', $slugs ) ); ?>" data-product-url="<?php the_permalink(); ?>">
+                            <article <?php wc_product_class( 'product-card home-botanica-product-card', $product ); ?> data-product-categories="<?php echo esc_attr( implode( ' ', $slugs ) ); ?>" data-product-url="<?php the_permalink(); ?>">
                                 <a class="product-image" href="<?php the_permalink(); ?>">
                                     <?php
                                     if ( $image_url ) {
@@ -149,7 +178,7 @@ $event_transition_url = $event_url;
                                         echo '<img src="' . esc_url( theme_perso_demo_products()[0]['image'] ) . '" alt="' . esc_attr( get_the_title() ) . '" loading="lazy">';
                                     }
                                     ?>
-                                    <span class="product-badge"><?php echo $product->is_on_sale() ? esc_html__( 'Offre', 'theme-perso' ) : esc_html__( 'Soin premium', 'theme-perso' ); ?></span>
+                                    <span class="product-badge product-badge--<?php echo esc_attr( $badge['modifier'] ); ?>"><?php echo esc_html( $badge['label'] ); ?></span>
                                 </a>
                                 <div class="product-body">
                                     <h3><a href="<?php the_permalink(); ?>"><?php the_title(); ?></a></h3>
@@ -165,11 +194,12 @@ $event_transition_url = $event_url;
 
                 if ( ! $has_products ) :
                     foreach ( array_slice( theme_perso_demo_products(), 0, 3 ) as $demo_product ) :
+                        $demo_badge = theme_perso_home_collection_badge( 0, array( $demo_product['category'] ), $demo_product['title'] );
                         ?>
-                        <article class="product-card" data-product-categories="<?php echo esc_attr( $demo_product['category'] ); ?>" data-product-url="<?php echo esc_url( $shop_url ); ?>">
+                        <article class="product-card home-botanica-product-card" data-product-categories="<?php echo esc_attr( $demo_product['category'] ); ?>" data-product-url="<?php echo esc_url( $shop_url ); ?>">
                             <div class="product-image">
                                 <img src="<?php echo esc_url( $demo_product['image'] ); ?>" alt="<?php echo esc_attr( $demo_product['title'] ); ?>" loading="lazy">
-                                <span class="product-badge"><?php echo esc_html( $demo_product['badge'] ); ?></span>
+                                <span class="product-badge product-badge--<?php echo esc_attr( $demo_badge['modifier'] ); ?>"><?php echo esc_html( $demo_badge['label'] ); ?></span>
                             </div>
                             <div class="product-body">
                                 <h3><?php echo esc_html( $demo_product['title'] ); ?></h3>
@@ -183,7 +213,7 @@ $event_transition_url = $event_url;
                 ?>
             </div>
             <div class="section-cta">
-                <a class="button button-outline" href="<?php echo esc_url( $shop_url ); ?>">Voir tous les produits</a>
+                <a class="button button-outline home-botanica-collection-button" href="<?php echo esc_url( $shop_url ); ?>">Découvrir la collection</a>
             </div>
         </div>
     </section>
