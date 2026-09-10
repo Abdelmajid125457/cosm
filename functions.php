@@ -118,7 +118,7 @@ function theme_perso_cookie_category_allowed( $category ) {
 }
 
 function theme_perso_google_analytics_measurement_id() {
-    $measurement_id = defined( 'COSMETHIQUE_GA_MEASUREMENT_ID' ) ? COSMETHIQUE_GA_MEASUREMENT_ID : get_theme_mod( 'cosmethique_ga_measurement_id', 'G-KDCY4CP560' );
+    $measurement_id = defined( 'COSMETHIQUE_GA_MEASUREMENT_ID' ) ? COSMETHIQUE_GA_MEASUREMENT_ID : get_theme_mod( 'cosmethique_ga_measurement_id', 'G-W74WQ2QRR1' );
     $measurement_id = strtoupper( trim( (string) $measurement_id ) );
 
     if ( ! $measurement_id || ! preg_match( '/^[A-Z]+-[A-Z0-9_-]+$/', $measurement_id ) ) {
@@ -353,7 +353,7 @@ function theme_perso_customize_google_analytics( $wp_customize ) {
     $wp_customize->add_setting(
         'cosmethique_ga_measurement_id',
         array(
-            'default'           => 'G-KDCY4CP560',
+            'default'           => 'G-W74WQ2QRR1',
             'sanitize_callback' => 'theme_perso_sanitize_google_analytics_measurement_id',
             'transport'         => 'refresh',
         )
@@ -574,7 +574,7 @@ function theme_perso_render_google_tag_manager_head() {
     $container_id   = theme_perso_google_tag_manager_container_id();
     $measurement_id = theme_perso_google_analytics_measurement_id();
 
-    if ( ! $container_id ) {
+    if ( ! $container_id && ! $measurement_id ) {
         return;
     }
     ?>
@@ -596,6 +596,14 @@ function theme_perso_render_google_tag_manager_head() {
             security_storage: 'granted'
         });
     </script>
+    <?php if ( $measurement_id ) : ?>
+    <script async src="<?php echo esc_url( 'https://www.googletagmanager.com/gtag/js?id=' . rawurlencode( $measurement_id ) ); ?>"></script>
+    <script>
+        gtag('js', new Date());
+        gtag('config', '<?php echo esc_js( $measurement_id ); ?>');
+    </script>
+    <?php endif; ?>
+    <?php if ( $container_id ) : ?>
     <script>
         window.dataLayer = window.dataLayer || [];
         window.dataLayer.push({
@@ -607,6 +615,7 @@ function theme_perso_render_google_tag_manager_head() {
         'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
         })(window,document,'script','dataLayer','<?php echo esc_js( $container_id ); ?>');
     </script>
+    <?php endif; ?>
     <?php
 }
 add_action( 'wp_head', 'theme_perso_render_google_tag_manager_head', 5 );
