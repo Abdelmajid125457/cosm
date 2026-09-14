@@ -310,16 +310,75 @@ document.addEventListener('DOMContentLoaded', () => {
     const navigation = document.querySelector('.site-navigation');
 
     if (menuButton && navigation) {
+        const updateMenuButtonLabel = (isOpen) => {
+            menuButton.setAttribute('aria-expanded', String(isOpen));
+            menuButton.setAttribute('aria-label', isOpen ? 'Fermer le menu principal' : 'Ouvrir le menu principal');
+        };
+
         menuButton.addEventListener('click', () => {
             const isOpen = navigation.classList.toggle('is-open');
-            menuButton.setAttribute('aria-expanded', String(isOpen));
+            updateMenuButtonLabel(isOpen);
         });
 
         navigation.querySelectorAll('a').forEach((link) => {
             link.addEventListener('click', () => {
                 navigation.classList.remove('is-open');
-                menuButton.setAttribute('aria-expanded', 'false');
+                updateMenuButtonLabel(false);
             });
+        });
+
+        navigation.querySelectorAll('.menu-item-has-children').forEach((item, index) => {
+            const trigger = Array.from(item.children).find((child) => child.matches('a, button'));
+            const submenu = Array.from(item.children).find((child) => child.matches('.sub-menu'));
+
+            if (!trigger || !submenu) {
+                return;
+            }
+
+            if (!submenu.id) {
+                submenu.id = `primary-submenu-${index + 1}`;
+            }
+
+            trigger.setAttribute('aria-haspopup', 'true');
+            trigger.setAttribute('aria-expanded', 'false');
+            trigger.setAttribute('aria-controls', submenu.id);
+
+            const setSubmenuState = (isOpen) => {
+                item.classList.toggle('is-keyboard-open', isOpen);
+                trigger.setAttribute('aria-expanded', String(isOpen));
+            };
+
+            item.addEventListener('mouseenter', () => setSubmenuState(true));
+            item.addEventListener('mouseleave', () => setSubmenuState(false));
+            item.addEventListener('focusin', () => setSubmenuState(true));
+            item.addEventListener('focusout', (event) => {
+                if (!item.contains(event.relatedTarget)) {
+                    setSubmenuState(false);
+                }
+            });
+            item.addEventListener('keydown', (event) => {
+                if (event.key === 'Escape') {
+                    event.preventDefault();
+                    setSubmenuState(false);
+                    trigger.focus({ preventScroll: true });
+                }
+
+                if (event.key === ' ') {
+                    event.preventDefault();
+                    const isOpen = trigger.getAttribute('aria-expanded') === 'true';
+                    setSubmenuState(!isOpen);
+                }
+            });
+        });
+
+        document.addEventListener('keydown', (event) => {
+            if (event.key !== 'Escape' || !navigation.classList.contains('is-open')) {
+                return;
+            }
+
+            navigation.classList.remove('is-open');
+            updateMenuButtonLabel(false);
+            menuButton.focus({ preventScroll: true });
         });
     }
 
@@ -411,6 +470,127 @@ document.addEventListener('DOMContentLoaded', () => {
     document.addEventListener('click', (event) => {
         if (!event.target.closest('[data-language-switcher]')) {
             closeLanguageSwitchers();
+        }
+    });
+
+    let generatedAccessibleLabelIndex = 0;
+
+    const ensureAccessibleForms = () => {
+        const fieldSelector = 'input:not([type="hidden"]):not([type="submit"]):not([type="button"]):not([type="reset"]):not([type="image"]), select, textarea';
+
+        document.querySelectorAll(fieldSelector).forEach((field) => {
+            if (field.required || field.hasAttribute('required')) {
+                field.setAttribute('aria-required', 'true');
+            }
+
+            if (field.closest('label') || field.getAttribute('aria-label') || field.getAttribute('aria-labelledby')) {
+                return;
+            }
+
+            if (!field.id) {
+                generatedAccessibleLabelIndex += 1;
+                field.id = `cosmethique-accessible-field-${generatedAccessibleLabelIndex}`;
+            }
+
+            const hasExplicitLabel = Array.from(document.querySelectorAll('label[for]')).some((label) => label.getAttribute('for') === field.id);
+
+            if (hasExplicitLabel) {
+                return;
+            }
+
+            const labelText = field.getAttribute('placeholder') || field.getAttribute('name') || field.getAttribute('id');
+
+            if (!labelText) {
+                return;
+            }
+
+            const label = document.createElement('label');
+            label.className = 'screen-reader-text';
+            label.setAttribute('for', field.id);
+            label.textContent = labelText
+                .replace(/[_-]+/g, ' ')
+                .replace(/\s+/g, ' ')
+                .trim();
+            field.insertAdjacentElement('beforebegin', label);
+        });
+
+        document.querySelectorAll('.woocommerce-error, .woocommerce-message, .woocommerce-info, .form-error, .event-form-status, .account-auth-message').forEach((message) => {
+            const isError = message.classList.contains('woocommerce-error') || message.classList.contains('is-error') || message.classList.contains('form-error');
+            message.setAttribute('role', isError ? 'alert' : 'status');
+            message.setAttribute('aria-live', isError ? 'assertive' : 'polite');
+        });
+
+        document.querySelectorAll('.woocommerce-invalid input, .woocommerce-invalid select, .woocommerce-invalid textarea, .is-invalid').forEach((field) => {
+            field.setAttribute('aria-invalid', 'true');
+        });
+
+        document.querySelectorAll('input[name="payment_method"][aria-controls]').forEach((radio) => {
+            radio.setAttribute('aria-expanded', String(radio.checked));
+        });
+    };
+
+    ensureAccessibleForms();
+
+    document.addEventListener('input', (event) => {
+        if (event.target.matches('input, select, textarea')) {
+            event.target.removeAttribute('aria-invalid');
+        }
+    });
+
+    document.addEventListener('change', (event) => {
+        if (!event.target.matches('input[name="payment_method"]')) {
+            return;
+        }
+
+        document.querySelectorAll('input[name="payment_method"][aria-controls]').forEach((radio) => {
+            radio.setAttribute('aria-expanded', String(radio.checked));
+        });
+    });
+
+    if ('MutationObserver' in window) {
+        let accessibilityObserverTimer = null;
+        const accessibilityObserver = new MutationObserver(() => {
+            window.clearTimeout(accessibilityObserverTimer);
+            accessibilityObserverTimer = window.setTimeout(ensureAccessibleForms, 120);
+        });
+        accessibilityObserver.observe(document.body, { childList: true, subtree: true });
+    }
+
+    if (window.jQuery) {
+        window.jQuery(document.body).on('updated_checkout updated_wc_div', ensureAccessibleForms);
+    }
+
+    document.addEventListener('keydown', (event) => {
+        if (event.key !== 'Tab') {
+            return;
+        }
+
+        const dialogs = Array.from(document.querySelectorAll('[role="dialog"][aria-modal="true"]:not([hidden])'))
+            .filter((dialog) => dialog.offsetParent !== null || dialog.getClientRects().length > 0);
+        const dialog = dialogs[dialogs.length - 1];
+
+        if (!dialog) {
+            return;
+        }
+
+        const focusable = Array.from(dialog.querySelectorAll('a[href], button:not([disabled]), input:not([type="hidden"]):not([disabled]), select:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"])'))
+            .filter((element) => element.offsetParent !== null || element.getClientRects().length > 0);
+
+        if (!focusable.length) {
+            event.preventDefault();
+            dialog.focus({ preventScroll: true });
+            return;
+        }
+
+        const first = focusable[0];
+        const last = focusable[focusable.length - 1];
+
+        if (event.shiftKey && document.activeElement === first) {
+            event.preventDefault();
+            last.focus({ preventScroll: true });
+        } else if (!event.shiftKey && document.activeElement === last) {
+            event.preventDefault();
+            first.focus({ preventScroll: true });
         }
     });
 

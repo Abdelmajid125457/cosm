@@ -8,7 +8,7 @@
 get_header();
 ?>
 
-<main id="primary" class="site-main">
+<main id="main-content" class="site-main" tabindex="-1">
     <header class="archive-hero">
         <div class="container">
             <p class="eyebrow">Archives</p>

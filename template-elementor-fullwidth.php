@@ -9,7 +9,7 @@
 get_header();
 ?>
 
-<main id="primary" class="site-main elementor-fullwidth-template">
+<main id="main-content" class="site-main elementor-fullwidth-template" tabindex="-1">
     <?php
     while ( have_posts() ) :
         the_post();

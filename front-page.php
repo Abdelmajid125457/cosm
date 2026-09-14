@@ -15,7 +15,7 @@ $event_url   = function_exists( 'theme_perso_footer_page_url' ) ? theme_perso_fo
 $event_transition_url = $event_url;
 ?>
 
-<main id="primary" class="site-main front-page">
+<main id="main-content" class="site-main front-page" tabindex="-1">
     <section class="hero-section hero-section--botanica-single" aria-labelledby="hero-title" data-home-botanica-hero data-home-event-url="<?php echo esc_url( $event_transition_url ); ?>">
         <div class="botanica-single-hero-bg" aria-hidden="true"></div>
         <div class="botanica-hero-particles" aria-hidden="true">

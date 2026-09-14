@@ -8,7 +8,7 @@
 get_header();
 ?>
 
-<main id="primary" class="site-main page-main">
+<main id="main-content" class="site-main page-main" tabindex="-1">
     <?php
     while ( have_posts() ) :
         the_post();

@@ -841,12 +841,12 @@ function theme_perso_render_language_selector() {
     $active    = isset( $languages[ $current ] ) ? $languages[ $current ] : $languages['fr'];
     ?>
     <div class="language-switcher" data-language-switcher>
-        <button class="language-switcher-toggle" type="button" aria-haspopup="true" aria-expanded="false">
+        <button class="language-switcher-toggle" type="button" aria-haspopup="true" aria-expanded="false" aria-controls="cosmethique-language-menu" aria-label="<?php esc_attr_e( 'Changer de langue', 'theme-perso' ); ?>">
             <span class="language-label-full"><?php echo esc_html( $active['label'] ); ?></span>
             <span class="language-label-short"><?php echo esc_html( $active['short'] ); ?></span>
             <svg aria-hidden="true" viewBox="0 0 16 16"><path d="M4 6l4 4 4-4"/></svg>
         </button>
-        <div class="language-switcher-menu" role="menu" hidden>
+        <div class="language-switcher-menu" id="cosmethique-language-menu" role="menu" hidden>
             <?php foreach ( $languages as $code => $language ) : ?>
                 <a
                     class="language-switcher-option<?php echo $current === $code ? ' is-active' : ''; ?>"
@@ -1063,6 +1063,69 @@ function theme_perso_hide_event_from_primary_menu( $items, $args ) {
     );
 }
 add_filter( 'wp_nav_menu_objects', 'theme_perso_hide_event_from_primary_menu', 20, 2 );
+
+function theme_perso_accessible_nav_menu_link_attributes( $atts, $item, $args, $depth ) {
+    if ( empty( $args->theme_location ) || 'primary' !== $args->theme_location ) {
+        return $atts;
+    }
+
+    $classes = isset( $item->classes ) && is_array( $item->classes ) ? $item->classes : array();
+
+    if ( in_array( 'current-menu-item', $classes, true ) || in_array( 'current_page_item', $classes, true ) || in_array( 'current_page_parent', $classes, true ) ) {
+        $atts['aria-current'] = 'page';
+    }
+
+    if ( in_array( 'menu-item-has-children', $classes, true ) ) {
+        $atts['aria-haspopup'] = 'true';
+        $atts['aria-expanded'] = 'false';
+    }
+
+    return $atts;
+}
+add_filter( 'nav_menu_link_attributes', 'theme_perso_accessible_nav_menu_link_attributes', 20, 4 );
+
+function theme_perso_product_image_accessible_alt( $attr, $attachment, $size ) {
+    if ( is_admin() || ! empty( $attr['alt'] ) || ! function_exists( 'is_woocommerce' ) ) {
+        return $attr;
+    }
+
+    if ( ! ( is_woocommerce() || is_cart() || is_checkout() ) ) {
+        return $attr;
+    }
+
+    $product_name = '';
+    global $product;
+
+    if ( $product instanceof WC_Product ) {
+        $product_name = $product->get_name();
+    } elseif ( 'product' === get_post_type() ) {
+        $product_name = get_the_title();
+    }
+
+    if ( $product_name ) {
+        $attr['alt'] = sprintf( __( 'Image du produit %s', 'theme-perso' ), $product_name );
+    }
+
+    return $attr;
+}
+add_filter( 'wp_get_attachment_image_attributes', 'theme_perso_product_image_accessible_alt', 20, 3 );
+
+function theme_perso_woocommerce_form_field_accessibility( $args, $key, $value ) {
+    if ( ! isset( $args['custom_attributes'] ) || ! is_array( $args['custom_attributes'] ) ) {
+        $args['custom_attributes'] = array();
+    }
+
+    if ( ! empty( $args['required'] ) ) {
+        $args['custom_attributes']['aria-required'] = 'true';
+    }
+
+    if ( empty( $args['label'] ) && ! empty( $args['placeholder'] ) && empty( $args['custom_attributes']['aria-label'] ) ) {
+        $args['custom_attributes']['aria-label'] = wp_strip_all_tags( $args['placeholder'] );
+    }
+
+    return $args;
+}
+add_filter( 'woocommerce_form_field_args', 'theme_perso_woocommerce_form_field_accessibility', 20, 3 );
 
 function theme_perso_footer_menu_fallback() {
     $items = array(
@@ -7737,11 +7800,11 @@ function theme_perso_account_registration_name_fields() {
     ?>
     <p class="form-row form-row-first">
         <label for="reg_billing_first_name"><?php esc_html_e( 'Prénom', 'theme-perso' ); ?> <span class="required" aria-hidden="true">*</span></label>
-        <input type="text" class="input-text" name="billing_first_name" id="reg_billing_first_name" autocomplete="given-name" value="<?php echo esc_attr( $first_name ); ?>" required>
+        <input type="text" class="input-text" name="billing_first_name" id="reg_billing_first_name" autocomplete="given-name" value="<?php echo esc_attr( $first_name ); ?>" required aria-required="true">
     </p>
     <p class="form-row form-row-last">
         <label for="reg_billing_last_name"><?php esc_html_e( 'Nom', 'theme-perso' ); ?> <span class="required" aria-hidden="true">*</span></label>
-        <input type="text" class="input-text" name="billing_last_name" id="reg_billing_last_name" autocomplete="family-name" value="<?php echo esc_attr( $last_name ); ?>" required>
+        <input type="text" class="input-text" name="billing_last_name" id="reg_billing_last_name" autocomplete="family-name" value="<?php echo esc_attr( $last_name ); ?>" required aria-required="true">
     </p>
     <div class="clear"></div>
     <?php
@@ -7755,7 +7818,7 @@ function theme_perso_account_registration_password_field() {
     ?>
     <p class="form-row form-row-wide">
         <label for="reg_password"><?php esc_html_e( 'Mot de passe', 'theme-perso' ); ?> <span class="required" aria-hidden="true">*</span></label>
-        <input type="password" class="input-text" name="password" id="reg_password" autocomplete="new-password" required>
+        <input type="password" class="input-text" name="password" id="reg_password" autocomplete="new-password" required aria-required="true">
     </p>
     <?php
 }
@@ -7771,7 +7834,7 @@ function theme_perso_account_registration_extra_fields() {
     ?>
     <p class="form-row form-row-wide">
         <label for="reg_password_confirm"><?php esc_html_e( 'Confirmation du mot de passe', 'theme-perso' ); ?> <span class="required" aria-hidden="true">*</span></label>
-        <input type="password" class="input-text" name="password_confirm" id="reg_password_confirm" autocomplete="new-password" required>
+        <input type="password" class="input-text" name="password_confirm" id="reg_password_confirm" autocomplete="new-password" required aria-required="true">
     </p>
     <p class="form-row form-row-wide">
         <label for="reg_billing_phone"><?php esc_html_e( 'Téléphone', 'theme-perso' ); ?> <span class="optional"><?php esc_html_e( 'optionnel', 'theme-perso' ); ?></span></label>
@@ -7779,11 +7842,11 @@ function theme_perso_account_registration_extra_fields() {
     </p>
     <div class="cosmethique-register-consents">
         <label class="woocommerce-form__label woocommerce-form__label-for-checkbox">
-            <input class="woocommerce-form__input woocommerce-form__input-checkbox" name="cosmethique_accept_terms" type="checkbox" value="1" <?php checked( ! empty( $_POST['cosmethique_accept_terms'] ) ); ?>>
+            <input class="woocommerce-form__input woocommerce-form__input-checkbox" name="cosmethique_accept_terms" type="checkbox" value="1" required aria-required="true" <?php checked( ! empty( $_POST['cosmethique_accept_terms'] ) ); ?>>
             <span><?php esc_html_e( 'J’accepte les Conditions Générales.', 'theme-perso' ); ?> <span class="required" aria-hidden="true">*</span></span>
         </label>
         <label class="woocommerce-form__label woocommerce-form__label-for-checkbox">
-            <input class="woocommerce-form__input woocommerce-form__input-checkbox" name="cosmethique_accept_privacy" type="checkbox" value="1" <?php checked( ! empty( $_POST['cosmethique_accept_privacy'] ) ); ?>>
+            <input class="woocommerce-form__input woocommerce-form__input-checkbox" name="cosmethique_accept_privacy" type="checkbox" value="1" required aria-required="true" <?php checked( ! empty( $_POST['cosmethique_accept_privacy'] ) ); ?>>
             <span><?php esc_html_e( 'J’accepte la Politique de confidentialité.', 'theme-perso' ); ?> <span class="required" aria-hidden="true">*</span></span>
         </label>
         <label class="woocommerce-form__label woocommerce-form__label-for-checkbox">

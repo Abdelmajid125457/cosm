@@ -63,7 +63,7 @@ if ( false !== $payment_hook_priority ) {
 	<span class="checkout-progress-step is-active">
 		<span><?php esc_html_e( 'Livraison', 'theme-perso' ); ?></span>
 	</span>
-	<span class="checkout-progress-step is-active">
+	<span class="checkout-progress-step is-active" aria-current="step">
 		<span><?php esc_html_e( 'Paiement', 'theme-perso' ); ?></span>
 	</span>
 	<span class="checkout-progress-step">

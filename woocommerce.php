@@ -8,7 +8,7 @@
 get_header();
 ?>
 
-<main id="primary" class="site-main">
+<main id="main-content" class="site-main" tabindex="-1">
     <?php if ( is_shop() && function_exists( 'theme_perso_render_shop_page' ) ) : ?>
         <?php theme_perso_render_shop_page(); ?>
     <?php elseif ( is_product_category( array( 'soins-visage', 'visage', 'soins-du-visage' ) ) && function_exists( 'theme_perso_render_visage_category_page' ) ) : ?>

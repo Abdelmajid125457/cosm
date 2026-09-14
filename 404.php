@@ -8,7 +8,7 @@
 get_header();
 ?>
 
-<main class="container">
+<main id="main-content" class="container" tabindex="-1">
     <article class="post error404 not-found">
         <header class="post-header">
             <h1 class="post-title"><?php esc_html_e( 'Erreur 404 - Page non trouvée', 'theme-perso' ); ?></h1>

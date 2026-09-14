@@ -36,7 +36,7 @@ $progress        = $free_threshold > 0 ? min( 100, ( $subtotal_amount / $free_th
 </section>
 
 <nav class="cart-progress-steps" aria-label="<?php esc_attr_e( 'Progression de commande', 'theme-perso' ); ?>">
-    <span class="is-active"><?php esc_html_e( 'Panier', 'theme-perso' ); ?></span>
+    <span class="is-active" aria-current="step"><?php esc_html_e( 'Panier', 'theme-perso' ); ?></span>
     <span><?php esc_html_e( 'Livraison', 'theme-perso' ); ?></span>
     <span><?php esc_html_e( 'Paiement', 'theme-perso' ); ?></span>
     <span><?php esc_html_e( 'Confirmation', 'theme-perso' ); ?></span>

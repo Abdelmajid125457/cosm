@@ -12,7 +12,7 @@ $featured_post = get_page_by_title( $featured['title'], OBJECT, 'post' );
 $featured_url  = $featured_post ? get_permalink( $featured_post ) : home_url( '/blog/' );
 ?>
 
-<main id="primary" class="site-main blog-page-main">
+<main id="main-content" class="site-main blog-page-main" tabindex="-1">
     <section class="blog-page-hero">
         <div class="container">
             <p class="eyebrow">Le blog</p>

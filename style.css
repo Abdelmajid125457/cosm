@@ -22622,3 +22622,91 @@ select:focus,
         transform: none;
     }
 }
+
+/* Accessibilite clavier: visible uniquement lors de la navigation au clavier. */
+.skip-link:focus,
+.skip-link:focus-visible {
+    position: fixed;
+    z-index: 100000;
+    top: 12px;
+    left: 12px;
+    width: auto;
+    height: auto;
+    margin: 0;
+    padding: 12px 18px;
+    clip: auto;
+    clip-path: none;
+    overflow: visible;
+    border: 2px solid #c8a96a;
+    border-radius: 999px;
+    outline: 3px solid #0d1b3d;
+    outline-offset: 3px;
+    background: #0d1b3d;
+    color: #ffffff;
+    box-shadow: 0 14px 34px rgba(13, 27, 61, 0.22);
+    font-weight: 800;
+    text-decoration: none;
+}
+
+body :is(
+    a[href],
+    button,
+    input:not([type="hidden"]),
+    select,
+    textarea,
+    summary,
+    [tabindex]:not([tabindex="-1"]),
+    [role="button"],
+    [role="link"],
+    [role="tab"],
+    [role="menuitem"],
+    [role="menuitemradio"],
+    [role="option"]
+):focus-visible {
+    outline: 3px solid #0d1b3d !important;
+    outline-offset: 4px !important;
+    box-shadow: 0 0 0 6px rgba(13, 27, 61, 0.14) !important;
+}
+
+.product-search-form:focus-within {
+    outline: 3px solid #0d1b3d;
+    outline-offset: 4px;
+}
+
+.product-search-form input:focus,
+.product-search-form input:focus-visible {
+    outline: 1px solid transparent !important;
+    outline-offset: 0 !important;
+    box-shadow: none !important;
+}
+
+.primary-menu .menu-item-has-children.is-keyboard-open > .sub-menu {
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+}
+
+@media (max-width: 768px) {
+    :where(
+        button,
+        .button,
+        .wp-element-button,
+        .added_to_cart,
+        input[type="submit"],
+        input[type="button"],
+        input[type="reset"],
+        .header-icon,
+        .mobile-menu-toggle,
+        .language-switcher-toggle,
+        .product-search-form button,
+        .woocommerce a.button,
+        .woocommerce button.button,
+        .woocommerce input.button,
+        .woocommerce #respond input#submit,
+        .quantity button,
+        .cart-quantity-control button
+    ) {
+        min-width: 44px;
+        min-height: 44px;
+    }
+}

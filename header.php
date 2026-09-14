@@ -25,10 +25,9 @@ if ( function_exists( 'WC' ) && WC()->cart ) {
 
 <body <?php body_class(); ?>>
 <?php wp_body_open(); ?>
+<a class="skip-link screen-reader-text" href="#main-content"><?php esc_html_e( 'Passer au contenu principal', 'theme-perso' ); ?></a>
 
 <div id="page" class="site">
-    <a class="skip-link screen-reader-text" href="#primary"><?php esc_html_e( 'Aller au contenu', 'theme-perso' ); ?></a>
-
     <header class="site-header" id="masthead">
         <div class="promo-bar promo-marquee" role="status" aria-label="<?php esc_attr_e( 'Avantages COSM’ETHIQUE', 'theme-perso' ); ?>">
             <div class="promo-track">
@@ -56,7 +55,7 @@ if ( function_exists( 'WC' ) && WC()->cart ) {
                     <?php endif; ?>
                 </div>
 
-                <button class="mobile-menu-toggle" type="button" aria-expanded="false" aria-controls="primary-menu">
+                <button class="mobile-menu-toggle" type="button" aria-expanded="false" aria-controls="primary-menu" aria-label="<?php esc_attr_e( 'Ouvrir le menu principal', 'theme-perso' ); ?>">
                     <span class="screen-reader-text"><?php esc_html_e( 'Ouvrir le menu', 'theme-perso' ); ?></span>
                     <span></span>
                     <span></span>
