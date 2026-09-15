@@ -1238,6 +1238,10 @@ function theme_perso_sitemap_document_title( $parts ) {
 add_filter( 'document_title_parts', 'theme_perso_sitemap_document_title', 20 );
 
 function theme_perso_sitemap_page_seo() {
+    if ( is_admin() || defined( 'WPSEO_VERSION' ) || defined( 'RANK_MATH_VERSION' ) ) {
+        return;
+    }
+
     $page_uri = is_page() ? get_page_uri( get_queried_object_id() ) : '';
     $seo_pages = array(
         'franchise/eligibilite'  => array(
@@ -1254,7 +1258,7 @@ function theme_perso_sitemap_page_seo() {
         ),
     );
 
-    if ( is_admin() || ( ! is_page( 'plan-du-site' ) && ! is_page( 'recrutement' ) && ! is_page( 'evenement' ) && ! isset( $seo_pages[ $page_uri ] ) ) ) {
+    if ( ! is_page( 'plan-du-site' ) && ! is_page( 'recrutement' ) && ! is_page( 'evenement' ) && ! isset( $seo_pages[ $page_uri ] ) ) {
         return;
     }
 

@@ -15,13 +15,13 @@
             echo do_shortcode( $shortcode );
         } else {
             ?>
-            <form class="cosmethique-form" action="#" method="post">
-                <label>Nom<input type="text" name="name" required></label>
-                <label>Prénom<input type="text" name="first_name" required></label>
-                <label>Email<input type="email" name="email" required></label>
+            <form class="cosmethique-form" action="<?php echo esc_url( home_url( '/contact/' ) ); ?>" method="post">
+                <label>Nom<input type="text" name="name" required aria-required="true"></label>
+                <label>Prénom<input type="text" name="first_name" required aria-required="true"></label>
+                <label>Email<input type="email" name="email" required aria-required="true"></label>
                 <label>Téléphone<input type="tel" name="phone"></label>
-                <label>Sujet<input type="text" name="subject" required></label>
-                <label>Message<textarea name="message" rows="5" required></textarea></label>
+                <label>Sujet<input type="text" name="subject" required aria-required="true"></label>
+                <label>Message<textarea name="message" rows="5" required aria-required="true"></textarea></label>
                 <?php theme_perso_security_fields( 'contact' ); ?>
                 <button class="button button-primary" type="submit">Envoyer</button>
             </form>

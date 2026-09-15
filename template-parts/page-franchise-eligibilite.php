@@ -96,31 +96,31 @@ $faq = array(
         </div>
         <form class="franchise-quiz motion-reveal" data-franchise-eligibility-form>
             <div class="franchise-form-grid">
-                <label><?php esc_html_e( 'Quel est votre nom ?', 'theme-perso' ); ?><input type="text" name="name" required></label>
-                <label><?php esc_html_e( 'Votre email', 'theme-perso' ); ?><input type="email" name="email" required></label>
-                <label><?php esc_html_e( 'Votre téléphone', 'theme-perso' ); ?><input type="tel" name="phone" required></label>
-                <label><?php esc_html_e( 'Votre ville', 'theme-perso' ); ?><input type="text" name="city" required></label>
-                <label><?php esc_html_e( 'Votre pays', 'theme-perso' ); ?><input type="text" name="country" required></label>
+                <label><?php esc_html_e( 'Quel est votre nom ?', 'theme-perso' ); ?><input type="text" name="name" required aria-required="true"></label>
+                <label><?php esc_html_e( 'Votre email', 'theme-perso' ); ?><input type="email" name="email" required aria-required="true"></label>
+                <label><?php esc_html_e( 'Votre téléphone', 'theme-perso' ); ?><input type="tel" name="phone" required aria-required="true"></label>
+                <label><?php esc_html_e( 'Votre ville', 'theme-perso' ); ?><input type="text" name="city" required aria-required="true"></label>
+                <label><?php esc_html_e( 'Votre pays', 'theme-perso' ); ?><input type="text" name="country" required aria-required="true"></label>
                 <fieldset>
                     <legend><?php esc_html_e( 'Disposez-vous d’un local ?', 'theme-perso' ); ?></legend>
-                    <label><input type="radio" name="premises" value="yes" required> <?php esc_html_e( 'Oui', 'theme-perso' ); ?></label>
+                    <label><input type="radio" name="premises" value="yes" required aria-required="true"> <?php esc_html_e( 'Oui', 'theme-perso' ); ?></label>
                     <label><input type="radio" name="premises" value="no"> <?php esc_html_e( 'Non', 'theme-perso' ); ?></label>
                 </fieldset>
                 <label><?php esc_html_e( 'Surface du local', 'theme-perso' ); ?><input type="text" name="surface"></label>
                 <fieldset>
                     <legend><?php esc_html_e( 'Budget disponible', 'theme-perso' ); ?></legend>
-                    <label><input type="radio" name="budget" value="low" required> <?php esc_html_e( 'moins de 20 000€', 'theme-perso' ); ?></label>
+                    <label><input type="radio" name="budget" value="low" required aria-required="true"> <?php esc_html_e( 'moins de 20 000€', 'theme-perso' ); ?></label>
                     <label><input type="radio" name="budget" value="medium"> <?php esc_html_e( '20-40k€', 'theme-perso' ); ?></label>
                     <label><input type="radio" name="budget" value="good"> <?php esc_html_e( '40-80k€', 'theme-perso' ); ?></label>
                     <label><input type="radio" name="budget" value="strong"> <?php esc_html_e( 'plus de 80k€', 'theme-perso' ); ?></label>
                 </fieldset>
                 <fieldset>
                     <legend><?php esc_html_e( 'Avez-vous déjà dirigé une entreprise ?', 'theme-perso' ); ?></legend>
-                    <label><input type="radio" name="business" value="yes" required> <?php esc_html_e( 'Oui', 'theme-perso' ); ?></label>
+                    <label><input type="radio" name="business" value="yes" required aria-required="true"> <?php esc_html_e( 'Oui', 'theme-perso' ); ?></label>
                     <label><input type="radio" name="business" value="no"> <?php esc_html_e( 'Non', 'theme-perso' ); ?></label>
                 </fieldset>
-                <label class="franchise-field-full"><?php esc_html_e( 'Pourquoi souhaitez-vous rejoindre Cosm’Éthique ?', 'theme-perso' ); ?><textarea name="motivation" rows="5" required></textarea></label>
-                <label class="franchise-field-full"><?php esc_html_e( 'Captcha', 'theme-perso' ); ?><input type="text" name="captcha" inputmode="numeric" autocomplete="off" data-franchise-captcha required placeholder="<?php esc_attr_e( 'Combien font 7 + 2 ?', 'theme-perso' ); ?>"></label>
+                <label class="franchise-field-full"><?php esc_html_e( 'Pourquoi souhaitez-vous rejoindre Cosm’Éthique ?', 'theme-perso' ); ?><textarea name="motivation" rows="5" required aria-required="true"></textarea></label>
+                <label class="franchise-field-full"><?php esc_html_e( 'Captcha', 'theme-perso' ); ?><input type="text" name="captcha" inputmode="numeric" autocomplete="off" data-franchise-captcha required aria-required="true" placeholder="<?php esc_attr_e( 'Combien font 7 + 2 ?', 'theme-perso' ); ?>"></label>
             </div>
             <button class="button button-primary" type="submit"><?php esc_html_e( 'Voir mon résultat', 'theme-perso' ); ?></button>
             <div class="franchise-quiz-result" data-franchise-eligibility-result hidden>

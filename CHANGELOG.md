@@ -2,6 +2,41 @@
 
 Toutes les interventions sur le thème doivent être sauvegardées et documentées ici.
 
+## 2026-09-15 12:39 CEST - Audit production, accessibilité et SEO
+
+Résumé :
+- Passe qualité avant livraison sur les points critiques du thème Cosm'Éthique.
+- Correction des formulaires sans destination réelle et ajout des attributs accessibles sur les champs obligatoires.
+- Amélioration des messages accessibles et des états des boutons de filtre.
+- Correction du panneau produit de la page Événement pour qu'il soit exposé comme une vraie fenêtre modale accessible.
+- Prévention des doublons canonical/schema lorsque Yoast SEO ou Rank Math est actif.
+- Ajout d'un rapport d'audit production dans le projet.
+
+Fichiers modifiés :
+- `AUDIT-PRODUCTION-COSMETHIQUE.md`
+- `footer.php`
+- `functions.php`
+- `index.php`
+- `js/main.js`
+- `single.php`
+- `template-parts/page-contact.php`
+- `template-parts/page-devenir-franchise.php`
+- `template-parts/page-evenement.php`
+- `template-parts/page-franchise-candidature.php`
+- `template-parts/page-franchise-eligibilite.php`
+- `template-parts/page-recrutement.php`
+- `CHANGELOG.md`
+
+Corrections de bugs :
+- Suppression des `action="#"` sur les formulaires blog, article, contact, franchise et recrutement.
+- Ajout de `aria-required` sur les champs requis des formulaires concernés.
+- Ajout des rôles `status` / `alert` aux retours utilisateur dynamiques.
+- Correction des états accessibles `aria-pressed` sur les filtres.
+- Vérification PHP complète : aucune erreur de syntaxe.
+- Vérification JavaScript : `js/main.js` valide avec `node --check`.
+- Vérification Git : `git diff --check` sans erreur.
+- Vérification navigateur ciblée : accueil desktop et page Événement mobile sans débordement horizontal critique.
+
 ## 2026-09-08 12:17 CEST - Hero Botanica : suppression du montage et pot unique
 
 Résumé :

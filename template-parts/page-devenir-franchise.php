@@ -86,16 +86,16 @@ $franchise_eligibility_url = home_url( '/franchise/eligibilite/' );
     </div>
     <div class="form-card" data-demo-autofill="franchise">
         <h3>Demande d’information franchisé</h3>
-        <form class="cosmethique-form" action="#" method="post">
-            <label>Nom complet<input type="text" name="name" required></label>
-            <label>Email<input type="email" name="email" required></label>
-            <label>Téléphone<input type="tel" name="phone" required></label>
-            <label>Ville souhaitée<input type="text" name="city" required></label>
-            <label>Apport personnel<input type="text" name="investment" required></label>
-            <label>Surface souhaitée<input type="text" name="surface" required></label>
-            <label>Expérience professionnelle<textarea name="experience" rows="4" required></textarea></label>
-            <label>Message<textarea name="message" rows="5" required></textarea></label>
-            <label class="checkbox-label"><input type="checkbox" name="consent" required> J’accepte d’être contacté au sujet de ma demande de franchise.</label>
+        <form class="cosmethique-form" action="<?php echo esc_url( home_url( '/devenir-franchise/' ) ); ?>" method="post">
+            <label>Nom complet<input type="text" name="name" required aria-required="true"></label>
+            <label>Email<input type="email" name="email" required aria-required="true"></label>
+            <label>Téléphone<input type="tel" name="phone" required aria-required="true"></label>
+            <label>Ville souhaitée<input type="text" name="city" required aria-required="true"></label>
+            <label>Apport personnel<input type="text" name="investment" required aria-required="true"></label>
+            <label>Surface souhaitée<input type="text" name="surface" required aria-required="true"></label>
+            <label>Expérience professionnelle<textarea name="experience" rows="4" required aria-required="true"></textarea></label>
+            <label>Message<textarea name="message" rows="5" required aria-required="true"></textarea></label>
+            <label class="checkbox-label"><input type="checkbox" name="consent" required aria-required="true"> J’accepte d’être contacté au sujet de ma demande de franchise.</label>
             <?php theme_perso_security_fields( 'franchise' ); ?>
             <button class="button button-primary" type="submit">Envoyer ma demande</button>
         </form>

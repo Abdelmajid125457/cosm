@@ -103,8 +103,9 @@ get_header();
                 </section>
                 <section class="blog-sidebar-card blog-newsletter-card">
                     <h2><?php esc_html_e( 'Recevez nos conseils beauté chaque semaine', 'theme-perso' ); ?></h2>
-                    <form class="newsletter-form" action="#" method="post">
-                        <input type="email" name="email" placeholder="<?php esc_attr_e( 'Votre adresse email', 'theme-perso' ); ?>" required>
+                    <form class="newsletter-form" action="<?php echo esc_url( home_url( '/' ) ); ?>" method="post">
+                        <label class="screen-reader-text" for="article-newsletter-email"><?php esc_html_e( 'Adresse email', 'theme-perso' ); ?></label>
+                        <input id="article-newsletter-email" type="email" name="email" placeholder="<?php esc_attr_e( 'Votre adresse email', 'theme-perso' ); ?>" required aria-required="true">
                         <?php theme_perso_security_fields( 'article_newsletter' ); ?>
                         <button class="button button-primary" type="submit"><?php esc_html_e( 'S’inscrire', 'theme-perso' ); ?></button>
                     </form>

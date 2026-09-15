@@ -279,16 +279,16 @@ foreach ( $jobs as $job ) {
             <h2 id="application-title"><?php esc_html_e( 'Présentez-nous votre talent.', 'theme-perso' ); ?></h2>
             <p><?php esc_html_e( 'Envoyez votre parcours, votre vision et ce que vous aimeriez construire avec Cosm’Éthique.', 'theme-perso' ); ?></p>
         </div>
-        <form class="recruitment-form motion-reveal motion-reveal--right" action="#" method="post" enctype="multipart/form-data" data-demo-autofill="recruitment" data-recruitment-form>
+        <form class="recruitment-form motion-reveal motion-reveal--right" action="<?php echo esc_url( home_url( '/recrutement/' ) ); ?>" method="post" enctype="multipart/form-data" data-demo-autofill="recruitment" data-recruitment-form>
             <div class="recruitment-form-grid">
-                <label><?php esc_html_e( 'Nom', 'theme-perso' ); ?><input type="text" name="last_name" required></label>
-                <label><?php esc_html_e( 'Prénom', 'theme-perso' ); ?><input type="text" name="first_name" required></label>
-                <label><?php esc_html_e( 'Email', 'theme-perso' ); ?><input type="email" name="email" required></label>
-                <label><?php esc_html_e( 'Téléphone', 'theme-perso' ); ?><input type="tel" name="phone" required></label>
+                <label><?php esc_html_e( 'Nom', 'theme-perso' ); ?><input type="text" name="last_name" required aria-required="true"></label>
+                <label><?php esc_html_e( 'Prénom', 'theme-perso' ); ?><input type="text" name="first_name" required aria-required="true"></label>
+                <label><?php esc_html_e( 'Email', 'theme-perso' ); ?><input type="email" name="email" required aria-required="true"></label>
+                <label><?php esc_html_e( 'Téléphone', 'theme-perso' ); ?><input type="tel" name="phone" required aria-required="true"></label>
                 <label><?php esc_html_e( 'CV', 'theme-perso' ); ?><input type="file" name="cv" accept=".pdf,.doc,.docx"></label>
                 <label><?php esc_html_e( 'Lettre de motivation', 'theme-perso' ); ?><input type="file" name="letter" accept=".pdf,.doc,.docx"></label>
-                <label class="recruitment-field-full"><?php esc_html_e( 'Message', 'theme-perso' ); ?><textarea name="message" rows="5" required></textarea></label>
-                <label class="recruitment-field-full"><?php esc_html_e( 'Captcha', 'theme-perso' ); ?><input type="text" name="captcha" inputmode="numeric" autocomplete="off" data-recruitment-captcha required placeholder="<?php esc_attr_e( 'Combien font 7 + 2 ?', 'theme-perso' ); ?>"></label>
+                <label class="recruitment-field-full"><?php esc_html_e( 'Message', 'theme-perso' ); ?><textarea name="message" rows="5" required aria-required="true"></textarea></label>
+                <label class="recruitment-field-full"><?php esc_html_e( 'Captcha', 'theme-perso' ); ?><input type="text" name="captcha" inputmode="numeric" autocomplete="off" data-recruitment-captcha required aria-required="true" placeholder="<?php esc_attr_e( 'Combien font 7 + 2 ?', 'theme-perso' ); ?>"></label>
             </div>
             <?php theme_perso_security_fields( 'recruitment' ); ?>
             <button class="button button-primary" type="submit"><?php esc_html_e( 'Envoyer ma candidature', 'theme-perso' ); ?></button>

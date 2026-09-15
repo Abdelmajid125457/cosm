@@ -474,6 +474,27 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     let generatedAccessibleLabelIndex = 0;
+    const accessibleStatusSelector = [
+        '.woocommerce-error',
+        '.woocommerce-message',
+        '.woocommerce-info',
+        '.form-error',
+        '.event-form-status',
+        '.account-auth-message',
+        '.franchise-form-status',
+        '.recruitment-form-status',
+        '.newsletter-status',
+        '.smart-search-status',
+        '.sitemap-search-empty',
+        '.checkout-coupon-feedback'
+    ].join(', ');
+    const accessibleFilterButtonSelector = '[data-filter-button], [data-blog-filter], [data-recruitment-filter]';
+
+    const syncAccessibleFilterStates = () => {
+        document.querySelectorAll(accessibleFilterButtonSelector).forEach((button) => {
+            button.setAttribute('aria-pressed', button.classList.contains('is-active') ? 'true' : 'false');
+        });
+    };
 
     const ensureAccessibleForms = () => {
         const fieldSelector = 'input:not([type="hidden"]):not([type="submit"]):not([type="button"]):not([type="reset"]):not([type="image"]), select, textarea';
@@ -514,11 +535,13 @@ document.addEventListener('DOMContentLoaded', () => {
             field.insertAdjacentElement('beforebegin', label);
         });
 
-        document.querySelectorAll('.woocommerce-error, .woocommerce-message, .woocommerce-info, .form-error, .event-form-status, .account-auth-message').forEach((message) => {
+        document.querySelectorAll(accessibleStatusSelector).forEach((message) => {
             const isError = message.classList.contains('woocommerce-error') || message.classList.contains('is-error') || message.classList.contains('form-error');
             message.setAttribute('role', isError ? 'alert' : 'status');
             message.setAttribute('aria-live', isError ? 'assertive' : 'polite');
         });
+
+        syncAccessibleFilterStates();
 
         document.querySelectorAll('.woocommerce-invalid input, .woocommerce-invalid select, .woocommerce-invalid textarea, .is-invalid').forEach((field) => {
             field.setAttribute('aria-invalid', 'true');
@@ -534,6 +557,12 @@ document.addEventListener('DOMContentLoaded', () => {
     document.addEventListener('input', (event) => {
         if (event.target.matches('input, select, textarea')) {
             event.target.removeAttribute('aria-invalid');
+        }
+    });
+
+    document.addEventListener('click', (event) => {
+        if (event.target.closest(accessibleFilterButtonSelector)) {
+            window.setTimeout(syncAccessibleFilterStates, 0);
         }
     });
 

@@ -556,7 +556,7 @@ $timeline = array(
             <?php endforeach; ?>
         </div>
 
-        <article class="event-product-panel" data-event-product-panel hidden aria-labelledby="event-product-panel-title">
+        <article class="event-product-panel" data-event-product-panel hidden role="dialog" aria-modal="true" aria-labelledby="event-product-panel-title" aria-describedby="event-product-panel-description">
             <button class="event-product-close" type="button" data-event-product-panel-close aria-label="<?php esc_attr_e( 'Fermer la fiche produit', 'theme-perso' ); ?>">×</button>
             <div class="event-product-panel-media">
                 <span data-event-product-panel-badge></span>
@@ -566,7 +566,7 @@ $timeline = array(
             <div class="event-product-panel-content">
                 <p class="event-kicker"><?php esc_html_e( 'Collection Botanica', 'theme-perso' ); ?></p>
                 <h2 id="event-product-panel-title" data-event-product-panel-title></h2>
-                <p class="event-product-panel-description" data-event-product-panel-description></p>
+                <p id="event-product-panel-description" class="event-product-panel-description" data-event-product-panel-description></p>
                 <strong class="event-product-panel-price" data-event-product-panel-price></strong>
 
                 <dl class="event-product-panel-details">
@@ -587,7 +587,7 @@ $timeline = array(
                 <div class="event-product-panel-actions">
                     <div class="event-product-quantity" aria-label="<?php esc_attr_e( 'Quantité', 'theme-perso' ); ?>">
                         <button type="button" data-event-product-qty-minus aria-label="<?php esc_attr_e( 'Réduire la quantité', 'theme-perso' ); ?>">-</button>
-                        <input type="number" min="1" max="12" value="1" data-event-product-quantity>
+                        <input type="number" min="1" max="12" value="1" data-event-product-quantity aria-label="<?php esc_attr_e( 'Quantité du produit', 'theme-perso' ); ?>">
                         <button type="button" data-event-product-qty-plus aria-label="<?php esc_attr_e( 'Augmenter la quantité', 'theme-perso' ); ?>">+</button>
                     </div>
                     <a class="button button-primary event-product-panel-add add_to_cart_button ajax_add_to_cart" href="<?php echo esc_url( home_url( '/boutique/' ) ); ?>" data-event-product-add data-product_id="" data-quantity="1">
@@ -605,11 +605,11 @@ $timeline = array(
                 <h2 id="event-reservation-title"><?php esc_html_e( 'Réserver ma place', 'theme-perso' ); ?></h2>
                 <form class="event-form" data-event-form novalidate>
                     <div class="event-form-grid">
-                        <label><?php esc_html_e( 'Nom', 'theme-perso' ); ?><input type="text" name="last_name" autocomplete="family-name" required></label>
-                        <label><?php esc_html_e( 'Prénom', 'theme-perso' ); ?><input type="text" name="first_name" autocomplete="given-name" required></label>
-                        <label><?php esc_html_e( 'Email', 'theme-perso' ); ?><input type="email" name="email" autocomplete="email" required></label>
-                        <label><?php esc_html_e( 'Téléphone', 'theme-perso' ); ?><input type="tel" name="phone" autocomplete="tel" required></label>
-                        <label class="event-field-full"><?php esc_html_e( 'Nombre de participants', 'theme-perso' ); ?><input type="number" name="participants" min="1" max="6" value="1" required></label>
+                        <label><?php esc_html_e( 'Nom', 'theme-perso' ); ?><input type="text" name="last_name" autocomplete="family-name" required aria-required="true"></label>
+                        <label><?php esc_html_e( 'Prénom', 'theme-perso' ); ?><input type="text" name="first_name" autocomplete="given-name" required aria-required="true"></label>
+                        <label><?php esc_html_e( 'Email', 'theme-perso' ); ?><input type="email" name="email" autocomplete="email" required aria-required="true"></label>
+                        <label><?php esc_html_e( 'Téléphone', 'theme-perso' ); ?><input type="tel" name="phone" autocomplete="tel" required aria-required="true"></label>
+                        <label class="event-field-full"><?php esc_html_e( 'Nombre de participants', 'theme-perso' ); ?><input type="number" name="participants" min="1" max="6" value="1" required aria-required="true"></label>
                     </div>
                     <button class="button button-primary" type="submit"><?php esc_html_e( 'Je participe', 'theme-perso' ); ?></button>
                     <p class="event-form-status" aria-live="polite"></p>

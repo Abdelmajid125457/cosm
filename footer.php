@@ -128,7 +128,7 @@
             </div>
 
             <details class="footer-column footer-nav-group" open>
-                <summary><?php esc_html_e( 'Produits', 'theme-perso' ); ?><span aria-hidden="true">+</span></summary>
+                <summary aria-label="<?php esc_attr_e( 'Liens produits du footer', 'theme-perso' ); ?>"><?php esc_html_e( 'Produits', 'theme-perso' ); ?><span aria-hidden="true">+</span></summary>
                 <ul class="footer-link-list">
                     <?php foreach ( $footer_product_links as $label => $url ) : ?>
                         <li><a href="<?php echo esc_url( $url ); ?>"><?php echo esc_html( $label ); ?><span aria-hidden="true">›</span></a></li>
@@ -137,7 +137,7 @@
             </details>
 
             <details class="footer-column footer-nav-group" open>
-                <summary><?php esc_html_e( 'À propos', 'theme-perso' ); ?><span aria-hidden="true">+</span></summary>
+                <summary aria-label="<?php esc_attr_e( 'Liens à propos du footer', 'theme-perso' ); ?>"><?php esc_html_e( 'À propos', 'theme-perso' ); ?><span aria-hidden="true">+</span></summary>
                 <ul class="footer-link-list">
                     <?php foreach ( $footer_about_links as $label => $url ) : ?>
                         <li><a href="<?php echo esc_url( $url ); ?>"><?php echo esc_html( $label ); ?><span aria-hidden="true">›</span></a></li>
@@ -146,7 +146,7 @@
             </details>
 
             <details class="footer-column footer-nav-group footer-utility-column" open>
-                <summary><?php esc_html_e( 'Aide & Informations', 'theme-perso' ); ?><span aria-hidden="true">+</span></summary>
+                <summary aria-label="<?php esc_attr_e( 'Liens aide et informations du footer', 'theme-perso' ); ?>"><?php esc_html_e( 'Aide & Informations', 'theme-perso' ); ?><span aria-hidden="true">+</span></summary>
                 <ul class="footer-link-list">
                     <?php foreach ( $footer_help_links as $label => $url ) : ?>
                         <li><a href="<?php echo esc_url( $url ); ?>"><?php echo esc_html( $label ); ?><span aria-hidden="true">›</span></a></li>
@@ -168,13 +168,13 @@
             <p>&copy; <?php echo esc_html( gmdate( 'Y' ) ); ?> COSM’ETHIQUE. <?php esc_html_e( 'Tous droits réservés.', 'theme-perso' ); ?></p>
 
             <div class="footer-payment-logos" aria-label="<?php esc_attr_e( 'Moyens de paiement acceptés', 'theme-perso' ); ?>">
-                <span class="payment-logo payment-logo--visa" aria-label="Visa"><svg viewBox="0 0 78 28" role="img" aria-hidden="true"><rect width="78" height="28" rx="8"></rect><text x="39" y="18">VISA</text></svg></span>
-                <span class="payment-logo payment-logo--mastercard" aria-label="Mastercard"><svg viewBox="0 0 78 28" role="img" aria-hidden="true"><rect width="78" height="28" rx="8"></rect><circle cx="34" cy="14" r="7"></circle><circle cx="44" cy="14" r="7"></circle><text x="39" y="23">mastercard</text></svg></span>
-                <span class="payment-logo payment-logo--paypal" aria-label="PayPal"><svg viewBox="0 0 78 28" role="img" aria-hidden="true"><rect width="78" height="28" rx="8"></rect><text x="39" y="18">PayPal</text></svg></span>
-                <span class="payment-logo payment-logo--klarna" aria-label="Klarna"><svg viewBox="0 0 78 28" role="img" aria-hidden="true"><rect width="78" height="28" rx="8"></rect><text x="39" y="18">Klarna</text></svg></span>
-                <span class="payment-logo payment-logo--apple" aria-label="Apple Pay"><svg viewBox="0 0 78 28" role="img" aria-hidden="true"><rect width="78" height="28" rx="8"></rect><text x="39" y="18"> Pay</text></svg></span>
-                <span class="payment-logo payment-logo--google" aria-label="Google Pay"><svg viewBox="0 0 78 28" role="img" aria-hidden="true"><rect width="78" height="28" rx="8"></rect><text x="39" y="18">G Pay</text></svg></span>
-                <span class="payment-logo payment-logo--cb" aria-label="<?php esc_attr_e( 'Carte Bancaire', 'theme-perso' ); ?>"><svg viewBox="0 0 78 28" role="img" aria-hidden="true"><rect width="78" height="28" rx="8"></rect><text x="39" y="18">CB</text></svg></span>
+                <span class="payment-logo payment-logo--visa" role="img" aria-label="Visa"><svg viewBox="0 0 78 28" aria-hidden="true" focusable="false"><rect width="78" height="28" rx="8"></rect><text x="39" y="18">VISA</text></svg></span>
+                <span class="payment-logo payment-logo--mastercard" role="img" aria-label="Mastercard"><svg viewBox="0 0 78 28" aria-hidden="true" focusable="false"><rect width="78" height="28" rx="8"></rect><circle cx="34" cy="14" r="7"></circle><circle cx="44" cy="14" r="7"></circle><text x="39" y="23">mastercard</text></svg></span>
+                <span class="payment-logo payment-logo--paypal" role="img" aria-label="PayPal"><svg viewBox="0 0 78 28" aria-hidden="true" focusable="false"><rect width="78" height="28" rx="8"></rect><text x="39" y="18">PayPal</text></svg></span>
+                <span class="payment-logo payment-logo--klarna" role="img" aria-label="Klarna"><svg viewBox="0 0 78 28" aria-hidden="true" focusable="false"><rect width="78" height="28" rx="8"></rect><text x="39" y="18">Klarna</text></svg></span>
+                <span class="payment-logo payment-logo--apple" role="img" aria-label="Apple Pay"><svg viewBox="0 0 78 28" aria-hidden="true" focusable="false"><rect width="78" height="28" rx="8"></rect><text x="39" y="18"> Pay</text></svg></span>
+                <span class="payment-logo payment-logo--google" role="img" aria-label="Google Pay"><svg viewBox="0 0 78 28" aria-hidden="true" focusable="false"><rect width="78" height="28" rx="8"></rect><text x="39" y="18">G Pay</text></svg></span>
+                <span class="payment-logo payment-logo--cb" role="img" aria-label="<?php esc_attr_e( 'Carte Bancaire', 'theme-perso' ); ?>"><svg viewBox="0 0 78 28" aria-hidden="true" focusable="false"><rect width="78" height="28" rx="8"></rect><text x="39" y="18">CB</text></svg></span>
             </div>
 
             <div class="footer-trust-badges" aria-label="<?php esc_attr_e( 'Réassurance', 'theme-perso' ); ?>">

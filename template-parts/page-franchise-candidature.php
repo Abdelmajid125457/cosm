@@ -37,20 +37,20 @@ $confirmation_url = home_url( '/franchise/confirmation/' );
         </div>
         <form class="franchise-application-form motion-reveal" action="<?php echo esc_url( $confirmation_url ); ?>" method="post" enctype="multipart/form-data" data-franchise-application-form>
             <div class="franchise-form-grid">
-                <label><?php esc_html_e( 'Nom', 'theme-perso' ); ?><input type="text" name="last_name" required></label>
-                <label><?php esc_html_e( 'Prénom', 'theme-perso' ); ?><input type="text" name="first_name" required></label>
-                <label><?php esc_html_e( 'Email', 'theme-perso' ); ?><input type="email" name="email" required></label>
-                <label><?php esc_html_e( 'Téléphone', 'theme-perso' ); ?><input type="tel" name="phone" required></label>
-                <label><?php esc_html_e( 'Ville', 'theme-perso' ); ?><input type="text" name="city" required></label>
-                <label><?php esc_html_e( 'Pays', 'theme-perso' ); ?><input type="text" name="country" required></label>
-                <label class="franchise-field-full"><?php esc_html_e( 'Adresse', 'theme-perso' ); ?><input type="text" name="address" required></label>
-                <label><?php esc_html_e( 'CV', 'theme-perso' ); ?><input type="file" name="cv" accept=".pdf,.doc,.docx" required></label>
-                <label><?php esc_html_e( 'Lettre de motivation', 'theme-perso' ); ?><input type="file" name="letter" accept=".pdf,.doc,.docx" required></label>
+                <label><?php esc_html_e( 'Nom', 'theme-perso' ); ?><input type="text" name="last_name" required aria-required="true"></label>
+                <label><?php esc_html_e( 'Prénom', 'theme-perso' ); ?><input type="text" name="first_name" required aria-required="true"></label>
+                <label><?php esc_html_e( 'Email', 'theme-perso' ); ?><input type="email" name="email" required aria-required="true"></label>
+                <label><?php esc_html_e( 'Téléphone', 'theme-perso' ); ?><input type="tel" name="phone" required aria-required="true"></label>
+                <label><?php esc_html_e( 'Ville', 'theme-perso' ); ?><input type="text" name="city" required aria-required="true"></label>
+                <label><?php esc_html_e( 'Pays', 'theme-perso' ); ?><input type="text" name="country" required aria-required="true"></label>
+                <label class="franchise-field-full"><?php esc_html_e( 'Adresse', 'theme-perso' ); ?><input type="text" name="address" required aria-required="true"></label>
+                <label><?php esc_html_e( 'CV', 'theme-perso' ); ?><input type="file" name="cv" accept=".pdf,.doc,.docx" required aria-required="true"></label>
+                <label><?php esc_html_e( 'Lettre de motivation', 'theme-perso' ); ?><input type="file" name="letter" accept=".pdf,.doc,.docx" required aria-required="true"></label>
                 <label><?php esc_html_e( 'Photo du local', 'theme-perso' ); ?><input type="file" name="premises_photo" accept="image/*"></label>
-                <label><?php esc_html_e( 'Budget', 'theme-perso' ); ?><input type="text" name="budget" required></label>
-                <label class="franchise-field-full"><?php esc_html_e( 'Message', 'theme-perso' ); ?><textarea name="message" rows="6" required></textarea></label>
-                <label class="franchise-field-full"><?php esc_html_e( 'Captcha', 'theme-perso' ); ?><input type="text" name="captcha" inputmode="numeric" autocomplete="off" data-franchise-captcha required placeholder="<?php esc_attr_e( 'Combien font 7 + 2 ?', 'theme-perso' ); ?>"></label>
-                <label class="franchise-rgpd franchise-field-full"><input type="checkbox" name="consent" required> <?php esc_html_e( 'J’accepte que Cosm’Éthique traite mes informations afin d’étudier ma candidature franchise.', 'theme-perso' ); ?></label>
+                <label><?php esc_html_e( 'Budget', 'theme-perso' ); ?><input type="text" name="budget" required aria-required="true"></label>
+                <label class="franchise-field-full"><?php esc_html_e( 'Message', 'theme-perso' ); ?><textarea name="message" rows="6" required aria-required="true"></textarea></label>
+                <label class="franchise-field-full"><?php esc_html_e( 'Captcha', 'theme-perso' ); ?><input type="text" name="captcha" inputmode="numeric" autocomplete="off" data-franchise-captcha required aria-required="true" placeholder="<?php esc_attr_e( 'Combien font 7 + 2 ?', 'theme-perso' ); ?>"></label>
+                <label class="franchise-rgpd franchise-field-full"><input type="checkbox" name="consent" required aria-required="true"> <?php esc_html_e( 'J’accepte que Cosm’Éthique traite mes informations afin d’étudier ma candidature franchise.', 'theme-perso' ); ?></label>
             </div>
             <?php theme_perso_security_fields( 'franchise_candidature' ); ?>
             <button class="button button-primary" type="submit"><?php esc_html_e( 'Envoyer ma candidature', 'theme-perso' ); ?></button>
