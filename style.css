@@ -20441,8 +20441,12 @@ select:focus,
 .franchise-form-status {
     min-height: 24px;
     margin: 14px 0 0;
-    color: var(--flow-petrol);
+    color: var(--flow-petrol, var(--color-petrol, #2B7D8A));
     font-weight: 900;
+}
+
+.franchise-form-status.is-success {
+    color: var(--flow-petrol, var(--color-petrol, #2B7D8A));
 }
 
 .franchise-form-status.is-error {

@@ -269,6 +269,36 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }, true);
 
+    document.querySelectorAll('[data-franchise-info-form]').forEach((form) => {
+        const submitButton = form.querySelector('button[type="submit"]');
+        const initialLabel = submitButton ? submitButton.textContent : '';
+
+        form.addEventListener('submit', (event) => {
+            if (!form.checkValidity()) {
+                return;
+            }
+
+            if (form.dataset.isSubmitting === 'true') {
+                event.preventDefault();
+                return;
+            }
+
+            form.dataset.isSubmitting = 'true';
+            if (submitButton) {
+                submitButton.disabled = true;
+                submitButton.textContent = translateUi('formSending', 'Envoi en cours…');
+            }
+        });
+
+        window.addEventListener('pageshow', () => {
+            form.dataset.isSubmitting = 'false';
+            if (submitButton) {
+                submitButton.disabled = false;
+                submitButton.textContent = initialLabel;
+            }
+        });
+    });
+
     document.addEventListener('click', (event) => {
         const addToCart = event.target.closest('.ajax_add_to_cart, .add_to_cart_button');
         if (addToCart) {

@@ -1,5 +1,6 @@
 <?php
 $franchise_eligibility_url = home_url( '/franchise/eligibilite/' );
+$franchise_form_notice     = function_exists( 'theme_perso_get_franchise_information_notice' ) ? theme_perso_get_franchise_information_notice() : null;
 ?>
 <section class="franchise-network" aria-labelledby="franchise-network-title">
     <div class="franchise-network-shell">
@@ -86,7 +87,13 @@ $franchise_eligibility_url = home_url( '/franchise/eligibilite/' );
     </div>
     <div class="form-card" data-demo-autofill="franchise">
         <h3>Demande d’information franchisé</h3>
-        <form class="cosmethique-form" action="<?php echo esc_url( home_url( '/devenir-franchise/' ) ); ?>" method="post">
+        <?php if ( $franchise_form_notice ) : ?>
+            <p class="franchise-form-status <?php echo 'error' === $franchise_form_notice['type'] ? 'is-error' : 'is-success'; ?>" role="<?php echo 'error' === $franchise_form_notice['type'] ? 'alert' : 'status'; ?>">
+                <?php echo esc_html( $franchise_form_notice['message'] ); ?>
+            </p>
+        <?php endif; ?>
+        <form class="cosmethique-form" action="<?php echo esc_url( home_url( '/devenir-franchise/' ) ); ?>" method="post" data-franchise-info-form>
+            <input type="hidden" name="cosmethique_form_type" value="franchise_information">
             <label>Nom complet<input type="text" name="name" required aria-required="true"></label>
             <label>Email<input type="email" name="email" required aria-required="true"></label>
             <label>Téléphone<input type="tel" name="phone" required aria-required="true"></label>
@@ -96,6 +103,7 @@ $franchise_eligibility_url = home_url( '/franchise/eligibilite/' );
             <label>Expérience professionnelle<textarea name="experience" rows="4" required aria-required="true"></textarea></label>
             <label>Message<textarea name="message" rows="5" required aria-required="true"></textarea></label>
             <label class="checkbox-label"><input type="checkbox" name="consent" required aria-required="true"> J’accepte d’être contacté au sujet de ma demande de franchise.</label>
+            <?php wp_nonce_field( 'franchise_information', 'franchise_information_nonce' ); ?>
             <?php theme_perso_security_fields( 'franchise' ); ?>
             <button class="button button-primary" type="submit">Envoyer ma demande</button>
         </form>

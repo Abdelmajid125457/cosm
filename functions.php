@@ -1003,6 +1003,90 @@ function theme_perso_verify_recaptcha_submission( $expected_action = 'cosmethiqu
     return $score >= 0.5 && sanitize_key( $expected_action ) === $action;
 }
 
+function theme_perso_get_franchise_information_notice() {
+    if ( ! empty( $GLOBALS['theme_perso_franchise_information_notice'] ) && is_array( $GLOBALS['theme_perso_franchise_information_notice'] ) ) {
+        return $GLOBALS['theme_perso_franchise_information_notice'];
+    }
+
+    if ( isset( $_GET['form'] ) && 'success' === sanitize_key( wp_unslash( $_GET['form'] ) ) ) { // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+        return array(
+            'type'    => 'success',
+            'message' => __( 'Merci pour votre candidature. Notre équipe étudiera votre demande et reviendra vers vous prochainement.', 'theme-perso' ),
+        );
+    }
+
+    return null;
+}
+
+function theme_perso_handle_franchise_information_form() {
+    if ( ! is_page( 'devenir-franchise' ) || 'POST' !== ( $_SERVER['REQUEST_METHOD'] ?? '' ) ) {
+        return;
+    }
+
+    $form_type = isset( $_POST['cosmethique_form_type'] ) ? sanitize_key( wp_unslash( $_POST['cosmethique_form_type'] ) ) : ''; // phpcs:ignore WordPress.Security.NonceVerification.Missing
+    if ( 'franchise_information' !== $form_type ) {
+        return;
+    }
+
+    $set_error = static function ( $message ) {
+        $GLOBALS['theme_perso_franchise_information_notice'] = array(
+            'type'    => 'error',
+            'message' => $message,
+        );
+    };
+
+    $nonce = isset( $_POST['franchise_information_nonce'] ) ? sanitize_text_field( wp_unslash( $_POST['franchise_information_nonce'] ) ) : '';
+    if ( ! $nonce || ! wp_verify_nonce( $nonce, 'franchise_information' ) ) {
+        $set_error( __( 'Votre session a expiré. Merci de réessayer.', 'theme-perso' ) );
+        return;
+    }
+
+    if ( theme_perso_is_honeypot_triggered() || ! theme_perso_verify_recaptcha_submission( 'franchise' ) ) {
+        $set_error( __( 'Votre demande n’a pas pu être validée. Merci de réessayer.', 'theme-perso' ) );
+        return;
+    }
+
+    $required_fields = array(
+        'name'       => __( 'Nom complet', 'theme-perso' ),
+        'email'      => __( 'Email', 'theme-perso' ),
+        'phone'      => __( 'Téléphone', 'theme-perso' ),
+        'city'       => __( 'Ville souhaitée', 'theme-perso' ),
+        'investment' => __( 'Apport personnel', 'theme-perso' ),
+        'surface'    => __( 'Surface souhaitée', 'theme-perso' ),
+        'experience' => __( 'Expérience professionnelle', 'theme-perso' ),
+        'message'    => __( 'Message', 'theme-perso' ),
+    );
+
+    $submission = array();
+    foreach ( $required_fields as $field => $label ) {
+        $value = isset( $_POST[ $field ] ) ? trim( sanitize_textarea_field( wp_unslash( $_POST[ $field ] ) ) ) : '';
+        if ( '' === $value ) {
+            $set_error( sprintf( __( 'Merci de compléter le champ : %s.', 'theme-perso' ), $label ) );
+            return;
+        }
+
+        $submission[ $field ] = $value;
+    }
+
+    $submission['email'] = sanitize_email( $submission['email'] );
+    if ( ! is_email( $submission['email'] ) ) {
+        $set_error( __( 'Merci d’indiquer une adresse email valide.', 'theme-perso' ) );
+        return;
+    }
+
+    if ( empty( $_POST['consent'] ) ) { // phpcs:ignore WordPress.Security.NonceVerification.Missing
+        $set_error( __( 'Merci d’accepter d’être contacté au sujet de votre demande.', 'theme-perso' ) );
+        return;
+    }
+
+    do_action( 'theme_perso_franchise_information_submitted', $submission );
+
+    $target = add_query_arg( 'form', 'success', get_permalink() ) . '#franchise-request-form';
+    wp_safe_redirect( $target, 303 );
+    exit;
+}
+add_action( 'template_redirect', 'theme_perso_handle_franchise_information_form', 20 );
+
 function theme_perso_recaptcha_admin_notice() {
     if ( ! current_user_can( 'manage_options' ) || theme_perso_recaptcha_is_configured() ) {
         return;
