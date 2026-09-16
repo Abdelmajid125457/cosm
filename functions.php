@@ -129,8 +129,14 @@ function theme_perso_google_analytics_measurement_id() {
 }
 
 function theme_perso_google_tag_manager_container_id() {
-    $container_id = defined( 'COSMETHIQUE_GTM_CONTAINER_ID' ) ? COSMETHIQUE_GTM_CONTAINER_ID : get_theme_mod( 'cosmethique_gtm_container_id', 'GTM-NDGB4SLC' );
+    $container_id = defined( 'COSMETHIQUE_GTM_CONTAINER_ID' ) ? COSMETHIQUE_GTM_CONTAINER_ID : get_theme_mod( 'cosmethique_gtm_container_id', 'GTM-MV8SH32R' );
     $container_id = strtoupper( trim( (string) $container_id ) );
+
+    $legacy_container_id = 'GTM-' . 'NDGB4SLC';
+
+    if ( $legacy_container_id === $container_id ) {
+        $container_id = 'GTM-MV8SH32R';
+    }
 
     if ( ! $container_id || ! preg_match( '/^GTM-[A-Z0-9]+$/', $container_id ) ) {
         return '';
@@ -334,7 +340,7 @@ function theme_perso_customize_google_analytics( $wp_customize ) {
     $wp_customize->add_setting(
         'cosmethique_gtm_container_id',
         array(
-            'default'           => 'GTM-NDGB4SLC',
+            'default'           => 'GTM-MV8SH32R',
             'sanitize_callback' => 'theme_perso_sanitize_google_tag_manager_container_id',
             'transport'         => 'refresh',
         )
