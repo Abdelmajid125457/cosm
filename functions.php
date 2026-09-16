@@ -1018,6 +1018,39 @@ function theme_perso_get_franchise_information_notice() {
     return null;
 }
 
+function theme_perso_get_clean_request_path() {
+    $request_uri = isset( $_SERVER['REQUEST_URI'] ) ? wp_unslash( $_SERVER['REQUEST_URI'] ) : ''; // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
+    $request_uri = is_string( $request_uri ) ? $request_uri : '';
+    $request_path = wp_parse_url( $request_uri, PHP_URL_PATH );
+    $home_path    = wp_parse_url( home_url( '/' ), PHP_URL_PATH );
+
+    $request_path = '/' . trim( (string) $request_path, '/' );
+    $home_path    = '/' . trim( (string) $home_path, '/' );
+
+    if ( '/' !== $home_path && 0 === strpos( $request_path . '/', $home_path . '/' ) ) {
+        $request_path = substr( $request_path, strlen( $home_path ) );
+    }
+
+    return trim( (string) $request_path, '/' );
+}
+
+function theme_perso_force_devenir_franchise_page_request( $query_vars ) {
+    if ( is_admin() || 'devenir-franchise' !== theme_perso_get_clean_request_path() ) {
+        return $query_vars;
+    }
+
+    $franchise_page = get_page_by_path( 'devenir-franchise' );
+    if ( ! $franchise_page || 'publish' !== get_post_status( $franchise_page ) ) {
+        return $query_vars;
+    }
+
+    return array(
+        'page_id'  => (int) $franchise_page->ID,
+        'pagename' => 'devenir-franchise',
+    );
+}
+add_filter( 'request', 'theme_perso_force_devenir_franchise_page_request', 0 );
+
 function theme_perso_handle_franchise_information_form() {
     if ( ! is_page( 'devenir-franchise' ) || 'POST' !== ( $_SERVER['REQUEST_METHOD'] ?? '' ) ) {
         return;
