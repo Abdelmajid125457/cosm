@@ -1081,11 +1081,52 @@ function theme_perso_handle_franchise_information_form() {
 
     do_action( 'theme_perso_franchise_information_submitted', $submission );
 
-    $target = add_query_arg( 'form', 'success', get_permalink() ) . '#franchise-request-form';
+    $confirmation_page = get_page_by_path( 'franchise/confirmation' );
+    $target            = $confirmation_page ? get_permalink( $confirmation_page ) : home_url( '/franchise/confirmation/' );
     wp_safe_redirect( $target, 303 );
     exit;
 }
 add_action( 'template_redirect', 'theme_perso_handle_franchise_information_form', 20 );
+
+function theme_perso_is_franchise_confirmation_request() {
+    global $wp;
+
+    $request = isset( $wp->request ) ? trim( (string) $wp->request, '/' ) : '';
+
+    return 'franchise/confirmation' === $request;
+}
+
+function theme_perso_allow_virtual_franchise_confirmation( $preempt, $wp_query ) {
+    if ( is_admin() || ! theme_perso_is_franchise_confirmation_request() || empty( $wp_query->is_404 ) ) {
+        return $preempt;
+    }
+
+    $wp_query->is_404       = false;
+    $wp_query->is_page      = true;
+    $wp_query->is_singular  = true;
+    $wp_query->is_home      = false;
+    $wp_query->is_archive   = false;
+    $wp_query->is_search    = false;
+    $wp_query->found_posts  = 1;
+    $wp_query->post_count   = 1;
+    $GLOBALS['theme_perso_virtual_franchise_confirmation'] = true;
+
+    status_header( 200 );
+
+    return true;
+}
+add_filter( 'pre_handle_404', 'theme_perso_allow_virtual_franchise_confirmation', 10, 2 );
+
+function theme_perso_load_virtual_franchise_confirmation_template( $template ) {
+    if ( empty( $GLOBALS['theme_perso_virtual_franchise_confirmation'] ) ) {
+        return $template;
+    }
+
+    $confirmation_template = locate_template( 'page-franchise-confirmation-standalone.php' );
+
+    return $confirmation_template ? $confirmation_template : $template;
+}
+add_filter( 'template_include', 'theme_perso_load_virtual_franchise_confirmation_template', 99 );
 
 function theme_perso_recaptcha_admin_notice() {
     if ( ! current_user_can( 'manage_options' ) || theme_perso_recaptcha_is_configured() ) {
