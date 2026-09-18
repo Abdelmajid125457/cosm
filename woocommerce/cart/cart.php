@@ -25,7 +25,7 @@ $progress        = $free_threshold > 0 ? min( 100, ( $subtotal_amount / $free_th
     <div class="cart-hero-shape cart-hero-shape--two"></div>
     <div class="cart-hero-copy">
         <p class="eyebrow"><?php esc_html_e( 'COSM’ÉTHIQUE', 'theme-perso' ); ?></p>
-        <h2 id="cart-premium-title"><?php esc_html_e( 'Votre panier beauté', 'theme-perso' ); ?></h2>
+        <h1 id="cart-premium-title"><?php esc_html_e( 'Votre panier beauté', 'theme-perso' ); ?></h1>
         <p><?php esc_html_e( 'Finalisez votre routine naturelle avec une expérience simple, rassurante et élégante.', 'theme-perso' ); ?></p>
     </div>
     <div class="cart-hero-products" aria-hidden="true">

@@ -531,6 +531,12 @@ function theme_perso_block_nonconsented_tracking_scripts() {
             'google-tag-manager',
             'gtm',
             'gtm4wp',
+            'reddit',
+            'reddit_tracking',
+            'reddit-for-woocommerce',
+            'snapchat',
+            'snapchat_tracking',
+            'snapchat-for-woocommerce',
             'meta-pixel',
             'fb-pixel',
             'pixel-caffeine',
@@ -571,6 +577,38 @@ function theme_perso_block_nonconsented_tracking_scripts() {
 }
 add_action( 'wp_print_scripts', 'theme_perso_block_nonconsented_tracking_scripts', 1 );
 add_action( 'wp_print_footer_scripts', 'theme_perso_block_nonconsented_tracking_scripts', 1 );
+
+function theme_perso_dequeue_conflicting_social_tracking_scripts() {
+    if ( is_admin() ) {
+        return;
+    }
+
+    $script_handles = array( 'reddit_tracking', 'snapchat_tracking' );
+
+    foreach ( $script_handles as $handle ) {
+        wp_dequeue_script( $handle );
+        wp_deregister_script( $handle );
+    }
+
+    $scripts = wp_scripts();
+    if ( ! $scripts || empty( $scripts->registered ) ) {
+        return;
+    }
+
+    foreach ( $scripts->registered as $handle => $script ) {
+        $source = isset( $script->src ) ? (string) $script->src : '';
+
+        if ( false === strpos( $source, 'reddit-for-woocommerce' ) && false === strpos( $source, 'snapchat-for-woocommerce' ) ) {
+            continue;
+        }
+
+        wp_dequeue_script( $handle );
+        wp_deregister_script( $handle );
+    }
+}
+add_action( 'wp_enqueue_scripts', 'theme_perso_dequeue_conflicting_social_tracking_scripts', 999 );
+add_action( 'wp_print_scripts', 'theme_perso_dequeue_conflicting_social_tracking_scripts', 999 );
+add_action( 'wp_print_footer_scripts', 'theme_perso_dequeue_conflicting_social_tracking_scripts', 999 );
 
 function theme_perso_render_google_tag_manager_head() {
     if ( is_admin() ) {

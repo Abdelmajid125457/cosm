@@ -71,6 +71,8 @@ get_header();
                         get_template_part( 'template-parts/page', 'recrutement' );
                     } elseif ( 'evenement' === $slug ) {
                         get_template_part( 'template-parts/page', 'evenement' );
+                    } elseif ( 'diagnostic' === $slug ) {
+                        get_template_part( 'template-parts/page', 'diagnostic' );
                     } elseif ( 'franchise/eligibilite' === $page_uri ) {
                         get_template_part( 'template-parts/page', 'franchise-eligibilite' );
                     } elseif ( 'franchise/candidature' === $page_uri ) {

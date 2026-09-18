@@ -28,6 +28,8 @@ get_header();
                 <?php if ( is_product() ) : ?>
                 <p class="archive-product-title"><?php the_title(); ?></p>
                 <p><?php esc_html_e( 'Découvrez la description, les images, le prix, le code promo et l’ajout au panier.', 'theme-perso' ); ?></p>
+                <?php elseif ( is_product_taxonomy() ) : ?>
+                    <p class="archive-heading-title"><?php woocommerce_page_title(); ?></p>
                 <?php else : ?>
                     <h1><?php woocommerce_page_title(); ?></h1>
                 <?php endif; ?>

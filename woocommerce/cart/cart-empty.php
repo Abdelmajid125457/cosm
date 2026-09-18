@@ -16,7 +16,7 @@ $diagnostic_url = home_url( '/diagnostic/' );
     <div class="cart-hero-shape cart-hero-shape--two"></div>
     <div class="cart-hero-copy">
         <p class="eyebrow"><?php esc_html_e( 'COSM’ÉTHIQUE', 'theme-perso' ); ?></p>
-        <h2 id="empty-cart-hero-title"><?php esc_html_e( 'Votre panier beauté', 'theme-perso' ); ?></h2>
+        <h1 id="empty-cart-hero-title"><?php esc_html_e( 'Votre panier beauté', 'theme-perso' ); ?></h1>
         <p><?php esc_html_e( 'Composez une routine naturelle, sensorielle et responsable.', 'theme-perso' ); ?></p>
     </div>
     <div class="cart-hero-products" aria-hidden="true">

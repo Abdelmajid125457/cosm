@@ -882,6 +882,7 @@
     }
 
     .archive-hero h1,
+    .archive-hero .archive-heading-title,
     .blog-page-hero h1,
     .blog-article-hero h1 {
         font-size: clamp(2.35rem, 12vw, 4.4rem) !important;
