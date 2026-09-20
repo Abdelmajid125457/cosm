@@ -33,12 +33,13 @@ $botanica_product_asset = function( $file ) use ( $asset ) {
 };
 
 $botanica_event_gallery_views = function( $key, $title ) use ( $botanica_product_asset ) {
+    $translated_title = function_exists( 'theme_perso_multilingual_translate' ) ? theme_perso_multilingual_translate( $title ) : $title;
     $views = array(
         'creme'   => array(
             array(
                 'url'         => $botanica_product_asset( 'creme-hydratante-botanica-pot-ferme.png' ),
                 'label'       => __( 'pot fermé', 'theme-perso' ),
-                'alt'         => sprintf( __( '%s - pot fermé', 'theme-perso' ), $title ),
+                'alt'         => sprintf( __( '%s - pot fermé', 'theme-perso' ), $translated_title ),
                 'position'    => '50% 50%',
                 'scale'       => '1',
                 'panel_scale' => '1',
@@ -46,7 +47,7 @@ $botanica_event_gallery_views = function( $key, $title ) use ( $botanica_product
             array(
                 'url'         => $botanica_product_asset( 'creme-hydratante-botanica-pot-ouvert.png' ),
                 'label'       => __( 'pot ouvert', 'theme-perso' ),
-                'alt'         => sprintf( __( '%s - pot ouvert', 'theme-perso' ), $title ),
+                'alt'         => sprintf( __( '%s - pot ouvert', 'theme-perso' ), $translated_title ),
                 'position'    => '50% 50%',
                 'scale'       => '1',
                 'panel_scale' => '1',
@@ -54,7 +55,7 @@ $botanica_event_gallery_views = function( $key, $title ) use ( $botanica_product
             array(
                 'url'         => $botanica_product_asset( 'creme-hydratante-botanica-angle.png' ),
                 'label'       => __( 'vue trois-quarts', 'theme-perso' ),
-                'alt'         => sprintf( __( '%s - vue trois-quarts du pot', 'theme-perso' ), $title ),
+                'alt'         => sprintf( __( '%s - vue trois-quarts du pot', 'theme-perso' ), $translated_title ),
                 'position'    => '50% 50%',
                 'scale'       => '1',
                 'panel_scale' => '1',
@@ -64,7 +65,7 @@ $botanica_event_gallery_views = function( $key, $title ) use ( $botanica_product
             array(
                 'url'         => $botanica_product_asset( 'serum-botanica-face.png' ),
                 'label'       => __( 'sérum de face', 'theme-perso' ),
-                'alt'         => sprintf( __( '%s - flacon de face', 'theme-perso' ), $title ),
+                'alt'         => sprintf( __( '%s - flacon de face', 'theme-perso' ), $translated_title ),
                 'position'    => '50% 50%',
                 'scale'       => '1',
                 'panel_scale' => '1',
@@ -72,7 +73,7 @@ $botanica_event_gallery_views = function( $key, $title ) use ( $botanica_product
             array(
                 'url'         => $botanica_product_asset( 'serum-botanica-pipette.png' ),
                 'label'       => __( 'pipette ouverte', 'theme-perso' ),
-                'alt'         => sprintf( __( '%s - pipette ouverte', 'theme-perso' ), $title ),
+                'alt'         => sprintf( __( '%s - pipette ouverte', 'theme-perso' ), $translated_title ),
                 'position'    => '50% 50%',
                 'scale'       => '1',
                 'panel_scale' => '1',
@@ -80,7 +81,7 @@ $botanica_event_gallery_views = function( $key, $title ) use ( $botanica_product
             array(
                 'url'         => $botanica_product_asset( 'serum-botanica-gouttes.png' ),
                 'label'       => __( 'gouttes sérum', 'theme-perso' ),
-                'alt'         => sprintf( __( '%s - gouttes en mise en scène', 'theme-perso' ), $title ),
+                'alt'         => sprintf( __( '%s - gouttes en mise en scène', 'theme-perso' ), $translated_title ),
                 'position'    => '50% 50%',
                 'scale'       => '1',
                 'panel_scale' => '1',
@@ -90,7 +91,7 @@ $botanica_event_gallery_views = function( $key, $title ) use ( $botanica_product
             array(
                 'url'         => $botanica_product_asset( 'huile-botanica-face.png' ),
                 'label'       => __( 'huile de face', 'theme-perso' ),
-                'alt'         => sprintf( __( '%s - flacon de face', 'theme-perso' ), $title ),
+                'alt'         => sprintf( __( '%s - flacon de face', 'theme-perso' ), $translated_title ),
                 'position'    => '50% 50%',
                 'scale'       => '1',
                 'panel_scale' => '1',
@@ -98,7 +99,7 @@ $botanica_event_gallery_views = function( $key, $title ) use ( $botanica_product
             array(
                 'url'         => $botanica_product_asset( 'huile-botanica-pipette.png' ),
                 'label'       => __( 'pipette huile', 'theme-perso' ),
-                'alt'         => sprintf( __( '%s - pipette ouverte', 'theme-perso' ), $title ),
+                'alt'         => sprintf( __( '%s - pipette ouverte', 'theme-perso' ), $translated_title ),
                 'position'    => '50% 50%',
                 'scale'       => '1',
                 'panel_scale' => '1',
@@ -106,7 +107,7 @@ $botanica_event_gallery_views = function( $key, $title ) use ( $botanica_product
             array(
                 'url'         => $botanica_product_asset( 'huile-botanica-gouttes.png' ),
                 'label'       => __( 'huile en utilisation', 'theme-perso' ),
-                'alt'         => sprintf( __( '%s - huile en utilisation', 'theme-perso' ), $title ),
+                'alt'         => sprintf( __( '%s - huile en utilisation', 'theme-perso' ), $translated_title ),
                 'position'    => '50% 50%',
                 'scale'       => '1',
                 'panel_scale' => '1',
@@ -116,7 +117,7 @@ $botanica_event_gallery_views = function( $key, $title ) use ( $botanica_product
             array(
                 'url'         => $botanica_product_asset( 'masque-botanica-pot-ferme.png' ),
                 'label'       => __( 'masque fermé', 'theme-perso' ),
-                'alt'         => sprintf( __( '%s - pot fermé', 'theme-perso' ), $title ),
+                'alt'         => sprintf( __( '%s - pot fermé', 'theme-perso' ), $translated_title ),
                 'position'    => '50% 50%',
                 'scale'       => '1',
                 'panel_scale' => '1',
@@ -124,7 +125,7 @@ $botanica_event_gallery_views = function( $key, $title ) use ( $botanica_product
             array(
                 'url'         => $botanica_product_asset( 'masque-botanica-detail.png' ),
                 'label'       => __( 'masque ouvert', 'theme-perso' ),
-                'alt'         => sprintf( __( '%s - détail du pot', 'theme-perso' ), $title ),
+                'alt'         => sprintf( __( '%s - détail du pot', 'theme-perso' ), $translated_title ),
                 'position'    => '50% 50%',
                 'scale'       => '1',
                 'panel_scale' => '1',
@@ -132,7 +133,7 @@ $botanica_event_gallery_views = function( $key, $title ) use ( $botanica_product
             array(
                 'url'         => $botanica_product_asset( 'masque-botanica-angle.png' ),
                 'label'       => __( 'vue trois-quarts', 'theme-perso' ),
-                'alt'         => sprintf( __( '%s - vue trois-quarts du pot', 'theme-perso' ), $title ),
+                'alt'         => sprintf( __( '%s - vue trois-quarts du pot', 'theme-perso' ), $translated_title ),
                 'position'    => '50% 50%',
                 'scale'       => '1',
                 'panel_scale' => '1',
@@ -142,7 +143,7 @@ $botanica_event_gallery_views = function( $key, $title ) use ( $botanica_product
             array(
                 'url'         => $botanica_product_asset( 'baume-botanica-pot-ferme.png' ),
                 'label'       => __( 'baume fermé', 'theme-perso' ),
-                'alt'         => sprintf( __( '%s - pot fermé', 'theme-perso' ), $title ),
+                'alt'         => sprintf( __( '%s - pot fermé', 'theme-perso' ), $translated_title ),
                 'position'    => '50% 50%',
                 'scale'       => '1',
                 'panel_scale' => '1',
@@ -150,7 +151,7 @@ $botanica_event_gallery_views = function( $key, $title ) use ( $botanica_product
             array(
                 'url'         => $botanica_product_asset( 'baume-botanica-detail.png' ),
                 'label'       => __( 'baume ouvert', 'theme-perso' ),
-                'alt'         => sprintf( __( '%s - détail du pot', 'theme-perso' ), $title ),
+                'alt'         => sprintf( __( '%s - détail du pot', 'theme-perso' ), $translated_title ),
                 'position'    => '50% 50%',
                 'scale'       => '1',
                 'panel_scale' => '1',
@@ -158,7 +159,7 @@ $botanica_event_gallery_views = function( $key, $title ) use ( $botanica_product
             array(
                 'url'         => $botanica_product_asset( 'baume-botanica-angle.png' ),
                 'label'       => __( 'vue trois-quarts', 'theme-perso' ),
-                'alt'         => sprintf( __( '%s - vue trois-quarts du pot', 'theme-perso' ), $title ),
+                'alt'         => sprintf( __( '%s - vue trois-quarts du pot', 'theme-perso' ), $translated_title ),
                 'position'    => '50% 50%',
                 'scale'       => '1',
                 'panel_scale' => '1',
@@ -168,7 +169,7 @@ $botanica_event_gallery_views = function( $key, $title ) use ( $botanica_product
             array(
                 'url'         => $botanica_product_asset( 'coffret-botanica-ferme.png' ),
                 'label'       => __( 'coffret fermé', 'theme-perso' ),
-                'alt'         => sprintf( __( '%s - coffret fermé', 'theme-perso' ), $title ),
+                'alt'         => sprintf( __( '%s - coffret fermé', 'theme-perso' ), $translated_title ),
                 'position'    => '50% 50%',
                 'scale'       => '1',
                 'panel_scale' => '1',
@@ -176,7 +177,7 @@ $botanica_event_gallery_views = function( $key, $title ) use ( $botanica_product
             array(
                 'url'         => $botanica_product_asset( 'coffret-botanica-ouvert.png' ),
                 'label'       => __( 'coffret ouvert', 'theme-perso' ),
-                'alt'         => sprintf( __( '%s - coffret ouvert', 'theme-perso' ), $title ),
+                'alt'         => sprintf( __( '%s - coffret ouvert', 'theme-perso' ), $translated_title ),
                 'position'    => '50% 50%',
                 'scale'       => '1',
                 'panel_scale' => '1',
@@ -184,7 +185,7 @@ $botanica_event_gallery_views = function( $key, $title ) use ( $botanica_product
             array(
                 'url'         => $botanica_product_asset( 'coffret-botanica-lifestyle.png' ),
                 'label'       => __( 'lifestyle coffret', 'theme-perso' ),
-                'alt'         => sprintf( __( '%s - mise en scène premium', 'theme-perso' ), $title ),
+                'alt'         => sprintf( __( '%s - mise en scène premium', 'theme-perso' ), $translated_title ),
                 'position'    => '50% 50%',
                 'scale'       => '1',
                 'panel_scale' => '1',
@@ -197,13 +198,13 @@ $botanica_event_gallery_views = function( $key, $title ) use ( $botanica_product
     }
 
     return array_map(
-        function( $view ) use ( $title ) {
+        function( $view ) use ( $translated_title ) {
             return wp_parse_args(
                 $view,
                 array(
                     'url'         => '',
                     'label'       => __( 'vue produit', 'theme-perso' ),
-                    'alt'         => $title,
+                    'alt'         => $translated_title,
                     'position'    => '50% 50%',
                     'scale'       => '1',
                     'panel_scale' => '1',
@@ -256,6 +257,7 @@ foreach ( $botanica_catalog as $product_title => $product_data ) {
     $price_html   = function_exists( 'wc_price' ) ? wc_price( (float) $product_data['price'] ) : esc_html( $product_data['price'] . ' €' );
     $product_url  = $wc_product instanceof WC_Product ? get_permalink( $wc_product->get_id() ) : home_url( '/boutique/' );
     $add_url      = $wc_product instanceof WC_Product ? $wc_product->add_to_cart_url() : $product_url;
+    $localized_product_title = function_exists( 'theme_perso_multilingual_translate' ) ? theme_perso_multilingual_translate( $product_title ) : $product_title;
 
     if ( $wc_product instanceof WC_Product && $wc_product->get_price_html() ) {
         $price_html = $wc_product->get_price_html();
@@ -279,7 +281,7 @@ foreach ( $botanica_catalog as $product_title => $product_data ) {
         }
     }
 
-    $event_gallery_views = $botanica_event_gallery_views( $product_data['key'], $product_title );
+    $event_gallery_views = $botanica_event_gallery_views( $product_data['key'], $localized_product_title );
 
     if ( ! empty( $event_gallery_views ) ) {
         $product_data['image']         = $event_gallery_views[0]['url'];
@@ -296,7 +298,7 @@ foreach ( $botanica_catalog as $product_title => $product_data ) {
     $botanica_shop_products[] = array_merge(
         $product_data,
         array(
-            'title'          => $product_title,
+            'title'          => $localized_product_title,
             'product_id'     => $wc_product instanceof WC_Product ? $wc_product->get_id() : 0,
             'product_url'    => $product_url,
             'add_url'        => $add_url,

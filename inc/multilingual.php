@@ -3348,6 +3348,345 @@ function theme_perso_multilingual_text_map() {
         'Réduction' => array( 'en' => 'Discount', 'es' => 'Descuento', 'ar' => 'الخصم' ),
         'TVA' => array( 'en' => 'VAT', 'es' => 'IVA', 'ar' => 'ضريبة القيمة المضافة' ),
         'Continuer mes achats' => array( 'en' => 'Continue shopping', 'es' => 'Seguir comprando', 'ar' => 'متابعة التسوق' ),
+        'Pourquoi choisir Cosm\'Éthique&nbsp;?' => array( 'en' => 'Why choose Cosm’Éthique?', 'es' => '¿Por qué elegir Cosm’Éthique?', 'ar' => 'لماذا تختار كوزم إيثيك؟' ),
+        'Pourquoi choisir Cosm’Éthique ?' => array( 'en' => 'Why choose Cosm’Éthique?', 'es' => '¿Por qué elegir Cosm’Éthique?', 'ar' => 'لماذا تختار كوزم إيثيك؟' ),
+        'Ingrédients naturels' => array( 'en' => 'Natural ingredients', 'es' => 'Ingredientes naturales', 'ar' => 'مكونات طبيعية' ),
+        'Des formules élaborées à partir d’actifs d’origine naturelle soigneusement sélectionnés.' => array( 'en' => 'Formulas developed with carefully selected naturally derived active ingredients.', 'es' => 'Fórmulas elaboradas con activos de origen natural cuidadosamente seleccionados.', 'ar' => 'تركيبات مطورة بمكونات فعالة من أصل طبيعي مختارة بعناية.' ),
+        'Des formules élaborées à partir d&#039;actifs d&#039;origine naturelle soigneusement sélectionnés.' => array( 'en' => 'Formulas developed with carefully selected naturally derived active ingredients.', 'es' => 'Fórmulas elaboradas con activos de origen natural cuidadosamente seleccionados.', 'ar' => 'تركيبات مطورة بمكونات فعالة من أصل طبيعي مختارة بعناية.' ),
+        'Fabrication premium' => array( 'en' => 'Premium manufacturing', 'es' => 'Fabricación premium', 'ar' => 'تصنيع فاخر' ),
+        'Des soins développés selon des standards de qualité élevés.' => array( 'en' => 'Products developed to high quality standards.', 'es' => 'Cuidados desarrollados según altos estándares de calidad.', 'ar' => 'منتجات مطورة وفق معايير جودة عالية.' ),
+        'Testés dermatologiquement' => array( 'en' => 'Dermatologically tested', 'es' => 'Testados dermatológicamente', 'ar' => 'مختبرة جلدياً' ),
+        'Des produits conçus pour respecter tous les types de peau.' => array( 'en' => 'Products designed to respect every skin type.', 'es' => 'Productos diseñados para respetar todos los tipos de piel.', 'ar' => 'منتجات مصممة لاحترام جميع أنواع البشرة.' ),
+        'Engagement responsable' => array( 'en' => 'Responsible commitment', 'es' => 'Compromiso responsable', 'ar' => 'التزام مسؤول' ),
+        'Des emballages recyclables et une démarche plus respectueuse de l\'environnement.' => array( 'en' => 'Recyclable packaging and a more environmentally conscious approach.', 'es' => 'Envases reciclables y un enfoque más respetuoso con el medio ambiente.', 'ar' => 'عبوات قابلة لإعادة التدوير ونهج أكثر احتراماً للبيئة.' ),
+        'Expédition soignée partout en France et en Europe.' => array( 'en' => 'Careful shipping throughout France and Europe.', 'es' => 'Envío cuidado en Francia y Europa.', 'ar' => 'شحن بعناية في فرنسا وأوروبا.' ),
+        'Paiement protégé et commande suivie jusqu&#039;à la livraison.' => array( 'en' => 'Protected payment and order tracking through delivery.', 'es' => 'Pago protegido y pedido seguido hasta la entrega.', 'ar' => 'دفع محمي وتتبع للطلب حتى التسليم.' ),
+        'Paiement protégé et commande suivie jusqu’à la livraison.' => array( 'en' => 'Protected payment and order tracking through delivery.', 'es' => 'Pago protegido y pedido seguido hasta la entrega.', 'ar' => 'دفع محمي وتتبع للطلب حتى التسليم.' ),
+        'Liens à propos du footer' => array( 'en' => 'Footer about links', 'es' => 'Enlaces sobre Cosm’Éthique del pie de página', 'ar' => 'روابط عن كوزم إيثيك في التذييل' ),
+        'Hydratation naturelle : les bienfaits du karité pour votre peau' => array( 'en' => 'Natural hydration: the benefits of shea butter for your skin', 'es' => 'Hidratación natural: los beneficios del karité para tu piel', 'ar' => 'ترطيب طبيعي: فوائد زبدة الشيا لبشرتك' ),
+        'Sérums naturels : comment choisir celui qui correspond à votre peau' => array( 'en' => 'Natural serums: how to choose the right one for your skin', 'es' => 'Sérums naturales: cómo elegir el adecuado para tu piel', 'ar' => 'السيرومات الطبيعية: كيف تختار المناسب لبشرتك' ),
+        'Peau sensible : adopter une routine douce' => array( 'en' => 'Sensitive skin: build a gentle routine', 'es' => 'Piel sensible: adoptar una rutina suave', 'ar' => 'البشرة الحساسة: اعتماد روتين لطيف' ),
+        'Actifs, textures, besoins de peau... Nos conseils pour sélectionner le sérum idéal et booster l’éclat naturellement.' => array( 'en' => 'Active ingredients, textures, skin needs... our advice for choosing the ideal serum and naturally boosting radiance.', 'es' => 'Activos, texturas, necesidades de la piel... nuestros consejos para elegir el sérum ideal y potenciar la luminosidad de forma natural.', 'ar' => 'المكونات الفعالة والقوام واحتياجات البشرة... نصائحنا لاختيار السيروم المثالي وتعزيز الإشراقة طبيعياً.' ),
+        'Découvrez pourquoi le karité est un allié incontournable pour nourrir, protéger et réparer les peaux sèches au quotidien.' => array( 'en' => 'Discover why shea butter is an essential ally to nourish, protect and repair dry skin every day.', 'es' => 'Descubre por qué el karité es un aliado imprescindible para nutrir, proteger y reparar las pieles secas a diario.', 'ar' => 'اكتشف لماذا يعد زبدة الشيا حليفاً أساسياً لتغذية البشرة الجافة وحمايتها وإصلاحها يومياً.' ),
+        'Découvrez les gestes essentiels pour une peau éclatante grâce à une routine naturelle adaptée à votre type de peau.' => array( 'en' => 'Discover the essential steps for radiant skin with a natural routine suited to your skin type.', 'es' => 'Descubre los gestos esenciales para una piel luminosa con una rutina natural adaptada a tu tipo de piel.', 'ar' => 'اكتشف الخطوات الأساسية لبشرة مشرقة مع روتين طبيعي مناسب لنوع بشرتك.' ),
+        'Découvrez notre routine complète et les bons gestes pour apaiser, protéger et renforcer les peaux sensibles.' => array( 'en' => 'Discover our complete routine and the right steps to soothe, protect and strengthen sensitive skin.', 'es' => 'Descubre nuestra rutina completa y los gestos adecuados para calmar, proteger y reforzar las pieles sensibles.', 'ar' => 'اكتشف روتيننا الكامل والخطوات المناسبة لتهدئة البشرة الحساسة وحمايتها وتقويتها.' ),
+        'Découvrez des soins naturels pensés avec exigence.' => array( 'en' => 'Discover natural products designed with high standards.', 'es' => 'Descubre cuidados naturales diseñados con exigencia.', 'ar' => 'اكتشف منتجات طبيعية مصممة بمعايير عالية.' ),
+        'Découvrez des soins pensés pour accompagner vos routines avec exigence, douceur et élégance.' => array( 'en' => 'Discover products designed to support your routines with precision, softness and elegance.', 'es' => 'Descubre cuidados pensados para acompañar tus rutinas con exigencia, suavidad y elegancia.', 'ar' => 'اكتشف منتجات مصممة لمرافقة روتينك بدقة ونعومة وأناقة.' ),
+        'Découvrez nos produits' => array( 'en' => 'Discover our products', 'es' => 'Descubrir nuestros productos', 'ar' => 'اكتشف منتجاتنا' ),
+        'Découvrir les soins visage' => array( 'en' => 'Discover face care', 'es' => 'Descubrir cuidado facial', 'ar' => 'اكتشف عناية الوجه' ),
+        'Découvrir les soins corps' => array( 'en' => 'Discover body care', 'es' => 'Descubrir cuidado corporal', 'ar' => 'اكتشف عناية الجسم' ),
+        'Découvrir les soins cheveux' => array( 'en' => 'Discover hair care', 'es' => 'Descubrir cuidado capilar', 'ar' => 'اكتشف عناية الشعر' ),
+        'Boutique cosmétiques naturels | Cosm’Éthique' => array( 'en' => 'Natural cosmetics shop | Cosm’Éthique', 'es' => 'Tienda de cosmética natural | Cosm’Éthique', 'ar' => 'متجر مستحضرات طبيعية | كوزم إيثيك' ),
+        'Cosmétiques naturels premium | Cosm’Éthique' => array( 'en' => 'Premium natural cosmetics | Cosm’Éthique', 'es' => 'Cosmética natural premium | Cosm’Éthique', 'ar' => 'مستحضرات طبيعية فاخرة | كوزم إيثيك' ),
+        'Découvrez Cosm’Éthique, marque de cosmétiques naturels premium avec soins visage, corps, cheveux, diagnostic beauté et routines personnalisées.' => array( 'en' => 'Discover Cosm’Éthique, a premium natural cosmetics brand with face, body and hair care, beauty diagnostic and personalised routines.', 'es' => 'Descubre Cosm’Éthique, marca de cosmética natural premium con cuidados faciales, corporales y capilares, diagnóstico de belleza y rutinas personalizadas.', 'ar' => 'اكتشف كوزم إيثيك، علامة مستحضرات طبيعية فاخرة للعناية بالوجه والجسم والشعر مع تشخيص جمال وروتينات مخصصة.' ),
+        'Explorez la boutique Cosm’Éthique : soins naturels premium pour le visage, le corps, les cheveux, accessoires beauté et packs routine.' => array( 'en' => 'Explore the Cosm’Éthique shop: premium natural care for face, body and hair, beauty accessories and routine sets.', 'es' => 'Explora la tienda Cosm’Éthique: cuidados naturales premium para rostro, cuerpo y cabello, accesorios de belleza y packs de rutina.', 'ar' => 'استكشف متجر كوزم إيثيك: عناية طبيعية فاخرة للوجه والجسم والشعر، إكسسوارات جمال ومجموعات روتين.' ),
+        'Collection Botanica | Collection Cosm’Éthique' => array( 'en' => 'Botanica Collection | Cosm’Éthique Collection', 'es' => 'Colección Botanica | Colección Cosm’Éthique', 'ar' => 'مجموعة بوتانيكا | مجموعة كوزم إيثيك' ),
+        'Découvrez la catégorie Collection Botanica de Cosm’Éthique : soins naturels premium, routines beauté, images produit, prix et conseils adaptés.' => array( 'en' => 'Discover the Cosm’Éthique Botanica Collection category: premium natural care, beauty routines, product images, prices and tailored advice.', 'es' => 'Descubre la categoría Collection Botanica de Cosm’Éthique: cuidados naturales premium, rutinas de belleza, imágenes de producto, precios y consejos adaptados.', 'ar' => 'اكتشف فئة مجموعة بوتانيكا من كوزم إيثيك: عناية طبيعية فاخرة وروتينات جمال وصور منتجات وأسعار ونصائح مناسبة.' ),
+        'Baume Botanica Cosm’Éthique - image produit principale' => array( 'en' => 'Botanica Balm Cosm’Éthique - main product image', 'es' => 'Bálsamo Botanica Cosm’Éthique - imagen principal del producto', 'ar' => 'بلسم بوتانيكا كوزم إيثيك - صورة المنتج الرئيسية' ),
+        'Collection Botanica | Cosm’Éthique' => array( 'en' => 'Botanica Collection | Cosm’Éthique', 'es' => 'Colección Botanica | Cosm’Éthique', 'ar' => 'مجموعة بوتانيكا | كوزم إيثيك' ),
+        'Collection Botanica Cosm’Éthique : événement exclusif, soins premium, lancement officiel et réservation.' => array( 'en' => 'Cosm’Éthique Botanica Collection: exclusive event, premium care, official launch and reservation.', 'es' => 'Colección Botanica Cosm’Éthique: evento exclusivo, cuidados premium, lanzamiento oficial y reserva.', 'ar' => 'مجموعة بوتانيكا من كوزم إيثيك: حدث حصري وعناية فاخرة وإطلاق رسمي وحجز.' ),
+        'Marque cosmétique naturelle | Cosm’Éthique' => array( 'en' => 'Natural cosmetics brand | Cosm’Éthique', 'es' => 'Marca de cosmética natural | Cosm’Éthique', 'ar' => 'علامة مستحضرات طبيعية | كوزم إيثيك' ),
+        'Découvrez notre marque cosmetique naturelle, son histoire, ses valeurs et son approche premium des soins responsables.' => array( 'en' => 'Discover our natural cosmetics brand, its story, values and premium approach to responsible care.', 'es' => 'Descubre nuestra marca de cosmética natural, su historia, sus valores y su enfoque premium del cuidado responsable.', 'ar' => 'اكتشف علامتنا للمستحضرات الطبيعية وقصتها وقيمها ونهجها الفاخر للعناية المسؤولة.' ),
+        'Panier Cosmethique | Cosm’Éthique' => array( 'en' => 'Cosmethique cart | Cosm’Éthique', 'es' => 'Carrito Cosmethique | Cosm’Éthique', 'ar' => 'سلة كوزم إيثيك | كوزم إيثيك' ),
+        'Panier Cosmethique sécurisé pour vérifier vos soins, ajuster les quantités et préparer votre commande en ligne.' => array( 'en' => 'Secure Cosmethique cart to review your products, adjust quantities and prepare your online order.', 'es' => 'Carrito seguro Cosmethique para revisar tus cuidados, ajustar cantidades y preparar tu pedido online.', 'ar' => 'سلة آمنة من كوزم إيثيك لمراجعة منتجاتك وتعديل الكميات وتجهيز طلبك عبر الإنترنت.' ),
+        'Mentions légales Cosmethique | Cosm’Éthique' => array( 'en' => 'Legal notice Cosmethique | Cosm’Éthique', 'es' => 'Aviso legal Cosmethique | Cosm’Éthique', 'ar' => 'الإشعارات القانونية كوزم إيثيك | كوزم إيثيك' ),
+        'Mentions legales Cosmethique : projet étudiant fictif, informations éditeur, hébergement et données pédagogiques.' => array( 'en' => 'Cosmethique legal notice: fictional student project, publisher information, hosting and educational data.', 'es' => 'Aviso legal Cosmethique: proyecto estudiantil ficticio, información del editor, alojamiento y datos pedagógicos.', 'ar' => 'الإشعارات القانونية لكوزم إيثيك: مشروع طلابي افتراضي، معلومات الناشر، الاستضافة والبيانات التعليمية.' ),
+        'Politique confidentialité Cosmethique | Cosm’Éthique' => array( 'en' => 'Privacy policy Cosmethique | Cosm’Éthique', 'es' => 'Política de privacidad Cosmethique | Cosm’Éthique', 'ar' => 'سياسة الخصوصية كوزم إيثيك | كوزم إيثيك' ),
+        'Politique confidentialite Cosmethique : données personnelles, formulaires, cookies, droits utilisateurs et sécurité.' => array( 'en' => 'Cosmethique privacy policy: personal data, forms, cookies, user rights and security.', 'es' => 'Política de privacidad Cosmethique: datos personales, formularios, cookies, derechos de usuario y seguridad.', 'ar' => 'سياسة خصوصية كوزم إيثيك: البيانات الشخصية والنماذج وملفات تعريف الارتباط وحقوق المستخدمين والأمان.' ),
+        'Politique cookies Cosmethique | Cosm’Éthique' => array( 'en' => 'Cookie policy Cosmethique | Cosm’Éthique', 'es' => 'Política de cookies Cosmethique | Cosm’Éthique', 'ar' => 'سياسة ملفات تعريف الارتباط كوزم إيثيك | كوزم إيثيك' ),
+        'Politique cookies Cosmethique : gestion du consentement, mesure d’audience, préférences et protection des données.' => array( 'en' => 'Cosmethique cookie policy: consent management, audience measurement, preferences and data protection.', 'es' => 'Política de cookies Cosmethique: gestión del consentimiento, medición de audiencia, preferencias y protección de datos.', 'ar' => 'سياسة ملفات تعريف الارتباط لكوزم إيثيك: إدارة الموافقة وقياس الجمهور والتفضيلات وحماية البيانات.' ),
+        'Politique de confidentialité' => array( 'en' => 'Privacy policy', 'es' => 'Política de privacidad', 'ar' => 'سياسة الخصوصية' ),
+        'Politique de cookies' => array( 'en' => 'Cookie policy', 'es' => 'Política de cookies', 'ar' => 'سياسة ملفات تعريف الارتباط' ),
+        'Mentions légales' => array( 'en' => 'Legal notice', 'es' => 'Aviso legal', 'ar' => 'الإشعارات القانونية' ),
+        'Notre réseau de franchises' => array( 'en' => 'Our franchise network', 'es' => 'Nuestra red de franquicias', 'ar' => 'شبكة الامتياز لدينا' ),
+        'Notre réseau grandit partout en France' => array( 'en' => 'Our network is growing across France', 'es' => 'Nuestra red crece por toda Francia', 'ar' => 'شبكتنا تنمو في أنحاء فرنسا' ),
+        'Rejoignez un réseau de boutiques engagées dans la cosmétique naturelle. Découvrez les villes déjà implantées et les opportunités encore disponibles.' => array( 'en' => 'Join a network of stores committed to natural cosmetics. Discover the cities already established and the opportunities still available.', 'es' => 'Únete a una red de tiendas comprometidas con la cosmética natural. Descubre las ciudades ya implantadas y las oportunidades disponibles.', 'ar' => 'انضم إلى شبكة متاجر ملتزمة بمستحضرات التجميل الطبيعية. اكتشف المدن الموجودة بالفعل والفرص المتاحة.' ),
+        'Chiffres clés du réseau Cosm’Éthique' => array( 'en' => 'Key figures for the Cosm’Éthique network', 'es' => 'Cifras clave de la red Cosm’Éthique', 'ar' => 'الأرقام الرئيسية لشبكة كوزم إيثيك' ),
+        'Boutiques ouvertes' => array( 'en' => 'Open stores', 'es' => 'Tiendas abiertas', 'ar' => 'متاجر مفتوحة' ),
+        'Villes couvertes' => array( 'en' => 'Cities covered', 'es' => 'Ciudades cubiertas', 'ar' => 'مدن مغطاة' ),
+        'Franchisés' => array( 'en' => 'Franchisees', 'es' => 'Franquiciados', 'ar' => 'أصحاب امتياز' ),
+        'Produits naturels' => array( 'en' => 'Natural products', 'es' => 'Productos naturales', 'ar' => 'منتجات طبيعية' ),
+        'Vous souhaitez ouvrir une franchise dans votre ville ?' => array( 'en' => 'Would you like to open a franchise in your city?', 'es' => '¿Quieres abrir una franquicia en tu ciudad?', 'ar' => 'هل ترغب في فتح امتياز في مدينتك؟' ),
+        'Vérifier mon éligibilité' => array( 'en' => 'Check my eligibility', 'es' => 'Comprobar mi elegibilidad', 'ar' => 'تحقق من أهليتي' ),
+        'Évaluez gratuitement votre projet en moins de 2 minutes avant de déposer votre candidature.' => array( 'en' => 'Evaluate your project for free in under 2 minutes before submitting your application.', 'es' => 'Evalúa tu proyecto gratis en menos de 2 minutos antes de presentar tu candidatura.', 'ar' => 'قيّم مشروعك مجاناً في أقل من دقيقتين قبل تقديم طلبك.' ),
+        'Ouvrir une adresse COSM’ETHIQUE' => array( 'en' => 'Open a COSM’ETHIQUE location', 'es' => 'Abrir una dirección COSM’ETHIQUE', 'ar' => 'افتح موقعاً لكوزم إيثيك' ),
+        'Nous recherchons des partenaires sensibles à la beauté naturelle, au conseil client et à l’expérience retail premium.' => array( 'en' => 'We are looking for partners who care about natural beauty, customer advice and premium retail experience.', 'es' => 'Buscamos socios sensibles a la belleza natural, el asesoramiento al cliente y la experiencia retail premium.', 'ar' => 'نبحث عن شركاء يهتمون بالجمال الطبيعي واستشارة العملاء وتجربة البيع الراقية.' ),
+        'produits signature au lancement' => array( 'en' => 'signature products at launch', 'es' => 'productos insignia en el lanzamiento', 'ar' => 'منتجات مميزة عند الإطلاق' ),
+        'seuil de livraison offerte' => array( 'en' => 'free delivery threshold', 'es' => 'umbral de envío gratuito', 'ar' => 'حد التوصيل المجاني' ),
+        'délai d’expédition cible' => array( 'en' => 'target shipping time', 'es' => 'plazo de envío objetivo', 'ar' => 'مدة الشحن المستهدفة' ),
+        'satisfaction client visée' => array( 'en' => 'target customer satisfaction', 'es' => 'satisfacción cliente objetivo', 'ar' => 'رضا العملاء المستهدف' ),
+        'Concept boutique élégant et duplicable' => array( 'en' => 'Elegant, replicable store concept', 'es' => 'Concepto de tienda elegante y replicable', 'ar' => 'مفهوم متجر أنيق وقابل للتكرار' ),
+        'Accompagnement lancement, merchandising et formation' => array( 'en' => 'Launch, merchandising and training support', 'es' => 'Acompañamiento en lanzamiento, merchandising y formación', 'ar' => 'دعم الإطلاق والعرض والتدريب' ),
+        'Catalogue naturel premium et stratégie ecommerce' => array( 'en' => 'Premium natural catalogue and ecommerce strategy', 'es' => 'Catálogo natural premium y estrategia ecommerce', 'ar' => 'كتالوج طبيعي فاخر واستراتيجية تجارة إلكترونية' ),
+        'Supports marketing et animation locale' => array( 'en' => 'Marketing materials and local activations', 'es' => 'Soportes de marketing y animación local', 'ar' => 'مواد تسويقية وتنشيط محلي' ),
+        'Demande d’information franchisé' => array( 'en' => 'Franchisee information request', 'es' => 'Solicitud de información franquiciado', 'ar' => 'طلب معلومات الامتياز' ),
+        'Nom' => array( 'en' => 'Last name', 'es' => 'Apellido', 'ar' => 'اسم العائلة' ),
+        'Prénom' => array( 'en' => 'First name', 'es' => 'Nombre', 'ar' => 'الاسم الأول' ),
+        'Nom complet' => array( 'en' => 'Full name', 'es' => 'Nombre completo', 'ar' => 'الاسم الكامل' ),
+        'Téléphone' => array( 'en' => 'Phone', 'es' => 'Teléfono', 'ar' => 'الهاتف' ),
+        'Ville' => array( 'en' => 'City', 'es' => 'Ciudad', 'ar' => 'المدينة' ),
+        'Pays' => array( 'en' => 'Country', 'es' => 'País', 'ar' => 'البلد' ),
+        'Ville souhaitée' => array( 'en' => 'Desired city', 'es' => 'Ciudad deseada', 'ar' => 'المدينة المطلوبة' ),
+        'Apport personnel' => array( 'en' => 'Personal contribution', 'es' => 'Aportación personal', 'ar' => 'المساهمة الشخصية' ),
+        'Surface souhaitée' => array( 'en' => 'Desired surface area', 'es' => 'Superficie deseada', 'ar' => 'المساحة المطلوبة' ),
+        'Expérience professionnelle' => array( 'en' => 'Professional experience', 'es' => 'Experiencia profesional', 'ar' => 'الخبرة المهنية' ),
+        'Message' => array( 'en' => 'Message', 'es' => 'Mensaje', 'ar' => 'الرسالة' ),
+        'J’accepte d’être contacté au sujet de ma demande de franchise.' => array( 'en' => 'I agree to be contacted about my franchise request.', 'es' => 'Acepto que me contacten sobre mi solicitud de franquicia.', 'ar' => 'أوافق على التواصل معي بخصوص طلبي للامتياز.' ),
+        'Envoyer ma demande' => array( 'en' => 'Send my request', 'es' => 'Enviar mi solicitud', 'ar' => 'إرسال طلبي' ),
+        'Éligibilité franchise' => array( 'en' => 'Franchise eligibility', 'es' => 'Elegibilidad de franquicia', 'ar' => 'أهلية الامتياز' ),
+        'Vérifiez si votre projet peut rejoindre Cosm’Éthique.' => array( 'en' => 'Check whether your project can join Cosm’Éthique.', 'es' => 'Comprueba si tu proyecto puede unirse a Cosm’Éthique.', 'ar' => 'تحقق مما إذا كان مشروعك يمكنه الانضمام إلى كوزم إيثيك.' ),
+        'Un parcours rapide, clair et rassurant pour évaluer gratuitement votre projet avant de déposer votre candidature.' => array( 'en' => 'A quick, clear and reassuring path to assess your project for free before applying.', 'es' => 'Un recorrido rápido, claro y tranquilizador para evaluar gratis tu proyecto antes de postular.', 'ar' => 'مسار سريع وواضح ومطمئن لتقييم مشروعك مجاناً قبل التقديم.' ),
+        'Commencer le questionnaire' => array( 'en' => 'Start the questionnaire', 'es' => 'Empezar el cuestionario', 'ar' => 'ابدأ الاستبيان' ),
+        'Voir les critères' => array( 'en' => 'View the criteria', 'es' => 'Ver los criterios', 'ar' => 'عرض المعايير' ),
+        'Programme franchise' => array( 'en' => 'Franchise program', 'es' => 'Programa de franquicia', 'ar' => 'برنامج الامتياز' ),
+        'Une méthode pour ouvrir une boutique naturelle, premium et cohérente.' => array( 'en' => 'A method for opening a natural, premium and coherent store.', 'es' => 'Un método para abrir una tienda natural, premium y coherente.', 'ar' => 'منهجية لافتتاح متجر طبيعي وفاخر ومنسجم.' ),
+        'Cosm’Éthique accompagne les porteurs de projet avec une identité forte, une expérience client soignée et un catalogue pensé pour les routines visage, corps et cheveux.' => array( 'en' => 'Cosm’Éthique supports project owners with a strong identity, polished customer experience and a catalogue designed for face, body and hair routines.', 'es' => 'Cosm’Éthique acompaña a emprendedores con una identidad fuerte, una experiencia cliente cuidada y un catálogo pensado para rutinas de rostro, cuerpo y cabello.', 'ar' => 'تدعم كوزم إيثيك أصحاب المشاريع بهوية قوية وتجربة عملاء مصقولة وكتالوج مصمم لروتين الوجه والجسم والشعر.' ),
+        'Questionnaire d’éligibilité' => array( 'en' => 'Eligibility questionnaire', 'es' => 'Cuestionario de elegibilidad', 'ar' => 'استبيان الأهلية' ),
+        'Évaluez votre projet en moins de 2 minutes.' => array( 'en' => 'Evaluate your project in under 2 minutes.', 'es' => 'Evalúa tu proyecto en menos de 2 minutos.', 'ar' => 'قيّم مشروعك في أقل من دقيقتين.' ),
+        'Quel est votre nom ?' => array( 'en' => 'What is your name?', 'es' => '¿Cuál es tu nombre?', 'ar' => 'ما اسمك؟' ),
+        'Votre email' => array( 'en' => 'Your email', 'es' => 'Tu email', 'ar' => 'بريدك الإلكتروني' ),
+        'Votre téléphone' => array( 'en' => 'Your phone number', 'es' => 'Tu teléfono', 'ar' => 'رقم هاتفك' ),
+        'Votre ville' => array( 'en' => 'Your city', 'es' => 'Tu ciudad', 'ar' => 'مدينتك' ),
+        'Votre pays' => array( 'en' => 'Your country', 'es' => 'Tu país', 'ar' => 'بلدك' ),
+        'Disposez-vous d’un local ?' => array( 'en' => 'Do you already have premises?', 'es' => '¿Dispones de un local?', 'ar' => 'هل لديك محل؟' ),
+        'Surface du local' => array( 'en' => 'Premises surface area', 'es' => 'Superficie del local', 'ar' => 'مساحة المحل' ),
+        'Budget disponible' => array( 'en' => 'Available budget', 'es' => 'Presupuesto disponible', 'ar' => 'الميزانية المتاحة' ),
+        'moins de 20 000€' => array( 'en' => 'under €20,000', 'es' => 'menos de 20.000 €', 'ar' => 'أقل من 20,000€' ),
+        '20-40k€' => array( 'en' => '€20k-€40k', 'es' => '20-40 mil €', 'ar' => '20-40 ألف €' ),
+        '40-80k€' => array( 'en' => '€40k-€80k', 'es' => '40-80 mil €', 'ar' => '40-80 ألف €' ),
+        'plus de 80k€' => array( 'en' => 'over €80k', 'es' => 'más de 80 mil €', 'ar' => 'أكثر من 80 ألف €' ),
+        'Avez-vous déjà dirigé une entreprise ?' => array( 'en' => 'Have you already managed a business?', 'es' => '¿Has dirigido ya una empresa?', 'ar' => 'هل سبق لك إدارة شركة؟' ),
+        'Pourquoi souhaitez-vous rejoindre Cosm’Éthique ?' => array( 'en' => 'Why would you like to join Cosm’Éthique?', 'es' => '¿Por qué quieres unirte a Cosm’Éthique?', 'ar' => 'لماذا ترغب في الانضمام إلى كوزم إيثيك؟' ),
+        'Voir mon résultat' => array( 'en' => 'View my result', 'es' => 'Ver mi resultado', 'ar' => 'عرض نتيجتي' ),
+        'Votre profil semble compatible avec notre réseau.' => array( 'en' => 'Your profile appears compatible with our network.', 'es' => 'Tu perfil parece compatible con nuestra red.', 'ar' => 'يبدو أن ملفك مناسب لشبكتنا.' ),
+        'Votre projet nécessite encore quelques ajustements.' => array( 'en' => 'Your project still needs a few adjustments.', 'es' => 'Tu proyecto necesita todavía algunos ajustes.', 'ar' => 'لا يزال مشروعك يحتاج إلى بعض التعديلات.' ),
+        'Vous pouvez maintenant déposer une candidature franchise complète et indépendante du formulaire Contact.' => array( 'en' => 'You can now submit a complete franchise application, separate from the Contact form.', 'es' => 'Ahora puedes presentar una candidatura de franquicia completa e independiente del formulario de contacto.', 'ar' => 'يمكنك الآن تقديم طلب امتياز كامل ومستقل عن نموذج الاتصال.' ),
+        'Déposer ma candidature' => array( 'en' => 'Submit my application', 'es' => 'Presentar mi candidatura', 'ar' => 'تقديم طلبي' ),
+        'Candidature franchise' => array( 'en' => 'Franchise application', 'es' => 'Candidatura de franquicia', 'ar' => 'طلب الامتياز' ),
+        'Présentez votre projet à Cosm’Éthique.' => array( 'en' => 'Present your project to Cosm’Éthique.', 'es' => 'Presenta tu proyecto a Cosm’Éthique.', 'ar' => 'قدم مشروعك إلى كوزم إيثيك.' ),
+        'Ce formulaire est exclusivement dédié aux candidatures franchise. Il ne remplace pas le formulaire Contact classique.' => array( 'en' => 'This form is dedicated exclusively to franchise applications. It does not replace the standard Contact form.', 'es' => 'Este formulario está dedicado exclusivamente a candidaturas de franquicia. No sustituye al formulario de contacto clásico.', 'ar' => 'هذا النموذج مخصص حصراً لطلبات الامتياز ولا يحل محل نموذج الاتصال العادي.' ),
+        'Parcours candidat' => array( 'en' => 'Candidate journey', 'es' => 'Recorrido del candidato', 'ar' => 'مسار المرشح' ),
+        'Dossier de candidature' => array( 'en' => 'Application file', 'es' => 'Expediente de candidatura', 'ar' => 'ملف الطلب' ),
+        'Analyse par l’équipe Franchise' => array( 'en' => 'Review by the Franchise team', 'es' => 'Análisis por el equipo de Franquicias', 'ar' => 'مراجعة من فريق الامتياز' ),
+        'Retour sous quelques jours' => array( 'en' => 'Reply within a few days', 'es' => 'Respuesta en unos días', 'ar' => 'رد خلال بضعة أيام' ),
+        'Dossier franchise' => array( 'en' => 'Franchise file', 'es' => 'Dossier de franquicia', 'ar' => 'ملف الامتياز' ),
+        'Déposez votre candidature complète.' => array( 'en' => 'Submit your complete application.', 'es' => 'Presenta tu candidatura completa.', 'ar' => 'قدم طلبك الكامل.' ),
+        'Adresse' => array( 'en' => 'Address', 'es' => 'Dirección', 'ar' => 'العنوان' ),
+        'CV' => array( 'en' => 'Resume', 'es' => 'CV', 'ar' => 'السيرة الذاتية' ),
+        'Lettre de motivation' => array( 'en' => 'Cover letter', 'es' => 'Carta de motivación', 'ar' => 'رسالة الدافع' ),
+        'Photo du local' => array( 'en' => 'Premises photo', 'es' => 'Foto del local', 'ar' => 'صورة المحل' ),
+        'J’accepte que Cosm’Éthique traite mes informations afin d’étudier ma candidature franchise.' => array( 'en' => 'I agree that Cosm’Éthique may process my information to review my franchise application.', 'es' => 'Acepto que Cosm’Éthique trate mis datos para estudiar mi candidatura de franquicia.', 'ar' => 'أوافق على أن تعالج كوزم إيثيك معلوماتي لدراسة طلب الامتياز.' ),
+        'Envoyer ma candidature' => array( 'en' => 'Send my application', 'es' => 'Enviar mi candidatura', 'ar' => 'إرسال طلبي' ),
+        'Demande envoyée' => array( 'en' => 'Request sent', 'es' => 'Solicitud enviada', 'ar' => 'تم إرسال الطلب' ),
+        'Votre demande a bien été envoyée' => array( 'en' => 'Your request has been sent successfully', 'es' => 'Tu solicitud se ha enviado correctamente', 'ar' => 'تم إرسال طلبك بنجاح' ),
+        'Merci pour votre candidature. Notre équipe étudiera votre demande et reviendra vers vous prochainement.' => array( 'en' => 'Thank you for your application. Our team will review your request and get back to you soon.', 'es' => 'Gracias por tu candidatura. Nuestro equipo estudiará tu solicitud y se pondrá en contacto contigo próximamente.', 'ar' => 'شكراً على طلبك. سيدرس فريقنا طلبك ويتواصل معك قريباً.' ),
+        'Retour à l’accueil' => array( 'en' => 'Back to home', 'es' => 'Volver al inicio', 'ar' => 'العودة إلى الرئيسية' ),
+        'Confirmation de candidature | Cosm’Éthique' => array( 'en' => 'Application confirmation | Cosm’Éthique', 'es' => 'Confirmación de candidatura | Cosm’Éthique', 'ar' => 'تأكيد الطلب | كوزم إيثيك' ),
+        'Votre candidature Cosm’Éthique a bien été reçue. Notre équipe franchise revient vers vous sous quelques jours.' => array( 'en' => 'Your Cosm’Éthique application has been received. Our franchise team will get back to you within a few days.', 'es' => 'Tu candidatura Cosm’Éthique se ha recibido correctamente. Nuestro equipo de franquicias te responderá en unos días.', 'ar' => 'تم استلام طلبك في كوزم إيثيك. سيتواصل معك فريق الامتياز خلال بضعة أيام.' ),
+        'Candidature reçue' => array( 'en' => 'Application received', 'es' => 'Candidatura recibida', 'ar' => 'تم استلام الطلب' ),
+        'Éligibilité franchise cosmétique | Cosm’Éthique' => array( 'en' => 'Cosmetics franchise eligibility | Cosm’Éthique', 'es' => 'Elegibilidad franquicia cosmética | Cosm’Éthique', 'ar' => 'أهلية امتياز مستحضرات التجميل | كوزم إيثيك' ),
+        'Eligibilite franchise cosmetique Cosm’Éthique : questionnaire, critères, budget, local et étapes de candidature.' => array( 'en' => 'Cosm’Éthique cosmetics franchise eligibility: questionnaire, criteria, budget, premises and application steps.', 'es' => 'Elegibilidad franquicia cosmética Cosm’Éthique: cuestionario, criterios, presupuesto, local y etapas de candidatura.', 'ar' => 'أهلية امتياز مستحضرات كوزم إيثيك: استبيان ومعايير وميزانية ومحل وخطوات التقديم.' ),
+        'Lancement de la Collection Botanica' => array( 'en' => 'Botanica Collection Launch', 'es' => 'Lanzamiento de la Colección Botanica', 'ar' => 'إطلاق مجموعة بوتانيكا' ),
+        'Événement Exclusif' => array( 'en' => 'Exclusive event', 'es' => 'Evento exclusivo', 'ar' => 'حدث حصري' ),
+        'Découvrir l’événement' => array( 'en' => 'Discover the event', 'es' => 'Descubrir el evento', 'ar' => 'اكتشف الحدث' ),
+        'Boutique Collection Botanica' => array( 'en' => 'Botanica Collection Shop', 'es' => 'Tienda Colección Botanica', 'ar' => 'متجر مجموعة بوتانيكا' ),
+        'Découvrez les soins du lancement.' => array( 'en' => 'Discover the launch products.', 'es' => 'Descubre los cuidados del lanzamiento.', 'ar' => 'اكتشف منتجات الإطلاق.' ),
+        'Découvrir Crème Hydratante Botanica' => array( 'en' => 'Discover Botanica Moisturising Cream', 'es' => 'Descubrir Crema Hidratante Botanica', 'ar' => 'اكتشف كريم بوتانيكا المرطب' ),
+        'Découvrir Sérum Botanica' => array( 'en' => 'Discover Botanica Serum', 'es' => 'Descubrir Sérum Botanica', 'ar' => 'اكتشف سيروم بوتانيكا' ),
+        'Découvrir Huile Botanica' => array( 'en' => 'Discover Botanica Oil', 'es' => 'Descubrir Aceite Botanica', 'ar' => 'اكتشف زيت بوتانيكا' ),
+        'Découvrir Masque Botanica' => array( 'en' => 'Discover Botanica Mask', 'es' => 'Descubrir Mascarilla Botanica', 'ar' => 'اكتشف قناع بوتانيكا' ),
+        'Découvrir Baume Botanica' => array( 'en' => 'Discover Botanica Balm', 'es' => 'Descubrir Bálsamo Botanica', 'ar' => 'اكتشف بلسم بوتانيكا' ),
+        'Découvrir Coffret Botanica' => array( 'en' => 'Discover Botanica Set', 'es' => 'Descubrir Cofre Botanica', 'ar' => 'اكتشف مجموعة بوتانيكا' ),
+        'Découvrez les textures, les actifs et les rituels de la collection dans un cadre confidentiel pensé pour une expérience sensorielle complète.' => array( 'en' => 'Discover the textures, active ingredients and rituals of the collection in an intimate setting designed for a complete sensorial experience.', 'es' => 'Descubre las texturas, activos y rituales de la colección en un entorno íntimo pensado para una experiencia sensorial completa.', 'ar' => 'اكتشف قوام ومكونات وطقوس المجموعة في إطار خاص مصمم لتجربة حسية كاملة.' ),
+        'Carrières' => array( 'en' => 'Careers', 'es' => 'Carreras', 'ar' => 'الوظائف' ),
+        'Rejoignez l’aventure Cosm’Éthique.' => array( 'en' => 'Join the Cosm’Éthique adventure.', 'es' => 'Únete a la aventura Cosm’Éthique.', 'ar' => 'انضم إلى رحلة كوزم إيثيك.' ),
+        'Ensemble, créons la cosmétique naturelle de demain.' => array( 'en' => 'Together, let’s create tomorrow’s natural cosmetics.', 'es' => 'Juntos, creemos la cosmética natural del mañana.', 'ar' => 'معاً نصنع مستحضرات التجميل الطبيعية للغد.' ),
+        'Voir nos offres' => array( 'en' => 'View our openings', 'es' => 'Ver nuestras ofertas', 'ar' => 'عرض وظائفنا' ),
+        'Candidature spontanée' => array( 'en' => 'Spontaneous application', 'es' => 'Candidatura espontánea', 'ar' => 'طلب تلقائي' ),
+        'Pourquoi nous rejoindre' => array( 'en' => 'Why join us', 'es' => 'Por qué unirte a nosotros', 'ar' => 'لماذا تنضم إلينا' ),
+        'Responsable Boutique' => array( 'en' => 'Store manager', 'es' => 'Responsable de tienda', 'ar' => 'مدير متجر' ),
+        'Développer les campagnes, contenus et leviers d’acquisition.' => array( 'en' => 'Develop campaigns, content and acquisition levers.', 'es' => 'Desarrollar campañas, contenidos y palancas de adquisición.', 'ar' => 'تطوير الحملات والمحتوى وقنوات الاستحواذ.' ),
+        'Coordonner les lancements produits et les temps forts e-commerce.' => array( 'en' => 'Coordinate product launches and ecommerce highlights.', 'es' => 'Coordinar lanzamientos de producto y momentos clave e-commerce.', 'ar' => 'تنسيق إطلاق المنتجات واللحظات الرئيسية للتجارة الإلكترونية.' ),
+        'Créer des interfaces élégantes, claires et orientées conversion.' => array( 'en' => 'Create elegant, clear and conversion-focused interfaces.', 'es' => 'Crear interfaces elegantes, claras y orientadas a la conversión.', 'ar' => 'إنشاء واجهات أنيقة وواضحة وموجهة للتحويل.' ),
+        'Améliorer les parcours WooCommerce, tracking et performances.' => array( 'en' => 'Improve WooCommerce journeys, tracking and performance.', 'es' => 'Mejorar recorridos WooCommerce, tracking y rendimiento.', 'ar' => 'تحسين مسارات WooCommerce والتتبع والأداء.' ),
+        'Piloter l’expérience retail et accompagner les conseillers beauté.' => array( 'en' => 'Lead the retail experience and support beauty advisors.', 'es' => 'Dirigir la experiencia retail y acompañar a los asesores de belleza.', 'ar' => 'قيادة تجربة البيع ودعم مستشاري الجمال.' ),
+        'Guider les clientes vers des routines naturelles et personnalisées.' => array( 'en' => 'Guide customers toward natural and personalised routines.', 'es' => 'Guiar a las clientas hacia rutinas naturales y personalizadas.', 'ar' => 'إرشاد العملاء نحو روتينات طبيعية ومخصصة.' ),
+        'Préparer les commandes avec soin et suivre les expéditions.' => array( 'en' => 'Prepare orders carefully and monitor shipments.', 'es' => 'Preparar pedidos con cuidado y seguir los envíos.', 'ar' => 'تحضير الطلبات بعناية ومتابعة الشحنات.' ),
+        'Développeur' => array( 'en' => 'Developer', 'es' => 'Desarrollador', 'ar' => 'مطور' ),
+        'Conseiller beauté' => array( 'en' => 'Beauty advisor', 'es' => 'Asesor de belleza', 'ar' => 'مستشار جمال' ),
+        'Logistique' => array( 'en' => 'Logistics', 'es' => 'Logística', 'ar' => 'الخدمات اللوجستية' ),
+        'Remote partiel' => array( 'en' => 'Partly remote', 'es' => 'Remoto parcial', 'ar' => 'عمل عن بعد جزئي' ),
+        'Hybride' => array( 'en' => 'Hybrid', 'es' => 'Híbrido', 'ar' => 'هجين' ),
+        'Île-de-France' => array( 'en' => 'Île-de-France', 'es' => 'Île-de-France', 'ar' => 'إيل دو فرانس' ),
+        'Temps plein' => array( 'en' => 'Full-time', 'es' => 'Tiempo completo', 'ar' => 'دوام كامل' ),
+        'Voir l’offre' => array( 'en' => 'View the opening', 'es' => 'Ver la oferta', 'ar' => 'عرض الوظيفة' ),
+        'Présentez-nous votre talent.' => array( 'en' => 'Show us your talent.', 'es' => 'Preséntanos tu talento.', 'ar' => 'عرّفنا بموهبتك.' ),
+        'Votre prochaine aventure commence ici.' => array( 'en' => 'Your next adventure starts here.', 'es' => 'Tu próxima aventura empieza aquí.', 'ar' => 'تبدأ مغامرتك القادمة هنا.' ),
+        'Je rejoins Cosm’Éthique' => array( 'en' => 'I’m joining Cosm’Éthique', 'es' => 'Me uno a Cosm’Éthique', 'ar' => 'أنضم إلى كوزم إيثيك' ),
+        'Éligibilité' => array( 'en' => 'Eligibility', 'es' => 'Elegibilidad', 'ar' => 'الأهلية' ),
+        'Rejoignez les pages essentielles de Cosm’Éthique en un clic, puis retrouvez la newsletter dans le footer global.' => array( 'en' => 'Reach the essential Cosm’Éthique pages in one click, then find the newsletter in the global footer.', 'es' => 'Accede a las páginas esenciales de Cosm’Éthique en un clic y encuentra la newsletter en el footer global.', 'ar' => 'انتقل إلى صفحات كوزم إيثيك الأساسية بنقرة واحدة ثم اعثر على النشرة في التذييل العام.' ),
+        'Rejoignez le développement de la maison COSM’ETHIQUE.' => array( 'en' => 'Join the growth of the COSM’ETHIQUE house.', 'es' => 'Únete al desarrollo de la maison COSM’ETHIQUE.', 'ar' => 'انضم إلى نمو دار COSM’ETHIQUE.' ),
+        'Votre futur commence ici' => array( 'en' => 'Your future starts here', 'es' => 'Tu futuro empieza aquí', 'ar' => 'يبدأ مستقبلك هنا' ),
+        'Une erreur est survenue. Merci de réessayer.' => array( 'en' => 'An error occurred. Please try again.', 'es' => 'Se ha producido un error. Inténtalo de nuevo.', 'ar' => 'حدث خطأ. يرجى المحاولة مرة أخرى.' ),
+        'Connexion réussie. Ouverture de votre espace beauté…' => array( 'en' => 'Sign in successful. Opening your beauty space…', 'es' => 'Conexión correcta. Abriendo tu espacio de belleza…', 'ar' => 'تم تسجيل الدخول بنجاح. يتم فتح مساحة الجمال الخاصة بك…' ),
+        'Votre compte est créé. Ouverture de votre espace beauté…' => array( 'en' => 'Your account has been created. Opening your beauty space…', 'es' => 'Tu cuenta se ha creado. Abriendo tu espacio de belleza…', 'ar' => 'تم إنشاء حسابك. يتم فتح مساحة الجمال الخاصة بك…' ),
+        'Passer au contenu principal' => array( 'en' => 'Skip to main content', 'es' => 'Saltar al contenido principal', 'ar' => 'تخطي إلى المحتوى الرئيسي' ),
+        'Changer de langue' => array( 'en' => 'Change language', 'es' => 'Cambiar idioma', 'ar' => 'تغيير اللغة' ),
+        'Nous recrutons' => array( 'en' => 'We are hiring', 'es' => 'Estamos contratando', 'ar' => 'نحن نوظف' ),
+        'Retour' => array( 'en' => 'Back', 'es' => 'Volver', 'ar' => 'رجوع' ),
+        'Ouvrir le menu principal' => array( 'en' => 'Open main menu', 'es' => 'Abrir menú principal', 'ar' => 'فتح القائمة الرئيسية' ),
+        'Date et lieu du lancement Botanica' => array( 'en' => 'Botanica launch date and location', 'es' => 'Fecha y lugar del lanzamiento Botanica', 'ar' => 'تاريخ ومكان إطلاق بوتانيكا' ),
+        'Cliquez sur le pot pour ouvrir le lancement.' => array( 'en' => 'Click the jar to open the launch.', 'es' => 'Haz clic en el tarro para abrir el lanzamiento.', 'ar' => 'انقر على العبوة لفتح الإطلاق.' ),
+        'Ouvrir le pot Botanica et découvrir le lancement' => array( 'en' => 'Open the Botanica jar and discover the launch', 'es' => 'Abrir el tarro Botanica y descubrir el lanzamiento', 'ar' => 'افتح عبوة بوتانيكا واكتشف الإطلاق' ),
+        'Crème régénérante' => array( 'en' => 'Regenerating cream', 'es' => 'Crema regeneradora', 'ar' => 'كريم مجدد' ),
+        'Compte à rebours avant le lancement' => array( 'en' => 'Countdown before launch', 'es' => 'Cuenta atrás antes del lanzamiento', 'ar' => 'العد التنازلي قبل الإطلاق' ),
+        'Scène interactive de la Collection Botanica' => array( 'en' => 'Interactive Botanica Collection scene', 'es' => 'Escena interactiva de la Colección Botanica', 'ar' => 'مشهد تفاعلي لمجموعة بوتانيكا' ),
+        'Révéler la collection Botanica' => array( 'en' => 'Reveal the Botanica collection', 'es' => 'Revelar la colección Botanica', 'ar' => 'اكشف مجموعة بوتانيكا' ),
+        'Pot de crème Botanica' => array( 'en' => 'Botanica cream jar', 'es' => 'Tarro de crema Botanica', 'ar' => 'عبوة كريم بوتانيكا' ),
+        'Événement' => array( 'en' => 'Event', 'es' => 'Evento', 'ar' => 'الحدث' ),
+        'Événement Exclusif' => array( 'en' => 'Exclusive event', 'es' => 'Evento exclusivo', 'ar' => 'حدث حصري' ),
+        'Une nouvelle génération de soins inspirés par la nature, entre innovation sensorielle, actifs botaniques et rituel premium.' => array( 'en' => 'A new generation of products inspired by nature, blending sensorial innovation, botanical actives and a premium ritual.', 'es' => 'Una nueva generación de cuidados inspirados en la naturaleza, entre innovación sensorial, activos botánicos y ritual premium.', 'ar' => 'جيل جديد من مستحضرات العناية المستوحاة من الطبيعة، يجمع بين الابتكار الحسي والمكونات النباتية الفعالة والطقس الفاخر.' ),
+        'Événements à venir' => array( 'en' => 'Upcoming events', 'es' => 'Próximos eventos', 'ar' => 'فعاليات قادمة' ),
+        'Les prochains rendez-vous Cosm’Éthique.' => array( 'en' => 'The next Cosm’Éthique dates.', 'es' => 'Las próximas citas Cosm’Éthique.', 'ar' => 'مواعيد كوزم إيثيك القادمة.' ),
+        'Événement précédent' => array( 'en' => 'Previous event', 'es' => 'Evento anterior', 'ar' => 'الحدث السابق' ),
+        'Événement suivant' => array( 'en' => 'Next event', 'es' => 'Evento siguiente', 'ar' => 'الحدث التالي' ),
+        'Découvrir %s' => array( 'en' => 'Discover %s', 'es' => 'Descubrir %s', 'ar' => 'اكتشف %s' ),
+        'Collection Botanica' => array( 'en' => 'Botanica Collection', 'es' => 'Colección Botanica', 'ar' => 'مجموعة بوتانيكا' ),
+        'Atelier Botanica' => array( 'en' => 'Botanica Workshop', 'es' => 'Taller Botanica', 'ar' => 'ورشة بوتانيكا' ),
+        'Masterclass Botanique' => array( 'en' => 'Botanical Masterclass', 'es' => 'Masterclass Botánica', 'ar' => 'ماستر كلاس نباتي' ),
+        'Preview privée Botanica' => array( 'en' => 'Private Botanica preview', 'es' => 'Preview privada Botanica', 'ar' => 'معاينة خاصة لبوتانيكا' ),
+        'Rencontre Collection Botanica' => array( 'en' => 'Botanica Collection Meetup', 'es' => 'Encuentro Colección Botanica', 'ar' => 'لقاء مجموعة بوتانيكا' ),
+        'Programme' => array( 'en' => 'Programme', 'es' => 'Programa', 'ar' => 'البرنامج' ),
+        'Une soirée pensée comme un rituel.' => array( 'en' => 'An evening designed like a ritual.', 'es' => 'Una velada pensada como un ritual.', 'ar' => 'أمسية مصممة كطقس عناية.' ),
+        'Inscription' => array( 'en' => 'Registration', 'es' => 'Inscripción', 'ar' => 'التسجيل' ),
+        'Découverte' => array( 'en' => 'Discovery', 'es' => 'Descubrimiento', 'ar' => 'الاكتشاف' ),
+        'Animation' => array( 'en' => 'Experience', 'es' => 'Animación', 'ar' => 'التجربة' ),
+        'Atelier' => array( 'en' => 'Workshop', 'es' => 'Taller', 'ar' => 'الورشة' ),
+        'Cadeaux' => array( 'en' => 'Gifts', 'es' => 'Regalos', 'ar' => 'الهدايا' ),
+        'Cocktail' => array( 'en' => 'Cocktail', 'es' => 'Cóctel', 'ar' => 'الكوكتيل' ),
+        'Réservez votre accès et recevez votre invitation personnalisée.' => array( 'en' => 'Reserve your access and receive your personalised invitation.', 'es' => 'Reserva tu acceso y recibe tu invitación personalizada.', 'ar' => 'احجز حضورك وتلق دعوتك المخصصة.' ),
+        'Entrez dans l’univers Botanica avec une présentation immersive.' => array( 'en' => 'Enter the Botanica universe through an immersive presentation.', 'es' => 'Entra en el universo Botanica con una presentación inmersiva.', 'ar' => 'ادخل عالم بوتانيكا من خلال عرض غامر.' ),
+        'Explorez les textures, les parfums et les actifs de la collection.' => array( 'en' => 'Explore the textures, fragrances and active ingredients of the collection.', 'es' => 'Explora las texturas, fragancias y activos de la colección.', 'ar' => 'استكشف قوام وروائح ومكونات المجموعة الفعالة.' ),
+        'Composez une routine adaptée avec les conseils de notre équipe.' => array( 'en' => 'Create a tailored routine with advice from our team.', 'es' => 'Crea una rutina adaptada con los consejos de nuestro equipo.', 'ar' => 'كوّن روتيناً مناسباً بمساعدة فريقنا.' ),
+        'Profitez d’attentions exclusives réservées aux participantes.' => array( 'en' => 'Enjoy exclusive gifts reserved for participants.', 'es' => 'Disfruta de detalles exclusivos reservados a las participantes.', 'ar' => 'استمتع بهدايا حصرية مخصصة للمشاركين.' ),
+        'Terminez la soirée autour d’un moment confidentiel et sensoriel.' => array( 'en' => 'End the evening with an intimate, sensorial moment.', 'es' => 'Termina la velada con un momento íntimo y sensorial.', 'ar' => 'اختتم الأمسية بلحظة خاصة وحسية.' ),
+        'Découvrez les soins du lancement.' => array( 'en' => 'Discover the launch products.', 'es' => 'Descubre los cuidados del lanzamiento.', 'ar' => 'اكتشف مستحضرات الإطلاق.' ),
+        'Une sélection pensée comme une routine complète, entre textures sensorielles, actifs botaniques et packagings bleu nuit.' => array( 'en' => 'A selection designed as a complete routine, with sensorial textures, botanical actives and midnight-blue packaging.', 'es' => 'Una selección pensada como una rutina completa, entre texturas sensoriales, activos botánicos y packaging azul noche.', 'ar' => 'تشكيلة مصممة كروتين كامل تجمع بين القوام الحسي والمكونات النباتية والعبوات الزرقاء الليلية.' ),
+        'Réserver ma place' => array( 'en' => 'Reserve my place', 'es' => 'Reservar mi plaza', 'ar' => 'احجز مكاني' ),
+        'Une immersion privée dans l’univers Botanica.' => array( 'en' => 'A private immersion in the Botanica universe.', 'es' => 'Una inmersión privada en el universo Botanica.', 'ar' => 'تجربة خاصة داخل عالم بوتانيكا.' ),
+        'Découvrez les textures, les actifs et les rituels de la collection dans un cadre confidentiel pensé pour une expérience sensorielle complète.' => array( 'en' => 'Discover the collection’s textures, actives and rituals in an intimate setting designed for a complete sensorial experience.', 'es' => 'Descubre las texturas, los activos y los rituales de la colección en un entorno confidencial pensado para una experiencia sensorial completa.', 'ar' => 'اكتشف قوام المجموعة ومكوناتها وطقوسها في إطار خاص مصمم لتجربة حسية متكاملة.' ),
+        'Nouvelle collection' => array( 'en' => 'New collection', 'es' => 'Nueva colección', 'ar' => 'مجموعة جديدة' ),
+        'Édition Automne 2026' => array( 'en' => 'Autumn 2026 Edition', 'es' => 'Edición Otoño 2026', 'ar' => 'إصدار خريف 2026' ),
+        'Une routine botanique premium inspirée des actifs naturels les plus précieux.' => array( 'en' => 'A premium botanical routine inspired by the most precious natural active ingredients.', 'es' => 'Una rutina botánica premium inspirada en los activos naturales más preciados.', 'ar' => 'روتين نباتي فاخر مستوحى من أثمن المكونات الطبيعية الفعالة.' ),
+        '15 Octobre 2026' => array( 'en' => '15 October 2026', 'es' => '15 de octubre de 2026', 'ar' => '15 أكتوبر 2026' ),
+        'Paris & en ligne' => array( 'en' => 'Paris & online', 'es' => 'París y online', 'ar' => 'باريس وعبر الإنترنت' ),
+        'Nouveau' => array( 'en' => 'New', 'es' => 'Nuevo', 'ar' => 'جديد' ),
+        'Edition limitée' => array( 'en' => 'Limited edition', 'es' => 'Edición limitada', 'ar' => 'إصدار محدود' ),
+        'Édition limitée' => array( 'en' => 'Limited edition', 'es' => 'Edición limitada', 'ar' => 'إصدار محدود' ),
+        'Crème Hydratante Botanica' => array( 'en' => 'Botanica Moisturising Cream', 'es' => 'Crema Hidratante Botanica', 'ar' => 'كريم بوتانيكا المرطب' ),
+        'Crème Hydratante Botanica | Soin naturel Cosm’Éthique' => array( 'en' => 'Botanica Moisturising Cream | Natural care Cosm’Éthique', 'es' => 'Crema Hidratante Botanica | Cuidado natural Cosm’Éthique', 'ar' => 'كريم بوتانيكا المرطب | عناية طبيعية من كوزم إيثيك' ),
+        'Crème Hydratante Botanica : soin naturel premium Cosm’Éthique pour une routine collection botanica, sensorielle, élégante et responsable.' => array( 'en' => 'Botanica Moisturising Cream: premium natural Cosm’Éthique care for a sensorial, elegant and responsible Botanica routine.', 'es' => 'Crema Hidratante Botanica: cuidado natural premium Cosm’Éthique para una rutina Botanica sensorial, elegante y responsable.', 'ar' => 'كريم بوتانيكا المرطب: عناية طبيعية فاخرة من كوزم إيثيك لروتين بوتانيكا حسي وأنيق ومسؤول.' ),
+        'Crème Hydratante Botanica Cosm’Éthique - image produit principale' => array( 'en' => 'Botanica Moisturising Cream Cosm’Éthique - main product image', 'es' => 'Crema Hidratante Botanica Cosm’Éthique - imagen principal del producto', 'ar' => 'كريم بوتانيكا المرطب كوزم إيثيك - صورة المنتج الرئيسية' ),
+        'Sérum Botanica' => array( 'en' => 'Botanica Serum', 'es' => 'Sérum Botanica', 'ar' => 'سيروم بوتانيكا' ),
+        'Huile Botanica' => array( 'en' => 'Botanica Oil', 'es' => 'Aceite Botanica', 'ar' => 'زيت بوتانيكا' ),
+        'Masque Botanica' => array( 'en' => 'Botanica Mask', 'es' => 'Mascarilla Botanica', 'ar' => 'قناع بوتانيكا' ),
+        'Baume Botanica' => array( 'en' => 'Botanica Balm', 'es' => 'Bálsamo Botanica', 'ar' => 'بلسم بوتانيكا' ),
+        'Coffret Botanica' => array( 'en' => 'Botanica Set', 'es' => 'Cofre Botanica', 'ar' => 'مجموعة بوتانيكا' ),
+        'Une crème fondante aux actifs botaniques pour hydrater, lisser et illuminer la peau.' => array( 'en' => 'A melting cream with botanical actives to hydrate, smooth and illuminate the skin.', 'es' => 'Una crema fundente con activos botánicos para hidratar, alisar e iluminar la piel.', 'ar' => 'كريم ناعم بمكونات نباتية فعالة لترطيب البشرة وتنعيمها وإضاءتها.' ),
+        'Sauge, camomille, acide hyaluronique végétal, vitamine E.' => array( 'en' => 'Sage, chamomile, botanical hyaluronic acid, vitamin E.', 'es' => 'Salvia, manzanilla, ácido hialurónico vegetal, vitamina E.', 'ar' => 'المريمية، البابونج، حمض الهيالورونيك النباتي، فيتامين E.' ),
+        'Hydratation longue durée, confort immédiat, éclat naturel.' => array( 'en' => 'Long-lasting hydration, immediate comfort, natural radiance.', 'es' => 'Hidratación duradera, confort inmediato, luminosidad natural.', 'ar' => 'ترطيب طويل الأمد، راحة فورية، إشراقة طبيعية.' ),
+        'Appliquer matin et soir sur peau propre, en massant délicatement le visage et le cou.' => array( 'en' => 'Apply morning and evening to clean skin, gently massaging face and neck.', 'es' => 'Aplicar mañana y noche sobre la piel limpia, masajeando suavemente rostro y cuello.', 'ar' => 'يطبق صباحاً ومساءً على بشرة نظيفة مع تدليك الوجه والرقبة بلطف.' ),
+        'Un sérum concentré pour réveiller l’éclat et renforcer la barrière cutanée.' => array( 'en' => 'A concentrated serum to revive radiance and strengthen the skin barrier.', 'es' => 'Un sérum concentrado para despertar la luminosidad y reforzar la barrera cutánea.', 'ar' => 'سيروم مركز لإيقاظ الإشراقة وتعزيز حاجز البشرة.' ),
+        'Extrait de sauge, niacinamide, aloe vera, rose botanique.' => array( 'en' => 'Sage extract, niacinamide, aloe vera, botanical rose.', 'es' => 'Extracto de salvia, niacinamida, aloe vera, rosa botánica.', 'ar' => 'مستخلص المريمية، النياسيناميد، الألوفيرا، الورد النباتي.' ),
+        'Éclat, hydratation, grain de peau plus lisse.' => array( 'en' => 'Radiance, hydration and smoother skin texture.', 'es' => 'Luminosidad, hidratación y textura de piel más lisa.', 'ar' => 'إشراقة وترطيب وملمس بشرة أنعم.' ),
+        'Déposer quelques gouttes avant la crème, matin ou soir.' => array( 'en' => 'Apply a few drops before cream, morning or evening.', 'es' => 'Aplicar unas gotas antes de la crema, por la mañana o por la noche.', 'ar' => 'توضع بضع قطرات قبل الكريم صباحاً أو مساءً.' ),
+        'Une huile sèche satinée qui nourrit la peau sans fini gras.' => array( 'en' => 'A satiny dry oil that nourishes the skin without a greasy finish.', 'es' => 'Un aceite seco satinado que nutre la piel sin acabado graso.', 'ar' => 'زيت جاف ساتاني يغذي البشرة دون ملمس دهني.' ),
+        'Huile de jojoba, amande douce, vitamine E, fleurs séchées.' => array( 'en' => 'Jojoba oil, sweet almond, vitamin E, dried flowers.', 'es' => 'Aceite de jojoba, almendra dulce, vitamina E, flores secas.', 'ar' => 'زيت الجوجوبا، اللوز الحلو، فيتامين E، أزهار مجففة.' ),
+        'Nutrition, souplesse, toucher velours.' => array( 'en' => 'Nutrition, suppleness and a velvety touch.', 'es' => 'Nutrición, flexibilidad y tacto aterciopelado.', 'ar' => 'تغذية ومرونة ولمسة مخملية.' ),
+        'Chauffer quelques gouttes dans les mains puis masser le visage, le cou ou le corps.' => array( 'en' => 'Warm a few drops in your hands, then massage face, neck or body.', 'es' => 'Calentar unas gotas en las manos y masajear rostro, cuello o cuerpo.', 'ar' => 'دفئ بضع قطرات بين اليدين ثم دلك الوجه أو الرقبة أو الجسم.' ),
+        'Un masque crème sensoriel pour repulper et apaiser les peaux en quête de lumière.' => array( 'en' => 'A sensorial cream mask to plump and soothe skin in search of radiance.', 'es' => 'Una mascarilla crema sensorial para rellenar y calmar las pieles que buscan luminosidad.', 'ar' => 'قناع كريمي حسي يمنح الامتلاء والتهدئة للبشرة الباحثة عن الإشراق.' ),
+        'Camomille, calendula, argile blanche, complexe floral.' => array( 'en' => 'Chamomile, calendula, white clay, floral complex.', 'es' => 'Manzanilla, caléndula, arcilla blanca, complejo floral.', 'ar' => 'البابونج، الآذريون، الطين الأبيض، مركب زهري.' ),
+        'Peau apaisée, texture affinée, éclat ravivé.' => array( 'en' => 'Soothed skin, refined texture, revived radiance.', 'es' => 'Piel calmada, textura afinada, luminosidad reavivada.', 'ar' => 'بشرة مهدأة، ملمس مصقول، إشراقة متجددة.' ),
+        'Laisser poser dix minutes une à deux fois par semaine, puis rincer.' => array( 'en' => 'Leave on for ten minutes once or twice a week, then rinse.', 'es' => 'Dejar actuar diez minutos una o dos veces por semana y aclarar.', 'ar' => 'يترك عشر دقائق مرة أو مرتين أسبوعياً ثم يشطف.' ),
+        'Un baume enveloppant pour nourrir intensément les zones sèches.' => array( 'en' => 'An enveloping balm to intensely nourish dry areas.', 'es' => 'Un bálsamo envolvente para nutrir intensamente las zonas secas.', 'ar' => 'بلسم غني لتغذية المناطق الجافة بعمق.' ),
+        'Karité, beurre de cacao, huile d’amande douce, sauge.' => array( 'en' => 'Shea butter, cocoa butter, sweet almond oil, sage.', 'es' => 'Karité, manteca de cacao, aceite de almendra dulce, salvia.', 'ar' => 'زبدة الشيا، زبدة الكاكاو، زيت اللوز الحلو، المريمية.' ),
+        'Réconfort, nutrition, protection contre le dessèchement.' => array( 'en' => 'Comfort, nutrition and protection against dryness.', 'es' => 'Confort, nutrición y protección contra la sequedad.', 'ar' => 'راحة وتغذية وحماية من الجفاف.' ),
+        'Appliquer localement sur les zones sèches ou en soin de nuit.' => array( 'en' => 'Apply locally to dry areas or as an overnight treatment.', 'es' => 'Aplicar localmente en las zonas secas o como cuidado de noche.', 'ar' => 'يطبق موضعياً على المناطق الجافة أو كعناية ليلية.' ),
+        'La routine complète Botanica réunie dans un coffret premium en édition limitée.' => array( 'en' => 'The complete Botanica routine gathered in a premium limited-edition set.', 'es' => 'La rutina completa Botanica reunida en un cofre premium de edición limitada.', 'ar' => 'روتين بوتانيكا الكامل في مجموعة فاخرة بإصدار محدود.' ),
+        'Crème, sérum, huile, masque et baume Botanica.' => array( 'en' => 'Botanica cream, serum, oil, mask and balm.', 'es' => 'Crema, sérum, aceite, mascarilla y bálsamo Botanica.', 'ar' => 'كريم وسيروم وزيت وقناع وبلسم بوتانيكا.' ),
+        'Routine complète, rituel sensoriel, avantage coffret.' => array( 'en' => 'Complete routine, sensorial ritual, set advantage.', 'es' => 'Rutina completa, ritual sensorial, ventaja del cofre.', 'ar' => 'روتين كامل، طقس حسي، ميزة المجموعة.' ),
+        'Suivre le rituel Botanica complet : sérum, crème, huile et masque hebdomadaire.' => array( 'en' => 'Follow the complete Botanica ritual: serum, cream, oil and weekly mask.', 'es' => 'Seguir el ritual Botanica completo: sérum, crema, aceite y mascarilla semanal.', 'ar' => 'اتبع طقس بوتانيكا الكامل: السيروم، الكريم، الزيت والقناع الأسبوعي.' ),
+        'pot fermé' => array( 'en' => 'closed jar', 'es' => 'tarro cerrado', 'ar' => 'عبوة مغلقة' ),
+        'pot ouvert' => array( 'en' => 'open jar', 'es' => 'tarro abierto', 'ar' => 'عبوة مفتوحة' ),
+        'vue trois-quarts' => array( 'en' => 'three-quarter view', 'es' => 'vista tres cuartos', 'ar' => 'منظر بزاوية ثلاثة أرباع' ),
+        'sérum de face' => array( 'en' => 'front serum', 'es' => 'sérum frontal', 'ar' => 'السيروم من الأمام' ),
+        'pipette ouverte' => array( 'en' => 'open pipette', 'es' => 'pipeta abierta', 'ar' => 'ماصة مفتوحة' ),
+        'gouttes sérum' => array( 'en' => 'serum drops', 'es' => 'gotas de sérum', 'ar' => 'قطرات السيروم' ),
+        'huile de face' => array( 'en' => 'front oil', 'es' => 'aceite frontal', 'ar' => 'الزيت من الأمام' ),
+        'pipette huile' => array( 'en' => 'oil pipette', 'es' => 'pipeta de aceite', 'ar' => 'ماصة الزيت' ),
+        'huile en utilisation' => array( 'en' => 'oil in use', 'es' => 'aceite en uso', 'ar' => 'الزيت أثناء الاستخدام' ),
+        'masque fermé' => array( 'en' => 'closed mask jar', 'es' => 'mascarilla cerrada', 'ar' => 'قناع مغلق' ),
+        'masque ouvert' => array( 'en' => 'open mask jar', 'es' => 'mascarilla abierta', 'ar' => 'قناع مفتوح' ),
+        'baume fermé' => array( 'en' => 'closed balm jar', 'es' => 'bálsamo cerrado', 'ar' => 'بلسم مغلق' ),
+        'baume ouvert' => array( 'en' => 'open balm jar', 'es' => 'bálsamo abierto', 'ar' => 'بلسم مفتوح' ),
+        'coffret fermé' => array( 'en' => 'closed set', 'es' => 'cofre cerrado', 'ar' => 'مجموعة مغلقة' ),
+        'coffret ouvert' => array( 'en' => 'open set', 'es' => 'cofre abierto', 'ar' => 'مجموعة مفتوحة' ),
+        'lifestyle coffret' => array( 'en' => 'set lifestyle', 'es' => 'lifestyle cofre', 'ar' => 'مشهد المجموعة' ),
+        'vue produit' => array( 'en' => 'product view', 'es' => 'vista producto', 'ar' => 'منظر المنتج' ),
+        '%s - pot fermé' => array( 'en' => '%s - closed jar', 'es' => '%s - tarro cerrado', 'ar' => '%s - عبوة مغلقة' ),
+        '%s - pot ouvert' => array( 'en' => '%s - open jar', 'es' => '%s - tarro abierto', 'ar' => '%s - عبوة مفتوحة' ),
+        '%s - vue trois-quarts du pot' => array( 'en' => '%s - three-quarter jar view', 'es' => '%s - vista tres cuartos del tarro', 'ar' => '%s - منظر العبوة بزاوية ثلاثة أرباع' ),
+        '%s - flacon de face' => array( 'en' => '%s - front bottle', 'es' => '%s - frasco frontal', 'ar' => '%s - العبوة من الأمام' ),
+        '%s - pipette ouverte' => array( 'en' => '%s - open pipette', 'es' => '%s - pipeta abierta', 'ar' => '%s - ماصة مفتوحة' ),
+        '%s - gouttes en mise en scène' => array( 'en' => '%s - drops in premium setting', 'es' => '%s - gotas en escena premium', 'ar' => '%s - قطرات في مشهد فاخر' ),
+        '%s - huile en utilisation' => array( 'en' => '%s - oil in use', 'es' => '%s - aceite en uso', 'ar' => '%s - زيت أثناء الاستخدام' ),
+        '%s - détail du pot' => array( 'en' => '%s - jar detail', 'es' => '%s - detalle del tarro', 'ar' => '%s - تفاصيل العبوة' ),
+        '%s - coffret fermé' => array( 'en' => '%s - closed set', 'es' => '%s - cofre cerrado', 'ar' => '%s - مجموعة مغلقة' ),
+        '%s - coffret ouvert' => array( 'en' => '%s - open set', 'es' => '%s - cofre abierto', 'ar' => '%s - مجموعة مفتوحة' ),
+        '%s - mise en scène premium' => array( 'en' => '%s - premium setting', 'es' => '%s - puesta en escena premium', 'ar' => '%s - مشهد فاخر' ),
+        'Galerie de %s' => array( 'en' => '%s gallery', 'es' => 'Galería de %s', 'ar' => 'معرض %s' ),
+        'Afficher %1$s de %2$s' => array( 'en' => 'Show %1$s for %2$s', 'es' => 'Mostrar %1$s de %2$s', 'ar' => 'عرض %1$s لـ %2$s' ),
+        'Ingrédients clés' => array( 'en' => 'Key ingredients', 'es' => 'Ingredientes clave', 'ar' => 'المكونات الرئيسية' ),
+        'Bénéfices' => array( 'en' => 'Benefits', 'es' => 'Beneficios', 'ar' => 'الفوائد' ),
+        'Réduire la quantité' => array( 'en' => 'Decrease quantity', 'es' => 'Disminuir cantidad', 'ar' => 'تقليل الكمية' ),
+        'Quantité du produit' => array( 'en' => 'Product quantity', 'es' => 'Cantidad del producto', 'ar' => 'كمية المنتج' ),
+        'Informations événement Botanica' => array( 'en' => 'Botanica event information', 'es' => 'Información del evento Botanica', 'ar' => 'معلومات حدث بوتانيكا' ),
+        'Accès privilégié' => array( 'en' => 'Privileged access', 'es' => 'Acceso privilegiado', 'ar' => 'وصول مميز' ),
+        'Un environnement exigeant, humain et créatif.' => array( 'en' => 'A demanding, human and creative environment.', 'es' => 'Un entorno exigente, humano y creativo.', 'ar' => 'بيئة طموحة وإنسانية وإبداعية.' ),
+        'Esprit d’équipe' => array( 'en' => 'Team spirit', 'es' => 'Espíritu de equipo', 'ar' => 'روح الفريق' ),
+        'Évolution de carrière' => array( 'en' => 'Career growth', 'es' => 'Evolución profesional', 'ar' => 'تطور مهني' ),
+        'Impact environnemental' => array( 'en' => 'Environmental impact', 'es' => 'Impacto ambiental', 'ar' => 'أثر بيئي' ),
+        'Formation continue' => array( 'en' => 'Continuous training', 'es' => 'Formación continua', 'ar' => 'تدريب مستمر' ),
+        'Une maison qui avance avec sens.' => array( 'en' => 'A house moving forward with purpose.', 'es' => 'Una maison que avanza con sentido.', 'ar' => 'دار تتقدم بمعنى واضح.' ),
+        'Exigence' => array( 'en' => 'High standards', 'es' => 'Exigencia', 'ar' => 'معايير عالية' ),
+        'Naturalité' => array( 'en' => 'Naturalness', 'es' => 'Naturalidad', 'ar' => 'طبيعية' ),
+        'Écoute' => array( 'en' => 'Listening', 'es' => 'Escucha', 'ar' => 'الإصغاء' ),
+        'Des expertises au service d’une beauté plus consciente.' => array( 'en' => 'Expertise serving more conscious beauty.', 'es' => 'Expertise al servicio de una belleza más consciente.', 'ar' => 'خبرات في خدمة جمال أكثر وعياً.' ),
+        'Grandir avec méthode, confiance et élégance.' => array( 'en' => 'Growing with method, confidence and elegance.', 'es' => 'Crecer con método, confianza y elegancia.', 'ar' => 'النمو بمنهجية وثقة وأناقة.' ),
+        'Celles et ceux qui font vivre la maison.' => array( 'en' => 'The people who bring the house to life.', 'es' => 'Quienes dan vida a la maison.', 'ar' => 'الأشخاص الذين يمنحون الدار حياتها.' ),
+        'Choisissez le poste qui vous ressemble.' => array( 'en' => 'Choose the role that matches you.', 'es' => 'Elige el puesto que se parece a ti.', 'ar' => 'اختر الدور الذي يناسبك.' ),
+        'Vos questions avant de postuler.' => array( 'en' => 'Your questions before applying.', 'es' => 'Tus preguntas antes de postular.', 'ar' => 'أسئلتك قبل التقديم.' ),
+        'Un parcours simple, étape par étape.' => array( 'en' => 'A simple journey, step by step.', 'es' => 'Un recorrido sencillo, paso a paso.', 'ar' => 'مسار بسيط، خطوة بخطوة.' ),
+        'Vérification de votre projet' => array( 'en' => 'Project review', 'es' => 'Verificación de tu proyecto', 'ar' => 'مراجعة مشروعك' ),
+        'Analyse de la zone souhaitée' => array( 'en' => 'Desired area analysis', 'es' => 'Análisis de la zona deseada', 'ar' => 'تحليل المنطقة المطلوبة' ),
+        'Échange avec l’équipe Franchise' => array( 'en' => 'Discussion with the Franchise team', 'es' => 'Intercambio con el equipo de Franquicias', 'ar' => 'نقاش مع فريق الامتياز' ),
+        'Étude financière' => array( 'en' => 'Financial review', 'es' => 'Estudio financiero', 'ar' => 'دراسة مالية' ),
+        'Dépôt de candidature' => array( 'en' => 'Application submission', 'es' => 'Presentación de candidatura', 'ar' => 'تقديم الطلب' ),
+        'Les bases d’un projet solide.' => array( 'en' => 'The foundations of a strong project.', 'es' => 'Las bases de un proyecto sólido.', 'ar' => 'أسس مشروع قوي.' ),
+        'Projet local solide' => array( 'en' => 'Strong local project', 'es' => 'Proyecto local sólido', 'ar' => 'مشروع محلي قوي' ),
+        'Apport maîtrisé' => array( 'en' => 'Controlled contribution', 'es' => 'Aportación controlada', 'ar' => 'مساهمة مالية مدروسة' ),
+        'Sens du conseil' => array( 'en' => 'Sense of advice', 'es' => 'Sentido del asesoramiento', 'ar' => 'حس الاستشارة' ),
+        'Engagement durable' => array( 'en' => 'Long-term commitment', 'es' => 'Compromiso duradero', 'ar' => 'التزام مستدام' ),
+        'Rejoindre une marque pensée pour durer.' => array( 'en' => 'Join a brand designed to last.', 'es' => 'Unirse a una marca pensada para durar.', 'ar' => 'انضم إلى علامة مصممة للاستمرار.' ),
+        'Concept boutique premium' => array( 'en' => 'Premium store concept', 'es' => 'Concepto de tienda premium', 'ar' => 'مفهوم متجر فاخر' ),
+        'Formation aux soins et au conseil' => array( 'en' => 'Care and advisory training', 'es' => 'Formación en cuidados y asesoramiento', 'ar' => 'تدريب على العناية والاستشارة' ),
+        'Accompagnement merchandising' => array( 'en' => 'Merchandising support', 'es' => 'Acompañamiento merchandising', 'ar' => 'دعم العرض التجاري' ),
+        'Supports marketing prêts à l’emploi' => array( 'en' => 'Ready-to-use marketing materials', 'es' => 'Soportes de marketing listos para usar', 'ar' => 'مواد تسويقية جاهزة للاستخدام' ),
+        'Catalogue naturel cohérent' => array( 'en' => 'Coherent natural catalogue', 'es' => 'Catálogo natural coherente', 'ar' => 'كتالوج طبيعي متناسق' ),
+        'Suivi d’ouverture structuré' => array( 'en' => 'Structured opening follow-up', 'es' => 'Seguimiento de apertura estructurado', 'ar' => 'متابعة افتتاح منظمة' ),
+        'Ils construisent le réseau avec nous.' => array( 'en' => 'They are building the network with us.', 'es' => 'Construyen la red con nosotros.', 'ar' => 'يبنون الشبكة معنا.' ),
+        'Les réponses avant de vous lancer.' => array( 'en' => 'Answers before you get started.', 'es' => 'Respuestas antes de empezar.', 'ar' => 'إجابات قبل أن تبدأ.' ),
+        'Commencez par vérifier votre éligibilité.' => array( 'en' => 'Start by checking your eligibility.', 'es' => 'Empieza por comprobar tu elegibilidad.', 'ar' => 'ابدأ بالتحقق من أهليتك.' ),
     );
 }
 
@@ -3662,6 +4001,111 @@ function theme_perso_multilingual_ngettext( $translation ) {
 add_filter( 'ngettext', 'theme_perso_multilingual_ngettext', 20, 5 );
 add_filter( 'ngettext_with_context', 'theme_perso_multilingual_ngettext', 20, 6 );
 
+function theme_perso_multilingual_seo_text( $value ) {
+    if ( ! theme_perso_multilingual_is_active() || ! is_string( $value ) || '' === $value ) {
+        return $value;
+    }
+
+    return theme_perso_multilingual_translate( $value );
+}
+add_filter( 'wpseo_title', 'theme_perso_multilingual_seo_text', 20 );
+add_filter( 'wpseo_metadesc', 'theme_perso_multilingual_seo_text', 20 );
+add_filter( 'wpseo_opengraph_title', 'theme_perso_multilingual_seo_text', 20 );
+add_filter( 'wpseo_opengraph_desc', 'theme_perso_multilingual_seo_text', 20 );
+add_filter( 'wpseo_twitter_title', 'theme_perso_multilingual_seo_text', 20 );
+add_filter( 'wpseo_twitter_description', 'theme_perso_multilingual_seo_text', 20 );
+
+function theme_perso_multilingual_translate_schema_value( $value ) {
+    if ( ! theme_perso_multilingual_is_active() ) {
+        return $value;
+    }
+
+    if ( is_string( $value ) ) {
+        return theme_perso_multilingual_translate( $value );
+    }
+
+    if ( is_array( $value ) ) {
+        foreach ( $value as $key => $item ) {
+            $value[ $key ] = theme_perso_multilingual_translate_schema_value( $item );
+        }
+    }
+
+    return $value;
+}
+add_filter( 'wpseo_schema_graph', 'theme_perso_multilingual_translate_schema_value', 20 );
+
+function theme_perso_multilingual_translate_text_node( $text, $replacements ) {
+    if ( '' === trim( $text ) ) {
+        return $text;
+    }
+
+    if ( preg_match( '/^(\s*)(.*?)(\s*)$/us', $text, $matches ) ) {
+        $content = $matches[2];
+
+        if ( isset( $replacements[ $content ] ) ) {
+            return $matches[1] . $replacements[ $content ] . $matches[3];
+        }
+
+        $decoded_content = html_entity_decode( $content, ENT_QUOTES | ENT_HTML5, 'UTF-8' );
+
+        foreach ( $replacements as $source => $translation ) {
+            if ( $decoded_content === html_entity_decode( $source, ENT_QUOTES | ENT_HTML5, 'UTF-8' ) ) {
+                return $matches[1] . $translation . $matches[3];
+            }
+        }
+    }
+
+    foreach ( $replacements as $source => $translation ) {
+        $decoded_source = html_entity_decode( $source, ENT_QUOTES | ENT_HTML5, 'UTF-8' );
+        $source_length  = function_exists( 'mb_strlen' ) ? mb_strlen( $decoded_source, 'UTF-8' ) : strlen( $decoded_source );
+
+        if ( $source_length < 4 ) {
+            continue;
+        }
+
+        $patterns = array( $source );
+
+        if ( $decoded_source !== $source ) {
+            $patterns[] = $decoded_source;
+        }
+
+        foreach ( array_unique( $patterns ) as $pattern_source ) {
+            $pattern = '/(?<![\p{L}\p{N}_])' . preg_quote( $pattern_source, '/' ) . '(?![\p{L}\p{N}_])/u';
+            $text    = preg_replace( $pattern, $translation, $text );
+        }
+    }
+
+    return $text;
+}
+
+function theme_perso_multilingual_translate_attribute_value( $value, $replacements ) {
+    if ( isset( $replacements[ $value ] ) ) {
+        return $replacements[ $value ];
+    }
+
+    $decoded_value = html_entity_decode( $value, ENT_QUOTES | ENT_HTML5, 'UTF-8' );
+
+    foreach ( $replacements as $source => $translation ) {
+        if ( $decoded_value === html_entity_decode( $source, ENT_QUOTES | ENT_HTML5, 'UTF-8' ) ) {
+            return esc_attr( $translation );
+        }
+    }
+
+    return $value;
+}
+
+function theme_perso_multilingual_translate_tag_attributes( $tag, $replacements ) {
+    return preg_replace_callback(
+        '/\s(alt|title|aria-label|placeholder|value|data-compatible-text|data-adjust-text|data-event-product-title|data-event-product-description|data-event-product-ingredients|data-event-product-benefits|data-event-product-usage|data-event-product-badge|data-event-product-image-alt|data-event-thumb-alt)=(["\'])(.*?)\2/isu',
+        static function ( $matches ) use ( $replacements ) {
+            $translated = theme_perso_multilingual_translate_attribute_value( $matches[3], $replacements );
+
+            return ' ' . $matches[1] . '=' . $matches[2] . $translated . $matches[2];
+        },
+        $tag
+    );
+}
+
 function theme_perso_multilingual_translate_html( $html ) {
     if ( ! theme_perso_multilingual_is_active() || '' === $html ) {
         return $html;
@@ -3695,7 +4139,26 @@ function theme_perso_multilingual_translate_html( $html ) {
         }
     );
 
-    return strtr( $html, $replacements );
+    $chunks = preg_split( '/(<(?:script|style)\b[^>]*>.*?<\/(?:script|style)>|<[^>]+>)/is', $html, -1, PREG_SPLIT_DELIM_CAPTURE );
+
+    if ( ! is_array( $chunks ) ) {
+        return theme_perso_multilingual_translate_text_node( $html, $replacements );
+    }
+
+    foreach ( $chunks as $index => $chunk ) {
+        if ( preg_match( '/^<(?:script|style)\b/i', $chunk ) ) {
+            continue;
+        }
+
+        if ( isset( $chunk[0] ) && '<' === $chunk[0] ) {
+            $chunks[ $index ] = theme_perso_multilingual_translate_tag_attributes( $chunk, $replacements );
+            continue;
+        }
+
+        $chunks[ $index ] = theme_perso_multilingual_translate_text_node( $chunk, $replacements );
+    }
+
+    return implode( '', $chunks );
 }
 
 function theme_perso_multilingual_start_buffer() {
