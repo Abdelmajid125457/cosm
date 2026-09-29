@@ -31,21 +31,21 @@ $timeline = array(
     ),
     array(
         'period' => __( 'Semaine 3', 'theme-perso' ),
-        'title'  => __( 'Immersion boutique pilote', 'theme-perso' ),
+        'title'  => __( 'Immersion boutique', 'theme-perso' ),
         'text'   => __( 'Merchandising, gestion de stock, encaissement, animation commerciale, relation client, avis et réclamations en boutique.', 'theme-perso' ),
-        'hours'  => __( '28 h', 'theme-perso' ),
+        'hours'  => __( '24 h', 'theme-perso' ),
     ),
     array(
         'period' => __( 'Semaine 4', 'theme-perso' ),
-        'title'  => __( 'Digital, performance et certification', 'theme-perso' ),
-        'text'   => __( 'WooCommerce côté franchise, CRM, newsletters, Google Business Profile, KPI, e-réputation, gestion de crise et soutenance finale.', 'theme-perso' ),
-        'hours'  => __( '18 h', 'theme-perso' ),
+        'title'  => __( 'Digital, KPI et certification', 'theme-perso' ),
+        'text'   => __( 'Utilisation des outils digitaux, suivi des indicateurs, e-réputation, cas pratiques, quiz final et certification interne.', 'theme-perso' ),
+        'hours'  => __( '22 h', 'theme-perso' ),
     ),
     array(
         'period' => __( 'Post-ouverture', 'theme-perso' ),
-        'title'  => __( 'Coaching opérationnel pendant 3 mois', 'theme-perso' ),
-        'text'   => __( 'Points hebdomadaires le premier mois, rendez-vous bi-mensuels ensuite, suivi KPI, coaching vente et contrôle qualité réseau.', 'theme-perso' ),
-        'hours'  => __( '12 h', 'theme-perso' ),
+        'title'  => __( 'Coaching et accompagnement opérationnel', 'theme-perso' ),
+        'text'   => __( 'Suivi pendant 3 mois, analyse des KPI, coaching commercial, contrôle qualité et accompagnement réseau.', 'theme-perso' ),
+        'hours'  => __( '3 mois', 'theme-perso' ),
     ),
 );
 
@@ -113,10 +113,12 @@ $faq = array(
         <div class="franchise-training-timeline-list">
             <?php foreach ( $timeline as $step ) : ?>
                 <article class="franchise-flow-card franchise-training-step motion-reveal">
-                    <span><?php echo esc_html( $step['period'] ); ?></span>
-                    <h3><?php echo esc_html( $step['title'] ); ?></h3>
-                    <p><?php echo esc_html( $step['text'] ); ?></p>
-                    <small><?php echo esc_html( $step['hours'] ); ?></small>
+                    <span class="franchise-training-step__period"><?php echo esc_html( $step['period'] ); ?></span>
+                    <div class="franchise-training-step__content">
+                        <h3><?php echo esc_html( $step['title'] ); ?></h3>
+                        <p><?php echo esc_html( $step['text'] ); ?></p>
+                    </div>
+                    <small class="franchise-training-step__duration"><?php echo esc_html( $step['hours'] ); ?></small>
                 </article>
             <?php endforeach; ?>
         </div>
