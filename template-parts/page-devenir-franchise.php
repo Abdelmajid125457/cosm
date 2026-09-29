@@ -1,5 +1,6 @@
 <?php
 $franchise_eligibility_url = home_url( '/franchise/eligibilite/' );
+$franchise_training_url    = home_url( '/franchise/formation/' );
 $franchise_form_notice     = function_exists( 'theme_perso_get_franchise_information_notice' ) ? theme_perso_get_franchise_information_notice() : null;
 ?>
 <section class="franchise-network" aria-labelledby="franchise-network-title">
@@ -53,6 +54,43 @@ $franchise_form_notice     = function_exists( 'theme_perso_get_franchise_informa
                 <p class="franchise-eligibility-note"><span aria-hidden="true">✓</span> Évaluez gratuitement votre projet en moins de 2 minutes avant de déposer votre candidature.</p>
             </div>
         </div>
+    </div>
+</section>
+
+<section class="franchise-training-preview" aria-labelledby="franchise-training-preview-title">
+    <div class="franchise-training-preview__intro motion-reveal">
+        <p class="eyebrow">Formation & accompagnement</p>
+        <h2 id="franchise-training-preview-title">Un parcours structuré pour ouvrir votre boutique avec méthode.</h2>
+        <p>Chaque nouveau franchisé suit une formation hybride mêlant e-learning, classes virtuelles, immersion en boutique pilote, ateliers pratiques et accompagnement post-ouverture. L’objectif est simple : garantir une expérience client homogène, premium et fidèle aux valeurs COSM’ÉTHIQUE dans chaque ville.</p>
+        <div class="franchise-cta-actions">
+            <a class="button button-primary" href="<?php echo esc_url( $franchise_training_url ); ?>">Découvrir le parcours de formation</a>
+            <a class="button franchise-eligibility-button" href="<?php echo esc_url( $franchise_eligibility_url ); ?>">
+                <span aria-hidden="true">✓</span>
+                Vérifier mon éligibilité
+            </a>
+        </div>
+    </div>
+    <div class="franchise-training-preview__grid">
+        <article class="franchise-training-preview__card motion-reveal">
+            <span aria-hidden="true">01</span>
+            <h3>4 semaines de formation</h3>
+            <p>Deux semaines à distance, une semaine en boutique pilote et une semaine dédiée au digital, aux KPI et à la certification.</p>
+        </article>
+        <article class="franchise-training-preview__card motion-reveal">
+            <span aria-hidden="true">02</span>
+            <h3>Immersion boutique</h3>
+            <p>Mise en situation réelle : diagnostic beauté, conseil personnalisé, merchandising, encaissement et relation client.</p>
+        </article>
+        <article class="franchise-training-preview__card motion-reveal">
+            <span aria-hidden="true">03</span>
+            <h3>Certification interne</h3>
+            <p>Quiz, étude de cas, simulation de vente et validation finale pour devenir franchisé COSM’ÉTHIQUE certifié.</p>
+        </article>
+        <article class="franchise-training-preview__card motion-reveal">
+            <span aria-hidden="true">04</span>
+            <h3>3 mois de coaching</h3>
+            <p>Suivi hebdomadaire au lancement, coaching vente, contrôle qualité, lecture des KPI et support opérationnel réseau.</p>
+        </article>
     </div>
 </section>
 

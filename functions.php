@@ -1390,6 +1390,8 @@ function theme_perso_seo_meta_description() {
         $description = "Rejoignez l’aventure Cosm’Éthique: découvrez nos métiers, nos valeurs, nos offres et envoyez votre candidature spontanée.";
     } elseif ( is_page( 'evenement' ) ) {
         $description = "Lancement de la Collection Botanica: une expérience immersive Cosm’Éthique entre soin naturel, innovation sensorielle et événement exclusif.";
+    } elseif ( 'franchise/formation' === $page_uri ) {
+        $description = "Formation des franchisés Cosm’Éthique : parcours hybride, immersion boutique, certification interne et accompagnement post-ouverture.";
     } elseif ( 'franchise/eligibilite' === $page_uri ) {
         $description = "Vérifiez gratuitement votre éligibilité franchise Cosm’Éthique avant de déposer votre candidature.";
     } elseif ( 'franchise/candidature' === $page_uri ) {
@@ -1424,6 +1426,9 @@ function theme_perso_sitemap_document_title( $parts ) {
     } elseif ( is_page( 'evenement' ) ) {
         $parts['title'] = 'Lancement Collection Botanica';
         $parts['site']  = 'COSM’ÉTHIQUE';
+    } elseif ( 'franchise/formation' === $page_uri ) {
+        $parts['title'] = 'Formation franchisés';
+        $parts['site']  = 'COSM’ÉTHIQUE';
     } elseif ( 'franchise/eligibilite' === $page_uri ) {
         $parts['title'] = 'Éligibilité franchise';
         $parts['site']  = 'COSM’ÉTHIQUE';
@@ -1446,6 +1451,10 @@ function theme_perso_sitemap_page_seo() {
 
     $page_uri = is_page() ? get_page_uri( get_queried_object_id() ) : '';
     $seo_pages = array(
+        'franchise/formation'  => array(
+            'name'        => 'Formation des franchisés COSM’ÉTHIQUE',
+            'description' => 'Parcours de formation hybride pour les nouveaux franchisés Cosm’Éthique : e-learning, boutique pilote, ateliers, certification et accompagnement.',
+        ),
         'franchise/eligibilite'  => array(
             'name'        => 'Éligibilité franchise COSM’ÉTHIQUE',
             'description' => 'Questionnaire d’éligibilité pour rejoindre le réseau de franchises Cosm’Éthique.',
@@ -3609,6 +3618,11 @@ function theme_perso_ensure_franchise_flow_pages() {
             'title'   => 'Éligibilité franchise',
             'excerpt' => 'Vérifiez gratuitement votre éligibilité avant de déposer votre candidature.',
             'content' => '<h2>Vérifiez votre éligibilité</h2><p>Répondez au questionnaire pour préparer votre projet franchise COSM’ÉTHIQUE.</p><p><a class="button button-primary" href="/franchise/candidature/">Déposer ma candidature</a></p>',
+        ),
+        'formation'  => array(
+            'title'   => 'Formation des franchisés',
+            'excerpt' => 'Un parcours hybride pour ouvrir, gérer et développer une boutique Cosm’Éthique avec méthode.',
+            'content' => '<h2>Formation des franchisés COSM’ÉTHIQUE</h2><p>Découvrez le parcours de formation hybride, l’immersion boutique et l’accompagnement post-ouverture.</p><p><a class="button button-primary" href="/franchise/candidature/">Déposer ma candidature</a></p>',
         ),
         'candidature' => array(
             'title'   => 'Candidature franchise',

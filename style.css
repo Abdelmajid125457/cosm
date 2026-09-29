@@ -5531,6 +5531,93 @@ button.category-card.is-active {
     font-weight: 900;
 }
 
+.franchise-training-preview {
+    display: grid;
+    grid-template-columns: minmax(0, 0.92fr) minmax(0, 1.08fr);
+    gap: clamp(28px, 5vw, 74px);
+    align-items: center;
+    width: min(100% - 48px, 1480px);
+    margin: clamp(42px, 6vw, 84px) auto;
+    padding: clamp(34px, 5vw, 76px);
+    border: 1px solid rgba(231, 236, 245, 0.95);
+    border-radius: clamp(26px, 4vw, 46px);
+    background:
+        radial-gradient(circle at 8% 12%, rgba(201, 164, 92, 0.16), transparent 28%),
+        radial-gradient(circle at 92% 88%, rgba(43, 125, 138, 0.14), transparent 26%),
+        linear-gradient(135deg, #FFFFFF 0%, #F8F4EE 100%);
+    box-shadow: 0 28px 88px rgba(13, 27, 61, 0.08);
+}
+
+.franchise-training-preview__intro {
+    display: grid;
+    gap: 18px;
+}
+
+.franchise-training-preview__intro h2 {
+    margin: 0;
+    color: var(--color-navy);
+    font-size: clamp(2.2rem, 4.5vw, 5rem);
+    line-height: 0.98;
+    letter-spacing: 0;
+}
+
+.franchise-training-preview__intro p:not(.eyebrow) {
+    max-width: 720px;
+    margin: 0;
+    color: #5D6F82;
+    font-size: clamp(1rem, 1.15vw, 1.18rem);
+    line-height: 1.78;
+}
+
+.franchise-training-preview__grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: clamp(16px, 2vw, 24px);
+}
+
+.franchise-training-preview__card {
+    min-height: 232px;
+    padding: clamp(22px, 2.6vw, 34px);
+    border: 1px solid rgba(231, 236, 245, 0.92);
+    border-radius: 28px;
+    background: rgba(255, 255, 255, 0.82);
+    box-shadow: 0 20px 58px rgba(13, 27, 61, 0.07);
+    backdrop-filter: blur(14px);
+    transition: transform 300ms ease, box-shadow 300ms ease, border-color 300ms ease;
+}
+
+.franchise-training-preview__card:hover,
+.franchise-training-preview__card:focus-within {
+    border-color: rgba(201, 164, 92, 0.44);
+    box-shadow: 0 32px 86px rgba(13, 27, 61, 0.12), 0 0 30px rgba(43, 125, 138, 0.08);
+    transform: translateY(-7px);
+}
+
+.franchise-training-preview__card span {
+    display: grid;
+    place-items: center;
+    width: 48px;
+    height: 48px;
+    margin-bottom: 18px;
+    border-radius: 999px;
+    background: var(--color-navy);
+    color: #FFFFFF;
+    font-weight: 900;
+}
+
+.franchise-training-preview__card h3 {
+    margin: 0 0 12px;
+    color: var(--color-navy);
+    font-size: clamp(1.16rem, 1.4vw, 1.45rem);
+}
+
+.franchise-training-preview__card p {
+    margin: 0;
+    color: #5D6F82;
+    font-size: 0.96rem;
+    line-height: 1.7;
+}
+
 .cosmethique-map-marker-wrap {
     background: transparent;
     border: 0;
@@ -20424,6 +20511,151 @@ select:focus,
     text-align: center;
 }
 
+.franchise-training-summary {
+    position: relative;
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 14px;
+    overflow: hidden;
+    min-height: clamp(430px, 48vw, 680px);
+    padding: clamp(18px, 3vw, 30px);
+    border: 1px solid rgba(255, 255, 255, 0.76);
+    border-radius: clamp(32px, 5vw, 68px);
+    background: rgba(255, 255, 255, 0.62);
+    box-shadow: 0 40px 110px rgba(13, 27, 61, 0.14);
+    backdrop-filter: blur(18px);
+}
+
+.franchise-training-summary::before {
+    content: "";
+    position: absolute;
+    inset: auto 10% 18% 10%;
+    height: 38%;
+    border-radius: 999px;
+    background: radial-gradient(circle, rgba(201, 164, 92, 0.25), transparent 68%);
+    filter: blur(10px);
+    pointer-events: none;
+}
+
+.franchise-training-summary img {
+    grid-column: 1 / -1;
+    width: 100%;
+    height: clamp(260px, 32vw, 440px);
+    object-fit: cover;
+    border-radius: clamp(24px, 4vw, 46px);
+    box-shadow: 0 28px 72px rgba(13, 27, 61, 0.14);
+}
+
+.franchise-training-summary div {
+    position: relative;
+    z-index: 1;
+    min-height: 128px;
+    padding: 20px;
+    border: 1px solid rgba(231, 236, 245, 0.88);
+    border-radius: 24px;
+    background: rgba(255, 255, 255, 0.86);
+}
+
+.franchise-training-summary strong {
+    display: block;
+    margin-bottom: 8px;
+    color: var(--flow-navy);
+    font-family: var(--serif);
+    font-size: clamp(1.55rem, 2.3vw, 2.5rem);
+    line-height: 1;
+}
+
+.franchise-training-summary span {
+    color: #5D6F82;
+    font-size: 0.92rem;
+    font-weight: 800;
+    line-height: 1.5;
+}
+
+.franchise-training-timeline-list {
+    display: grid;
+    gap: 18px;
+    width: min(100%, 1220px);
+    margin: 0 auto;
+}
+
+.franchise-training-step {
+    position: relative;
+    display: grid;
+    grid-template-columns: minmax(120px, 0.28fr) minmax(0, 0.72fr) auto;
+    gap: clamp(16px, 3vw, 34px);
+    align-items: center;
+    min-height: 168px;
+}
+
+.franchise-training-step::before {
+    content: "";
+    position: absolute;
+    left: clamp(28px, 4vw, 48px);
+    top: -18px;
+    bottom: -18px;
+    width: 1px;
+    background: linear-gradient(180deg, transparent, rgba(201, 164, 92, 0.58), transparent);
+}
+
+.franchise-training-step span,
+.franchise-training-step small {
+    position: relative;
+    z-index: 1;
+    display: inline-grid;
+    place-items: center;
+    min-height: 48px;
+    border-radius: 999px;
+    font-weight: 900;
+}
+
+.franchise-training-step span {
+    background: var(--flow-navy);
+    color: #FFFFFF;
+}
+
+.franchise-training-step small {
+    min-width: 74px;
+    padding: 0 16px;
+    background: #F8F4EE;
+    color: var(--flow-navy);
+}
+
+.franchise-training-step h3 {
+    margin: 0 0 10px;
+}
+
+.franchise-training-step p {
+    margin: 0;
+}
+
+.franchise-training-module-grid {
+    grid-template-columns: repeat(7, minmax(0, 1fr));
+}
+
+.franchise-training-module-grid .franchise-flow-card {
+    min-height: 240px;
+}
+
+.franchise-training-immersive {
+    background:
+        radial-gradient(circle at 86% 14%, rgba(43, 125, 138, 0.18), transparent 28%),
+        #FFFFFF;
+}
+
+.franchise-training-immersive-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 0.96fr) minmax(420px, 1.04fr);
+    gap: clamp(30px, 5vw, 78px);
+    align-items: center;
+    width: min(100%, 1480px);
+    margin: 0 auto;
+}
+
+.franchise-training-immersive .check-list {
+    margin-top: 28px;
+}
+
 .franchise-flow-final h2,
 .franchise-confirmation-panel h1 {
     color: #FFFFFF;
@@ -20515,14 +20747,21 @@ select:focus,
 
 @media (max-width: 1180px) {
     .franchise-flow-hero,
-    .franchise-flow-program {
+    .franchise-flow-program,
+    .franchise-training-preview,
+    .franchise-training-immersive-grid {
         grid-template-columns: 1fr;
     }
 
     .franchise-flow-step-grid,
     .franchise-flow-grid,
-    .franchise-flow-stats {
+    .franchise-flow-stats,
+    .franchise-training-module-grid {
         grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .franchise-training-summary {
+        min-height: auto;
     }
 }
 
@@ -20550,7 +20789,10 @@ select:focus,
     .franchise-flow-grid,
     .franchise-flow-grid--three,
     .franchise-flow-stats,
-    .franchise-form-grid {
+    .franchise-form-grid,
+    .franchise-training-preview__grid,
+    .franchise-training-summary,
+    .franchise-training-module-grid {
         grid-template-columns: 1fr;
     }
 
@@ -20558,6 +20800,39 @@ select:focus,
     .franchise-quiz,
     .franchise-application-form {
         border-radius: 24px;
+    }
+
+    .franchise-training-preview {
+        width: min(100% - 24px, 100%);
+        padding: 24px;
+        border-radius: 24px;
+    }
+
+    .franchise-training-preview__intro .franchise-cta-actions {
+        justify-content: stretch;
+    }
+
+    .franchise-training-preview__intro .button {
+        width: 100%;
+    }
+
+    .franchise-training-step {
+        grid-template-columns: 1fr;
+        gap: 12px;
+    }
+
+    .franchise-training-step::before {
+        display: none;
+    }
+
+    .franchise-training-step span,
+    .franchise-training-step small {
+        width: fit-content;
+        padding: 0 16px;
+    }
+
+    .franchise-training-summary img {
+        height: 280px;
     }
 }
 
