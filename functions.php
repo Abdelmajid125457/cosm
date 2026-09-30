@@ -1409,25 +1409,38 @@ function theme_perso_accessible_nav_menu_link_attributes( $atts, $item, $args, $
 add_filter( 'nav_menu_link_attributes', 'theme_perso_accessible_nav_menu_link_attributes', 20, 4 );
 
 function theme_perso_product_image_accessible_alt( $attr, $attachment, $size ) {
-    if ( is_admin() || ! empty( $attr['alt'] ) || ! function_exists( 'is_woocommerce' ) ) {
-        return $attr;
-    }
-
-    if ( ! ( is_woocommerce() || is_cart() || is_checkout() ) ) {
+    if ( is_admin() || ! empty( $attr['alt'] ) ) {
         return $attr;
     }
 
     $product_name = '';
     global $product;
 
-    if ( $product instanceof WC_Product ) {
+    if ( class_exists( 'WC_Product' ) && $product instanceof WC_Product ) {
         $product_name = $product->get_name();
-    } elseif ( 'product' === get_post_type() ) {
+    } elseif ( 'product' === get_post_type() || ( function_exists( 'is_product' ) && is_product() ) ) {
         $product_name = get_the_title();
     }
 
     if ( $product_name ) {
         $attr['alt'] = sprintf( __( 'Image du produit %s', 'theme-perso' ), $product_name );
+        return $attr;
+    }
+
+    $attachment_alt = trim( (string) get_post_meta( $attachment->ID, '_wp_attachment_image_alt', true ) );
+
+    if ( $attachment_alt ) {
+        $attr['alt'] = $attachment_alt;
+        return $attr;
+    }
+
+    if ( ! empty( $attachment->post_title ) ) {
+        $attr['alt'] = wp_strip_all_tags( $attachment->post_title );
+        return $attr;
+    }
+
+    if ( is_singular() ) {
+        $attr['alt'] = sprintf( __( 'Visuel de la page %s', 'theme-perso' ), get_the_title() );
     }
 
     return $attr;
@@ -1495,6 +1508,46 @@ function theme_perso_body_classes( $classes ) {
 }
 add_filter( 'body_class', 'theme_perso_body_classes' );
 
+function theme_perso_is_seo_plugin_active() {
+    return defined( 'WPSEO_VERSION' ) || defined( 'RANK_MATH_VERSION' );
+}
+
+function theme_perso_seo_site_name() {
+    return 'COSM’ÉTHIQUE';
+}
+
+function theme_perso_seo_trim_description( $description ) {
+    $description = trim( preg_replace( '/\s+/u', ' ', wp_strip_all_tags( (string) $description ) ) );
+
+    if ( '' === $description ) {
+        $description = 'Découvrez COSM’ÉTHIQUE, une maison de cosmétiques naturels premium pensée pour des routines efficaces, sensorielles et responsables.';
+    }
+
+    return wp_html_excerpt( $description, 158, '' );
+}
+
+function theme_perso_seo_fallback_image_url() {
+    if ( function_exists( 'theme_perso_botanica_asset_url' ) ) {
+        return theme_perso_botanica_asset_url( 'cosmethique-botanica-home-campaign.png' );
+    }
+
+    if ( function_exists( 'theme_perso_product_fallback_image_url' ) ) {
+        return theme_perso_product_fallback_image_url();
+    }
+
+    $custom_logo_id = get_theme_mod( 'custom_logo' );
+
+    if ( $custom_logo_id ) {
+        $logo = wp_get_attachment_image_url( $custom_logo_id, 'full' );
+
+        if ( $logo ) {
+            return $logo;
+        }
+    }
+
+    return '';
+}
+
 function theme_perso_legal_seo_map() {
     return array(
         'mentions-legales' => array(
@@ -1525,6 +1578,187 @@ function theme_perso_legal_seo_map() {
     );
 }
 
+function theme_perso_seo_page_map() {
+    return array_merge(
+        array(
+            'front' => array(
+                'title'       => 'COSM’ÉTHIQUE | Cosmétiques naturels premium',
+                'description' => 'Découvrez COSM’ÉTHIQUE : soins naturels premium pour le visage, le corps et les cheveux, diagnostic beauté, Collection Botanica et routines responsables.',
+                'schema_type' => 'WebSite',
+            ),
+            'boutique' => array(
+                'title'       => 'Boutique cosmétiques naturels | COSM’ÉTHIQUE',
+                'description' => 'Explorez la boutique COSM’ÉTHIQUE : soins visage, corps, cheveux, accessoires, packs et Collection Botanica aux formules naturelles premium.',
+                'schema_type' => 'CollectionPage',
+            ),
+            'blog' => array(
+                'title'       => 'Blog beauté naturelle | COSM’ÉTHIQUE',
+                'description' => 'Conseils beauté, routines naturelles, ingrédients responsables et inspirations premium pour composer votre rituel COSM’ÉTHIQUE.',
+                'schema_type' => 'Blog',
+            ),
+            'diagnostic' => array(
+                'title'       => 'Diagnostic beauté personnalisé | COSM’ÉTHIQUE',
+                'description' => 'Réalisez le diagnostic beauté COSM’ÉTHIQUE pour identifier les soins naturels les plus adaptés à votre peau, votre routine et vos besoins.',
+                'schema_type' => 'WebPage',
+            ),
+            'qui-sommes-nous' => array(
+                'title'       => 'Qui sommes-nous ? Maison cosmétique naturelle | COSM’ÉTHIQUE',
+                'description' => 'Découvrez l’histoire de COSM’ÉTHIQUE, sa vision premium de la cosmétique naturelle, ses valeurs et son approche responsable du soin.',
+                'schema_type' => 'AboutPage',
+            ),
+            'notre-histoire' => array(
+                'title'       => 'Notre histoire | COSM’ÉTHIQUE',
+                'description' => 'Découvrez la naissance de COSM’ÉTHIQUE, une maison de cosmétiques naturels pensée autour d’une beauté plus consciente et responsable.',
+                'schema_type' => 'AboutPage',
+            ),
+            'engagements' => array(
+                'title'       => 'Nos engagements responsables | COSM’ÉTHIQUE',
+                'description' => 'Beauté naturelle, transparence, cruelty free, fabrication responsable et emballages recyclables : découvrez les engagements COSM’ÉTHIQUE.',
+                'schema_type' => 'WebPage',
+            ),
+            'ingredients' => array(
+                'title'       => 'Nos ingrédients naturels | COSM’ÉTHIQUE',
+                'description' => 'Explorez la bibliothèque des ingrédients COSM’ÉTHIQUE : rose, karité, camomille, sauge, lavande, jojoba, argile verte et vitamine E.',
+                'schema_type' => 'CollectionPage',
+            ),
+            'qualite' => array(
+                'title'       => 'Fabrication et qualité | COSM’ÉTHIQUE',
+                'description' => 'Découvrez le processus de fabrication COSM’ÉTHIQUE : sélection des matières premières, formulation, contrôles qualité, conditionnement et expédition.',
+                'schema_type' => 'WebPage',
+            ),
+            'faq' => array(
+                'title'       => 'FAQ cosmétiques, livraison et commandes | COSM’ÉTHIQUE',
+                'description' => 'Retrouvez les réponses aux questions fréquentes sur les produits COSM’ÉTHIQUE, les commandes, la livraison, le paiement, les retours et le diagnostic.',
+                'schema_type' => 'FAQPage',
+            ),
+            'contact' => array(
+                'title'       => 'Contact service client | COSM’ÉTHIQUE',
+                'description' => 'Contactez l’équipe COSM’ÉTHIQUE pour une question sur les soins, la boutique, une commande, un diagnostic ou un projet professionnel.',
+                'schema_type' => 'ContactPage',
+            ),
+            'devenir-franchise' => array(
+                'title'       => 'Devenir franchisé cosmétique naturelle | COSM’ÉTHIQUE',
+                'description' => 'Rejoignez le réseau COSM’ÉTHIQUE : concept boutique, accompagnement, formation, candidature et opportunités franchise en cosmétique naturelle.',
+                'schema_type' => 'WebPage',
+            ),
+            'franchise/formation' => array(
+                'title'       => 'Formation des franchisés | COSM’ÉTHIQUE',
+                'description' => 'Découvrez le parcours de formation franchisés COSM’ÉTHIQUE : e-learning, immersion boutique, digital, KPI, certification et coaching post-ouverture.',
+                'schema_type' => 'EducationalOccupationalProgram',
+            ),
+            'franchise/eligibilite' => array(
+                'title'       => 'Éligibilité franchise | COSM’ÉTHIQUE',
+                'description' => 'Vérifiez gratuitement votre éligibilité au réseau de franchise COSM’ÉTHIQUE avant de déposer votre candidature.',
+                'schema_type' => 'WebPage',
+            ),
+            'franchise/candidature' => array(
+                'title'       => 'Candidature franchise | COSM’ÉTHIQUE',
+                'description' => 'Déposez une candidature franchise COSM’ÉTHIQUE avec un formulaire dédié pour présenter votre profil, votre ville, votre budget et votre projet.',
+                'schema_type' => 'WebPage',
+            ),
+            'franchise/confirmation' => array(
+                'title'       => 'Candidature franchise envoyée | COSM’ÉTHIQUE',
+                'description' => 'Votre candidature franchise COSM’ÉTHIQUE a bien été transmise. Notre équipe reviendra vers vous prochainement.',
+                'schema_type' => 'WebPage',
+            ),
+            'recrutement' => array(
+                'title'       => 'Recrutement cosmétique naturelle | COSM’ÉTHIQUE',
+                'description' => 'Rejoignez COSM’ÉTHIQUE : métiers, valeurs, offres, environnement de travail et candidature spontanée dans l’univers de la cosmétique naturelle premium.',
+                'schema_type' => 'CollectionPage',
+            ),
+            'mon-compte' => array(
+                'title'       => 'Mon compte client | COSM’ÉTHIQUE',
+                'description' => 'Connectez-vous à votre espace client COSM’ÉTHIQUE pour suivre vos commandes, gérer vos adresses, vos informations personnelles et votre mot de passe.',
+                'schema_type' => 'WebPage',
+            ),
+            'panier' => array(
+                'title'       => 'Panier | COSM’ÉTHIQUE',
+                'description' => 'Consultez votre panier COSM’ÉTHIQUE, modifiez les quantités et préparez votre commande de soins naturels premium.',
+                'schema_type' => 'CheckoutPage',
+            ),
+            'commande' => array(
+                'title'       => 'Paiement sécurisé | COSM’ÉTHIQUE',
+                'description' => 'Finalisez votre commande COSM’ÉTHIQUE sur une page de paiement claire, sécurisée et adaptée à tous les appareils.',
+                'schema_type' => 'CheckoutPage',
+            ),
+            'plan-du-site' => array(
+                'title'       => 'Plan du site | COSM’ÉTHIQUE',
+                'description' => 'Explorez l’univers COSM’ÉTHIQUE : boutique, diagnostic beauté, blog, franchise, recrutement, contact, compte client et pages essentielles.',
+                'schema_type' => 'WebPage',
+            ),
+            'evenement' => array(
+                'title'       => 'Lancement Collection Botanica | COSM’ÉTHIQUE',
+                'description' => 'Découvrez l’événement COSM’ÉTHIQUE dédié au lancement de la Collection Botanica, une routine botanique premium en édition limitée.',
+                'schema_type' => 'Event',
+            ),
+            'boutiques' => array(
+                'title'       => 'Boutiques COSM’ÉTHIQUE | Réseau cosmétique naturelle',
+                'description' => 'Découvrez le réseau de boutiques COSM’ÉTHIQUE et l’expérience retail premium dédiée aux cosmétiques naturels responsables.',
+                'schema_type' => 'CollectionPage',
+            ),
+            'avis-clients' => array(
+                'title'       => 'Avis clients | COSM’ÉTHIQUE',
+                'description' => 'Consultez les avis clients COSM’ÉTHIQUE et les retours d’expérience autour des soins naturels premium de la marque.',
+                'schema_type' => 'WebPage',
+            ),
+        ),
+        theme_perso_legal_seo_map()
+    );
+}
+
+function theme_perso_seo_product_category_map() {
+    return array(
+        'visage' => array(
+            'title'       => 'Soins visage naturels | COSM’ÉTHIQUE',
+            'description' => 'Découvrez les soins visage COSM’ÉTHIQUE : sérums, crèmes, masques et routines naturelles premium pour hydrater, lisser et illuminer la peau.',
+        ),
+        'soins-visage' => array(
+            'title'       => 'Soins visage naturels | COSM’ÉTHIQUE',
+            'description' => 'Explorez les soins visage naturels COSM’ÉTHIQUE : textures sensorielles, actifs responsables et routines premium adaptées à chaque besoin.',
+        ),
+        'corps' => array(
+            'title'       => 'Soins corps naturels | COSM’ÉTHIQUE',
+            'description' => 'Huiles, baumes, gommages et laits pour le corps : découvrez les soins naturels COSM’ÉTHIQUE pour nourrir, hydrater et sublimer la peau.',
+        ),
+        'soins-corps' => array(
+            'title'       => 'Soins corps naturels | COSM’ÉTHIQUE',
+            'description' => 'Découvrez les soins corps premium COSM’ÉTHIQUE : formules naturelles, textures enveloppantes et rituels sensoriels responsables.',
+        ),
+        'cheveux' => array(
+            'title'       => 'Soins cheveux naturels | COSM’ÉTHIQUE',
+            'description' => 'Shampooings, masques et huiles capillaires COSM’ÉTHIQUE pour nettoyer, nourrir, réparer et sublimer les cheveux naturellement.',
+        ),
+        'soins-cheveux' => array(
+            'title'       => 'Soins cheveux naturels | COSM’ÉTHIQUE',
+            'description' => 'Explorez les soins capillaires naturels COSM’ÉTHIQUE : routines premium pour cuir chevelu, longueurs, nutrition et brillance.',
+        ),
+        'accessoires-beaute' => array(
+            'title'       => 'Accessoires beauté premium | COSM’ÉTHIQUE',
+            'description' => 'Complétez votre routine avec les accessoires beauté COSM’ÉTHIQUE : gua sha, roller, éponge, brosse et trousses au design premium.',
+        ),
+        'accessoires' => array(
+            'title'       => 'Accessoires beauté premium | COSM’ÉTHIQUE',
+            'description' => 'Découvrez les accessoires beauté COSM’ÉTHIQUE pour accompagner les soins naturels avec précision, élégance et durabilité.',
+        ),
+        'packs' => array(
+            'title'       => 'Packs et coffrets beauté | COSM’ÉTHIQUE',
+            'description' => 'Découvrez les packs COSM’ÉTHIQUE : routines complètes, coffrets premium et sélections avantageuses de soins naturels.',
+        ),
+        'promotions' => array(
+            'title'       => 'Promotions cosmétiques naturels | COSM’ÉTHIQUE',
+            'description' => 'Retrouvez les offres COSM’ÉTHIQUE sur une sélection de soins naturels premium, routines beauté et coffrets.',
+        ),
+        'collection-botanica' => array(
+            'title'       => 'Collection Botanica | COSM’ÉTHIQUE',
+            'description' => 'Découvrez la Collection Botanica COSM’ÉTHIQUE : crème, sérum, huile, masque, baume et coffret aux actifs botaniques premium.',
+        ),
+        'aromatherapie' => array(
+            'title'       => 'Aromathérapie naturelle | COSM’ÉTHIQUE',
+            'description' => 'Explorez les huiles essentielles et rituels aromatiques COSM’ÉTHIQUE pour accompagner les moments de bien-être.',
+        ),
+    );
+}
+
 function theme_perso_current_legal_seo() {
     if ( is_admin() || ! is_page() ) {
         return null;
@@ -1536,160 +1770,352 @@ function theme_perso_current_legal_seo() {
     return isset( $map[ $slug ] ) ? $map[ $slug ] : null;
 }
 
-function theme_perso_seo_meta_description() {
-    if ( defined( 'WPSEO_VERSION' ) || defined( 'RANK_MATH_VERSION' ) || is_admin() ) {
-        return;
+function theme_perso_seo_current_url() {
+    if ( is_singular() || ( function_exists( 'is_shop' ) && is_shop() ) ) {
+        $permalink = get_permalink( get_queried_object_id() );
+
+        if ( $permalink ) {
+            return $permalink;
+        }
     }
-
-    $description = get_bloginfo( 'description' );
-
-    $page_uri  = is_page() ? get_page_uri( get_queried_object_id() ) : '';
-    $legal_seo = theme_perso_current_legal_seo();
 
     if ( is_front_page() ) {
-        $description = "COSM’ETHIQUE, marque de cosmétiques naturels premium: soins visage, corps, cheveux et aromathérapie formulés avec exigence.";
-    } elseif ( $legal_seo ) {
-        $description = $legal_seo['description'];
-    } elseif ( is_page( 'plan-du-site' ) ) {
-        $description = "Explorez l’univers Cosm’Éthique avec un plan du site immersif: boutique, diagnostic beauté, blog, contact, compte client et pages essentielles.";
-    } elseif ( is_page( 'recrutement' ) ) {
-        $description = "Rejoignez l’aventure Cosm’Éthique: découvrez nos métiers, nos valeurs, nos offres et envoyez votre candidature spontanée.";
-    } elseif ( is_page( 'evenement' ) ) {
-        $description = "Lancement de la Collection Botanica: une expérience immersive Cosm’Éthique entre soin naturel, innovation sensorielle et événement exclusif.";
-    } elseif ( 'franchise/formation' === $page_uri ) {
-        $description = "Formation des franchisés Cosm’Éthique : parcours hybride, immersion boutique, certification interne et accompagnement post-ouverture.";
-    } elseif ( 'franchise/eligibilite' === $page_uri ) {
-        $description = "Vérifiez gratuitement votre éligibilité franchise Cosm’Éthique avant de déposer votre candidature.";
-    } elseif ( 'franchise/candidature' === $page_uri ) {
-        $description = "Déposez votre candidature franchise Cosm’Éthique avec un formulaire indépendant, clair et sécurisé.";
-    } elseif ( 'franchise/confirmation' === $page_uri ) {
-        $description = "Confirmation de candidature franchise Cosm’Éthique.";
-    } elseif ( is_singular() ) {
-        $description = wp_strip_all_tags( get_the_excerpt() );
-    } elseif ( is_archive() ) {
-        $description = wp_strip_all_tags( get_the_archive_description() );
+        return home_url( '/' );
     }
 
-    if ( $description ) {
-        printf( '<meta name="description" content="%s">' . "\n", esc_attr( wp_trim_words( $description, 28, '' ) ) );
+    if ( is_category() || is_tag() || is_tax() ) {
+        $term = get_queried_object();
+
+        if ( $term && ! is_wp_error( $term ) ) {
+            $link = get_term_link( $term );
+
+            if ( ! is_wp_error( $link ) ) {
+                return $link;
+            }
+        }
     }
+
+    if ( is_search() ) {
+        return get_search_link();
+    }
+
+    return home_url( add_query_arg( array(), $GLOBALS['wp']->request ?? '' ) );
 }
-add_action( 'wp_head', 'theme_perso_seo_meta_description', 2 );
 
-function theme_perso_sitemap_document_title( $parts ) {
+function theme_perso_seo_product_context() {
+    if ( ! function_exists( 'is_product' ) || ! is_product() || ! function_exists( 'wc_get_product' ) ) {
+        return null;
+    }
+
+    $product = wc_get_product( get_queried_object_id() );
+
+    if ( ! $product ) {
+        return null;
+    }
+
+    $name        = $product->get_name();
+    $description = $product->get_short_description() ? $product->get_short_description() : $product->get_description();
+    $terms       = wp_get_post_terms( $product->get_id(), 'product_cat', array( 'fields' => 'names' ) );
+    $category    = ! is_wp_error( $terms ) && ! empty( $terms ) ? implode( ', ', $terms ) : 'Cosmétiques naturels';
+    $image       = function_exists( 'theme_perso_product_primary_gallery_image_url' ) ? theme_perso_product_primary_gallery_image_url( $product ) : '';
+
+    if ( ! $image && $product->get_image_id() ) {
+        $image = wp_get_attachment_image_url( $product->get_image_id(), 'full' );
+    }
+
+    $price    = $product->get_price();
+    $currency = function_exists( 'get_woocommerce_currency' ) ? get_woocommerce_currency() : 'EUR';
+
+    return array(
+        'title'       => $name . ' | COSM’ÉTHIQUE',
+        'description' => $description ? $description : sprintf( 'Découvrez %s, un soin naturel premium COSM’ÉTHIQUE pour une routine beauté sensorielle, efficace et responsable.', $name ),
+        'canonical'   => get_permalink( $product->get_id() ),
+        'og_type'     => 'product',
+        'image'       => $image ? $image : theme_perso_seo_fallback_image_url(),
+        'schema_type' => 'Product',
+        'schema'      => array(
+            '@type'       => 'Product',
+            '@id'         => get_permalink( $product->get_id() ) . '#product',
+            'name'        => $name,
+            'description' => theme_perso_seo_trim_description( $description ),
+            'image'       => $image ? array( $image ) : array(),
+            'sku'         => $product->get_sku(),
+            'category'    => $category,
+            'brand'       => array(
+                '@type' => 'Brand',
+                'name'  => theme_perso_seo_site_name(),
+            ),
+            'offers'      => array(
+                '@type'         => 'Offer',
+                'url'           => get_permalink( $product->get_id() ),
+                'priceCurrency' => $currency,
+                'price'         => $price ? wc_format_decimal( $price, wc_get_price_decimals() ) : '',
+                'availability'  => $product->is_in_stock() ? 'https://schema.org/InStock' : 'https://schema.org/OutOfStock',
+                'itemCondition' => 'https://schema.org/NewCondition',
+            ),
+        ),
+    );
+}
+
+function theme_perso_seo_current_context() {
     if ( is_admin() ) {
-        return $parts;
+        return array();
     }
 
-    $page_uri = is_page() ? get_page_uri( get_queried_object_id() ) : '';
-    $legal_seo = theme_perso_current_legal_seo();
+    $product_context = theme_perso_seo_product_context();
 
-    if ( $legal_seo ) {
-        $parts['title'] = $legal_seo['short_title'];
-        $parts['site']  = 'COSM’ÉTHIQUE';
-    } elseif ( is_page( 'plan-du-site' ) ) {
-        $parts['title'] = 'Plan du site premium';
-        $parts['site']  = 'COSM’ÉTHIQUE';
-    } elseif ( is_page( 'recrutement' ) ) {
-        $parts['title'] = 'Recrutement';
-        $parts['site']  = 'COSM’ÉTHIQUE';
-    } elseif ( is_page( 'evenement' ) ) {
-        $parts['title'] = 'Lancement Collection Botanica';
-        $parts['site']  = 'COSM’ÉTHIQUE';
-    } elseif ( 'franchise/formation' === $page_uri ) {
-        $parts['title'] = 'Formation franchisés';
-        $parts['site']  = 'COSM’ÉTHIQUE';
-    } elseif ( 'franchise/eligibilite' === $page_uri ) {
-        $parts['title'] = 'Éligibilité franchise';
-        $parts['site']  = 'COSM’ÉTHIQUE';
-    } elseif ( 'franchise/candidature' === $page_uri ) {
-        $parts['title'] = 'Candidature franchise';
-        $parts['site']  = 'COSM’ÉTHIQUE';
-    } elseif ( 'franchise/confirmation' === $page_uri ) {
-        $parts['title'] = 'Candidature reçue';
-        $parts['site']  = 'COSM’ÉTHIQUE';
+    if ( $product_context ) {
+        return $product_context;
     }
 
-    return $parts;
-}
-add_filter( 'document_title_parts', 'theme_perso_sitemap_document_title', 20 );
+    $site_name = theme_perso_seo_site_name();
+    $image     = theme_perso_seo_fallback_image_url();
+    $context   = array(
+        'title'       => get_bloginfo( 'name' ),
+        'description' => get_bloginfo( 'description' ),
+        'canonical'   => theme_perso_seo_current_url(),
+        'og_type'     => 'website',
+        'image'       => $image,
+        'schema_type' => 'WebPage',
+        'robots'      => 'index,follow',
+    );
 
-function theme_perso_legal_wpseo_title( $title ) {
-    $legal_seo = theme_perso_current_legal_seo();
+    if ( is_front_page() ) {
+        $page_map = theme_perso_seo_page_map();
+        $context  = array_merge( $context, $page_map['front'], array( 'canonical' => home_url( '/' ) ) );
+    } elseif ( function_exists( 'is_shop' ) && is_shop() ) {
+        $page_map = theme_perso_seo_page_map();
+        $context  = array_merge( $context, $page_map['boutique'], array( 'canonical' => theme_perso_seo_current_url() ) );
+    } elseif ( function_exists( 'is_product_category' ) && is_product_category() ) {
+        $term     = get_queried_object();
+        $cat_map  = theme_perso_seo_product_category_map();
+        $fallback = $term && ! is_wp_error( $term ) ? $term->name . ' | ' . $site_name : 'Catégorie produits | ' . $site_name;
 
-    return $legal_seo ? $legal_seo['title'] : $title;
-}
-add_filter( 'wpseo_title', 'theme_perso_legal_wpseo_title', 30 );
-add_filter( 'wpseo_opengraph_title', 'theme_perso_legal_wpseo_title', 30 );
-add_filter( 'wpseo_twitter_title', 'theme_perso_legal_wpseo_title', 30 );
+        if ( $term && ! is_wp_error( $term ) && isset( $cat_map[ $term->slug ] ) ) {
+            $context = array_merge( $context, $cat_map[ $term->slug ] );
+        } else {
+            $context['title']       = $fallback;
+            $context['description'] = $term && ! is_wp_error( $term ) && $term->description ? $term->description : 'Découvrez cette sélection de soins naturels premium COSM’ÉTHIQUE.';
+        }
 
-function theme_perso_legal_wpseo_description( $description ) {
-    $legal_seo = theme_perso_current_legal_seo();
+        $context['canonical']   = theme_perso_seo_current_url();
+        $context['schema_type'] = 'CollectionPage';
+    } elseif ( is_page() ) {
+        $page_uri = get_page_uri( get_queried_object_id() );
+        $slug     = get_post_field( 'post_name', get_queried_object_id() );
+        $page_map = theme_perso_seo_page_map();
+        $key      = isset( $page_map[ $page_uri ] ) ? $page_uri : $slug;
 
-    return $legal_seo ? $legal_seo['description'] : $description;
-}
-add_filter( 'wpseo_metadesc', 'theme_perso_legal_wpseo_description', 30 );
-add_filter( 'wpseo_opengraph_desc', 'theme_perso_legal_wpseo_description', 30 );
-add_filter( 'wpseo_twitter_description', 'theme_perso_legal_wpseo_description', 30 );
+        if ( isset( $page_map[ $key ] ) ) {
+            $context = array_merge( $context, $page_map[ $key ] );
+        } else {
+            $context['title']       = get_the_title() . ' | ' . $site_name;
+            $context['description'] = has_excerpt() ? get_the_excerpt() : wp_trim_words( wp_strip_all_tags( get_the_content() ), 28, '' );
+        }
 
-function theme_perso_sitemap_page_seo() {
-    if ( is_admin() || defined( 'WPSEO_VERSION' ) || defined( 'RANK_MATH_VERSION' ) ) {
-        return;
+        $context['canonical'] = get_permalink( get_queried_object_id() );
+    } elseif ( is_home() ) {
+        $page_map = theme_perso_seo_page_map();
+        $context  = array_merge( $context, $page_map['blog'], array( 'canonical' => theme_perso_seo_current_url(), 'og_type' => 'website' ) );
+    } elseif ( is_singular( 'post' ) ) {
+        $image = has_post_thumbnail() ? get_the_post_thumbnail_url( get_the_ID(), 'full' ) : theme_perso_get_post_image_url( get_the_ID() );
+
+        $context['title']       = get_the_title() . ' | Blog COSM’ÉTHIQUE';
+        $context['description'] = get_the_excerpt() ? get_the_excerpt() : wp_trim_words( wp_strip_all_tags( get_the_content() ), 32, '' );
+        $context['canonical']   = get_permalink();
+        $context['og_type']     = 'article';
+        $context['image']       = $image ? $image : theme_perso_seo_fallback_image_url();
+        $context['schema_type'] = 'BlogPosting';
+        $context['schema']      = array(
+            '@type'            => 'BlogPosting',
+            '@id'              => get_permalink() . '#article',
+            'headline'         => get_the_title(),
+            'description'      => theme_perso_seo_trim_description( $context['description'] ),
+            'url'              => get_permalink(),
+            'image'            => $context['image'] ? array( $context['image'] ) : array(),
+            'datePublished'    => get_the_date( DATE_W3C ),
+            'dateModified'     => get_the_modified_date( DATE_W3C ),
+            'author'           => array(
+                '@type' => 'Organization',
+                'name'  => $site_name,
+            ),
+            'publisher'        => array(
+                '@type' => 'Organization',
+                'name'  => $site_name,
+            ),
+            'mainEntityOfPage' => get_permalink(),
+        );
+    } elseif ( is_search() ) {
+        $query                  = get_search_query();
+        $context['title']       = $query ? sprintf( 'Recherche “%s” | COSM’ÉTHIQUE', $query ) : 'Recherche | COSM’ÉTHIQUE';
+        $context['description'] = $query ? sprintf( 'Résultats de recherche COSM’ÉTHIQUE pour “%s” : soins naturels, routines beauté, conseils et produits premium.', $query ) : 'Recherchez un soin, une routine beauté, un ingrédient ou un conseil COSM’ÉTHIQUE.';
+        $context['canonical']   = get_search_link();
+        $context['schema_type'] = 'SearchResultsPage';
+        $context['robots']      = 'noindex,follow';
+    } elseif ( is_404() ) {
+        $context['title']       = 'Page introuvable | COSM’ÉTHIQUE';
+        $context['description'] = 'La page demandée est introuvable. Retrouvez la boutique, le diagnostic beauté, le blog et les pages essentielles COSM’ÉTHIQUE.';
+        $context['canonical']   = home_url( '/' );
+        $context['schema_type'] = 'WebPage';
+        $context['robots']      = 'noindex,follow';
+    } elseif ( is_archive() ) {
+        $archive_title          = wp_strip_all_tags( get_the_archive_title() );
+        $context['title']       = $archive_title . ' | COSM’ÉTHIQUE';
+        $context['description'] = get_the_archive_description() ? get_the_archive_description() : sprintf( 'Découvrez les contenus COSM’ÉTHIQUE liés à %s.', $archive_title );
+        $context['canonical']   = theme_perso_seo_current_url();
+        $context['schema_type'] = 'CollectionPage';
     }
 
-    $page_uri = is_page() ? get_page_uri( get_queried_object_id() ) : '';
-    $legal_seo = theme_perso_current_legal_seo();
-    $seo_pages = array(
-        'franchise/formation'  => array(
-            'name'        => 'Formation des franchisés COSM’ÉTHIQUE',
-            'description' => 'Parcours de formation hybride pour les nouveaux franchisés Cosm’Éthique : e-learning, boutique pilote, ateliers, certification et accompagnement.',
+    $context['title']       = trim( wp_strip_all_tags( $context['title'] ) );
+    $context['description'] = theme_perso_seo_trim_description( $context['description'] );
+    $context['image']       = ! empty( $context['image'] ) ? $context['image'] : theme_perso_seo_fallback_image_url();
+
+    return $context;
+}
+
+function theme_perso_seo_schema_graph( $context ) {
+    if ( empty( $context ) ) {
+        return array();
+    }
+
+    $site_name = theme_perso_seo_site_name();
+    $canonical = ! empty( $context['canonical'] ) ? $context['canonical'] : home_url( '/' );
+    $graph     = array(
+        array(
+            '@type' => 'Organization',
+            '@id'   => home_url( '/#organization' ),
+            'name'  => $site_name,
+            'url'   => home_url( '/' ),
+            'logo'  => theme_perso_seo_fallback_image_url(),
         ),
-        'franchise/eligibilite'  => array(
-            'name'        => 'Éligibilité franchise COSM’ÉTHIQUE',
-            'description' => 'Questionnaire d’éligibilité pour rejoindre le réseau de franchises Cosm’Éthique.',
-        ),
-        'franchise/candidature' => array(
-            'name'        => 'Candidature franchise COSM’ÉTHIQUE',
-            'description' => 'Formulaire indépendant de candidature franchise Cosm’Éthique.',
-        ),
-        'franchise/confirmation' => array(
-            'name'        => 'Confirmation candidature franchise COSM’ÉTHIQUE',
-            'description' => 'Confirmation d’envoi de candidature franchise Cosm’Éthique.',
+        array(
+            '@type'           => 'WebSite',
+            '@id'             => home_url( '/#website' ),
+            'name'            => $site_name,
+            'url'             => home_url( '/' ),
+            'publisher'       => array( '@id' => home_url( '/#organization' ) ),
+            'potentialAction' => array(
+                '@type'       => 'SearchAction',
+                'target'      => home_url( '/?s={search_term_string}' ),
+                'query-input' => 'required name=search_term_string',
+            ),
         ),
     );
 
-    if ( $legal_seo ) {
-        $seo_pages[ $page_uri ] = array(
-            'name'        => $legal_seo['short_title'] . ' COSM’ÉTHIQUE',
-            'description' => $legal_seo['description'],
+    if ( ! empty( $context['schema'] ) ) {
+        $graph[] = $context['schema'];
+    } else {
+        $graph[] = array(
+            '@type'       => ! empty( $context['schema_type'] ) ? $context['schema_type'] : 'WebPage',
+            '@id'         => $canonical . '#webpage',
+            'name'        => $context['title'],
+            'description' => $context['description'],
+            'url'         => $canonical,
+            'isPartOf'    => array( '@id' => home_url( '/#website' ) ),
         );
     }
 
-    if ( ! is_page( 'plan-du-site' ) && ! is_page( 'recrutement' ) && ! is_page( 'evenement' ) && ! isset( $seo_pages[ $page_uri ] ) ) {
+    return array(
+        '@context' => 'https://schema.org',
+        '@graph'   => $graph,
+    );
+}
+
+function theme_perso_seo_pre_get_document_title( $title ) {
+    $context = theme_perso_seo_current_context();
+
+    if ( empty( $context['title'] ) ) {
+        return $title;
+    }
+
+    return function_exists( 'theme_perso_multilingual_seo_text' ) ? theme_perso_multilingual_seo_text( $context['title'] ) : $context['title'];
+}
+add_filter( 'pre_get_document_title', 'theme_perso_seo_pre_get_document_title', 40 );
+
+function theme_perso_seo_filter_title( $title ) {
+    $context = theme_perso_seo_current_context();
+
+    return ! empty( $context['title'] ) ? $context['title'] : $title;
+}
+add_filter( 'wpseo_title', 'theme_perso_seo_filter_title', 10 );
+add_filter( 'wpseo_opengraph_title', 'theme_perso_seo_filter_title', 10 );
+add_filter( 'wpseo_twitter_title', 'theme_perso_seo_filter_title', 10 );
+
+function theme_perso_seo_filter_description( $description ) {
+    $context = theme_perso_seo_current_context();
+
+    return ! empty( $context['description'] ) ? $context['description'] : $description;
+}
+add_filter( 'wpseo_metadesc', 'theme_perso_seo_filter_description', 10 );
+add_filter( 'wpseo_opengraph_desc', 'theme_perso_seo_filter_description', 10 );
+add_filter( 'wpseo_twitter_description', 'theme_perso_seo_filter_description', 10 );
+
+function theme_perso_seo_filter_canonical( $canonical ) {
+    $context = theme_perso_seo_current_context();
+
+    return ! empty( $context['canonical'] ) ? $context['canonical'] : $canonical;
+}
+add_filter( 'wpseo_canonical', 'theme_perso_seo_filter_canonical', 10 );
+
+function theme_perso_seo_filter_image( $image ) {
+    $context = theme_perso_seo_current_context();
+
+    return ! empty( $context['image'] ) ? $context['image'] : $image;
+}
+add_filter( 'wpseo_opengraph_image', 'theme_perso_seo_filter_image', 10 );
+add_filter( 'wpseo_twitter_image', 'theme_perso_seo_filter_image', 10 );
+
+function theme_perso_seo_filter_robots( $robots ) {
+    $context = theme_perso_seo_current_context();
+
+    if ( empty( $context['robots'] ) || 'noindex,follow' !== $context['robots'] ) {
+        return $robots;
+    }
+
+    if ( is_array( $robots ) ) {
+        $robots['index']  = 'noindex';
+        $robots['follow'] = 'follow';
+
+        return $robots;
+    }
+
+    return 'noindex, follow';
+}
+add_filter( 'wpseo_robots', 'theme_perso_seo_filter_robots', 10 );
+
+function theme_perso_render_fallback_seo_head() {
+    if ( is_admin() || theme_perso_is_seo_plugin_active() ) {
+        return;
+    }
+
+    $context = theme_perso_seo_current_context();
+
+    if ( empty( $context ) ) {
         return;
     }
 
     remove_action( 'wp_head', 'rel_canonical' );
-
-    $canonical = get_permalink();
-    $schema    = array(
-        '@context'    => 'https://schema.org',
-        '@type'       => 'WebPage',
-        'name'        => isset( $seo_pages[ $page_uri ] ) ? $seo_pages[ $page_uri ]['name'] : ( is_page( 'recrutement' ) ? 'Recrutement COSM’ÉTHIQUE' : ( is_page( 'evenement' ) ? 'Lancement Collection Botanica COSM’ÉTHIQUE' : 'Plan du site COSM’ÉTHIQUE' ) ),
-        'description' => isset( $seo_pages[ $page_uri ] ) ? $seo_pages[ $page_uri ]['description'] : ( is_page( 'recrutement' ) ? 'Découvrez les métiers, les offres et la candidature spontanée de Cosm’Éthique.' : ( is_page( 'evenement' ) ? 'Découvrez la page événement immersive dédiée au lancement de la Collection Botanica Cosm’Éthique.' : 'Explorez l’univers Cosm’Éthique avec un plan du site immersif regroupant les pages essentielles de la boutique.' ) ),
-        'url'         => $canonical,
-        'isPartOf'    => array(
-            '@type' => 'WebSite',
-            'name'  => get_bloginfo( 'name' ),
-            'url'   => home_url( '/' ),
-        ),
-    );
     ?>
-    <link rel="canonical" href="<?php echo esc_url( $canonical ); ?>">
-    <script type="application/ld+json"><?php echo wp_json_encode( $schema, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE ); ?></script>
+    <meta name="description" content="<?php echo esc_attr( $context['description'] ); ?>">
+    <meta name="robots" content="<?php echo esc_attr( $context['robots'] ?? 'index,follow' ); ?>">
+    <link rel="canonical" href="<?php echo esc_url( $context['canonical'] ); ?>">
+    <meta property="og:locale" content="<?php echo esc_attr( str_replace( '-', '_', get_bloginfo( 'language' ) ) ); ?>">
+    <meta property="og:type" content="<?php echo esc_attr( $context['og_type'] ?? 'website' ); ?>">
+    <meta property="og:title" content="<?php echo esc_attr( $context['title'] ); ?>">
+    <meta property="og:description" content="<?php echo esc_attr( $context['description'] ); ?>">
+    <meta property="og:url" content="<?php echo esc_url( $context['canonical'] ); ?>">
+    <meta property="og:site_name" content="<?php echo esc_attr( theme_perso_seo_site_name() ); ?>">
+    <?php if ( ! empty( $context['image'] ) ) : ?>
+        <meta property="og:image" content="<?php echo esc_url( $context['image'] ); ?>">
+        <meta name="twitter:image" content="<?php echo esc_url( $context['image'] ); ?>">
+    <?php endif; ?>
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="<?php echo esc_attr( $context['title'] ); ?>">
+    <meta name="twitter:description" content="<?php echo esc_attr( $context['description'] ); ?>">
+    <script type="application/ld+json"><?php echo wp_json_encode( theme_perso_seo_schema_graph( $context ), JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE ); ?></script>
     <?php
 }
-add_action( 'wp_head', 'theme_perso_sitemap_page_seo', 3 );
+add_action( 'wp_head', 'theme_perso_render_fallback_seo_head', 2 );
 
 function theme_perso_cart_count_fragments( $fragments ) {
     if ( function_exists( 'WC' ) && WC()->cart ) {
