@@ -186,6 +186,31 @@
 
     </footer>
 
+    <div class="accessibility-widget" data-accessibility-widget>
+        <button class="accessibility-toggle" type="button" aria-label="<?php esc_attr_e( 'Ouvrir les réglages d’accessibilité', 'theme-perso' ); ?>" aria-expanded="false" aria-controls="cosmethique-accessibility-panel" data-accessibility-toggle>
+            <span aria-hidden="true">Aa</span>
+        </button>
+        <section class="accessibility-panel" id="cosmethique-accessibility-panel" role="dialog" aria-modal="false" aria-labelledby="cosmethique-accessibility-title" data-accessibility-panel hidden>
+            <div class="accessibility-panel__header">
+                <p class="eyebrow"><?php esc_html_e( 'Accessibilité', 'theme-perso' ); ?></p>
+                <h2 id="cosmethique-accessibility-title"><?php esc_html_e( 'Adapter l’affichage', 'theme-perso' ); ?></h2>
+                <button class="accessibility-close" type="button" aria-label="<?php esc_attr_e( 'Fermer les réglages d’accessibilité', 'theme-perso' ); ?>" data-accessibility-close>×</button>
+            </div>
+            <div class="accessibility-controls" aria-label="<?php esc_attr_e( 'Options d’accessibilité', 'theme-perso' ); ?>">
+                <div class="accessibility-control-group" role="group" aria-label="<?php esc_attr_e( 'Taille du texte', 'theme-perso' ); ?>">
+                    <button type="button" data-accessibility-font="decrease"><?php esc_html_e( 'A− Texte', 'theme-perso' ); ?></button>
+                    <button type="button" data-accessibility-font="increase"><?php esc_html_e( 'A+ Texte', 'theme-perso' ); ?></button>
+                </div>
+                <button type="button" data-accessibility-option="contrast" aria-pressed="false"><?php esc_html_e( 'Contraste renforcé', 'theme-perso' ); ?></button>
+                <button type="button" data-accessibility-option="readable" aria-pressed="false"><?php esc_html_e( 'Mode lisibilité', 'theme-perso' ); ?></button>
+                <button type="button" data-accessibility-option="underline" aria-pressed="false"><?php esc_html_e( 'Souligner les liens', 'theme-perso' ); ?></button>
+                <button type="button" data-accessibility-option="motion" aria-pressed="false"><?php esc_html_e( 'Réduire les animations', 'theme-perso' ); ?></button>
+                <button type="button" data-accessibility-option="spacing" aria-pressed="false"><?php esc_html_e( 'Espacement du texte', 'theme-perso' ); ?></button>
+                <button class="accessibility-reset" type="button" data-accessibility-reset><?php esc_html_e( 'Réinitialiser', 'theme-perso' ); ?></button>
+            </div>
+        </section>
+    </div>
+
     <div class="cookie-banner" role="dialog" aria-live="polite" aria-label="<?php esc_attr_e( 'Gestion des cookies', 'theme-perso' ); ?>" data-cookie-banner hidden>
         <div class="cookie-banner-content">
             <strong><?php esc_html_e( 'Votre confidentialité', 'theme-perso' ); ?></strong>
@@ -193,8 +218,8 @@
             <a href="<?php echo esc_url( theme_perso_cookie_policy_url() ); ?>"><?php esc_html_e( 'Consulter la politique de cookies', 'theme-perso' ); ?></a>
         </div>
         <div class="cookie-actions">
-            <button class="button cookie-button cookie-button--accept" type="button" data-cookie-accept-all><?php esc_html_e( 'Accepter tout', 'theme-perso' ); ?></button>
-            <button class="button cookie-button cookie-button--refuse" type="button" data-cookie-refuse><?php esc_html_e( 'Refuser', 'theme-perso' ); ?></button>
+            <button class="button cookie-button cookie-button--accept" type="button" data-cookie-accept-all><?php esc_html_e( 'Tout accepter', 'theme-perso' ); ?></button>
+            <button class="button cookie-button cookie-button--refuse" type="button" data-cookie-refuse><?php esc_html_e( 'Tout refuser', 'theme-perso' ); ?></button>
             <button class="button cookie-button cookie-button--customize" type="button" data-cookie-customize><?php esc_html_e( 'Personnaliser', 'theme-perso' ); ?></button>
         </div>
     </div>
@@ -254,9 +279,9 @@
             </div>
 
             <div class="cookie-modal-actions">
-                <button class="button cookie-button cookie-button--refuse" type="button" data-cookie-refuse><?php esc_html_e( 'Refuser', 'theme-perso' ); ?></button>
+                <button class="button cookie-button cookie-button--refuse" type="button" data-cookie-refuse><?php esc_html_e( 'Tout refuser', 'theme-perso' ); ?></button>
                 <button class="button cookie-button cookie-button--customize" type="button" data-cookie-save><?php esc_html_e( 'Enregistrer mes choix', 'theme-perso' ); ?></button>
-                <button class="button cookie-button cookie-button--accept" type="button" data-cookie-accept-all><?php esc_html_e( 'Accepter tout', 'theme-perso' ); ?></button>
+                <button class="button cookie-button cookie-button--accept" type="button" data-cookie-accept-all><?php esc_html_e( 'Tout accepter', 'theme-perso' ); ?></button>
             </div>
         </section>
     </div>

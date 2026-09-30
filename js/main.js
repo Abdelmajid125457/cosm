@@ -2109,6 +2109,7 @@ Thomas Bernard`,
             return;
         }
 
+        document.body.classList.add('cookie-banner-visible');
         cookieBanner.hidden = false;
         window.requestAnimationFrame(() => cookieBanner.classList.add('is-visible'));
     };
@@ -2121,6 +2122,7 @@ Thomas Bernard`,
         cookieBanner.classList.remove('is-visible');
         window.setTimeout(() => {
             cookieBanner.hidden = true;
+            document.body.classList.remove('cookie-banner-visible');
         }, 260);
     };
 
@@ -2245,6 +2247,176 @@ Thomas Bernard`,
         page_title: document.title,
         page_location: window.location.href,
         page_path: window.location.pathname,
+    });
+
+    const accessibilityWidget = document.querySelector('[data-accessibility-widget]');
+    const accessibilityToggle = accessibilityWidget?.querySelector('[data-accessibility-toggle]');
+    const accessibilityPanel = accessibilityWidget?.querySelector('[data-accessibility-panel]');
+    const accessibilityClose = accessibilityWidget?.querySelector('[data-accessibility-close]');
+    const accessibilityOptionButtons = accessibilityWidget ? Array.from(accessibilityWidget.querySelectorAll('[data-accessibility-option]')) : [];
+    const accessibilityFontButtons = accessibilityWidget ? Array.from(accessibilityWidget.querySelectorAll('[data-accessibility-font]')) : [];
+    const accessibilityReset = accessibilityWidget?.querySelector('[data-accessibility-reset]');
+    const accessibilityStorageKey = 'cosmethique_accessibility_preferences';
+    let accessibilityLastFocus = null;
+
+    const accessibilityDefaults = () => ({
+        font: 0,
+        contrast: false,
+        readable: false,
+        underline: false,
+        motion: false,
+        spacing: false
+    });
+
+    const readAccessibilityPreferences = () => {
+        try {
+            return {
+                ...accessibilityDefaults(),
+                ...JSON.parse(window.localStorage.getItem(accessibilityStorageKey) || '{}')
+            };
+        } catch (error) {
+            return accessibilityDefaults();
+        }
+    };
+
+    const writeAccessibilityPreferences = (preferences) => {
+        try {
+            window.localStorage.setItem(accessibilityStorageKey, JSON.stringify(preferences));
+        } catch (error) {
+            // Les préférences restent appliquées pour la session si le stockage local est indisponible.
+        }
+    };
+
+    const applyAccessibilityPreferences = (preferences = readAccessibilityPreferences()) => {
+        const root = document.documentElement;
+        root.classList.remove('a11y-text-small', 'a11y-text-large');
+
+        if (preferences.font < 0) {
+            root.classList.add('a11y-text-small');
+        } else if (preferences.font > 0) {
+            root.classList.add('a11y-text-large');
+        }
+
+        root.classList.toggle('a11y-contrast', Boolean(preferences.contrast));
+        root.classList.toggle('a11y-readable', Boolean(preferences.readable));
+        root.classList.toggle('a11y-underline', Boolean(preferences.underline));
+        root.classList.toggle('a11y-reduce-motion', Boolean(preferences.motion));
+        root.classList.toggle('a11y-text-spacing', Boolean(preferences.spacing));
+
+        accessibilityOptionButtons.forEach((button) => {
+            const key = button.dataset.accessibilityOption;
+            button.setAttribute('aria-pressed', String(Boolean(preferences[key])));
+        });
+    };
+
+    const closeAccessibilityPanel = () => {
+        if (!accessibilityPanel || !accessibilityToggle) {
+            return;
+        }
+
+        accessibilityPanel.classList.remove('is-visible');
+        accessibilityToggle.setAttribute('aria-expanded', 'false');
+
+        window.setTimeout(() => {
+            accessibilityPanel.hidden = true;
+        }, 220);
+
+        if (accessibilityLastFocus) {
+            accessibilityLastFocus.focus({ preventScroll: true });
+        }
+    };
+
+    const openAccessibilityPanel = () => {
+        if (!accessibilityPanel || !accessibilityToggle) {
+            return;
+        }
+
+        accessibilityLastFocus = document.activeElement;
+        accessibilityPanel.hidden = false;
+        accessibilityToggle.setAttribute('aria-expanded', 'true');
+        window.requestAnimationFrame(() => {
+            accessibilityPanel.classList.add('is-visible');
+            accessibilityClose?.focus({ preventScroll: true });
+        });
+    };
+
+    applyAccessibilityPreferences();
+
+    accessibilityToggle?.addEventListener('click', () => {
+        if (accessibilityToggle.getAttribute('aria-expanded') === 'true') {
+            closeAccessibilityPanel();
+        } else {
+            openAccessibilityPanel();
+        }
+    });
+
+    accessibilityClose?.addEventListener('click', closeAccessibilityPanel);
+
+    accessibilityOptionButtons.forEach((button) => {
+        button.addEventListener('click', () => {
+            const preferences = readAccessibilityPreferences();
+            const key = button.dataset.accessibilityOption;
+            preferences[key] = !preferences[key];
+            writeAccessibilityPreferences(preferences);
+            applyAccessibilityPreferences(preferences);
+        });
+    });
+
+    accessibilityFontButtons.forEach((button) => {
+        button.addEventListener('click', () => {
+            const preferences = readAccessibilityPreferences();
+            preferences.font = Math.max(-1, Math.min(1, preferences.font + (button.dataset.accessibilityFont === 'increase' ? 1 : -1)));
+            writeAccessibilityPreferences(preferences);
+            applyAccessibilityPreferences(preferences);
+        });
+    });
+
+    accessibilityReset?.addEventListener('click', () => {
+        const preferences = accessibilityDefaults();
+        writeAccessibilityPreferences(preferences);
+        applyAccessibilityPreferences(preferences);
+    });
+
+    document.addEventListener('click', (event) => {
+        if (!accessibilityWidget || !accessibilityPanel || accessibilityPanel.hidden) {
+            return;
+        }
+
+        if (!accessibilityWidget.contains(event.target)) {
+            closeAccessibilityPanel();
+        }
+    });
+
+    document.addEventListener('keydown', (event) => {
+        if (!accessibilityPanel || accessibilityPanel.hidden) {
+            return;
+        }
+
+        if (event.key === 'Escape') {
+            closeAccessibilityPanel();
+            return;
+        }
+
+        if (event.key !== 'Tab') {
+            return;
+        }
+
+        const focusable = Array.from(accessibilityPanel.querySelectorAll('button, [href], input, [tabindex]:not([tabindex="-1"])'))
+            .filter((item) => !item.disabled && item.offsetParent !== null);
+        const first = focusable[0];
+        const last = focusable[focusable.length - 1];
+
+        if (!first || !last) {
+            return;
+        }
+
+        if (event.shiftKey && document.activeElement === first) {
+            event.preventDefault();
+            last.focus();
+        } else if (!event.shiftKey && document.activeElement === last) {
+            event.preventDefault();
+            first.focus();
+        }
     });
 
     const searchParams = new URLSearchParams(window.location.search);

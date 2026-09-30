@@ -6380,6 +6380,211 @@ button.category-card.is-active {
     color: inherit;
 }
 
+html.a11y-text-small body {
+    font-size: 93.75%;
+}
+
+html.a11y-text-large body {
+    font-size: 112.5%;
+}
+
+html.a11y-contrast body {
+    color: #020B15;
+}
+
+html.a11y-contrast a:not(.button),
+html.a11y-contrast button:not(.button),
+html.a11y-contrast input,
+html.a11y-contrast textarea,
+html.a11y-contrast select {
+    border-color: #071A2D !important;
+}
+
+html.a11y-readable body {
+    letter-spacing: 0.01em;
+}
+
+html.a11y-readable p,
+html.a11y-readable li,
+html.a11y-readable label,
+html.a11y-readable input,
+html.a11y-readable textarea,
+html.a11y-readable select {
+    line-height: 1.78;
+}
+
+html.a11y-underline a:not(.button):not(.brand-logo):not(.custom-logo-link) {
+    text-decoration: underline !important;
+    text-decoration-thickness: 0.08em;
+    text-underline-offset: 0.22em;
+}
+
+html.a11y-reduce-motion *,
+html.a11y-reduce-motion *::before,
+html.a11y-reduce-motion *::after {
+    scroll-behavior: auto !important;
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+}
+
+html.a11y-text-spacing p,
+html.a11y-text-spacing li,
+html.a11y-text-spacing label,
+html.a11y-text-spacing blockquote {
+    letter-spacing: 0.04em;
+    word-spacing: 0.12em;
+    line-height: 1.9;
+}
+
+.accessibility-widget {
+    position: fixed;
+    right: 22px;
+    bottom: 112px;
+    z-index: 1095;
+    display: grid;
+    justify-items: end;
+    pointer-events: none;
+}
+
+body.cookie-banner-visible .accessibility-widget {
+    bottom: clamp(210px, 24vh, 320px);
+}
+
+.accessibility-toggle {
+    pointer-events: auto;
+    display: grid;
+    place-items: center;
+    width: 58px;
+    height: 58px;
+    border: 1px solid rgba(201, 164, 92, 0.34);
+    border-radius: 999px;
+    background:
+        linear-gradient(145deg, rgba(255, 255, 255, 0.16), rgba(255, 255, 255, 0.04)),
+        #071A2D;
+    color: #FFFFFF;
+    box-shadow: 0 18px 46px rgba(7, 26, 45, 0.22);
+    cursor: pointer;
+    font-family: var(--serif);
+    font-size: 1rem;
+    font-weight: 800;
+    letter-spacing: 0.02em;
+    transition: transform 240ms ease, box-shadow 240ms ease, border-color 240ms ease;
+}
+
+.accessibility-toggle:hover,
+.accessibility-toggle:focus-visible {
+    border-color: rgba(245, 221, 163, 0.75);
+    box-shadow: 0 24px 68px rgba(7, 26, 45, 0.28), 0 0 0 4px rgba(201, 164, 92, 0.14);
+    transform: translateY(-3px);
+}
+
+.accessibility-panel {
+    pointer-events: auto;
+    position: absolute;
+    right: 0;
+    bottom: calc(100% + 14px);
+    width: min(390px, calc(100vw - 32px));
+    max-height: min(680px, calc(100vh - 150px));
+    overflow: auto;
+    padding: 24px;
+    border: 1px solid rgba(201, 164, 92, 0.24);
+    border-radius: 28px;
+    background:
+        radial-gradient(circle at 95% 0%, rgba(201, 164, 92, 0.14), transparent 34%),
+        rgba(255, 255, 255, 0.96);
+    color: #071A2D;
+    box-shadow: 0 28px 90px rgba(7, 26, 45, 0.2);
+    backdrop-filter: blur(18px);
+    opacity: 0;
+    transform: translateY(12px) scale(0.98);
+    transition: opacity 240ms ease, transform 240ms ease;
+}
+
+.accessibility-panel[hidden] {
+    display: none;
+}
+
+.accessibility-panel.is-visible {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+}
+
+.accessibility-panel__header {
+    position: relative;
+    padding-right: 46px;
+}
+
+.accessibility-panel__header .eyebrow {
+    margin-bottom: 8px;
+    color: #2B7D8A;
+}
+
+.accessibility-panel h2 {
+    margin: 0 0 18px;
+    color: #071A2D;
+    font-size: clamp(1.6rem, 5vw, 2rem);
+    line-height: 1.05;
+}
+
+.accessibility-close {
+    position: absolute;
+    top: 0;
+    right: 0;
+    display: grid;
+    place-items: center;
+    width: 38px;
+    height: 38px;
+    border: 1px solid rgba(231, 236, 245, 0.95);
+    border-radius: 50%;
+    background: #FFFFFF;
+    color: #071A2D;
+    cursor: pointer;
+    font-size: 1.35rem;
+    line-height: 1;
+}
+
+.accessibility-controls {
+    display: grid;
+    gap: 10px;
+}
+
+.accessibility-control-group {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 10px;
+}
+
+.accessibility-controls button {
+    min-height: 48px;
+    padding: 12px 14px;
+    border: 1px solid rgba(231, 236, 245, 0.96);
+    border-radius: 16px;
+    background: #FFFFFF;
+    color: #071A2D;
+    cursor: pointer;
+    font: inherit;
+    font-weight: 800;
+    text-align: left;
+    transition: transform 220ms ease, box-shadow 220ms ease, border-color 220ms ease, background 220ms ease;
+}
+
+.accessibility-controls button:hover,
+.accessibility-controls button:focus-visible,
+.accessibility-controls button[aria-pressed="true"] {
+    border-color: rgba(201, 164, 92, 0.48);
+    background: #FBF7F0;
+    box-shadow: 0 12px 32px rgba(13, 27, 61, 0.08);
+    transform: translateY(-2px);
+}
+
+.accessibility-reset {
+    justify-content: center;
+    background: #071A2D !important;
+    color: #FFFFFF !important;
+    text-align: center !important;
+}
+
 .cookie-banner {
     position: fixed;
     right: 22px;
@@ -6393,9 +6598,11 @@ button.category-card.is-active {
     width: min(1040px, calc(100% - 44px));
     margin: 0 auto;
     padding: clamp(18px, 2.3vw, 26px);
-    border: 1px solid #e8ebf1;
-    border-radius: 20px;
-    background: #ffffff;
+    border: 1px solid rgba(201, 164, 92, 0.24);
+    border-radius: 24px;
+    background:
+        radial-gradient(circle at 98% 0%, rgba(201, 164, 92, 0.12), transparent 30%),
+        #ffffff;
     color: #0D1B3D;
     box-shadow: 0 22px 70px rgba(13, 27, 61, 0.16);
     opacity: 0;
@@ -6465,7 +6672,8 @@ button.category-card.is-active {
 .cookie-button:hover,
 .cookie-button:focus-visible {
     transform: translateY(-2px);
-    outline: none;
+    outline: 2px solid rgba(7, 26, 45, 0.2);
+    outline-offset: 3px;
     box-shadow: 0 14px 30px rgba(13, 27, 61, 0.13);
 }
 
@@ -12928,6 +13136,33 @@ body.cosmethique-sorting .woocommerce ul.products {
     .about-testimonial-card {
         min-height: 370px;
         padding: clamp(30px, 6vw, 46px);
+    }
+
+    .accessibility-widget {
+        right: 16px;
+        bottom: 92px;
+    }
+
+    body.cookie-banner-visible .accessibility-widget {
+        top: 92px;
+        bottom: auto;
+    }
+
+    .accessibility-toggle {
+        width: 52px;
+        height: 52px;
+    }
+
+    .accessibility-panel {
+        right: 0;
+        width: min(360px, calc(100vw - 32px));
+        max-height: min(620px, calc(100vh - 126px));
+        padding: 20px;
+        border-radius: 24px;
+    }
+
+    .accessibility-control-group {
+        grid-template-columns: 1fr;
     }
 
     .cookie-banner {
