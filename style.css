@@ -5348,6 +5348,64 @@ button.category-card.is-active {
     margin-top: 0.35em;
 }
 
+.cosmethique-form--structured {
+    gap: 22px;
+}
+
+.cosmethique-form-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 16px;
+}
+
+.cosmethique-field-full,
+.cosmethique-form-section {
+    grid-column: 1 / -1;
+}
+
+.cosmethique-form-section {
+    display: grid;
+    gap: 16px;
+    margin: 0;
+    padding: 20px;
+    border: 1px solid rgba(13, 27, 61, 0.08);
+    border-radius: 22px;
+    background: rgba(255, 255, 255, 0.72);
+}
+
+.cosmethique-form-section legend {
+    padding: 0 8px;
+    color: #0D1B3D;
+    font-weight: 900;
+}
+
+.franchise-form-status.is-error,
+.product-format-help,
+.form-error-message {
+    color: #A04444;
+}
+
+.franchise-form-status.is-success {
+    color: #1f7a56;
+}
+
+.franchise-form-status {
+    padding: 14px 16px;
+    border: 1px solid rgba(13, 27, 61, 0.08);
+    border-radius: 18px;
+    background: rgba(250, 246, 239, 0.82);
+    font-weight: 800;
+}
+
+.franchise-form-status:empty {
+    display: none;
+}
+
+.cosmethique-form .is-invalid {
+    border-color: #A04444;
+    box-shadow: 0 0 0 3px rgba(160, 68, 68, 0.12);
+}
+
 .franchise-section {
     display: grid;
     grid-template-columns: minmax(0, 0.95fr) minmax(0, 1.05fr);
@@ -7343,6 +7401,17 @@ body.cookie-modal-open {
 }
 
 @media (max-width: 640px) {
+    .cosmethique-form-grid,
+    .product-format-options {
+        grid-template-columns: 1fr;
+    }
+
+    .cosmethique-form-section,
+    .product-format-selector {
+        padding: 16px;
+        border-radius: 18px;
+    }
+
     .page-content-wrap--legal {
         width: min(100% - 24px, 1180px);
     }
@@ -10565,6 +10634,111 @@ body.cosmethique-sorting .woocommerce ul.products {
     align-items: center;
     gap: 12px;
     margin: 24px 0 0;
+}
+
+.product-format-selector {
+    flex: 1 0 100%;
+    width: 100%;
+    margin: 0 0 10px;
+    padding: 18px;
+    border: 1px solid rgba(201, 164, 92, 0.28);
+    border-radius: 22px;
+    background:
+        linear-gradient(145deg, rgba(255, 255, 255, 0.96), rgba(250, 246, 239, 0.72));
+    box-shadow: 0 16px 36px rgba(13, 27, 61, 0.06);
+}
+
+.product-format-selector legend {
+    padding: 0 8px;
+    color: #0D1B3D;
+    font-weight: 900;
+}
+
+.product-format-options {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 12px;
+}
+
+.product-format-option {
+    position: relative;
+    min-width: 0;
+}
+
+.product-format-option input {
+    position: absolute;
+    opacity: 0;
+    pointer-events: none;
+}
+
+.product-format-option span {
+    display: grid;
+    min-height: 76px;
+    align-content: center;
+    gap: 4px;
+    padding: 14px 16px;
+    border: 1px solid rgba(13, 27, 61, 0.1);
+    border-radius: 18px;
+    background: #ffffff;
+    color: #0D1B3D;
+    cursor: pointer;
+    transition: transform 0.24s ease, border-color 0.24s ease, box-shadow 0.24s ease, background 0.24s ease;
+}
+
+.product-format-option strong {
+    font-size: 1rem;
+    font-weight: 900;
+}
+
+.product-format-option small,
+.product-format-option em {
+    color: #5f7085;
+    font-style: normal;
+    font-weight: 700;
+}
+
+.product-format-option input:checked + span {
+    border-color: rgba(201, 164, 92, 0.78);
+    background: #0D1B3D;
+    color: #ffffff;
+    box-shadow: 0 18px 38px rgba(13, 27, 61, 0.2);
+}
+
+.product-format-option input:checked + span small,
+.product-format-option input:checked + span em {
+    color: rgba(255, 255, 255, 0.78);
+}
+
+.product-format-option input:focus-visible + span {
+    outline: 3px solid rgba(43, 125, 138, 0.24);
+    outline-offset: 3px;
+}
+
+.product-format-option:hover span {
+    transform: translateY(-2px);
+    border-color: rgba(43, 125, 138, 0.36);
+    box-shadow: 0 14px 30px rgba(13, 27, 61, 0.1);
+}
+
+.product-format-help {
+    margin: 10px 0 0;
+    font-size: 0.9rem;
+    font-weight: 800;
+}
+
+.product-format-selector:not(.is-invalid) .product-format-help {
+    color: #5f7085;
+}
+
+.product-format-selector--event {
+    margin-top: 14px;
+    padding: 14px;
+    border-radius: 18px;
+    box-shadow: none;
+}
+
+.event-product-panel-format {
+    width: 100%;
 }
 
 .woocommerce div.product form.cart div.quantity {
@@ -21083,7 +21257,8 @@ select:focus,
 }
 
 .franchise-form-grid input:not([type="radio"]):not([type="checkbox"]),
-.franchise-form-grid textarea {
+.franchise-form-grid textarea,
+.franchise-form-grid select {
     width: 100%;
     min-height: 54px;
     padding: 14px 16px;
@@ -21097,13 +21272,15 @@ select:focus,
 }
 
 .franchise-form-grid input:focus,
-.franchise-form-grid textarea:focus {
+.franchise-form-grid textarea:focus,
+.franchise-form-grid select:focus {
     border-color: var(--flow-petrol);
     box-shadow: 0 0 0 4px rgba(43, 125, 138, 0.12);
 }
 
 .franchise-form-grid input.is-invalid,
 .franchise-form-grid textarea.is-invalid,
+.franchise-form-grid select.is-invalid,
 .franchise-form-grid fieldset.is-invalid {
     border-color: #B45353;
     box-shadow: 0 0 0 4px rgba(180, 83, 83, 0.12);

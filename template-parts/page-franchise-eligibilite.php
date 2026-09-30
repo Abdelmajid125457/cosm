@@ -100,13 +100,34 @@ $faq = array(
                 <label><?php esc_html_e( 'Votre email', 'theme-perso' ); ?><input type="email" name="email" required aria-required="true"></label>
                 <label><?php esc_html_e( 'Votre téléphone', 'theme-perso' ); ?><input type="tel" name="phone" required aria-required="true"></label>
                 <label><?php esc_html_e( 'Votre ville', 'theme-perso' ); ?><input type="text" name="city" required aria-required="true"></label>
+                <label><?php esc_html_e( 'Code postal', 'theme-perso' ); ?><input type="text" name="postcode" inputmode="numeric" autocomplete="postal-code" required aria-required="true"></label>
                 <label><?php esc_html_e( 'Votre pays', 'theme-perso' ); ?><input type="text" name="country" required aria-required="true"></label>
+                <label><?php esc_html_e( 'Statut actuel', 'theme-perso' ); ?>
+                    <select name="current_status" required aria-required="true">
+                        <option value=""><?php esc_html_e( 'Sélectionner', 'theme-perso' ); ?></option>
+                        <option value="salarie"><?php esc_html_e( 'Salarié', 'theme-perso' ); ?></option>
+                        <option value="entrepreneur"><?php esc_html_e( 'Entrepreneur', 'theme-perso' ); ?></option>
+                        <option value="commercant"><?php esc_html_e( 'Commerçant', 'theme-perso' ); ?></option>
+                        <option value="investisseur"><?php esc_html_e( 'Investisseur', 'theme-perso' ); ?></option>
+                        <option value="reconversion"><?php esc_html_e( 'Reconversion professionnelle', 'theme-perso' ); ?></option>
+                        <option value="autre"><?php esc_html_e( 'Autre', 'theme-perso' ); ?></option>
+                    </select>
+                </label>
                 <fieldset>
                     <legend><?php esc_html_e( 'Disposez-vous d’un local ?', 'theme-perso' ); ?></legend>
                     <label><input type="radio" name="premises" value="yes" required aria-required="true"> <?php esc_html_e( 'Oui', 'theme-perso' ); ?></label>
                     <label><input type="radio" name="premises" value="no"> <?php esc_html_e( 'Non', 'theme-perso' ); ?></label>
                 </fieldset>
                 <label><?php esc_html_e( 'Surface du local', 'theme-perso' ); ?><input type="text" name="surface"></label>
+                <label><?php esc_html_e( 'Horizon d’ouverture', 'theme-perso' ); ?>
+                    <select name="opening_horizon" required aria-required="true">
+                        <option value=""><?php esc_html_e( 'Sélectionner', 'theme-perso' ); ?></option>
+                        <option value="moins-3-mois"><?php esc_html_e( 'Moins de 3 mois', 'theme-perso' ); ?></option>
+                        <option value="3-6-mois"><?php esc_html_e( '3 à 6 mois', 'theme-perso' ); ?></option>
+                        <option value="6-12-mois"><?php esc_html_e( '6 à 12 mois', 'theme-perso' ); ?></option>
+                        <option value="plus-12-mois"><?php esc_html_e( 'Plus de 12 mois', 'theme-perso' ); ?></option>
+                    </select>
+                </label>
                 <fieldset>
                     <legend><?php esc_html_e( 'Budget disponible', 'theme-perso' ); ?></legend>
                     <label><input type="radio" name="budget" value="low" required aria-required="true"> <?php esc_html_e( 'moins de 20 000€', 'theme-perso' ); ?></label>

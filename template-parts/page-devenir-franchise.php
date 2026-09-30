@@ -126,20 +126,95 @@ $franchise_form_notice     = function_exists( 'theme_perso_get_franchise_informa
                 <?php echo esc_html( $franchise_form_notice['message'] ); ?>
             </p>
         <?php endif; ?>
-        <form class="cosmethique-form" action="<?php echo esc_url( home_url( '/devenir-franchise/' ) ); ?>" method="post" data-franchise-info-form>
+        <form class="cosmethique-form cosmethique-form--structured franchise-btob-form" action="<?php echo esc_url( home_url( '/devenir-franchise/' ) ); ?>" method="post" data-franchise-info-form novalidate>
             <input type="hidden" name="cosmethique_form_type" value="franchise_information">
-            <label>Nom complet<input type="text" name="name" required aria-required="true"></label>
-            <label>Email<input type="email" name="email" required aria-required="true"></label>
-            <label>Téléphone<input type="tel" name="phone" required aria-required="true"></label>
-            <label>Ville souhaitée<input type="text" name="city" required aria-required="true"></label>
-            <label>Apport personnel<input type="text" name="investment" required aria-required="true"></label>
-            <label>Surface souhaitée<input type="text" name="surface" required aria-required="true"></label>
-            <label>Expérience professionnelle<textarea name="experience" rows="4" required aria-required="true"></textarea></label>
-            <label>Message<textarea name="message" rows="5" required aria-required="true"></textarea></label>
-            <label class="checkbox-label"><input type="checkbox" name="consent" required aria-required="true"> J’accepte d’être contacté au sujet de ma demande de franchise.</label>
+            <fieldset class="cosmethique-form-section">
+                <legend>Informations personnelles</legend>
+                <div class="cosmethique-form-grid">
+                    <label>Prénom<input type="text" name="first_name" autocomplete="given-name" required aria-required="true"></label>
+                    <label>Nom<input type="text" name="last_name" autocomplete="family-name" required aria-required="true"></label>
+                    <label>Email<input type="email" name="email" autocomplete="email" required aria-required="true"></label>
+                    <label>Téléphone<input type="tel" name="phone" autocomplete="tel" required aria-required="true"></label>
+                    <label>Ville<input type="text" name="city" autocomplete="address-level2" required aria-required="true"></label>
+                    <label>Code postal<input type="text" name="postcode" inputmode="numeric" autocomplete="postal-code" required aria-required="true"></label>
+                </div>
+            </fieldset>
+
+            <fieldset class="cosmethique-form-section">
+                <legend>Profil professionnel</legend>
+                <div class="cosmethique-form-grid">
+                    <label>Statut actuel
+                        <select name="current_status" required aria-required="true">
+                            <option value="">Sélectionner</option>
+                            <option value="salarie">Salarié</option>
+                            <option value="entrepreneur">Entrepreneur</option>
+                            <option value="commercant">Commerçant</option>
+                            <option value="investisseur">Investisseur</option>
+                            <option value="reconversion">Reconversion professionnelle</option>
+                            <option value="autre">Autre</option>
+                        </select>
+                    </label>
+                    <label>Expérience principale
+                        <select name="experience_area" required aria-required="true">
+                            <option value="">Sélectionner</option>
+                            <option value="commerce">Commerce</option>
+                            <option value="vente">Vente</option>
+                            <option value="beaute-cosmetique">Beauté / cosmétique</option>
+                            <option value="management">Management</option>
+                            <option value="entrepreneuriat">Entrepreneuriat</option>
+                            <option value="aucune">Aucune expérience</option>
+                        </select>
+                    </label>
+                </div>
+            </fieldset>
+
+            <fieldset class="cosmethique-form-section">
+                <legend>Projet franchise</legend>
+                <div class="cosmethique-form-grid">
+                    <label>Ville ou région souhaitée<input type="text" name="desired_area" required aria-required="true"></label>
+                    <label>Horizon d’ouverture
+                        <select name="opening_horizon" required aria-required="true">
+                            <option value="">Sélectionner</option>
+                            <option value="moins-3-mois">Moins de 3 mois</option>
+                            <option value="3-6-mois">3 à 6 mois</option>
+                            <option value="6-12-mois">6 à 12 mois</option>
+                            <option value="plus-12-mois">Plus de 12 mois</option>
+                        </select>
+                    </label>
+                    <label>Apport personnel estimé
+                        <select name="investment" required aria-required="true">
+                            <option value="">Sélectionner</option>
+                            <option value="moins-15000">Moins de 15 000 €</option>
+                            <option value="15000-30000">15 000 à 30 000 €</option>
+                            <option value="30000-50000">30 000 à 50 000 €</option>
+                            <option value="plus-50000">Plus de 50 000 €</option>
+                        </select>
+                    </label>
+                    <label>Local déjà identifié ?
+                        <select name="premises_status" required aria-required="true">
+                            <option value="">Sélectionner</option>
+                            <option value="oui">Oui</option>
+                            <option value="non">Non</option>
+                            <option value="recherche">En recherche</option>
+                        </select>
+                    </label>
+                    <label class="cosmethique-field-full">Site web ou LinkedIn si disponible<input type="url" name="website" placeholder="https://www.linkedin.com/in/..."></label>
+                </div>
+            </fieldset>
+
+            <fieldset class="cosmethique-form-section">
+                <legend>Motivation</legend>
+                <div class="cosmethique-form-grid">
+                    <label class="cosmethique-field-full">Pourquoi souhaitez-vous rejoindre COSM’ÉTHIQUE ?<textarea name="motivation" rows="4" required aria-required="true"></textarea></label>
+                    <label class="cosmethique-field-full">Quelles sont vos motivations pour ouvrir une franchise ?<textarea name="franchise_motivation" rows="4" required aria-required="true"></textarea></label>
+                    <label class="cosmethique-field-full">Message libre<textarea name="message" rows="5" required aria-required="true"></textarea></label>
+                </div>
+            </fieldset>
+
+            <label class="checkbox-label"><input type="checkbox" name="consent" required aria-required="true"> J’accepte que mes données soient utilisées pour être recontacté dans le cadre de ma demande de franchise.</label>
             <?php wp_nonce_field( 'franchise_information', 'franchise_information_nonce' ); ?>
             <?php theme_perso_security_fields( 'franchise' ); ?>
-            <button class="button button-primary" type="submit">Envoyer ma demande</button>
+            <button class="button button-primary" type="submit">Envoyer ma candidature franchise</button>
         </form>
     </div>
 </section>

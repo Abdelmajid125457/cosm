@@ -238,7 +238,83 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
+    const getStructuredFormStatus = (form) => {
+        let status = form.querySelector('[data-form-status]');
+
+        if (!status) {
+            status = document.createElement('p');
+            status.className = 'franchise-form-status';
+            status.dataset.formStatus = 'true';
+            status.setAttribute('role', 'alert');
+            status.setAttribute('aria-live', 'polite');
+            form.insertBefore(status, form.firstElementChild?.nextSibling || form.firstChild);
+        }
+
+        return status;
+    };
+
+    const validateStructuredForm = (form) => {
+        if (!form?.matches?.('.cosmethique-form--structured')) {
+            return true;
+        }
+
+        const requiredFields = Array.from(form.querySelectorAll('input[required], select[required], textarea[required]'))
+            .filter((field) => !field.disabled && field.type !== 'hidden');
+        const status = getStructuredFormStatus(form);
+        let firstInvalid = null;
+
+        requiredFields.forEach((field) => {
+            const isCheckbox = field.type === 'checkbox';
+            const hasValue = isCheckbox ? field.checked : Boolean((field.value || '').trim());
+            const valid = hasValue && field.checkValidity();
+
+            field.classList.toggle('is-invalid', !valid);
+            field.setAttribute('aria-invalid', valid ? 'false' : 'true');
+
+            if (!valid && !firstInvalid) {
+                firstInvalid = field;
+            }
+        });
+
+        if (firstInvalid) {
+            status.textContent = translateUi('form_error', 'Merci de vérifier les champs indiqués avant d’envoyer votre demande.');
+            status.classList.add('is-error');
+            status.classList.remove('is-success');
+            firstInvalid.focus({ preventScroll: false });
+            return false;
+        }
+
+        status.textContent = '';
+        status.classList.remove('is-error', 'is-success');
+        return true;
+    };
+
+    document.querySelectorAll('.cosmethique-form--structured input, .cosmethique-form--structured select, .cosmethique-form--structured textarea').forEach((field) => {
+        const syncFieldState = () => {
+            if (!field.classList.contains('is-invalid')) {
+                return;
+            }
+
+            const isCheckbox = field.type === 'checkbox';
+            const valid = (isCheckbox ? field.checked : Boolean((field.value || '').trim())) && field.checkValidity();
+            if (valid) {
+                field.classList.remove('is-invalid');
+                field.setAttribute('aria-invalid', 'false');
+            }
+        };
+
+        field.addEventListener('input', syncFieldState);
+        field.addEventListener('change', syncFieldState);
+    });
+
     document.addEventListener('submit', (event) => {
+        const structuredForm = event.target.closest('form.cosmethique-form--structured');
+        if (structuredForm && !validateStructuredForm(structuredForm)) {
+            event.preventDefault();
+            event.stopImmediatePropagation();
+            return;
+        }
+
         const cartForm = event.target.closest('form.cart');
         if (cartForm) {
             const button = cartForm.querySelector('[name="add-to-cart"], .single_add_to_cart_button');
@@ -3256,7 +3332,7 @@ Thomas Bernard`,
 
     document.querySelectorAll('[data-franchise-application-form]').forEach((form) => {
         const status = form.querySelector('.franchise-form-status');
-        const requiredFields = Array.from(form.querySelectorAll('input[required], textarea[required]'));
+        const requiredFields = Array.from(form.querySelectorAll('input[required], select[required], textarea[required]'));
 
         requiredFields.forEach((field) => {
             field.addEventListener('input', () => {
@@ -3970,6 +4046,7 @@ Thomas Bernard`,
         const productPanelBenefits = productPanel?.querySelector('[data-event-product-panel-benefits]');
         const productPanelUsage = productPanel?.querySelector('[data-event-product-panel-usage]');
         const productPanelPrice = productPanel?.querySelector('[data-event-product-panel-price]');
+        const productPanelFormat = productPanel?.querySelector('[data-event-product-panel-format]');
         const productPanelQuantity = productPanel?.querySelector('[data-event-product-quantity]');
         const productPanelAdd = productPanel?.querySelector('[data-event-product-add]');
         let activeEventProductCard = null;
@@ -4151,7 +4228,7 @@ Thomas Bernard`,
             link.classList.toggle('add_to_cart_button', Boolean(productId));
         };
 
-        const buildEventAddUrl = (baseUrl, quantity) => {
+        const buildEventAddUrl = (baseUrl, quantity, format = '') => {
             if (!baseUrl) {
                 return '#';
             }
@@ -4159,10 +4236,43 @@ Thomas Bernard`,
             try {
                 const url = new URL(baseUrl, window.location.href);
                 url.searchParams.set('quantity', String(quantity));
+                if (format) {
+                    url.searchParams.set('cosmethique_product_format', String(format));
+                }
                 return url.toString();
             } catch (error) {
                 return baseUrl;
             }
+        };
+
+        const getEventSelectedFormat = (link, showError = false) => {
+            const isPanelLink = Boolean(link?.matches?.('[data-event-product-add]'));
+            const scope = isPanelLink ? productPanel : link?.closest?.('[data-event-product-card]');
+            const card = isPanelLink ? activeEventProductCard : scope;
+
+            if (!card || card.dataset.eventRequiresFormat !== 'true') {
+                return '';
+            }
+
+            const formatScope = isPanelLink ? productPanelFormat : scope.querySelector('[data-event-format-selector]');
+            const selected = formatScope?.querySelector?.('input[type="radio"]:checked');
+            const message = formatScope?.querySelector?.('[data-event-format-message]');
+
+            if (!selected) {
+                if (showError && message) {
+                    message.hidden = false;
+                    message.setAttribute('role', 'alert');
+                }
+                formatScope?.classList?.add('is-invalid');
+                formatScope?.querySelector?.('input[type="radio"]')?.focus?.();
+                return null;
+            }
+
+            if (message) {
+                message.hidden = true;
+            }
+            formatScope?.classList?.remove('is-invalid');
+            return selected.value;
         };
 
         const setEventProductQuantity = (quantity) => {
@@ -4171,9 +4281,10 @@ Thomas Bernard`,
                 productPanelQuantity.value = String(nextQuantity);
             }
             if (productPanelAdd) {
+                const selectedFormat = getEventSelectedFormat(productPanelAdd, false) || '';
                 productPanelAdd.dataset.quantity = String(nextQuantity);
                 productPanelAdd.dataset.trackingItemQuantity = String(nextQuantity);
-                productPanelAdd.setAttribute('href', buildEventAddUrl(productPanelAdd.dataset.baseAddUrl || productPanelAdd.href, nextQuantity));
+                productPanelAdd.setAttribute('href', buildEventAddUrl(productPanelAdd.dataset.baseAddUrl || productPanelAdd.href, nextQuantity, selectedFormat));
             }
         };
 
@@ -4353,6 +4464,20 @@ Thomas Bernard`,
             renderEventProductGallery(gallery, title, initialPanelView);
 
             fillEventProductLink(productPanelAdd, card);
+            if (productPanelFormat) {
+                const sourceFormat = card.querySelector('[data-event-format-selector]');
+                if (card.dataset.eventRequiresFormat === 'true' && sourceFormat) {
+                    productPanelFormat.innerHTML = sourceFormat.outerHTML.replaceAll(`event_product_format_${productId}`, `event_panel_product_format_${productId}`);
+                    productPanelFormat.hidden = false;
+                    productPanelFormat.querySelectorAll('input[type="radio"]').forEach((input) => {
+                        input.checked = false;
+                        input.addEventListener('change', () => setEventProductQuantity(productPanelQuantity?.value || 1));
+                    });
+                } else {
+                    productPanelFormat.innerHTML = '';
+                    productPanelFormat.hidden = true;
+                }
+            }
 
             setEventProductQuantity(1);
             productPanel.hidden = false;
@@ -4400,6 +4525,17 @@ Thomas Bernard`,
             });
         });
 
+        eventPage.querySelectorAll('[data-event-format-selector] input[type="radio"]').forEach((input) => {
+            input.addEventListener('change', () => {
+                const selector = input.closest('[data-event-format-selector]');
+                selector?.classList.remove('is-invalid');
+                const message = selector?.querySelector('[data-event-format-message]');
+                if (message) {
+                    message.hidden = true;
+                }
+            });
+        });
+
         productPanel?.querySelectorAll('[data-event-product-panel-close]').forEach((button) => {
             button.addEventListener('click', closeEventProductPanel);
         });
@@ -4443,15 +4579,20 @@ Thomas Bernard`,
         const addEventProductToCart = (link) => {
             const productId = link?.dataset?.product_id || '';
             const quantity = Math.max(1, Number(link?.dataset?.quantity || 1) || 1);
+            const selectedFormat = getEventSelectedFormat(link, true);
 
             if (!productId || productId === '0') {
+                return;
+            }
+
+            if (selectedFormat === null) {
                 return;
             }
 
             link.classList.add('is-loading');
             link.setAttribute('aria-busy', 'true');
 
-            const body = `product_id=${encodeURIComponent(productId)}&quantity=${encodeURIComponent(quantity)}`;
+            const body = `product_id=${encodeURIComponent(productId)}&quantity=${encodeURIComponent(quantity)}${selectedFormat ? `&cosmethique_product_format=${encodeURIComponent(selectedFormat)}` : ''}`;
             const request = new XMLHttpRequest();
             request.open('POST', `${window.location.origin}/?wc-ajax=add_to_cart`, true);
             request.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded; charset=UTF-8');

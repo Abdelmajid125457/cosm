@@ -304,6 +304,7 @@ foreach ( $botanica_catalog as $product_title => $product_data ) {
             'add_url'        => $add_url,
             'price_html'     => $price_html,
             'purchasable'    => $wc_product instanceof WC_Product && $wc_product->is_purchasable() && $wc_product->is_in_stock(),
+            'requires_format' => $wc_product instanceof WC_Product && function_exists( 'theme_perso_product_requires_format' ) ? theme_perso_product_requires_format( $wc_product ) : false,
             'tracking_attrs' => $wc_product instanceof WC_Product && function_exists( 'theme_perso_tracking_item_attributes' ) ? theme_perso_tracking_item_attributes( $wc_product ) : '',
         )
     );
@@ -500,6 +501,7 @@ $timeline = array(
                     data-event-product-url="<?php echo esc_url( $product['product_url'] ); ?>"
                     data-event-add-url="<?php echo esc_url( $product['add_url'] ); ?>"
                     data-event-product-id="<?php echo esc_attr( (string) $product['product_id'] ); ?>"
+                    data-event-requires-format="<?php echo $product['requires_format'] ? 'true' : 'false'; ?>"
                 >
                     <span class="event-botanica-badge"><?php echo esc_html( $product['badge'] ); ?></span>
                     <button class="event-botanica-image-button" type="button" data-event-product-open aria-label="<?php echo esc_attr( sprintf( __( 'Découvrir %s', 'theme-perso' ), $product['title'] ) ); ?>">
@@ -539,6 +541,23 @@ $timeline = array(
                         <p class="event-botanica-category"><?php echo esc_html( $product['category'] ); ?></p>
                         <h3><?php echo esc_html( $product['title'] ); ?></h3>
                         <p><?php echo esc_html( $product['description'] ); ?></p>
+                        <?php if ( $product['requires_format'] && function_exists( 'theme_perso_product_format_options' ) ) : ?>
+                            <fieldset class="product-format-selector product-format-selector--event" data-event-format-selector>
+                                <legend><?php esc_html_e( 'Contenance', 'theme-perso' ); ?></legend>
+                                <div class="product-format-options">
+                                    <?php foreach ( theme_perso_product_format_options() as $format_value => $format_option ) : ?>
+                                        <label class="product-format-option">
+                                            <input type="radio" name="event_product_format_<?php echo esc_attr( (string) $product['product_id'] ); ?>" value="<?php echo esc_attr( $format_value ); ?>">
+                                            <span>
+                                                <strong><?php echo esc_html( $format_option['label'] ); ?></strong>
+                                                <small><?php echo esc_html( $format_option['description'] ); ?></small>
+                                            </span>
+                                        </label>
+                                    <?php endforeach; ?>
+                                </div>
+                                <p class="product-format-help" data-event-format-message hidden><?php esc_html_e( 'Veuillez choisir une contenance.', 'theme-perso' ); ?></p>
+                            </fieldset>
+                        <?php endif; ?>
                         <div class="event-botanica-card-footer">
                             <strong><?php echo wp_kses_post( $product['price_html'] ); ?></strong>
                             <button class="button button-outline" type="button" data-event-product-open><?php esc_html_e( 'Découvrir', 'theme-perso' ); ?></button>
@@ -587,6 +606,7 @@ $timeline = array(
                 </dl>
 
                 <div class="event-product-panel-actions">
+                    <div class="event-product-panel-format" data-event-product-panel-format hidden></div>
                     <div class="event-product-quantity" aria-label="<?php esc_attr_e( 'Quantité', 'theme-perso' ); ?>">
                         <button type="button" data-event-product-qty-minus aria-label="<?php esc_attr_e( 'Réduire la quantité', 'theme-perso' ); ?>">-</button>
                         <input type="number" min="1" max="12" value="1" data-event-product-quantity aria-label="<?php esc_attr_e( 'Quantité du produit', 'theme-perso' ); ?>">

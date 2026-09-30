@@ -1062,6 +1062,99 @@ function theme_perso_get_franchise_information_notice() {
     return null;
 }
 
+function theme_perso_get_contact_form_notice() {
+    if ( ! empty( $GLOBALS['theme_perso_contact_form_notice'] ) && is_array( $GLOBALS['theme_perso_contact_form_notice'] ) ) {
+        return $GLOBALS['theme_perso_contact_form_notice'];
+    }
+
+    if ( isset( $_GET['contact'] ) && 'success' === sanitize_key( wp_unslash( $_GET['contact'] ) ) ) { // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+        return array(
+            'type'    => 'success',
+            'message' => __( 'Merci, votre message a bien été envoyé. Notre équipe vous répondra prochainement.', 'theme-perso' ),
+        );
+    }
+
+    return null;
+}
+
+function theme_perso_handle_contact_form() {
+    if ( ! is_page( 'contact' ) || 'POST' !== ( $_SERVER['REQUEST_METHOD'] ?? '' ) ) {
+        return;
+    }
+
+    $form_type = isset( $_POST['cosmethique_form_type'] ) ? sanitize_key( wp_unslash( $_POST['cosmethique_form_type'] ) ) : ''; // phpcs:ignore WordPress.Security.NonceVerification.Missing
+    if ( 'contact_general' !== $form_type ) {
+        return;
+    }
+
+    $set_error = static function ( $message ) {
+        $GLOBALS['theme_perso_contact_form_notice'] = array(
+            'type'    => 'error',
+            'message' => $message,
+        );
+    };
+
+    $nonce = isset( $_POST['contact_general_nonce'] ) ? sanitize_text_field( wp_unslash( $_POST['contact_general_nonce'] ) ) : '';
+    if ( ! $nonce || ! wp_verify_nonce( $nonce, 'contact_general' ) ) {
+        $set_error( __( 'Votre session a expiré. Merci de réessayer.', 'theme-perso' ) );
+        return;
+    }
+
+    if ( theme_perso_is_honeypot_triggered() || ! theme_perso_verify_recaptcha_submission( 'contact' ) ) {
+        $set_error( __( 'Votre message n’a pas pu être validé. Merci de réessayer.', 'theme-perso' ) );
+        return;
+    }
+
+    $required_fields = array(
+        'first_name'   => __( 'Prénom', 'theme-perso' ),
+        'last_name'    => __( 'Nom', 'theme-perso' ),
+        'email'        => __( 'Email', 'theme-perso' ),
+        'subject'      => __( 'Sujet de la demande', 'theme-perso' ),
+        'request_type' => __( 'Type de demande', 'theme-perso' ),
+        'message'      => __( 'Message', 'theme-perso' ),
+    );
+
+    $submission = array();
+    foreach ( $required_fields as $field => $label ) {
+        $value = isset( $_POST[ $field ] ) ? trim( sanitize_textarea_field( wp_unslash( $_POST[ $field ] ) ) ) : '';
+        if ( '' === $value ) {
+            $set_error( sprintf( __( 'Merci de compléter le champ : %s.', 'theme-perso' ), $label ) );
+            return;
+        }
+
+        $submission[ $field ] = $value;
+    }
+
+    $submission['email'] = sanitize_email( $submission['email'] );
+    if ( ! is_email( $submission['email'] ) ) {
+        $set_error( __( 'Merci d’indiquer une adresse email valide.', 'theme-perso' ) );
+        return;
+    }
+
+    $submission['phone'] = isset( $_POST['phone'] ) ? sanitize_text_field( wp_unslash( $_POST['phone'] ) ) : '';
+    if ( $submission['phone'] && ! preg_match( '/^[0-9 +().-]{6,20}$/', $submission['phone'] ) ) {
+        $set_error( __( 'Merci d’indiquer un numéro de téléphone cohérent.', 'theme-perso' ) );
+        return;
+    }
+
+    $allowed_types = array( 'service-client', 'commande', 'produit', 'partenariat', 'presse', 'franchise', 'autre' );
+    if ( ! in_array( $submission['request_type'], $allowed_types, true ) ) {
+        $set_error( __( 'Merci de choisir un type de demande valide.', 'theme-perso' ) );
+        return;
+    }
+
+    if ( empty( $_POST['consent'] ) ) { // phpcs:ignore WordPress.Security.NonceVerification.Missing
+        $set_error( __( 'Merci d’accepter le traitement de vos données pour être recontacté.', 'theme-perso' ) );
+        return;
+    }
+
+    do_action( 'theme_perso_contact_form_submitted', $submission );
+
+    wp_safe_redirect( add_query_arg( 'contact', 'success', home_url( '/contact/' ) ), 303 );
+    exit;
+}
+add_action( 'template_redirect', 'theme_perso_handle_contact_form', 20 );
+
 function theme_perso_get_clean_request_path() {
     $request_uri = isset( $_SERVER['REQUEST_URI'] ) ? wp_unslash( $_SERVER['REQUEST_URI'] ) : ''; // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
     $request_uri = is_string( $request_uri ) ? $request_uri : '';
@@ -1124,14 +1217,21 @@ function theme_perso_handle_franchise_information_form() {
     }
 
     $required_fields = array(
-        'name'       => __( 'Nom complet', 'theme-perso' ),
-        'email'      => __( 'Email', 'theme-perso' ),
-        'phone'      => __( 'Téléphone', 'theme-perso' ),
-        'city'       => __( 'Ville souhaitée', 'theme-perso' ),
-        'investment' => __( 'Apport personnel', 'theme-perso' ),
-        'surface'    => __( 'Surface souhaitée', 'theme-perso' ),
-        'experience' => __( 'Expérience professionnelle', 'theme-perso' ),
-        'message'    => __( 'Message', 'theme-perso' ),
+        'first_name'            => __( 'Prénom', 'theme-perso' ),
+        'last_name'             => __( 'Nom', 'theme-perso' ),
+        'email'                 => __( 'Email', 'theme-perso' ),
+        'phone'                 => __( 'Téléphone', 'theme-perso' ),
+        'city'                  => __( 'Ville', 'theme-perso' ),
+        'postcode'              => __( 'Code postal', 'theme-perso' ),
+        'current_status'        => __( 'Statut actuel', 'theme-perso' ),
+        'experience_area'       => __( 'Expérience principale', 'theme-perso' ),
+        'desired_area'          => __( 'Ville ou région souhaitée', 'theme-perso' ),
+        'opening_horizon'       => __( 'Horizon d’ouverture', 'theme-perso' ),
+        'investment'            => __( 'Apport personnel estimé', 'theme-perso' ),
+        'premises_status'       => __( 'Local déjà identifié', 'theme-perso' ),
+        'motivation'            => __( 'Pourquoi rejoindre COSM’ÉTHIQUE ?', 'theme-perso' ),
+        'franchise_motivation'  => __( 'Motivations franchise', 'theme-perso' ),
+        'message'               => __( 'Message libre', 'theme-perso' ),
     );
 
     $submission = array();
@@ -1150,6 +1250,28 @@ function theme_perso_handle_franchise_information_form() {
         $set_error( __( 'Merci d’indiquer une adresse email valide.', 'theme-perso' ) );
         return;
     }
+
+    if ( ! preg_match( '/^[0-9 +().-]{6,20}$/', $submission['phone'] ) ) {
+        $set_error( __( 'Merci d’indiquer un numéro de téléphone cohérent.', 'theme-perso' ) );
+        return;
+    }
+
+    $allowed_values = array(
+        'current_status'  => array( 'salarie', 'entrepreneur', 'commercant', 'investisseur', 'reconversion', 'autre' ),
+        'experience_area' => array( 'commerce', 'vente', 'beaute-cosmetique', 'management', 'entrepreneuriat', 'aucune' ),
+        'opening_horizon' => array( 'moins-3-mois', '3-6-mois', '6-12-mois', 'plus-12-mois' ),
+        'investment'      => array( 'moins-15000', '15000-30000', '30000-50000', 'plus-50000' ),
+        'premises_status' => array( 'oui', 'non', 'recherche' ),
+    );
+
+    foreach ( $allowed_values as $field => $allowed ) {
+        if ( ! in_array( $submission[ $field ], $allowed, true ) ) {
+            $set_error( sprintf( __( 'Merci de choisir une option valide pour : %s.', 'theme-perso' ), $required_fields[ $field ] ) );
+            return;
+        }
+    }
+
+    $submission['website'] = isset( $_POST['website'] ) ? esc_url_raw( wp_unslash( $_POST['website'] ) ) : '';
 
     if ( empty( $_POST['consent'] ) ) { // phpcs:ignore WordPress.Security.NonceVerification.Missing
         $set_error( __( 'Merci d’accepter d’être contacté au sujet de votre demande.', 'theme-perso' ) );
@@ -5434,6 +5556,235 @@ function theme_perso_woocommerce_product_image( $image, $product, $size, $attr )
 }
 add_filter( 'woocommerce_product_get_image', 'theme_perso_woocommerce_product_image', 10, 4 );
 
+function theme_perso_product_format_options() {
+    return array(
+        '50'  => array(
+            'label'       => __( '50 ml', 'theme-perso' ),
+            'description' => __( 'Format découverte', 'theme-perso' ),
+            'multiplier'  => 1,
+        ),
+        '100' => array(
+            'label'       => __( '100 ml', 'theme-perso' ),
+            'description' => __( 'Format standard', 'theme-perso' ),
+            'multiplier'  => 1.65,
+        ),
+    );
+}
+
+function theme_perso_normalize_product_format( $format ) {
+    $format  = preg_replace( '/[^0-9]/', '', (string) $format );
+    $options = theme_perso_product_format_options();
+
+    return isset( $options[ $format ] ) ? $format : '';
+}
+
+function theme_perso_product_requires_format( $product ) {
+    if ( is_numeric( $product ) && function_exists( 'wc_get_product' ) ) {
+        $product = wc_get_product( absint( $product ) );
+    }
+
+    if ( ! $product instanceof WC_Product ) {
+        return false;
+    }
+
+    $name     = strtolower( remove_accents( $product->get_name() ) );
+    $excluded = array( 'accessoire', 'brosse', 'peigne', 'trousse', 'gua sha', 'roller', 'eponge', 'konjac', 'pack', 'coffret', 'set premium' );
+
+    foreach ( $excluded as $keyword ) {
+        if ( false !== strpos( $name, $keyword ) ) {
+            return false;
+        }
+    }
+
+    $terms = get_the_terms( $product->get_id(), 'product_cat' );
+    if ( ! empty( $terms ) && ! is_wp_error( $terms ) ) {
+        foreach ( $terms as $term ) {
+            $term_slug = strtolower( remove_accents( $term->slug ) );
+            $term_name = strtolower( remove_accents( $term->name ) );
+
+            if ( false !== strpos( $term_slug, 'accessoire' ) || false !== strpos( $term_slug, 'pack' ) || false !== strpos( $term_name, 'accessoire' ) || false !== strpos( $term_name, 'pack' ) ) {
+                return false;
+            }
+        }
+    }
+
+    $included = array( 'creme', 'serum', 'huile', 'masque', 'baume', 'shampooing', 'shampoing', 'gel', 'lotion', 'lait', 'beurre', 'gommage', 'deodorant', 'spray', 'apres-shampooing', 'apres-shampoing', 'capillaire', 'botanica', 'soin' );
+
+    foreach ( $included as $keyword ) {
+        if ( false !== strpos( $name, $keyword ) ) {
+            return true;
+        }
+    }
+
+    return false;
+}
+
+function theme_perso_product_format_label( $format ) {
+    $format  = theme_perso_normalize_product_format( $format );
+    $options = theme_perso_product_format_options();
+
+    if ( ! isset( $options[ $format ] ) ) {
+        return '';
+    }
+
+    return $options[ $format ]['label'] . ' — ' . $options[ $format ]['description'];
+}
+
+function theme_perso_product_format_price( $product, $format ) {
+    if ( ! $product instanceof WC_Product ) {
+        return 0;
+    }
+
+    $format  = theme_perso_normalize_product_format( $format );
+    $options = theme_perso_product_format_options();
+    $base    = (float) $product->get_price();
+
+    if ( ! $base || ! isset( $options[ $format ] ) ) {
+        return $base;
+    }
+
+    return round( $base * (float) $options[ $format ]['multiplier'], 2 );
+}
+
+function theme_perso_render_product_format_selector( $selected_product = null, $context = 'single' ) {
+    if ( ! $selected_product instanceof WC_Product ) {
+        global $product;
+        $selected_product = $product;
+    }
+
+    if ( ! $selected_product instanceof WC_Product || ! theme_perso_product_requires_format( $selected_product ) ) {
+        return;
+    }
+
+    $options    = theme_perso_product_format_options();
+    $field_id   = 'cosmethique-product-format-' . $context . '-' . $selected_product->get_id();
+    $message_id = $field_id . '-hint';
+    ?>
+    <fieldset class="product-format-selector product-format-selector--<?php echo esc_attr( $context ); ?>" aria-describedby="<?php echo esc_attr( $message_id ); ?>" data-product-format-selector>
+        <legend><?php esc_html_e( 'Choisir la contenance', 'theme-perso' ); ?> <span aria-hidden="true">*</span></legend>
+        <div class="product-format-options">
+            <?php foreach ( $options as $value => $option ) : ?>
+                <?php $option_id = $field_id . '-' . $value; ?>
+                <label class="product-format-option" for="<?php echo esc_attr( $option_id ); ?>">
+                    <input id="<?php echo esc_attr( $option_id ); ?>" type="radio" name="cosmethique_product_format" value="<?php echo esc_attr( $value ); ?>" required aria-required="true">
+                    <span>
+                        <strong><?php echo esc_html( $option['label'] ); ?></strong>
+                        <small><?php echo esc_html( $option['description'] ); ?></small>
+                        <em><?php echo wp_kses_post( wc_price( theme_perso_product_format_price( $selected_product, $value ) ) ); ?></em>
+                    </span>
+                </label>
+            <?php endforeach; ?>
+        </div>
+        <p id="<?php echo esc_attr( $message_id ); ?>" class="product-format-help" data-product-format-message><?php esc_html_e( 'Veuillez choisir une contenance avant d’ajouter ce produit au panier.', 'theme-perso' ); ?></p>
+    </fieldset>
+    <?php
+}
+add_action( 'woocommerce_before_add_to_cart_button', 'theme_perso_render_product_format_selector', 8 );
+
+function theme_perso_validate_product_format_before_cart( $passed, $product_id ) {
+    $product = function_exists( 'wc_get_product' ) ? wc_get_product( $product_id ) : null;
+
+    if ( ! $product instanceof WC_Product || ! theme_perso_product_requires_format( $product ) ) {
+        return $passed;
+    }
+
+    $format = isset( $_REQUEST['cosmethique_product_format'] ) ? theme_perso_normalize_product_format( wp_unslash( $_REQUEST['cosmethique_product_format'] ) ) : ''; // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+
+    if ( ! $format ) {
+        wc_add_notice( __( 'Veuillez choisir une contenance avant d’ajouter ce produit au panier.', 'theme-perso' ), 'error' );
+        return false;
+    }
+
+    return $passed;
+}
+add_filter( 'woocommerce_add_to_cart_validation', 'theme_perso_validate_product_format_before_cart', 10, 2 );
+
+function theme_perso_add_product_format_cart_item_data( $cart_item_data, $product_id ) {
+    $product = function_exists( 'wc_get_product' ) ? wc_get_product( $product_id ) : null;
+
+    if ( ! $product instanceof WC_Product || ! theme_perso_product_requires_format( $product ) ) {
+        return $cart_item_data;
+    }
+
+    $format = isset( $_REQUEST['cosmethique_product_format'] ) ? theme_perso_normalize_product_format( wp_unslash( $_REQUEST['cosmethique_product_format'] ) ) : ''; // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+
+    if ( ! $format ) {
+        return $cart_item_data;
+    }
+
+    $cart_item_data['cosmethique_product_format']       = $format;
+    $cart_item_data['cosmethique_product_format_label'] = theme_perso_product_format_label( $format );
+    $cart_item_data['cosmethique_base_price']           = (float) $product->get_price();
+    $cart_item_data['unique_key']                       = md5( $product_id . '|' . $format . '|' . microtime( true ) );
+
+    return $cart_item_data;
+}
+add_filter( 'woocommerce_add_cart_item_data', 'theme_perso_add_product_format_cart_item_data', 10, 2 );
+
+function theme_perso_apply_product_format_cart_price( $cart ) {
+    if ( is_admin() && ! defined( 'DOING_AJAX' ) ) {
+        return;
+    }
+
+    if ( ! $cart || did_action( 'woocommerce_before_calculate_totals' ) > 1 ) {
+        return;
+    }
+
+    $options = theme_perso_product_format_options();
+
+    foreach ( $cart->get_cart() as $cart_item ) {
+        if ( empty( $cart_item['cosmethique_product_format'] ) || empty( $cart_item['data'] ) || ! $cart_item['data'] instanceof WC_Product ) {
+            continue;
+        }
+
+        $format = theme_perso_normalize_product_format( $cart_item['cosmethique_product_format'] );
+        if ( ! isset( $options[ $format ] ) ) {
+            continue;
+        }
+
+        $base_price = isset( $cart_item['cosmethique_base_price'] ) ? (float) $cart_item['cosmethique_base_price'] : (float) $cart_item['data']->get_price();
+        $cart_item['data']->set_price( round( $base_price * (float) $options[ $format ]['multiplier'], 2 ) );
+    }
+}
+add_action( 'woocommerce_before_calculate_totals', 'theme_perso_apply_product_format_cart_price', 20 );
+
+function theme_perso_display_product_format_cart_item_data( $item_data, $cart_item ) {
+    if ( empty( $cart_item['cosmethique_product_format_label'] ) ) {
+        return $item_data;
+    }
+
+    $item_data[] = array(
+        'key'   => __( 'Contenance', 'theme-perso' ),
+        'value' => wc_clean( $cart_item['cosmethique_product_format_label'] ),
+    );
+
+    return $item_data;
+}
+add_filter( 'woocommerce_get_item_data', 'theme_perso_display_product_format_cart_item_data', 10, 2 );
+
+function theme_perso_save_product_format_order_item_meta( $item, $cart_item_key, $values ) {
+    if ( empty( $values['cosmethique_product_format_label'] ) ) {
+        return;
+    }
+
+    $item->add_meta_data( __( 'Contenance', 'theme-perso' ), wc_clean( $values['cosmethique_product_format_label'] ), true );
+}
+add_action( 'woocommerce_checkout_create_order_line_item', 'theme_perso_save_product_format_order_item_meta', 10, 3 );
+
+function theme_perso_product_format_loop_add_to_cart_link( $html, $product ) {
+    if ( ! $product instanceof WC_Product || ! theme_perso_product_requires_format( $product ) ) {
+        return $html;
+    }
+
+    return sprintf(
+        '<a href="%1$s" class="button product_type_simple product-format-required-link" aria-label="%2$s">%3$s</a>',
+        esc_url( get_permalink( $product->get_id() ) ),
+        esc_attr( sprintf( __( 'Choisir la contenance de %s', 'theme-perso' ), $product->get_name() ) ),
+        esc_html__( 'Choisir le format', 'theme-perso' )
+    );
+}
+add_filter( 'woocommerce_loop_add_to_cart_link', 'theme_perso_product_format_loop_add_to_cart_link', 20, 2 );
+
 function theme_perso_apply_product_coupon() {
     if ( ! class_exists( 'WooCommerce' ) || empty( $_POST['theme_perso_coupon_nonce'] ) ) {
         return;
@@ -5480,7 +5831,13 @@ function theme_perso_buy_now_product() {
         return;
     }
 
-    WC()->cart->add_to_cart( $product_id, max( 1, $quantity ) );
+    $added = WC()->cart->add_to_cart( $product_id, max( 1, $quantity ) );
+
+    if ( ! $added ) {
+        wp_safe_redirect( get_permalink( $product_id ) );
+        exit;
+    }
+
     wp_safe_redirect( wc_get_checkout_url() );
     exit;
 }
