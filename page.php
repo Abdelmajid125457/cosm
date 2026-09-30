@@ -18,7 +18,9 @@ get_header();
         $is_cart_page      = function_exists( 'is_cart' ) && is_cart();
         $is_checkout_page  = function_exists( 'is_checkout' ) && is_checkout() && ( ! function_exists( 'is_order_received_page' ) || ! is_order_received_page() ) && ( ! function_exists( 'is_checkout_pay_page' ) || ! is_checkout_pay_page() );
         $institutional_slugs = array( 'engagements', 'ingredients', 'qualite', 'boutiques', 'faq', 'avis-clients' );
+        $legal_slugs       = array( 'mentions-legales', 'cgv', 'cgu', 'politique-de-confidentialite', 'politique-de-cookies' );
         $is_institutional_page = in_array( $slug, $institutional_slugs, true );
+        $is_legal_page     = in_array( $slug, $legal_slugs, true );
         $is_franchise_child = in_array( $page_uri, array( 'franchise/formation', 'franchise/eligibilite', 'franchise/candidature', 'franchise/confirmation' ), true );
         $has_custom_hero   = in_array( $slug, array( 'diagnostic', 'mon-compte', 'plan-du-site', 'recrutement', 'evenement' ), true ) || $is_franchise_child || $is_cart_page || $is_checkout_page || $is_institutional_page;
         $is_compact_hero   = in_array( $slug, array( 'contact', 'devenir-franchise' ), true );
@@ -41,6 +43,8 @@ get_header();
             $content_classes = 'page-content-wrap page-content-wrap--cart';
         } elseif ( $is_checkout_page ) {
             $content_classes = 'page-content-wrap page-content-wrap--checkout';
+        } elseif ( $is_legal_page ) {
+            $content_classes = 'container page-content-wrap page-content-wrap--legal page-content-wrap--legal-' . sanitize_html_class( $slug );
         } else {
             $content_classes = 'container page-content-wrap' . ( $is_compact_hero ? ' page-content-wrap--compact' : '' );
         }
@@ -84,6 +88,8 @@ get_header();
                     } elseif ( $is_institutional_page ) {
                         get_template_part( 'template-parts/page', 'institutionnel', array( 'slug' => $slug ) );
                     } elseif ( in_array( $slug, array( 'qui-sommes-nous', 'mon-compte' ), true ) ) {
+                        get_template_part( 'template-parts/page', $slug );
+                    } elseif ( $is_legal_page ) {
                         get_template_part( 'template-parts/page', $slug );
                     } elseif ( trim( get_the_content() ) ) {
                         the_content();

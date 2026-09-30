@@ -1373,6 +1373,47 @@ function theme_perso_body_classes( $classes ) {
 }
 add_filter( 'body_class', 'theme_perso_body_classes' );
 
+function theme_perso_legal_seo_map() {
+    return array(
+        'mentions-legales' => array(
+            'short_title' => 'Mentions légales',
+            'title'       => 'Mentions légales | COSM’ÉTHIQUE',
+            'description' => 'Consultez les informations légales de COSM’ÉTHIQUE : éditeur, hébergeur, propriété intellectuelle, responsabilité et statut de projet étudiant fictif.',
+        ),
+        'cgv' => array(
+            'short_title' => 'Conditions générales de vente',
+            'title'       => 'Conditions générales de vente | COSM’ÉTHIQUE',
+            'description' => 'Découvrez les conditions générales de vente COSM’ÉTHIQUE : produits, prix, commande, paiement simulé, livraison, rétractation et garanties.',
+        ),
+        'cgu' => array(
+            'short_title' => 'Conditions générales d’utilisation',
+            'title'       => 'Conditions générales d’utilisation | COSM’ÉTHIQUE',
+            'description' => 'Consultez les conditions générales d’utilisation du site COSM’ÉTHIQUE : accès, compte client, contenus, sécurité et règles d’usage.',
+        ),
+        'politique-de-confidentialite' => array(
+            'short_title' => 'Politique de confidentialité',
+            'title'       => 'Politique de confidentialité | COSM’ÉTHIQUE',
+            'description' => 'Découvrez comment COSM’ÉTHIQUE présente la collecte, l’utilisation, la conservation et les droits RGPD liés aux données personnelles.',
+        ),
+        'politique-de-cookies' => array(
+            'short_title' => 'Politique de cookies',
+            'title'       => 'Politique de cookies | COSM’ÉTHIQUE',
+            'description' => 'Comprenez l’utilisation des cookies sur COSM’ÉTHIQUE et gérez vos préférences : nécessaires, analytiques et marketing.',
+        ),
+    );
+}
+
+function theme_perso_current_legal_seo() {
+    if ( is_admin() || ! is_page() ) {
+        return null;
+    }
+
+    $slug = get_post_field( 'post_name', get_queried_object_id() );
+    $map  = theme_perso_legal_seo_map();
+
+    return isset( $map[ $slug ] ) ? $map[ $slug ] : null;
+}
+
 function theme_perso_seo_meta_description() {
     if ( defined( 'WPSEO_VERSION' ) || defined( 'RANK_MATH_VERSION' ) || is_admin() ) {
         return;
@@ -1380,10 +1421,13 @@ function theme_perso_seo_meta_description() {
 
     $description = get_bloginfo( 'description' );
 
-    $page_uri = is_page() ? get_page_uri( get_queried_object_id() ) : '';
+    $page_uri  = is_page() ? get_page_uri( get_queried_object_id() ) : '';
+    $legal_seo = theme_perso_current_legal_seo();
 
     if ( is_front_page() ) {
         $description = "COSM’ETHIQUE, marque de cosmétiques naturels premium: soins visage, corps, cheveux et aromathérapie formulés avec exigence.";
+    } elseif ( $legal_seo ) {
+        $description = $legal_seo['description'];
     } elseif ( is_page( 'plan-du-site' ) ) {
         $description = "Explorez l’univers Cosm’Éthique avec un plan du site immersif: boutique, diagnostic beauté, blog, contact, compte client et pages essentielles.";
     } elseif ( is_page( 'recrutement' ) ) {
@@ -1416,8 +1460,12 @@ function theme_perso_sitemap_document_title( $parts ) {
     }
 
     $page_uri = is_page() ? get_page_uri( get_queried_object_id() ) : '';
+    $legal_seo = theme_perso_current_legal_seo();
 
-    if ( is_page( 'plan-du-site' ) ) {
+    if ( $legal_seo ) {
+        $parts['title'] = $legal_seo['short_title'];
+        $parts['site']  = 'COSM’ÉTHIQUE';
+    } elseif ( is_page( 'plan-du-site' ) ) {
         $parts['title'] = 'Plan du site premium';
         $parts['site']  = 'COSM’ÉTHIQUE';
     } elseif ( is_page( 'recrutement' ) ) {
@@ -1444,12 +1492,31 @@ function theme_perso_sitemap_document_title( $parts ) {
 }
 add_filter( 'document_title_parts', 'theme_perso_sitemap_document_title', 20 );
 
+function theme_perso_legal_wpseo_title( $title ) {
+    $legal_seo = theme_perso_current_legal_seo();
+
+    return $legal_seo ? $legal_seo['title'] : $title;
+}
+add_filter( 'wpseo_title', 'theme_perso_legal_wpseo_title', 30 );
+add_filter( 'wpseo_opengraph_title', 'theme_perso_legal_wpseo_title', 30 );
+add_filter( 'wpseo_twitter_title', 'theme_perso_legal_wpseo_title', 30 );
+
+function theme_perso_legal_wpseo_description( $description ) {
+    $legal_seo = theme_perso_current_legal_seo();
+
+    return $legal_seo ? $legal_seo['description'] : $description;
+}
+add_filter( 'wpseo_metadesc', 'theme_perso_legal_wpseo_description', 30 );
+add_filter( 'wpseo_opengraph_desc', 'theme_perso_legal_wpseo_description', 30 );
+add_filter( 'wpseo_twitter_description', 'theme_perso_legal_wpseo_description', 30 );
+
 function theme_perso_sitemap_page_seo() {
     if ( is_admin() || defined( 'WPSEO_VERSION' ) || defined( 'RANK_MATH_VERSION' ) ) {
         return;
     }
 
     $page_uri = is_page() ? get_page_uri( get_queried_object_id() ) : '';
+    $legal_seo = theme_perso_current_legal_seo();
     $seo_pages = array(
         'franchise/formation'  => array(
             'name'        => 'Formation des franchisés COSM’ÉTHIQUE',
@@ -1468,6 +1535,13 @@ function theme_perso_sitemap_page_seo() {
             'description' => 'Confirmation d’envoi de candidature franchise Cosm’Éthique.',
         ),
     );
+
+    if ( $legal_seo ) {
+        $seo_pages[ $page_uri ] = array(
+            'name'        => $legal_seo['short_title'] . ' COSM’ÉTHIQUE',
+            'description' => $legal_seo['description'],
+        );
+    }
 
     if ( ! is_page( 'plan-du-site' ) && ! is_page( 'recrutement' ) && ! is_page( 'evenement' ) && ! isset( $seo_pages[ $page_uri ] ) ) {
         return;
