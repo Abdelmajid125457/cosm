@@ -23958,15 +23958,33 @@ body :is(
 }
 
 .product-search-form:focus-within {
-    outline: 3px solid #0d1b3d;
-    outline-offset: 4px;
+    outline: none !important;
+    outline-offset: 0 !important;
+    border-color: rgba(43, 125, 138, 0.44);
+    box-shadow: 0 10px 26px rgba(13, 27, 61, 0.08), 0 0 0 3px rgba(43, 125, 138, 0.08);
 }
 
 .product-search-form input:focus,
-.product-search-form input:focus-visible {
-    outline: 1px solid transparent !important;
+.product-search-form #cosmethique-product-search:focus,
+.product-search-form button:focus {
+    outline: none !important;
     outline-offset: 0 !important;
     box-shadow: none !important;
+}
+
+.product-search-form input:focus-visible,
+.product-search-form #cosmethique-product-search:focus-visible {
+    outline: none !important;
+    outline-offset: 0 !important;
+    box-shadow: inset 0 0 0 2px rgba(43, 125, 138, 0.38) !important;
+    border-radius: 999px;
+}
+
+.product-search-form button:focus-visible,
+.product-search-form > button[type="submit"]:focus-visible {
+    outline: none !important;
+    outline-offset: 0 !important;
+    box-shadow: inset 0 0 0 2px rgba(43, 125, 138, 0.5), 0 0 0 4px rgba(43, 125, 138, 0.12) !important;
 }
 
 .primary-menu .menu-item-has-children.is-keyboard-open > .sub-menu {
