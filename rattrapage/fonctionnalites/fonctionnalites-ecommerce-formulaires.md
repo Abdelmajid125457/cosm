@@ -13,6 +13,13 @@ Les produits cosmetiques disposent maintenant d'un choix obligatoire de format a
 
 Le selecteur est affiche sous forme de capsules premium, avec etat actif, focus accessible, bordures discretes et integration visuelle coherente avec la charte COSM'ETHIQUE.
 
+Chaque format possede un prix distinct :
+
+- le 50 ml utilise le prix de reference du produit ;
+- le 100 ml applique un tarif de format standard equivalent au double du format decouverte ;
+- le prix affiche sur la fiche produit se met a jour lors de la selection ;
+- la section Botanica reprend la meme logique sur les cartes et dans les fiches produit interactives.
+
 Si aucune contenance n'est selectionnee, l'ajout au panier est bloque avec le message :
 
 > Veuillez choisir une contenance avant d'ajouter ce produit au panier.

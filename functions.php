@@ -5566,7 +5566,7 @@ function theme_perso_product_format_options() {
         '100' => array(
             'label'       => __( '100 ml', 'theme-perso' ),
             'description' => __( 'Format standard', 'theme-perso' ),
-            'multiplier'  => 1.65,
+            'multiplier'  => 2,
         ),
     );
 }
@@ -5646,6 +5646,16 @@ function theme_perso_product_format_price( $product, $format ) {
     return round( $base * (float) $options[ $format ]['multiplier'], 2 );
 }
 
+function theme_perso_product_format_price_html( $product, $format ) {
+    $price = theme_perso_product_format_price( $product, $format );
+
+    if ( function_exists( 'wc_price' ) ) {
+        return wc_price( $price );
+    }
+
+    return number_format_i18n( $price, 2 ) . ' €';
+}
+
 function theme_perso_render_product_format_selector( $selected_product = null, $context = 'single' ) {
     if ( ! $selected_product instanceof WC_Product ) {
         global $product;
@@ -5661,16 +5671,32 @@ function theme_perso_render_product_format_selector( $selected_product = null, $
     $message_id = $field_id . '-hint';
     ?>
     <fieldset class="product-format-selector product-format-selector--<?php echo esc_attr( $context ); ?>" aria-describedby="<?php echo esc_attr( $message_id ); ?>" data-product-format-selector>
-        <legend><?php esc_html_e( 'Choisir la contenance', 'theme-perso' ); ?> <span aria-hidden="true">*</span></legend>
+        <legend class="product-format-title"><?php esc_html_e( 'Choisir la contenance', 'theme-perso' ); ?> <span aria-hidden="true">*</span></legend>
         <div class="product-format-options">
             <?php foreach ( $options as $value => $option ) : ?>
-                <?php $option_id = $field_id . '-' . $value; ?>
+                <?php
+                $option_id        = $field_id . '-' . $value;
+                $option_price     = theme_perso_product_format_price( $selected_product, $value );
+                $option_price_html = theme_perso_product_format_price_html( $selected_product, $value );
+                ?>
                 <label class="product-format-option" for="<?php echo esc_attr( $option_id ); ?>">
-                    <input id="<?php echo esc_attr( $option_id ); ?>" type="radio" name="cosmethique_product_format" value="<?php echo esc_attr( $value ); ?>" required aria-required="true">
-                    <span>
-                        <strong><?php echo esc_html( $option['label'] ); ?></strong>
-                        <small><?php echo esc_html( $option['description'] ); ?></small>
-                        <em><?php echo wp_kses_post( wc_price( theme_perso_product_format_price( $selected_product, $value ) ) ); ?></em>
+                    <input
+                        id="<?php echo esc_attr( $option_id ); ?>"
+                        type="radio"
+                        name="cosmethique_product_format"
+                        value="<?php echo esc_attr( $value ); ?>"
+                        required
+                        aria-required="true"
+                        data-format-price="<?php echo esc_attr( (string) $option_price ); ?>"
+                        data-format-price-html="<?php echo esc_attr( $option_price_html ); ?>"
+                        data-format-price-text="<?php echo esc_attr( wp_strip_all_tags( $option_price_html ) ); ?>"
+                    >
+                    <span class="product-format-card">
+                        <span class="product-format-card-main">
+                            <strong class="product-format-size"><?php echo esc_html( $option['label'] ); ?></strong>
+                            <small class="product-format-description"><?php echo esc_html( $option['description'] ); ?></small>
+                        </span>
+                        <span class="product-format-price"><?php echo wp_kses_post( $option_price_html ); ?></span>
                     </span>
                 </label>
             <?php endforeach; ?>
@@ -6042,7 +6068,7 @@ function theme_perso_single_product_summary_premium() {
             <em><?php echo esc_html( sprintf( _n( '%s avis client', '%s avis clients', $review_count, 'theme-perso' ), number_format_i18n( $review_count ) ) ); ?></em>
         </div>
 
-        <div class="product-hero-price"><?php echo wp_kses_post( $product->get_price_html() ); ?></div>
+        <div class="product-hero-price" data-product-dynamic-price data-product-base-price-html="<?php echo esc_attr( $product->get_price_html() ); ?>"><?php echo wp_kses_post( $product->get_price_html() ); ?></div>
         <p class="product-hero-description"><?php echo esc_html( theme_perso_product_short_story( $product ) ); ?></p>
 
         <div class="product-hero-status">

@@ -307,6 +307,60 @@ document.addEventListener('DOMContentLoaded', () => {
         field.addEventListener('change', syncFieldState);
     });
 
+    const syncProductFormatSelection = (input) => {
+        if (!input?.matches?.('input[name="cosmethique_product_format"], [data-event-format-selector] input[type="radio"]')) {
+            return;
+        }
+
+        const selector = input.closest('[data-product-format-selector], [data-event-format-selector]');
+        const priceHtml = input.dataset.formatPriceHtml || '';
+        const priceValue = input.dataset.formatPrice || '';
+
+        selector?.classList.remove('is-invalid');
+        selector?.querySelectorAll('.product-format-option').forEach((option) => {
+            const optionInput = option.querySelector('input[type="radio"]');
+            option.classList.toggle('is-selected', optionInput === input && input.checked);
+        });
+
+        const help = selector?.querySelector('[data-product-format-message], [data-event-format-message]');
+        if (help && input.checked) {
+            help.hidden = Boolean(help.dataset.eventFormatMessage);
+        }
+
+        const isEventSelector = Boolean(selector?.matches?.('[data-event-format-selector]'));
+        if (!isEventSelector && priceHtml) {
+            const dynamicPrice = document.querySelector('[data-product-dynamic-price]');
+            if (dynamicPrice) {
+                dynamicPrice.innerHTML = priceHtml;
+                dynamicPrice.classList.remove('is-format-updated');
+                void dynamicPrice.offsetWidth;
+                dynamicPrice.classList.add('is-format-updated');
+            }
+        }
+
+        const eventCard = selector?.closest?.('[data-event-product-card]');
+        const eventPanel = selector?.closest?.('[data-event-product-panel]');
+        const eventPriceTarget = eventCard?.querySelector?.('[data-event-card-price]') || eventPanel?.querySelector?.('[data-event-product-panel-price]');
+        if (priceHtml && eventPriceTarget) {
+            eventPriceTarget.innerHTML = priceHtml;
+            eventPriceTarget.classList.remove('is-format-updated');
+            void eventPriceTarget.offsetWidth;
+            eventPriceTarget.classList.add('is-format-updated');
+        }
+
+        const cartLink = eventCard?.querySelector?.('.event-botanica-cart-button') || eventPanel?.querySelector?.('[data-event-product-add]');
+        if (cartLink && priceValue) {
+            cartLink.dataset.trackingItemPrice = String(priceValue);
+        }
+    };
+
+    document.querySelectorAll('[data-product-format-selector] input[type="radio"], [data-event-format-selector] input[type="radio"]').forEach((input) => {
+        input.addEventListener('change', () => syncProductFormatSelection(input));
+        if (input.checked) {
+            syncProductFormatSelection(input);
+        }
+    });
+
     document.addEventListener('submit', (event) => {
         const structuredForm = event.target.closest('form.cosmethique-form--structured');
         if (structuredForm && !validateStructuredForm(structuredForm)) {
@@ -317,6 +371,22 @@ document.addEventListener('DOMContentLoaded', () => {
 
         const cartForm = event.target.closest('form.cart');
         if (cartForm) {
+            const formatSelector = cartForm.querySelector('[data-product-format-selector]');
+            const selectedFormat = formatSelector?.querySelector?.('input[name="cosmethique_product_format"]:checked');
+            if (formatSelector && !selectedFormat) {
+                event.preventDefault();
+                event.stopImmediatePropagation();
+                formatSelector.classList.add('is-invalid');
+                const help = formatSelector.querySelector('[data-product-format-message]');
+                if (help) {
+                    help.hidden = false;
+                    help.setAttribute('role', 'alert');
+                }
+                formatSelector.querySelector('input[name="cosmethique_product_format"]')?.focus?.();
+                formatSelector.scrollIntoView({ behavior: prefersReducedMotion ? 'auto' : 'smooth', block: 'center' });
+                return;
+            }
+
             const button = cartForm.querySelector('[name="add-to-cart"], .single_add_to_cart_button');
             const item = findTrackingItem(button || cartForm);
             if (item.item_id) {
@@ -4259,12 +4329,14 @@ Thomas Bernard`,
             const message = formatScope?.querySelector?.('[data-event-format-message]');
 
             if (!selected) {
-                if (showError && message) {
-                    message.hidden = false;
-                    message.setAttribute('role', 'alert');
+                if (showError) {
+                    if (message) {
+                        message.hidden = false;
+                        message.setAttribute('role', 'alert');
+                    }
+                    formatScope?.classList?.add('is-invalid');
+                    formatScope?.querySelector?.('input[type="radio"]')?.focus?.();
                 }
-                formatScope?.classList?.add('is-invalid');
-                formatScope?.querySelector?.('input[type="radio"]')?.focus?.();
                 return null;
             }
 
@@ -4471,7 +4543,10 @@ Thomas Bernard`,
                     productPanelFormat.hidden = false;
                     productPanelFormat.querySelectorAll('input[type="radio"]').forEach((input) => {
                         input.checked = false;
-                        input.addEventListener('change', () => setEventProductQuantity(productPanelQuantity?.value || 1));
+                        input.addEventListener('change', () => {
+                            syncProductFormatSelection(input);
+                            setEventProductQuantity(productPanelQuantity?.value || 1);
+                        });
                     });
                 } else {
                     productPanelFormat.innerHTML = '';
@@ -4527,6 +4602,7 @@ Thomas Bernard`,
 
         eventPage.querySelectorAll('[data-event-format-selector] input[type="radio"]').forEach((input) => {
             input.addEventListener('change', () => {
+                syncProductFormatSelection(input);
                 const selector = input.closest('[data-event-format-selector]');
                 selector?.classList.remove('is-invalid');
                 const message = selector?.querySelector('[data-event-format-message]');

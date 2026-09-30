@@ -263,6 +263,18 @@ foreach ( $botanica_catalog as $product_title => $product_data ) {
         $price_html = $wc_product->get_price_html();
     }
 
+    $format_prices = array();
+    if ( $wc_product instanceof WC_Product && function_exists( 'theme_perso_product_format_options' ) && function_exists( 'theme_perso_product_format_price_html' ) && function_exists( 'theme_perso_product_format_price' ) ) {
+        foreach ( theme_perso_product_format_options() as $format_value => $format_option ) {
+            $format_price_html = theme_perso_product_format_price_html( $wc_product, $format_value );
+            $format_prices[ $format_value ] = array(
+                'raw'  => theme_perso_product_format_price( $wc_product, $format_value ),
+                'html' => $format_price_html,
+                'text' => wp_strip_all_tags( $format_price_html ),
+            );
+        }
+    }
+
     if ( $wc_product instanceof WC_Product && function_exists( 'theme_perso_product_gallery_images' ) ) {
         $product_gallery = theme_perso_product_gallery_images( $wc_product );
         $primary_image    = function_exists( 'theme_perso_product_primary_gallery_image_url' ) ? theme_perso_product_primary_gallery_image_url( $wc_product ) : '';
@@ -303,6 +315,7 @@ foreach ( $botanica_catalog as $product_title => $product_data ) {
             'product_url'    => $product_url,
             'add_url'        => $add_url,
             'price_html'     => $price_html,
+            'format_prices'   => $format_prices,
             'purchasable'    => $wc_product instanceof WC_Product && $wc_product->is_purchasable() && $wc_product->is_in_stock(),
             'requires_format' => $wc_product instanceof WC_Product && function_exists( 'theme_perso_product_requires_format' ) ? theme_perso_product_requires_format( $wc_product ) : false,
             'tracking_attrs' => $wc_product instanceof WC_Product && function_exists( 'theme_perso_tracking_item_attributes' ) ? theme_perso_tracking_item_attributes( $wc_product ) : '',
@@ -543,14 +556,33 @@ $timeline = array(
                         <p><?php echo esc_html( $product['description'] ); ?></p>
                         <?php if ( $product['requires_format'] && function_exists( 'theme_perso_product_format_options' ) ) : ?>
                             <fieldset class="product-format-selector product-format-selector--event" data-event-format-selector>
-                                <legend><?php esc_html_e( 'Contenance', 'theme-perso' ); ?></legend>
+                                <legend class="product-format-title"><?php esc_html_e( 'Contenance', 'theme-perso' ); ?></legend>
                                 <div class="product-format-options">
                                     <?php foreach ( theme_perso_product_format_options() as $format_value => $format_option ) : ?>
+                                        <?php
+                                        $format_price = isset( $product['format_prices'][ $format_value ] ) ? $product['format_prices'][ $format_value ] : array(
+                                            'raw'  => '',
+                                            'html' => '',
+                                            'text' => '',
+                                        );
+                                        ?>
                                         <label class="product-format-option">
-                                            <input type="radio" name="event_product_format_<?php echo esc_attr( (string) $product['product_id'] ); ?>" value="<?php echo esc_attr( $format_value ); ?>">
-                                            <span>
-                                                <strong><?php echo esc_html( $format_option['label'] ); ?></strong>
-                                                <small><?php echo esc_html( $format_option['description'] ); ?></small>
+                                            <input
+                                                type="radio"
+                                                name="event_product_format_<?php echo esc_attr( (string) $product['product_id'] ); ?>"
+                                                value="<?php echo esc_attr( $format_value ); ?>"
+                                                data-format-price="<?php echo esc_attr( (string) $format_price['raw'] ); ?>"
+                                                data-format-price-html="<?php echo esc_attr( $format_price['html'] ); ?>"
+                                                data-format-price-text="<?php echo esc_attr( $format_price['text'] ); ?>"
+                                            >
+                                            <span class="product-format-card">
+                                                <span class="product-format-card-main">
+                                                    <strong class="product-format-size"><?php echo esc_html( $format_option['label'] ); ?></strong>
+                                                    <small class="product-format-description"><?php echo esc_html( $format_option['description'] ); ?></small>
+                                                </span>
+                                                <?php if ( ! empty( $format_price['html'] ) ) : ?>
+                                                    <span class="product-format-price"><?php echo wp_kses_post( $format_price['html'] ); ?></span>
+                                                <?php endif; ?>
                                             </span>
                                         </label>
                                     <?php endforeach; ?>
@@ -559,7 +591,7 @@ $timeline = array(
                             </fieldset>
                         <?php endif; ?>
                         <div class="event-botanica-card-footer">
-                            <strong><?php echo wp_kses_post( $product['price_html'] ); ?></strong>
+                            <strong data-event-card-price><?php echo wp_kses_post( $product['price_html'] ); ?></strong>
                             <button class="button button-outline" type="button" data-event-product-open><?php esc_html_e( 'Découvrir', 'theme-perso' ); ?></button>
                             <a
                                 class="<?php echo esc_attr( $button_class ); ?>"
