@@ -64,9 +64,9 @@ Les balises Open Graph permettent d’obtenir un aperçu propre et professionnel
 Page Formation franchisés :
 
 - `title` : Formation des franchisés | COSM’ÉTHIQUE
-- `meta description` : Découvrez le parcours de formation COSM’ÉTHIQUE : e-learning, immersion boutique, certification interne et accompagnement post-ouverture.
-- `og:title` : Formation des franchisés COSM’ÉTHIQUE
-- `og:description` : Un parcours complet pour accompagner les futurs franchisés COSM’ÉTHIQUE, de la formation initiale au coaching post-ouverture.
+- `meta description` : Découvrez le COSM’ÉTHIQUE Phygital Franchise Lab : LearnyBox, serious game, 6 jours en boutique pilote à Paris, validation à 80 % et suivi post-ouverture.
+- `og:title` : COSM’ÉTHIQUE Phygital Franchise Lab
+- `og:description` : Un parcours hybride pour former les franchisés : e-learning LearnyBox, serious game, immersion en boutique pilote, certification interne et accompagnement post-ouverture.
 - `og:image` : image premium liée à l’univers franchise / produits COSM'ÉTHIQUE.
 
 ## Présentation au jury

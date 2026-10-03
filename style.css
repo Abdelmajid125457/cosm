@@ -21760,7 +21760,8 @@ select:focus,
     max-width: 660px;
 }
 
-.franchise-training-page .franchise-flow-program > p {
+.franchise-training-page .franchise-flow-program > p,
+.franchise-training-page .franchise-flow-program__content {
     position: relative;
     z-index: 1;
     max-width: 690px;
@@ -21770,6 +21771,19 @@ select:focus,
     border-radius: 28px;
     background: rgba(255, 255, 255, 0.86);
     box-shadow: 0 18px 54px rgba(13, 27, 61, 0.055);
+}
+
+.franchise-training-page .franchise-flow-program__content {
+    display: grid;
+    gap: 16px;
+    max-width: 760px;
+}
+
+.franchise-training-page .franchise-flow-program__content p {
+    margin: 0;
+    color: #5D6F82;
+    font-size: clamp(0.98rem, 1vw, 1.06rem);
+    line-height: 1.7;
 }
 
 .franchise-training-page .franchise-flow-section {
@@ -22116,10 +22130,11 @@ select:focus,
 
 .franchise-training-page .franchise-training-step {
     display: grid;
-    grid-template-columns: 150px minmax(0, 1fr) 100px;
+    grid-template-columns: minmax(140px, 0.24fr) minmax(0, 1fr) minmax(116px, max-content);
     gap: clamp(22px, 2.4vw, 32px);
     align-items: center;
     min-height: auto;
+    min-width: 0;
     padding: clamp(22px, 2.2vw, 30px);
     overflow: hidden;
     border: 1px solid rgba(201, 164, 92, 0.22);
@@ -22503,6 +22518,11 @@ select:focus,
     }
 
     .franchise-training-page .franchise-flow-program > p {
+        padding: 20px;
+        border-radius: 22px;
+    }
+
+    .franchise-training-page .franchise-flow-program__content {
         padding: 20px;
         border-radius: 22px;
     }

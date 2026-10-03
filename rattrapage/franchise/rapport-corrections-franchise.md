@@ -79,10 +79,12 @@ Ajout d'une section complète :
 Cette section présente :
 
 - formation hybride ;
-- durée de 4 semaines ;
-- immersion boutique ;
+- phase digitale préparatoire via LearnyBox ;
+- serious game pédagogique ;
+- 6 jours présentiel/mixte en boutique pilote à Paris ;
 - certification interne ;
-- accompagnement post-ouverture de 3 mois ;
+- validation à 80 % des compétences ;
+- accompagnement post-ouverture ;
 - bénéfices pour le futur franchisé ;
 - bouton "Découvrir le parcours de formation" ;
 - bouton "Vérifier mon éligibilité".

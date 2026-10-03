@@ -18,54 +18,54 @@ $eligibility_url = home_url( '/franchise/eligibilite/' );
 
 $timeline = array(
     array(
-        'period' => __( 'Semaine 1', 'theme-perso' ),
-        'title'  => __( 'Marque, valeurs et cadre réglementaire', 'theme-perso' ),
-        'text'   => __( 'Histoire de Cosm’Éthique, positionnement premium accessible, RSE, transparence, charte de marque et bases de la réglementation cosmétique.', 'theme-perso' ),
-        'hours'  => __( '12 h', 'theme-perso' ),
+        'period' => __( 'Phase digitale', 'theme-perso' ),
+        'title'  => __( 'Préparation LearnyBox et serious game', 'theme-perso' ),
+        'text'   => __( 'Diagnostic initial, culture de marque, lecture des compositions INCI, certifications COSMOS/Ecocert et entraînement aux objections clients.', 'theme-perso' ),
+        'hours'  => __( 'En amont', 'theme-perso' ),
     ),
     array(
-        'period' => __( 'Semaine 2', 'theme-perso' ),
-        'title'  => __( 'Produits, ingrédients et conseil client', 'theme-perso' ),
-        'text'   => __( 'Gammes visage, corps, cheveux, routines, diagnostic beauté, objections clients, naturalité et discours anti-greenwashing.', 'theme-perso' ),
-        'hours'  => __( '16 h', 'theme-perso' ),
+        'period' => __( 'Jours 1-2', 'theme-perso' ),
+        'title'  => __( 'Marque, produits et conseil client', 'theme-perso' ),
+        'text'   => __( 'Routines visage, corps et cheveux, naturalité, discours anti-greenwashing, diagnostic beauté et conseil personnalisé.', 'theme-perso' ),
+        'hours'  => __( '2 jours', 'theme-perso' ),
     ),
     array(
-        'period' => __( 'Semaine 3', 'theme-perso' ),
-        'title'  => __( 'Immersion boutique', 'theme-perso' ),
-        'text'   => __( 'Merchandising, gestion de stock, encaissement, animation commerciale, relation client, avis et réclamations en boutique.', 'theme-perso' ),
-        'hours'  => __( '24 h', 'theme-perso' ),
+        'period' => __( 'Jours 3-4', 'theme-perso' ),
+        'title'  => __( 'Immersion en boutique pilote à Paris', 'theme-perso' ),
+        'text'   => __( 'Mises en situation professionnelles : vente, relation client, merchandising, encaissement, gestion de stock et réclamations.', 'theme-perso' ),
+        'hours'  => __( '2 jours', 'theme-perso' ),
     ),
     array(
-        'period' => __( 'Semaine 4', 'theme-perso' ),
-        'title'  => __( 'Digital, KPI et certification', 'theme-perso' ),
-        'text'   => __( 'Utilisation des outils digitaux, suivi des indicateurs, e-réputation, cas pratiques, quiz final et certification interne.', 'theme-perso' ),
-        'hours'  => __( '22 h', 'theme-perso' ),
+        'period' => __( 'Jours 5-6', 'theme-perso' ),
+        'title'  => __( 'Digital, KPI et validation finale', 'theme-perso' ),
+        'text'   => __( 'Pilotage des indicateurs, reporting réseau, e-réputation, cas pratiques, quiz final et validation à 80 % des compétences attendues.', 'theme-perso' ),
+        'hours'  => __( '2 jours', 'theme-perso' ),
     ),
     array(
         'period' => __( 'Post-ouverture', 'theme-perso' ),
         'title'  => __( 'Coaching et accompagnement opérationnel', 'theme-perso' ),
-        'text'   => __( 'Suivi pendant 3 mois, analyse des KPI, coaching commercial, contrôle qualité et accompagnement réseau.', 'theme-perso' ),
-        'hours'  => __( '3 mois', 'theme-perso' ),
+        'text'   => __( 'Suivi des premiers mois d’exploitation, analyse des KPI, accompagnement commercial et contrôle qualité réseau.', 'theme-perso' ),
+        'hours'  => __( 'Premiers mois', 'theme-perso' ),
     ),
 );
 
 $modules = array(
-    array( 'icon' => '✦', 'title' => __( 'Marque & valeurs', 'theme-perso' ), 'text' => __( 'Comprendre l’ADN Cosm’Éthique, la promesse client, la naturalité et l’exigence de transparence.', 'theme-perso' ) ),
-    array( 'icon' => '☘', 'title' => __( 'Produits & ingrédients', 'theme-perso' ), 'text' => __( 'Maîtriser les actifs, les textures, les routines et les bénéfices de chaque gamme.', 'theme-perso' ) ),
+    array( 'icon' => '✦', 'title' => __( 'LearnyBox', 'theme-perso' ), 'text' => __( 'Accéder en autonomie aux bases marque, RSE, réglementation, outils et standards réseau avant la présence terrain.', 'theme-perso' ) ),
+    array( 'icon' => '☘', 'title' => __( 'INCI & certifications', 'theme-perso' ), 'text' => __( 'Comprendre les compositions, les actifs naturels, les labels COSMOS/Ecocert et le discours anti-greenwashing.', 'theme-perso' ) ),
     array( 'icon' => '◌', 'title' => __( 'Conseil client', 'theme-perso' ), 'text' => __( 'Savoir conduire un diagnostic beauté, personnaliser une routine et répondre aux objections.', 'theme-perso' ) ),
     array( 'icon' => '▣', 'title' => __( 'Gestion boutique', 'theme-perso' ), 'text' => __( 'Piloter le stock, le merchandising, l’encaissement, les animations et la fidélisation locale.', 'theme-perso' ) ),
-    array( 'icon' => '◎', 'title' => __( 'Digital & e-commerce', 'theme-perso' ), 'text' => __( 'Utiliser les outils WordPress/WooCommerce, suivre les commandes et activer les leviers CRM.', 'theme-perso' ) ),
+    array( 'icon' => '◎', 'title' => __( 'Digital & KPI', 'theme-perso' ), 'text' => __( 'Suivre les indicateurs, le reporting réseau, les commandes, la visibilité locale et les leviers CRM.', 'theme-perso' ) ),
     array( 'icon' => '✺', 'title' => __( 'E-réputation', 'theme-perso' ), 'text' => __( 'Gérer les avis, les messages sensibles, les réponses publiques et les situations de crise.', 'theme-perso' ) ),
-    array( 'icon' => '◆', 'title' => __( 'Performance & KPI', 'theme-perso' ), 'text' => __( 'Suivre le chiffre d’affaires, la satisfaction, le taux de réachat et la conformité à la charte.', 'theme-perso' ) ),
+    array( 'icon' => '◆', 'title' => __( 'Certification interne', 'theme-perso' ), 'text' => __( 'Valider au minimum 80 % des compétences attendues avant l’ouverture du point de vente.', 'theme-perso' ) ),
 );
 
 $faq = array(
-    __( 'Où se déroule la formation ?', 'theme-perso' ) => __( 'Les deux premières semaines sont réalisées à distance via une plateforme e-learning. La troisième semaine se déroule à Paris, dans la boutique pilote et un espace showroom. Le suivi post-ouverture se fait à distance.', 'theme-perso' ),
-    __( 'Combien de temps dure-t-elle ?', 'theme-perso' ) => __( 'Le parcours initial dure 4 semaines pour environ 74 heures de formation, puis 3 mois d’accompagnement opérationnel après ouverture.', 'theme-perso' ),
-    __( 'Est-elle obligatoire ?', 'theme-perso' ) => __( 'Oui. Elle garantit une expérience client homogène, la maîtrise des produits et le respect de la charte Cosm’Éthique dans toutes les boutiques.', 'theme-perso' ),
-    __( 'Quels outils sont fournis ?', 'theme-perso' ) => __( 'Le franchisé reçoit un manuel opératoire, des fiches produits, un guide de vente, un guide merchandising, des scripts de réponse client et un tableau de bord KPI.', 'theme-perso' ),
-    __( 'Comment est-on évalué ?', 'theme-perso' ) => __( 'Chaque module comprend un quiz. La validation finale combine une simulation de vente, une étude de cas et une courte soutenance devant l’équipe réseau.', 'theme-perso' ),
-    __( 'Y a-t-il un accompagnement après ouverture ?', 'theme-perso' ) => __( 'Oui. Des rendez-vous réguliers permettent de suivre les KPI, corriger les points de friction et renforcer l’autonomie commerciale du franchisé.', 'theme-perso' ),
+    __( 'Où se déroule la formation ?', 'theme-perso' ) => __( 'La phase digitale se déroule en autonomie via LearnyBox. Elle est complétée par 6 jours de formation présentielle et mixte en boutique pilote à Paris.', 'theme-perso' ),
+    __( 'Combien de temps dure-t-elle ?', 'theme-perso' ) => __( 'Le parcours comprend une phase digitale préparatoire, 6 jours présentiel/mixte en boutique pilote, puis un accompagnement post-ouverture pendant les premiers mois d’exploitation.', 'theme-perso' ),
+    __( 'Est-elle obligatoire ?', 'theme-perso' ) => __( 'Oui. Elle sécurise l’ouverture, homogénéise l’expérience client et vérifie que chaque franchisé maîtrise les standards COSM’ÉTHIQUE.', 'theme-perso' ),
+    __( 'Quels outils sont fournis ?', 'theme-perso' ) => __( 'Le franchisé reçoit un accès LearnyBox, un serious game pédagogique, un manuel opératoire, des fiches produits, un guide de vente, un guide merchandising et un tableau de bord KPI.', 'theme-perso' ),
+    __( 'Comment est-on évalué ?', 'theme-perso' ) => __( 'La validation repose sur une logique de compétences : quiz, serious game, simulation de vente, cas pratique et seuil minimum de 80 % avant ouverture.', 'theme-perso' ),
+    __( 'Y a-t-il un accompagnement après ouverture ?', 'theme-perso' ) => __( 'Oui. L’équipe réseau suit les premiers mois, analyse les KPI, accompagne les actions commerciales et maintient l’homogénéité de l’expérience client.', 'theme-perso' ),
 );
 ?>
 
@@ -73,8 +73,8 @@ $faq = array(
     <section class="franchise-flow-hero franchise-training-hero" aria-labelledby="franchise-training-title">
         <div class="franchise-flow-copy motion-reveal motion-reveal--left">
             <p class="franchise-flow-kicker"><?php esc_html_e( 'Formation franchisés', 'theme-perso' ); ?></p>
-            <h1 id="franchise-training-title"><?php esc_html_e( 'Formation des franchisés COSM’ÉTHIQUE', 'theme-perso' ); ?></h1>
-            <p><?php esc_html_e( 'Un parcours complet pour ouvrir, gérer et développer votre boutique en toute confiance, avec une expérience client homogène et premium.', 'theme-perso' ); ?></p>
+            <h1 id="franchise-training-title"><?php esc_html_e( 'COSM’ÉTHIQUE Phygital Franchise Lab', 'theme-perso' ); ?></h1>
+            <p><?php esc_html_e( 'Un parcours hybride pour préparer, valider et accompagner chaque franchisé avant et après l’ouverture de son point de vente.', 'theme-perso' ); ?></p>
             <div class="franchise-flow-actions">
                 <a class="button button-primary" href="<?php echo esc_url( $candidature_url ); ?>"><?php esc_html_e( 'Déposer ma candidature', 'theme-perso' ); ?></a>
                 <a class="button franchise-flow-secondary" href="<?php echo esc_url( $eligibility_url ); ?>"><?php esc_html_e( 'Vérifier mon éligibilité', 'theme-perso' ); ?></a>
@@ -83,16 +83,16 @@ $faq = array(
         <aside class="franchise-training-summary motion-reveal motion-reveal--right" aria-label="<?php esc_attr_e( 'Résumé du parcours de formation', 'theme-perso' ); ?>">
             <img src="<?php echo esc_url( $asset( 'about', 'about-eco-commitment.png' ) ); ?>" alt="" loading="lazy">
             <div>
-                <strong><?php esc_html_e( '4 semaines', 'theme-perso' ); ?></strong>
-                <span><?php esc_html_e( '74 h de formation initiale', 'theme-perso' ); ?></span>
+                <strong><?php esc_html_e( 'LearnyBox', 'theme-perso' ); ?></strong>
+                <span><?php esc_html_e( 'phase digitale préparatoire', 'theme-perso' ); ?></span>
             </div>
             <div>
-                <strong><?php esc_html_e( '3 mois', 'theme-perso' ); ?></strong>
-                <span><?php esc_html_e( 'd’accompagnement post-ouverture', 'theme-perso' ); ?></span>
+                <strong><?php esc_html_e( '6 jours', 'theme-perso' ); ?></strong>
+                <span><?php esc_html_e( 'présentiel/mixte en boutique pilote à Paris', 'theme-perso' ); ?></span>
             </div>
             <div>
-                <strong><?php esc_html_e( 'Certification', 'theme-perso' ); ?></strong>
-                <span><?php esc_html_e( 'Franchisé COSM’ÉTHIQUE certifié', 'theme-perso' ); ?></span>
+                <strong><?php esc_html_e( '80 %', 'theme-perso' ); ?></strong>
+                <span><?php esc_html_e( 'minimum de compétences validées', 'theme-perso' ); ?></span>
             </div>
         </aside>
     </section>
@@ -102,7 +102,12 @@ $faq = array(
             <p class="franchise-flow-kicker"><?php esc_html_e( 'Pourquoi une formation ?', 'theme-perso' ); ?></p>
             <h2 id="training-why-title"><?php esc_html_e( 'Sécuriser l’ouverture et protéger l’expérience de marque.', 'theme-perso' ); ?></h2>
         </div>
-        <p><?php esc_html_e( 'La formation permet de transmettre le savoir-faire Cosm’Éthique, d’éviter les écarts de discours entre boutiques et d’accompagner les franchisés sur les enjeux clés : conseil beauté, RSE, gestion commerciale, outils digitaux et e-réputation.', 'theme-perso' ); ?></p>
+        <div class="franchise-flow-program__content">
+            <p><?php esc_html_e( 'Le parcours COSM’ÉTHIQUE Phygital Franchise Lab accompagne chaque nouveau franchisé avant l’ouverture de son point de vente. Il combine une phase digitale préparatoire, accessible en autonomie via LearnyBox, avec un serious game pédagogique permettant de s’entraîner à la lecture des compositions INCI, aux certifications COSMOS/Ecocert et au traitement des objections clients.', 'theme-perso' ); ?></p>
+            <p><?php esc_html_e( 'Cette phase digitale est complétée par 6 jours de formation présentielle et mixte en boutique pilote à Paris. Les franchisés sont placés dans des situations concrètes : conseil client, vente, gestion des stocks, animation commerciale locale, pilotage des indicateurs et reporting réseau.', 'theme-perso' ); ?></p>
+            <p><?php esc_html_e( 'La validation du parcours repose sur une logique de compétences. Le franchisé doit atteindre au minimum 80 % des compétences attendues afin de garantir sa capacité à représenter la marque, conseiller les clients et piloter son point de vente dans le respect des standards COSM’ÉTHIQUE.', 'theme-perso' ); ?></p>
+            <p><?php esc_html_e( 'Après l’ouverture, un accompagnement post-ouverture est prévu afin de suivre les premiers mois d’exploitation, analyser les indicateurs de performance et maintenir l’homogénéité de l’expérience client au sein du réseau.', 'theme-perso' ); ?></p>
+        </div>
     </section>
 
     <section class="franchise-flow-section franchise-flow-timeline franchise-training-timeline" aria-labelledby="training-timeline-title">
@@ -145,11 +150,12 @@ $faq = array(
             <div class="franchise-flow-copy motion-reveal motion-reveal--left">
                 <p class="franchise-flow-kicker"><?php esc_html_e( 'Expérience immersive', 'theme-perso' ); ?></p>
                 <h2 id="training-immersive-title"><?php esc_html_e( 'Apprendre en situation réelle, pas seulement en théorie.', 'theme-perso' ); ?></h2>
-                <p><?php esc_html_e( 'Le parcours combine vidéos courtes, quiz, serious game, ateliers pratiques, jeux de rôle vendeur/client, simulation de diagnostic beauté et immersion dans la boutique pilote parisienne.', 'theme-perso' ); ?></p>
+                <p><?php esc_html_e( 'Le parcours combine LearnyBox, quiz, serious game, ateliers pratiques, jeux de rôle vendeur/client, simulation de diagnostic beauté et immersion dans la boutique pilote parisienne.', 'theme-perso' ); ?></p>
                 <ul class="check-list">
                     <li><?php esc_html_e( 'Serious game : gérer une journée en boutique COSM’ÉTHIQUE', 'theme-perso' ); ?></li>
+                    <li><?php esc_html_e( 'Lecture INCI et certifications COSMOS/Ecocert', 'theme-perso' ); ?></li>
                     <li><?php esc_html_e( 'Simulation de vente et objections client', 'theme-perso' ); ?></li>
-                    <li><?php esc_html_e( 'Badges de progression et certification interne', 'theme-perso' ); ?></li>
+                    <li><?php esc_html_e( 'Attestation de compétences après validation à 80 %', 'theme-perso' ); ?></li>
                     <li><?php esc_html_e( 'Cas pratiques de gestion de crise et avis clients', 'theme-perso' ); ?></li>
                 </ul>
             </div>
@@ -162,9 +168,9 @@ $faq = array(
     </section>
 
     <section class="franchise-flow-stats" data-counter-scope aria-label="<?php esc_attr_e( 'Chiffres clés de la formation', 'theme-perso' ); ?>">
-        <div><strong><span data-counter-target="74">0</span>h</strong><p><?php esc_html_e( 'formation initiale', 'theme-perso' ); ?></p></div>
-        <div><strong><span data-counter-target="4">0</span></strong><p><?php esc_html_e( 'semaines structurées', 'theme-perso' ); ?></p></div>
-        <div><strong><span data-counter-target="3">0</span></strong><p><?php esc_html_e( 'mois de coaching', 'theme-perso' ); ?></p></div>
+        <div><strong><span data-counter-target="6">0</span></strong><p><?php esc_html_e( 'jours présentiel/mixte à Paris', 'theme-perso' ); ?></p></div>
+        <div><strong><span data-counter-target="1">0</span></strong><p><?php esc_html_e( 'plateforme LearnyBox préparatoire', 'theme-perso' ); ?></p></div>
+        <div><strong><span data-counter-target="3">0</span></strong><p><?php esc_html_e( 'mois de suivi post-ouverture', 'theme-perso' ); ?></p></div>
         <div><strong><span data-counter-target="80">0</span>%</strong><p><?php esc_html_e( 'score minimum de certification', 'theme-perso' ); ?></p></div>
     </section>
 

@@ -21,6 +21,8 @@ $criteria = array(
     array( 'value' => __( 'Apport maîtrisé', 'theme-perso' ), 'text' => __( 'Un budget cohérent pour préparer l’ouverture et sécuriser les premiers mois.', 'theme-perso' ) ),
     array( 'value' => __( 'Sens du conseil', 'theme-perso' ), 'text' => __( 'Une envie d’accompagner les clientes vers des routines naturelles et premium.', 'theme-perso' ) ),
     array( 'value' => __( 'Engagement durable', 'theme-perso' ), 'text' => __( 'Une adhésion forte aux valeurs Cosm’Éthique : naturalité, exigence et responsabilité.', 'theme-perso' ) ),
+    array( 'value' => __( 'Disponibilité formation', 'theme-perso' ), 'text' => __( 'La capacité à suivre LearnyBox, le serious game et 6 jours présentiel/mixte en boutique pilote à Paris.', 'theme-perso' ) ),
+    array( 'value' => __( 'Validation des compétences', 'theme-perso' ), 'text' => __( 'Une volonté de progresser jusqu’au seuil de 80 % attendu avant l’ouverture du point de vente.', 'theme-perso' ) ),
 );
 
 $steps = array(
@@ -33,11 +35,12 @@ $steps = array(
 
 $benefits = array(
     __( 'Concept boutique premium', 'theme-perso' ),
-    __( 'Formation aux soins et au conseil', 'theme-perso' ),
+    __( 'Phygital Franchise Lab avec LearnyBox', 'theme-perso' ),
+    __( 'Serious game pédagogique', 'theme-perso' ),
     __( 'Accompagnement merchandising', 'theme-perso' ),
     __( 'Supports marketing prêts à l’emploi', 'theme-perso' ),
-    __( 'Catalogue naturel cohérent', 'theme-perso' ),
-    __( 'Suivi d’ouverture structuré', 'theme-perso' ),
+    __( '6 jours en boutique pilote à Paris', 'theme-perso' ),
+    __( 'Suivi post-ouverture structuré', 'theme-perso' ),
 );
 
 $faq = array(
@@ -53,7 +56,7 @@ $faq = array(
         <div class="franchise-flow-copy motion-reveal motion-reveal--left">
             <p class="franchise-flow-kicker"><?php esc_html_e( 'Éligibilité franchise', 'theme-perso' ); ?></p>
             <h1 id="eligibility-title"><?php esc_html_e( 'Vérifiez si votre projet peut rejoindre Cosm’Éthique.', 'theme-perso' ); ?></h1>
-            <p><?php esc_html_e( 'Un parcours rapide, clair et rassurant pour évaluer gratuitement votre projet avant de déposer votre candidature.', 'theme-perso' ); ?></p>
+            <p><?php esc_html_e( 'Un parcours rapide, clair et rassurant pour évaluer votre projet avant d’intégrer le COSM’ÉTHIQUE Phygital Franchise Lab et de déposer votre candidature.', 'theme-perso' ); ?></p>
             <div class="franchise-flow-actions">
                 <a class="button button-primary" href="#questionnaire-eligibilite"><?php esc_html_e( 'Commencer le questionnaire', 'theme-perso' ); ?></a>
                 <a class="button franchise-flow-secondary" href="#criteres-eligibilite"><?php esc_html_e( 'Voir les critères', 'theme-perso' ); ?></a>
@@ -71,7 +74,7 @@ $faq = array(
             <p class="franchise-flow-kicker"><?php esc_html_e( 'Programme franchise', 'theme-perso' ); ?></p>
             <h2><?php esc_html_e( 'Une méthode pour ouvrir une boutique naturelle, premium et cohérente.', 'theme-perso' ); ?></h2>
         </div>
-        <p><?php esc_html_e( 'Cosm’Éthique accompagne les porteurs de projet avec une identité forte, une expérience client soignée et un catalogue pensé pour les routines visage, corps et cheveux.', 'theme-perso' ); ?></p>
+        <p><?php esc_html_e( 'Cosm’Éthique accompagne les porteurs de projet avec une identité forte, un parcours hybride LearnyBox + serious game, 6 jours en boutique pilote à Paris et un suivi post-ouverture centré sur les KPI et l’expérience client.', 'theme-perso' ); ?></p>
     </section>
 
     <section class="franchise-flow-section franchise-flow-timeline" aria-labelledby="franchise-process-title">

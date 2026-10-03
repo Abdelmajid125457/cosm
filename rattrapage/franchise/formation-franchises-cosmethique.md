@@ -48,34 +48,33 @@ Le parcours recommandé est hybride, progressif et orienté pratique.
 
 ## 4. Durée de la formation
 
-La durée proposée est de 4 semaines, suivies de 3 mois d'accompagnement post-ouverture.
+Le parcours est présenté comme un **COSM'ÉTHIQUE Phygital Franchise Lab** : une phase digitale préparatoire en autonomie, suivie de **6 jours de formation présentielle / mixte** en boutique pilote à Paris, puis d'un accompagnement post-ouverture.
 
 | Période | Modalité | Durée estimée | Objectif |
 |---|---:|---:|---|
-| Semaine 1 | Distanciel / e-learning / classe virtuelle | 12 h | Découvrir la marque, les valeurs, la RSE et le cadre réglementaire. |
-| Semaine 2 | Distanciel + ateliers virtuels | 16 h | Maîtriser les produits, ingrédients, routines et conseils client. |
-| Semaine 3 | Présentiel à Paris | 28 h | Pratiquer en boutique pilote et apprendre la gestion opérationnelle. |
-| Semaine 4 | Hybride | 18 h | Maîtriser les outils digitaux, KPI, e-réputation et passer la certification. |
-| Post-ouverture | Coaching à distance | 12 h sur 3 mois | Accompagner les premières semaines d'activité. |
+| Phase digitale préparatoire | LearnyBox + serious game | En amont | Découvrir la marque, les valeurs, la RSE, les compositions INCI et les certifications COSMOS/Ecocert. |
+| Jours 1-2 | Présentiel / mixte à Paris | 2 jours | Maîtriser les produits, les routines, le diagnostic beauté et le conseil client. |
+| Jours 3-4 | Boutique pilote à Paris | 2 jours | Pratiquer en situation réelle : vente, merchandising, stock, encaissement et relation client. |
+| Jours 5-6 | Mixte | 2 jours | Piloter les KPI, le reporting réseau, l'e-réputation et passer la validation finale. |
+| Post-ouverture | Coaching et suivi KPI | Premiers mois | Accompagner le lancement et maintenir l'homogénéité de l'expérience client. |
 
-**Total : 86 heures**, dont **74 heures de formation initiale** et **12 heures d'accompagnement post-ouverture**.
+La phase présentielle / mixte représente donc **6 jours en boutique pilote**, complétés par la préparation digitale et le suivi post-ouverture.
 
-### Organisation semaine par semaine
+### Organisation par étapes
 
-| Semaine | Volume | Format dominant |
-|---|---:|---|
-| Semaine 1 | 12 h | Modules e-learning + classe virtuelle |
-| Semaine 2 | 16 h | Fiches produits interactives + ateliers conseil |
-| Semaine 3 | 28 h | Immersion boutique + jeux de rôle |
-| Semaine 4 | 18 h | Outils digitaux + étude de cas + certification |
-| Mois 1 après ouverture | 4 h | Rendez-vous hebdomadaires |
-| Mois 2 et 3 après ouverture | 8 h | Rendez-vous bi-mensuels + support KPI |
+| Étape | Format dominant |
+|---|---|
+| Phase digitale | Modules LearnyBox, diagnostic initial, quiz et serious game |
+| Jours 1-2 | Marque, produits, INCI, certifications et conseil client |
+| Jours 3-4 | Immersion boutique, jeux de rôle, vente et gestion opérationnelle |
+| Jours 5-6 | KPI, reporting, cas pratiques et validation à 80 % |
+| Après ouverture | Rendez-vous de suivi, analyse KPI, coaching vente et contrôle qualité |
 
 ## 5. Lieu de formation
 
 | Phase | Lieu |
 |---|---|
-| Modules e-learning | Plateforme de formation COSM'ÉTHIQUE accessible à distance. |
+| Modules e-learning | Plateforme LearnyBox accessible à distance. |
 | Classes virtuelles | Visioconférence animée par l'équipe réseau et les formateurs. |
 | Présentiel | Paris, boutique pilote COSM'ÉTHIQUE et showroom de formation. |
 | Ateliers pratiques | Boutique pilote, espace de formation ou showroom selon disponibilité. |
@@ -87,10 +86,10 @@ Ce choix permet de limiter les coûts de déplacement tout en conservant une imm
 
 | Période | Module | Contenu détaillé | Livrables / validation |
 |---|---|---|---|
-| Semaine 1 | Découverte de la marque | Histoire, valeurs, positionnement, charte graphique, promesse client, RSE, transparence, réglementation cosmétique, discours anti-greenwashing. | Quiz marque + mini-cas RSE. |
-| Semaine 2 | Produits et conseil client | Gammes visage, corps, cheveux, accessoires, packs, ingrédients, routines, diagnostic beauté, conseils personnalisés, objections client. | Simulation de diagnostic beauté + quiz produits. |
-| Semaine 3 | Gestion commerciale et boutique | Gestion du point de vente, merchandising, stock, encaissement, animation commerciale, fidélisation, relation client, avis et réclamations. | Mise en situation boutique + grille d'observation. |
-| Semaine 4 | Digital, e-commerce et performance | WordPress/WooCommerce côté franchise, suivi commandes, CRM/newsletter, réseaux sociaux locaux, Google Business Profile, KPI, tableaux de bord, e-réputation, gestion de crise. | Étude de cas + soutenance courte + certification. |
+| Phase digitale | Découverte de la marque | Histoire, valeurs, positionnement, RSE, transparence, lecture INCI, certifications COSMOS/Ecocert, discours anti-greenwashing et serious game. | Quiz marque + serious game. |
+| Jours 1-2 | Produits et conseil client | Gammes visage, corps, cheveux, ingrédients, routines, diagnostic beauté, conseils personnalisés, objections client. | Simulation de diagnostic beauté + quiz produits. |
+| Jours 3-4 | Gestion commerciale et boutique | Gestion du point de vente, merchandising, stock, encaissement, animation commerciale, fidélisation, relation client, avis et réclamations. | Mise en situation boutique + grille d'observation. |
+| Jours 5-6 | Digital, KPI et certification | Suivi commandes, CRM/newsletter, réseaux sociaux locaux, Google Business Profile, KPI, tableaux de bord, e-réputation, gestion de crise. | Étude de cas + validation à 80 % + certification. |
 | Post-ouverture | Accompagnement 3 mois | Rendez-vous hebdomadaire le premier mois, rendez-vous bi-mensuel les deux mois suivants, suivi KPI, coaching vente, contrôle qualité, support opérationnel. | Compte rendu mensuel + plan d'action. |
 
 ## 7. Méthodes pédagogiques innovantes

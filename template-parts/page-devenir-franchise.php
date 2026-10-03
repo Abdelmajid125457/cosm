@@ -60,8 +60,8 @@ $franchise_form_notice     = function_exists( 'theme_perso_get_franchise_informa
 <section class="franchise-training-preview" aria-labelledby="franchise-training-preview-title">
     <div class="franchise-training-preview__intro motion-reveal">
         <p class="eyebrow">Formation & accompagnement</p>
-        <h2 id="franchise-training-preview-title">Un parcours structuré pour ouvrir votre boutique avec méthode.</h2>
-        <p>Chaque nouveau franchisé suit une formation hybride mêlant e-learning, classes virtuelles, immersion en boutique pilote, ateliers pratiques et accompagnement post-ouverture. L’objectif est simple : garantir une expérience client homogène, premium et fidèle aux valeurs COSM’ÉTHIQUE dans chaque ville.</p>
+        <h2 id="franchise-training-preview-title">COSM’ÉTHIQUE Phygital Franchise Lab.</h2>
+        <p>Chaque nouveau franchisé suit un parcours préparatoire progressif incluant une phase digitale en amont, 6 jours de formation présentielle/mixte en boutique pilote à Paris et un accompagnement post-ouverture. L’objectif est simple : garantir une expérience client homogène, premium et fidèle aux standards COSM’ÉTHIQUE dans chaque ville.</p>
         <div class="franchise-cta-actions">
             <a class="button button-primary" href="<?php echo esc_url( $franchise_training_url ); ?>">Découvrir le parcours de formation</a>
         </div>
@@ -69,23 +69,23 @@ $franchise_form_notice     = function_exists( 'theme_perso_get_franchise_informa
     <div class="franchise-training-preview__grid">
         <article class="franchise-training-preview__card motion-reveal">
             <span aria-hidden="true">01</span>
-            <h3>4 semaines de formation</h3>
-            <p>Deux semaines à distance, une semaine en boutique pilote et une semaine dédiée au digital, aux KPI et à la certification.</p>
+            <h3>Phase digitale préparatoire</h3>
+            <p>LearnyBox, diagnostic initial, serious game, culture de marque, lecture INCI et certifications COSMOS/Ecocert.</p>
         </article>
         <article class="franchise-training-preview__card motion-reveal">
             <span aria-hidden="true">02</span>
-            <h3>Immersion boutique</h3>
-            <p>Mise en situation réelle : diagnostic beauté, conseil personnalisé, merchandising, encaissement et relation client.</p>
+            <h3>Immersion boutique pilote</h3>
+            <p>6 jours présentiel/mixte à Paris : conseil client, vente, gestion opérationnelle, stock et animation locale.</p>
         </article>
         <article class="franchise-training-preview__card motion-reveal">
             <span aria-hidden="true">03</span>
-            <h3>Certification interne</h3>
-            <p>Quiz, cas pratiques, simulation de vente et validation finale avant ouverture de la boutique.</p>
+            <h3>Validation des compétences</h3>
+            <p>Certification interne, attestation et validation avant ouverture avec un seuil minimum de 80 % des compétences attendues.</p>
         </article>
         <article class="franchise-training-preview__card motion-reveal">
             <span aria-hidden="true">04</span>
-            <h3>3 mois de coaching</h3>
-            <p>Suivi post-ouverture, points réguliers, analyse des KPI, accompagnement commercial et contrôle qualité.</p>
+            <h3>Accompagnement post-ouverture</h3>
+            <p>Suivi des premiers mois, analyse des KPI, conseils opérationnels et maintien de l’homogénéité du réseau.</p>
         </article>
     </div>
 </section>

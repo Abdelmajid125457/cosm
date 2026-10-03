@@ -42,6 +42,7 @@ $confirmation_url = home_url( '/franchise/confirmation/' );
                 <label><?php esc_html_e( 'Email', 'theme-perso' ); ?><input type="email" name="email" required aria-required="true"></label>
                 <label><?php esc_html_e( 'Téléphone', 'theme-perso' ); ?><input type="tel" name="phone" required aria-required="true"></label>
                 <label><?php esc_html_e( 'Ville', 'theme-perso' ); ?><input type="text" name="city" required aria-required="true"></label>
+                <label><?php esc_html_e( 'Région souhaitée', 'theme-perso' ); ?><input type="text" name="desired_region" required aria-required="true"></label>
                 <label><?php esc_html_e( 'Code postal', 'theme-perso' ); ?><input type="text" name="postcode" inputmode="numeric" autocomplete="postal-code" required aria-required="true"></label>
                 <label><?php esc_html_e( 'Pays', 'theme-perso' ); ?><input type="text" name="country" required aria-required="true"></label>
                 <label class="franchise-field-full"><?php esc_html_e( 'Adresse', 'theme-perso' ); ?><input type="text" name="address" required aria-required="true"></label>
@@ -54,6 +55,16 @@ $confirmation_url = home_url( '/franchise/confirmation/' );
                         <option value="investisseur"><?php esc_html_e( 'Investisseur', 'theme-perso' ); ?></option>
                         <option value="reconversion"><?php esc_html_e( 'Reconversion professionnelle', 'theme-perso' ); ?></option>
                         <option value="autre"><?php esc_html_e( 'Autre', 'theme-perso' ); ?></option>
+                    </select>
+                </label>
+                <label><?php esc_html_e( 'Expérience commerce / beauté / management', 'theme-perso' ); ?>
+                    <select name="business_experience" required aria-required="true">
+                        <option value=""><?php esc_html_e( 'Sélectionner', 'theme-perso' ); ?></option>
+                        <option value="commerce"><?php esc_html_e( 'Commerce', 'theme-perso' ); ?></option>
+                        <option value="beaute-cosmetique"><?php esc_html_e( 'Beauté / cosmétique', 'theme-perso' ); ?></option>
+                        <option value="management"><?php esc_html_e( 'Management', 'theme-perso' ); ?></option>
+                        <option value="multi-experience"><?php esc_html_e( 'Plusieurs expériences', 'theme-perso' ); ?></option>
+                        <option value="aucune"><?php esc_html_e( 'Aucune expérience directe', 'theme-perso' ); ?></option>
                     </select>
                 </label>
                 <label><?php esc_html_e( 'Horizon d’ouverture', 'theme-perso' ); ?>
@@ -86,7 +97,7 @@ $confirmation_url = home_url( '/franchise/confirmation/' );
                     </select>
                 </label>
                 <label class="franchise-field-full"><?php esc_html_e( 'Site web ou LinkedIn', 'theme-perso' ); ?><input type="url" name="website" placeholder="https://"></label>
-                <label class="franchise-field-full"><?php esc_html_e( 'Message', 'theme-perso' ); ?><textarea name="message" rows="6" required aria-required="true"></textarea></label>
+                <label class="franchise-field-full"><?php esc_html_e( 'Motivation et présentation du projet', 'theme-perso' ); ?><textarea name="message" rows="6" required aria-required="true"></textarea></label>
                 <label class="franchise-field-full"><?php esc_html_e( 'Captcha', 'theme-perso' ); ?><input type="text" name="captcha" inputmode="numeric" autocomplete="off" data-franchise-captcha required aria-required="true" placeholder="<?php esc_attr_e( 'Combien font 7 + 2 ?', 'theme-perso' ); ?>"></label>
                 <label class="franchise-rgpd franchise-field-full"><input type="checkbox" name="consent" required aria-required="true"> <?php esc_html_e( 'J’accepte que Cosm’Éthique traite mes informations afin d’étudier ma candidature franchise.', 'theme-perso' ); ?></label>
             </div>
