@@ -60,13 +60,13 @@ $franchise_form_notice     = function_exists( 'theme_perso_get_franchise_informa
 <section class="franchise-training-preview" aria-labelledby="franchise-training-preview-title">
     <div class="franchise-training-preview__intro motion-reveal">
         <p class="eyebrow">Formation & accompagnement</p>
-        <h2 id="franchise-training-preview-title">COSM’ÉTHIQUE Phygital Franchise Lab.</h2>
-        <p>Chaque nouveau franchisé suit un parcours préparatoire progressif incluant une phase digitale en amont, 6 jours de formation présentielle/mixte en boutique pilote à Paris et un accompagnement post-ouverture. L’objectif est simple : garantir une expérience client homogène, premium et fidèle aux standards COSM’ÉTHIQUE dans chaque ville.</p>
+        <h2 id="franchise-training-preview-title">COSM’ÉTHIQUE Phygital Franchise Lab</h2>
+        <p>Chaque nouveau franchisé suit un parcours préparatoire progressif combinant une phase digitale en amont, 6 jours de formation présentielle et mixte en boutique pilote à Paris, puis un accompagnement post-ouverture. L’objectif est de garantir une expérience client homogène, premium et fidèle aux standards COSM’ÉTHIQUE dans chaque ville.</p>
         <div class="franchise-cta-actions">
             <a class="button button-primary" href="<?php echo esc_url( $franchise_training_url ); ?>">Découvrir le parcours de formation</a>
         </div>
     </div>
-    <div class="franchise-training-preview__grid">
+    <div class="franchise-training-preview__grid" aria-label="Étapes du COSM’ÉTHIQUE Phygital Franchise Lab">
         <article class="franchise-training-preview__card motion-reveal">
             <span aria-hidden="true">01</span>
             <h3>Phase digitale préparatoire</h3>
@@ -74,13 +74,13 @@ $franchise_form_notice     = function_exists( 'theme_perso_get_franchise_informa
         </article>
         <article class="franchise-training-preview__card motion-reveal">
             <span aria-hidden="true">02</span>
-            <h3>Immersion boutique pilote</h3>
-            <p>6 jours présentiel/mixte à Paris : conseil client, vente, gestion opérationnelle, stock et animation locale.</p>
+            <h3>Immersion en boutique pilote</h3>
+            <p>6 jours de formation présentielle et mixte à Paris : conseil client, vente, gestion opérationnelle, stocks et animation locale.</p>
         </article>
         <article class="franchise-training-preview__card motion-reveal">
             <span aria-hidden="true">03</span>
             <h3>Validation des compétences</h3>
-            <p>Certification interne, attestation et validation avant ouverture avec un seuil minimum de 80 % des compétences attendues.</p>
+            <p>Certification interne, attestation et validation avant ouverture avec un seuil de 80 % des compétences attendues.</p>
         </article>
         <article class="franchise-training-preview__card motion-reveal">
             <span aria-hidden="true">04</span>
