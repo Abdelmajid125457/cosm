@@ -58,35 +58,37 @@ $franchise_form_notice     = function_exists( 'theme_perso_get_franchise_informa
 </section>
 
 <section class="franchise-training-preview" aria-labelledby="franchise-training-preview-title">
-    <div class="franchise-training-preview__intro motion-reveal">
-        <p class="eyebrow">Formation & accompagnement</p>
-        <h2 id="franchise-training-preview-title">COSM’ÉTHIQUE Phygital Franchise Lab</h2>
-        <p>Chaque nouveau franchisé suit un parcours préparatoire progressif combinant une phase digitale en amont, 6 jours de formation présentielle et mixte en boutique pilote à Paris, puis un accompagnement post-ouverture. L’objectif est de garantir une expérience client homogène, premium et fidèle aux standards COSM’ÉTHIQUE dans chaque ville.</p>
-        <div class="franchise-cta-actions">
-            <a class="button button-primary" href="<?php echo esc_url( $franchise_training_url ); ?>">Découvrir le parcours de formation</a>
+    <div class="franchise-training-preview__inner">
+        <div class="franchise-training-preview__intro motion-reveal">
+            <p class="eyebrow">Formation & accompagnement</p>
+            <h2 id="franchise-training-preview-title">COSM’ÉTHIQUE Phygital Franchise Lab</h2>
+            <p>Chaque nouveau franchisé suit un parcours préparatoire progressif combinant une phase digitale en amont, 6 jours de formation présentielle et mixte en boutique pilote à Paris, puis un accompagnement post-ouverture. L’objectif est de garantir une expérience client homogène, premium et fidèle aux standards COSM’ÉTHIQUE dans chaque ville.</p>
+            <div class="franchise-cta-actions">
+                <a class="button button-primary" href="<?php echo esc_url( $franchise_training_url ); ?>">Découvrir le parcours de formation</a>
+            </div>
         </div>
-    </div>
-    <div class="franchise-training-preview__grid" aria-label="Étapes du COSM’ÉTHIQUE Phygital Franchise Lab">
-        <article class="franchise-training-preview__card motion-reveal">
-            <span aria-hidden="true">01</span>
-            <h3>Phase digitale préparatoire</h3>
-            <p>LearnyBox, diagnostic initial, serious game, culture de marque, lecture INCI et certifications COSMOS/Ecocert.</p>
-        </article>
-        <article class="franchise-training-preview__card motion-reveal">
-            <span aria-hidden="true">02</span>
-            <h3>Immersion en boutique pilote</h3>
-            <p>6 jours de formation présentielle et mixte à Paris : conseil client, vente, gestion opérationnelle, stocks et animation locale.</p>
-        </article>
-        <article class="franchise-training-preview__card motion-reveal">
-            <span aria-hidden="true">03</span>
-            <h3>Validation des compétences</h3>
-            <p>Certification interne, attestation et validation avant ouverture avec un seuil de 80 % des compétences attendues.</p>
-        </article>
-        <article class="franchise-training-preview__card motion-reveal">
-            <span aria-hidden="true">04</span>
-            <h3>Accompagnement post-ouverture</h3>
-            <p>Suivi des premiers mois, analyse des KPI, conseils opérationnels et maintien de l’homogénéité du réseau.</p>
-        </article>
+        <div class="franchise-training-preview__grid" aria-label="Étapes du COSM’ÉTHIQUE Phygital Franchise Lab">
+            <article class="franchise-training-preview__card motion-reveal">
+                <span aria-hidden="true">01</span>
+                <h3>Phase digitale préparatoire</h3>
+                <p>LearnyBox, diagnostic initial, serious game, culture de marque, lecture INCI et certifications COSMOS/Ecocert.</p>
+            </article>
+            <article class="franchise-training-preview__card motion-reveal">
+                <span aria-hidden="true">02</span>
+                <h3>Immersion en boutique pilote</h3>
+                <p>6 jours de formation présentielle et mixte à Paris : conseil client, vente, gestion opérationnelle, stocks et animation locale.</p>
+            </article>
+            <article class="franchise-training-preview__card motion-reveal">
+                <span aria-hidden="true">03</span>
+                <h3>Validation des compétences</h3>
+                <p>Certification interne, attestation et validation avant ouverture avec un seuil de 80 % des compétences attendues.</p>
+            </article>
+            <article class="franchise-training-preview__card motion-reveal">
+                <span aria-hidden="true">04</span>
+                <h3>Accompagnement post-ouverture</h3>
+                <p>Suivi des premiers mois, analyse des KPI, conseils opérationnels et maintien de l’homogénéité du réseau.</p>
+            </article>
+        </div>
     </div>
 </section>
 
