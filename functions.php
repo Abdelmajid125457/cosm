@@ -1062,6 +1062,22 @@ function theme_perso_get_franchise_information_notice() {
     return null;
 }
 
+function theme_perso_get_franchise_information_value( $field, $default = '' ) {
+    $values = isset( $GLOBALS['theme_perso_franchise_information_values'] ) && is_array( $GLOBALS['theme_perso_franchise_information_values'] )
+        ? $GLOBALS['theme_perso_franchise_information_values']
+        : array();
+
+    return isset( $values[ $field ] ) ? $values[ $field ] : $default;
+}
+
+function theme_perso_get_franchise_information_error( $field ) {
+    $errors = isset( $GLOBALS['theme_perso_franchise_information_errors'] ) && is_array( $GLOBALS['theme_perso_franchise_information_errors'] )
+        ? $GLOBALS['theme_perso_franchise_information_errors']
+        : array();
+
+    return isset( $errors[ $field ] ) ? $errors[ $field ] : '';
+}
+
 function theme_perso_get_contact_form_notice() {
     if ( ! empty( $GLOBALS['theme_perso_contact_form_notice'] ) && is_array( $GLOBALS['theme_perso_contact_form_notice'] ) ) {
         return $GLOBALS['theme_perso_contact_form_notice'];
@@ -1198,12 +1214,35 @@ function theme_perso_handle_franchise_information_form() {
         return;
     }
 
-    $set_error = static function ( $message ) {
+    $set_error = static function ( $message, $field_errors = array() ) {
         $GLOBALS['theme_perso_franchise_information_notice'] = array(
             'type'    => 'error',
             'message' => $message,
         );
+
+        if ( $field_errors ) {
+            $GLOBALS['theme_perso_franchise_information_errors'] = $field_errors;
+        }
     };
+
+    $submission = array(
+        'last_name'               => isset( $_POST['last_name'] ) ? sanitize_text_field( wp_unslash( $_POST['last_name'] ) ) : '',
+        'first_name'              => isset( $_POST['first_name'] ) ? sanitize_text_field( wp_unslash( $_POST['first_name'] ) ) : '',
+        'email'                   => isset( $_POST['email'] ) ? sanitize_email( wp_unslash( $_POST['email'] ) ) : '',
+        'phone'                   => isset( $_POST['phone'] ) ? sanitize_text_field( wp_unslash( $_POST['phone'] ) ) : '',
+        'implantation_city'       => isset( $_POST['implantation_city'] ) ? sanitize_text_field( wp_unslash( $_POST['implantation_city'] ) ) : '',
+        'implantation_postcode'   => isset( $_POST['implantation_postcode'] ) ? sanitize_text_field( wp_unslash( $_POST['implantation_postcode'] ) ) : '',
+        'personal_contribution'   => isset( $_POST['personal_contribution'] ) ? sanitize_text_field( wp_unslash( $_POST['personal_contribution'] ) ) : '',
+        'professional_experience' => isset( $_POST['professional_experience'] ) ? sanitize_textarea_field( wp_unslash( $_POST['professional_experience'] ) ) : '',
+        'project_message'         => isset( $_POST['project_message'] ) ? sanitize_textarea_field( wp_unslash( $_POST['project_message'] ) ) : '',
+        'privacy_consent'         => ! empty( $_POST['privacy_consent'] ) ? '1' : '',
+    );
+
+    foreach ( $submission as $field => $value ) {
+        $submission[ $field ] = is_string( $value ) ? trim( $value ) : $value;
+    }
+
+    $GLOBALS['theme_perso_franchise_information_values'] = $submission;
 
     $nonce = isset( $_POST['franchise_information_nonce'] ) ? sanitize_text_field( wp_unslash( $_POST['franchise_information_nonce'] ) ) : '';
     if ( ! $nonce || ! wp_verify_nonce( $nonce, 'franchise_information' ) ) {
@@ -1216,68 +1255,112 @@ function theme_perso_handle_franchise_information_form() {
         return;
     }
 
-    $required_fields = array(
-        'first_name'            => __( 'Prénom', 'theme-perso' ),
-        'last_name'             => __( 'Nom', 'theme-perso' ),
-        'email'                 => __( 'Email', 'theme-perso' ),
-        'phone'                 => __( 'Téléphone', 'theme-perso' ),
-        'city'                  => __( 'Ville', 'theme-perso' ),
-        'postcode'              => __( 'Code postal', 'theme-perso' ),
-        'current_status'        => __( 'Statut actuel', 'theme-perso' ),
-        'experience_area'       => __( 'Expérience principale', 'theme-perso' ),
-        'desired_area'          => __( 'Ville ou région souhaitée', 'theme-perso' ),
-        'opening_horizon'       => __( 'Horizon d’ouverture', 'theme-perso' ),
-        'investment'            => __( 'Apport personnel estimé', 'theme-perso' ),
-        'premises_status'       => __( 'Local déjà identifié', 'theme-perso' ),
-        'motivation'            => __( 'Pourquoi rejoindre COSM’ÉTHIQUE ?', 'theme-perso' ),
-        'franchise_motivation'  => __( 'Motivations franchise', 'theme-perso' ),
-        'message'               => __( 'Message libre', 'theme-perso' ),
-    );
+    $field_errors = array();
 
-    $submission = array();
-    foreach ( $required_fields as $field => $label ) {
-        $value = isset( $_POST[ $field ] ) ? trim( sanitize_textarea_field( wp_unslash( $_POST[ $field ] ) ) ) : '';
-        if ( '' === $value ) {
-            $set_error( sprintf( __( 'Merci de compléter le champ : %s.', 'theme-perso' ), $label ) );
-            return;
-        }
-
-        $submission[ $field ] = $value;
+    if ( '' === $submission['last_name'] ) {
+        $field_errors['last_name'] = __( 'Veuillez renseigner votre nom.', 'theme-perso' );
     }
 
-    $submission['email'] = sanitize_email( $submission['email'] );
+    if ( '' === $submission['first_name'] ) {
+        $field_errors['first_name'] = __( 'Veuillez renseigner votre prénom.', 'theme-perso' );
+    }
+
     if ( ! is_email( $submission['email'] ) ) {
-        $set_error( __( 'Merci d’indiquer une adresse email valide.', 'theme-perso' ) );
+        $field_errors['email'] = __( 'Veuillez saisir une adresse e-mail valide.', 'theme-perso' );
+    }
+
+    if ( '' === $submission['phone'] || ! preg_match( '/^[0-9 +().-]{6,20}$/', $submission['phone'] ) ) {
+        $field_errors['phone'] = __( 'Veuillez renseigner un numéro de téléphone valide.', 'theme-perso' );
+    }
+
+    if ( '' === $submission['implantation_city'] ) {
+        $field_errors['implantation_city'] = __( 'Veuillez renseigner la ville d’implantation souhaitée.', 'theme-perso' );
+    }
+
+    if ( ! preg_match( '/^[0-9]{5}$/', $submission['implantation_postcode'] ) ) {
+        $field_errors['implantation_postcode'] = __( 'Veuillez saisir un code postal valide à 5 chiffres.', 'theme-perso' );
+    }
+
+    if ( '' === $submission['personal_contribution'] || ! preg_match( '/^[0-9]+$/', $submission['personal_contribution'] ) ) {
+        $field_errors['personal_contribution'] = __( 'Veuillez indiquer votre apport personnel disponible avec un montant positif ou nul.', 'theme-perso' );
+    } elseif ( 0 !== ( (int) $submission['personal_contribution'] % 1000 ) ) {
+        $field_errors['personal_contribution'] = __( 'Veuillez saisir un montant par tranche de 1 000 €.', 'theme-perso' );
+    }
+
+    if ( '' === $submission['project_message'] ) {
+        $field_errors['project_message'] = __( 'Veuillez présenter votre projet de franchise.', 'theme-perso' );
+    }
+
+    if ( '1' !== $submission['privacy_consent'] ) {
+        $field_errors['privacy_consent'] = __( 'Veuillez accepter le traitement des données nécessaire à votre candidature.', 'theme-perso' );
+    }
+
+    if ( $field_errors ) {
+        $set_error( __( 'Merci de vérifier les champs indiqués avant d’envoyer votre candidature.', 'theme-perso' ), $field_errors );
         return;
     }
 
-    if ( ! preg_match( '/^[0-9 +().-]{6,20}$/', $submission['phone'] ) ) {
-        $set_error( __( 'Merci d’indiquer un numéro de téléphone cohérent.', 'theme-perso' ) );
+    $submission['personal_contribution'] = (int) $submission['personal_contribution'];
+    $submission['privacy_consent']       = true;
+
+    $duplicate_key = 'cosmethique_franchise_' . md5( strtolower( $submission['email'] ) . '|' . $submission['phone'] . '|' . $submission['project_message'] );
+    if ( get_transient( $duplicate_key ) ) {
+        $set_error( __( 'Cette candidature a déjà été transmise. Merci de patienter avant de réessayer.', 'theme-perso' ) );
         return;
     }
 
-    $allowed_values = array(
-        'current_status'  => array( 'salarie', 'entrepreneur', 'commercant', 'investisseur', 'reconversion', 'autre' ),
-        'experience_area' => array( 'commerce', 'vente', 'beaute-cosmetique', 'management', 'entrepreneuriat', 'aucune' ),
-        'opening_horizon' => array( 'moins-3-mois', '3-6-mois', '6-12-mois', 'plus-12-mois' ),
-        'investment'      => array( 'moins-15000', '15000-30000', '30000-50000', 'plus-50000' ),
-        'premises_status' => array( 'oui', 'non', 'recherche' ),
+    $recipient = sanitize_email( get_option( 'admin_email' ) );
+    if ( ! is_email( $recipient ) ) {
+        $set_error( __( 'La candidature ne peut pas être transmise pour le moment. Merci de réessayer ultérieurement.', 'theme-perso' ) );
+        return;
+    }
+
+    $subject = sprintf(
+        /* translators: 1: implantation city, 2: postcode. */
+        __( '[COSM’ÉTHIQUE] Nouvelle candidature franchise — %1$s (%2$s)', 'theme-perso' ),
+        $submission['implantation_city'],
+        $submission['implantation_postcode']
     );
 
-    foreach ( $allowed_values as $field => $allowed ) {
-        if ( ! in_array( $submission[ $field ], $allowed, true ) ) {
-            $set_error( sprintf( __( 'Merci de choisir une option valide pour : %s.', 'theme-perso' ), $required_fields[ $field ] ) );
-            return;
-        }
-    }
+    $experience = $submission['professional_experience'] ?: __( 'Non renseignée', 'theme-perso' );
+    $message    = implode(
+        "\n",
+        array(
+            'INFORMATIONS DU CANDIDAT',
+            'Nom : ' . $submission['last_name'],
+            'Prénom : ' . $submission['first_name'],
+            'E-mail : ' . $submission['email'],
+            'Téléphone : ' . $submission['phone'],
+            '',
+            'PROJET D’IMPLANTATION',
+            'Ville d’implantation souhaitée : ' . $submission['implantation_city'],
+            'Code postal de la zone d’implantation souhaitée : ' . $submission['implantation_postcode'],
+            'Apport personnel disponible : ' . number_format_i18n( $submission['personal_contribution'], 0 ) . ' €',
+            '',
+            'PARCOURS ET MOTIVATIONS',
+            'Expérience professionnelle :',
+            $experience,
+            '',
+            'Message / Présentation du projet :',
+            $submission['project_message'],
+            '',
+            'CONSENTEMENT',
+            'Consentement relatif au traitement de la candidature : accepté.',
+        )
+    );
 
-    $submission['website'] = isset( $_POST['website'] ) ? esc_url_raw( wp_unslash( $_POST['website'] ) ) : '';
+    $reply_name = trim( $submission['first_name'] . ' ' . $submission['last_name'] );
+    $headers    = array(
+        'Content-Type: text/plain; charset=UTF-8',
+        sprintf( 'Reply-To: %s <%s>', sanitize_text_field( $reply_name ), $submission['email'] ),
+    );
 
-    if ( empty( $_POST['consent'] ) ) { // phpcs:ignore WordPress.Security.NonceVerification.Missing
-        $set_error( __( 'Merci d’accepter d’être contacté au sujet de votre demande.', 'theme-perso' ) );
+    if ( ! wp_mail( $recipient, $subject, $message, $headers ) ) {
+        $set_error( __( 'Votre candidature n’a pas pu être envoyée. Merci de réessayer dans quelques instants.', 'theme-perso' ) );
         return;
     }
 
+    set_transient( $duplicate_key, 1, 2 * MINUTE_IN_SECONDS );
     do_action( 'theme_perso_franchise_information_submitted', $submission );
 
     $confirmation_page = get_page_by_path( 'franchise/confirmation' );

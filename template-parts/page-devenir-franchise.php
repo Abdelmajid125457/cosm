@@ -2,6 +2,13 @@
 $franchise_eligibility_url = home_url( '/franchise/eligibilite/' );
 $franchise_training_url    = home_url( '/franchise/formation/' );
 $franchise_form_notice     = function_exists( 'theme_perso_get_franchise_information_notice' ) ? theme_perso_get_franchise_information_notice() : null;
+$franchise_privacy_url     = home_url( '/politique-de-confidentialite/' );
+$franchise_value           = static function ( $field ) {
+    return function_exists( 'theme_perso_get_franchise_information_value' ) ? theme_perso_get_franchise_information_value( $field ) : '';
+};
+$franchise_error           = static function ( $field ) {
+    return function_exists( 'theme_perso_get_franchise_information_error' ) ? theme_perso_get_franchise_information_error( $field ) : '';
+};
 ?>
 <section class="franchise-network" aria-labelledby="franchise-network-title">
     <div class="franchise-network-shell">
@@ -121,102 +128,103 @@ $franchise_form_notice     = function_exists( 'theme_perso_get_franchise_informa
             <li>Supports marketing et animation locale</li>
         </ul>
     </div>
-    <div class="form-card" data-demo-autofill="franchise">
-        <h3>Demande d’information franchisé</h3>
+    <div class="form-card">
+        <p class="eyebrow">Candidature franchise</p>
+        <h3>Présentez votre projet</h3>
+        <p class="franchise-form-intro">Ces informations permettent à notre équipe d’évaluer votre projet d’implantation et de vous recontacter dans un cadre strictement professionnel.</p>
+        <p class="franchise-required-note"><span aria-hidden="true">*</span> Champs obligatoires</p>
         <?php if ( $franchise_form_notice ) : ?>
             <p class="franchise-form-status <?php echo 'error' === $franchise_form_notice['type'] ? 'is-error' : 'is-success'; ?>" role="<?php echo 'error' === $franchise_form_notice['type'] ? 'alert' : 'status'; ?>">
                 <?php echo esc_html( $franchise_form_notice['message'] ); ?>
             </p>
         <?php endif; ?>
-        <form class="cosmethique-form cosmethique-form--structured franchise-btob-form" action="<?php echo esc_url( home_url( '/devenir-franchise/' ) ); ?>" method="post" data-franchise-info-form novalidate>
+        <form class="cosmethique-form cosmethique-form--structured franchise-btob-form" action="<?php echo esc_url( home_url( '/devenir-franchise/' ) ); ?>" method="post" data-franchise-info-form data-demo-autofill-disabled="true" data-error-summary="Merci de vérifier les champs indiqués avant d’envoyer votre candidature." novalidate>
             <input type="hidden" name="cosmethique_form_type" value="franchise_information">
+            <p class="franchise-form-status" data-form-status role="alert" aria-live="assertive"></p>
+
             <fieldset class="cosmethique-form-section">
                 <legend>Informations personnelles</legend>
                 <div class="cosmethique-form-grid">
-                    <label>Prénom<input type="text" name="first_name" autocomplete="given-name" required aria-required="true"></label>
-                    <label>Nom<input type="text" name="last_name" autocomplete="family-name" required aria-required="true"></label>
-                    <label>Email<input type="email" name="email" autocomplete="email" required aria-required="true"></label>
-                    <label>Téléphone<input type="tel" name="phone" autocomplete="tel" required aria-required="true"></label>
-                    <label>Ville<input type="text" name="city" autocomplete="address-level2" required aria-required="true"></label>
-                    <label>Code postal<input type="text" name="postcode" inputmode="numeric" autocomplete="postal-code" required aria-required="true"></label>
+                    <div class="cosmethique-form-field">
+                        <label for="franchise-last-name">Nom <span class="franchise-required-mark" aria-hidden="true">*</span><span class="screen-reader-text"> (obligatoire)</span></label>
+                        <input id="franchise-last-name" type="text" name="last_name" value="<?php echo esc_attr( $franchise_value( 'last_name' ) ); ?>" autocomplete="family-name" maxlength="80" required aria-required="true" aria-describedby="franchise-last-name-error" aria-invalid="<?php echo $franchise_error( 'last_name' ) ? 'true' : 'false'; ?>" data-error-required="Veuillez renseigner votre nom.">
+                        <span id="franchise-last-name-error" class="form-error-message" data-field-error-for="franchise-last-name"><?php echo esc_html( $franchise_error( 'last_name' ) ); ?></span>
+                    </div>
+                    <div class="cosmethique-form-field">
+                        <label for="franchise-first-name">Prénom <span class="franchise-required-mark" aria-hidden="true">*</span><span class="screen-reader-text"> (obligatoire)</span></label>
+                        <input id="franchise-first-name" type="text" name="first_name" value="<?php echo esc_attr( $franchise_value( 'first_name' ) ); ?>" autocomplete="given-name" maxlength="80" required aria-required="true" aria-describedby="franchise-first-name-error" aria-invalid="<?php echo $franchise_error( 'first_name' ) ? 'true' : 'false'; ?>" data-error-required="Veuillez renseigner votre prénom.">
+                        <span id="franchise-first-name-error" class="form-error-message" data-field-error-for="franchise-first-name"><?php echo esc_html( $franchise_error( 'first_name' ) ); ?></span>
+                    </div>
+                    <div class="cosmethique-form-field">
+                        <label for="franchise-email">E-mail <span class="franchise-required-mark" aria-hidden="true">*</span><span class="screen-reader-text"> (obligatoire)</span></label>
+                        <input id="franchise-email" type="email" name="email" value="<?php echo esc_attr( $franchise_value( 'email' ) ); ?>" autocomplete="email" maxlength="190" required aria-required="true" aria-describedby="franchise-email-error" aria-invalid="<?php echo $franchise_error( 'email' ) ? 'true' : 'false'; ?>" data-error-required="Veuillez renseigner votre adresse e-mail." data-error-type="Veuillez saisir une adresse e-mail valide.">
+                        <span id="franchise-email-error" class="form-error-message" data-field-error-for="franchise-email"><?php echo esc_html( $franchise_error( 'email' ) ); ?></span>
+                    </div>
+                    <div class="cosmethique-form-field">
+                        <label for="franchise-phone">Téléphone <span class="franchise-required-mark" aria-hidden="true">*</span><span class="screen-reader-text"> (obligatoire)</span></label>
+                        <input id="franchise-phone" type="tel" name="phone" value="<?php echo esc_attr( $franchise_value( 'phone' ) ); ?>" autocomplete="tel" maxlength="20" pattern="[0-9+(). -]{6,20}" required aria-required="true" aria-describedby="franchise-phone-error" aria-invalid="<?php echo $franchise_error( 'phone' ) ? 'true' : 'false'; ?>" data-error-required="Veuillez renseigner votre téléphone." data-error-pattern="Veuillez renseigner un numéro de téléphone valide.">
+                        <span id="franchise-phone-error" class="form-error-message" data-field-error-for="franchise-phone"><?php echo esc_html( $franchise_error( 'phone' ) ); ?></span>
+                    </div>
                 </div>
             </fieldset>
 
             <fieldset class="cosmethique-form-section">
-                <legend>Profil professionnel</legend>
+                <legend>Projet d’implantation</legend>
+                <p id="franchise-location-help" class="cosmethique-form-section-help">Précisez la localisation envisagée pour votre future boutique COSM’ÉTHIQUE.</p>
                 <div class="cosmethique-form-grid">
-                    <label>Statut actuel
-                        <select name="current_status" required aria-required="true">
-                            <option value="">Sélectionner</option>
-                            <option value="salarie">Salarié</option>
-                            <option value="entrepreneur">Entrepreneur</option>
-                            <option value="commercant">Commerçant</option>
-                            <option value="investisseur">Investisseur</option>
-                            <option value="reconversion">Reconversion professionnelle</option>
-                            <option value="autre">Autre</option>
-                        </select>
-                    </label>
-                    <label>Expérience principale
-                        <select name="experience_area" required aria-required="true">
-                            <option value="">Sélectionner</option>
-                            <option value="commerce">Commerce</option>
-                            <option value="vente">Vente</option>
-                            <option value="beaute-cosmetique">Beauté / cosmétique</option>
-                            <option value="management">Management</option>
-                            <option value="entrepreneuriat">Entrepreneuriat</option>
-                            <option value="aucune">Aucune expérience</option>
-                        </select>
-                    </label>
+                    <div class="cosmethique-form-field">
+                        <label for="franchise-implantation-city">Ville d’implantation souhaitée <span class="franchise-required-mark" aria-hidden="true">*</span><span class="screen-reader-text"> (obligatoire)</span></label>
+                        <input id="franchise-implantation-city" type="text" name="implantation_city" value="<?php echo esc_attr( $franchise_value( 'implantation_city' ) ); ?>" autocomplete="address-level2" maxlength="120" required aria-required="true" aria-describedby="franchise-location-help franchise-implantation-city-error" aria-invalid="<?php echo $franchise_error( 'implantation_city' ) ? 'true' : 'false'; ?>" data-error-required="Veuillez renseigner la ville d’implantation souhaitée.">
+                        <span id="franchise-implantation-city-error" class="form-error-message" data-field-error-for="franchise-implantation-city"><?php echo esc_html( $franchise_error( 'implantation_city' ) ); ?></span>
+                    </div>
+                    <div class="cosmethique-form-field">
+                        <label for="franchise-implantation-postcode">Code postal de la zone d’implantation souhaitée <span class="franchise-required-mark" aria-hidden="true">*</span><span class="screen-reader-text"> (obligatoire)</span></label>
+                        <input id="franchise-implantation-postcode" type="text" name="implantation_postcode" value="<?php echo esc_attr( $franchise_value( 'implantation_postcode' ) ); ?>" inputmode="numeric" autocomplete="postal-code" minlength="5" maxlength="5" pattern="[0-9]{5}" required aria-required="true" aria-describedby="franchise-location-help franchise-implantation-postcode-error" aria-invalid="<?php echo $franchise_error( 'implantation_postcode' ) ? 'true' : 'false'; ?>" data-error-required="Veuillez renseigner le code postal de la zone d’implantation." data-error-pattern="Veuillez saisir un code postal valide à 5 chiffres.">
+                        <span id="franchise-implantation-postcode-error" class="form-error-message" data-field-error-for="franchise-implantation-postcode"><?php echo esc_html( $franchise_error( 'implantation_postcode' ) ); ?></span>
+                    </div>
+                    <div class="cosmethique-form-field cosmethique-field-full">
+                        <label for="franchise-personal-contribution">Apport personnel disponible <span class="franchise-required-mark" aria-hidden="true">*</span><span class="screen-reader-text"> (obligatoire)</span></label>
+                        <div class="franchise-currency-field">
+                            <input id="franchise-personal-contribution" type="number" name="personal_contribution" value="<?php echo esc_attr( $franchise_value( 'personal_contribution' ) ); ?>" inputmode="numeric" min="0" step="1000" placeholder="25000" required aria-required="true" aria-describedby="franchise-contribution-help franchise-personal-contribution-error" aria-invalid="<?php echo $franchise_error( 'personal_contribution' ) ? 'true' : 'false'; ?>" data-error-required="Veuillez indiquer votre apport personnel disponible." data-error-range="Le montant de l’apport personnel ne peut pas être négatif." data-error-step="Veuillez saisir un montant par tranche de 1 000 €.">
+                            <span aria-hidden="true">€</span>
+                        </div>
+                        <small id="franchise-contribution-help">Indiquez le montant disponible, sans espace ni symbole monétaire. Cette information sert uniquement à qualifier le projet.</small>
+                        <span id="franchise-personal-contribution-error" class="form-error-message" data-field-error-for="franchise-personal-contribution"><?php echo esc_html( $franchise_error( 'personal_contribution' ) ); ?></span>
+                    </div>
                 </div>
             </fieldset>
 
             <fieldset class="cosmethique-form-section">
-                <legend>Projet franchise</legend>
+                <legend>Votre parcours et votre projet</legend>
                 <div class="cosmethique-form-grid">
-                    <label>Ville ou région souhaitée<input type="text" name="desired_area" required aria-required="true"></label>
-                    <label>Horizon d’ouverture
-                        <select name="opening_horizon" required aria-required="true">
-                            <option value="">Sélectionner</option>
-                            <option value="moins-3-mois">Moins de 3 mois</option>
-                            <option value="3-6-mois">3 à 6 mois</option>
-                            <option value="6-12-mois">6 à 12 mois</option>
-                            <option value="plus-12-mois">Plus de 12 mois</option>
-                        </select>
-                    </label>
-                    <label>Apport personnel estimé
-                        <select name="investment" required aria-required="true">
-                            <option value="">Sélectionner</option>
-                            <option value="moins-15000">Moins de 15 000 €</option>
-                            <option value="15000-30000">15 000 à 30 000 €</option>
-                            <option value="30000-50000">30 000 à 50 000 €</option>
-                            <option value="plus-50000">Plus de 50 000 €</option>
-                        </select>
-                    </label>
-                    <label>Local déjà identifié ?
-                        <select name="premises_status" required aria-required="true">
-                            <option value="">Sélectionner</option>
-                            <option value="oui">Oui</option>
-                            <option value="non">Non</option>
-                            <option value="recherche">En recherche</option>
-                        </select>
-                    </label>
-                    <label class="cosmethique-field-full">Site web ou LinkedIn si disponible<input type="url" name="website" placeholder="https://www.linkedin.com/in/..."></label>
+                    <div class="cosmethique-form-field cosmethique-field-full">
+                        <label for="franchise-professional-experience">Expérience professionnelle</label>
+                        <textarea id="franchise-professional-experience" name="professional_experience" rows="4" maxlength="2000" aria-describedby="franchise-professional-experience-help"><?php echo esc_textarea( $franchise_value( 'professional_experience' ) ); ?></textarea>
+                        <small id="franchise-professional-experience-help">Facultatif — présentez brièvement votre parcours, notamment en commerce, management ou entrepreneuriat.</small>
+                    </div>
+                    <div class="cosmethique-form-field cosmethique-field-full">
+                        <label for="franchise-project-message">Message / Présentation du projet <span class="franchise-required-mark" aria-hidden="true">*</span><span class="screen-reader-text"> (obligatoire)</span></label>
+                        <textarea id="franchise-project-message" name="project_message" rows="6" maxlength="4000" required aria-required="true" aria-describedby="franchise-project-message-error" aria-invalid="<?php echo $franchise_error( 'project_message' ) ? 'true' : 'false'; ?>" data-error-required="Veuillez présenter votre projet de franchise."><?php echo esc_textarea( $franchise_value( 'project_message' ) ); ?></textarea>
+                        <span id="franchise-project-message-error" class="form-error-message" data-field-error-for="franchise-project-message"><?php echo esc_html( $franchise_error( 'project_message' ) ); ?></span>
+                    </div>
                 </div>
             </fieldset>
 
-            <fieldset class="cosmethique-form-section">
-                <legend>Motivation</legend>
-                <div class="cosmethique-form-grid">
-                    <label class="cosmethique-field-full">Pourquoi souhaitez-vous rejoindre COSM’ÉTHIQUE ?<textarea name="motivation" rows="4" required aria-required="true"></textarea></label>
-                    <label class="cosmethique-field-full">Quelles sont vos motivations pour ouvrir une franchise ?<textarea name="franchise_motivation" rows="4" required aria-required="true"></textarea></label>
-                    <label class="cosmethique-field-full">Message libre<textarea name="message" rows="5" required aria-required="true"></textarea></label>
+            <fieldset class="cosmethique-form-section cosmethique-form-section--privacy">
+                <legend>Protection des données</legend>
+                <div class="cosmethique-form-field cosmethique-field-full">
+                    <p class="franchise-consent-heading">Consentement RGPD <span class="franchise-required-mark" aria-hidden="true">*</span><span class="screen-reader-text"> (obligatoire)</span></p>
+                    <label class="checkbox-label" for="franchise-privacy-consent">
+                        <input id="franchise-privacy-consent" type="checkbox" name="privacy_consent" value="1" <?php checked( '1', $franchise_value( 'privacy_consent' ) ); ?> required aria-required="true" aria-describedby="franchise-privacy-consent-error" aria-invalid="<?php echo $franchise_error( 'privacy_consent' ) ? 'true' : 'false'; ?>" data-error-required="Veuillez accepter le traitement des données nécessaire à votre candidature.">
+                        <span>J’accepte que les informations transmises soient utilisées par COSM’ÉTHIQUE pour étudier ma candidature franchise et me recontacter dans le cadre de mon projet. <a href="<?php echo esc_url( $franchise_privacy_url ); ?>">Consulter la politique de confidentialité</a>.</span>
+                    </label>
+                    <span id="franchise-privacy-consent-error" class="form-error-message" data-field-error-for="franchise-privacy-consent"><?php echo esc_html( $franchise_error( 'privacy_consent' ) ); ?></span>
                 </div>
             </fieldset>
 
-            <label class="checkbox-label"><input type="checkbox" name="consent" required aria-required="true"> J’accepte que mes données soient utilisées pour être recontacté dans le cadre de ma demande de franchise.</label>
             <?php wp_nonce_field( 'franchise_information', 'franchise_information_nonce' ); ?>
             <?php theme_perso_security_fields( 'franchise' ); ?>
-            <button class="button button-primary" type="submit">Envoyer ma candidature franchise</button>
+            <button class="button button-primary franchise-submit-button" type="submit">Envoyer ma candidature</button>
         </form>
     </div>
 </section>

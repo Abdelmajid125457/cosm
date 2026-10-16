@@ -253,6 +253,50 @@ document.addEventListener('DOMContentLoaded', () => {
         return status;
     };
 
+    const getStructuredFieldError = (field) => {
+        if (!field || field.checkValidity()) {
+            return '';
+        }
+
+        const validity = field.validity || {};
+
+        if (validity.valueMissing) {
+            return field.dataset.errorRequired || 'Ce champ est obligatoire.';
+        }
+
+        if (validity.typeMismatch || validity.badInput) {
+            return field.dataset.errorType || 'Veuillez saisir une valeur valide.';
+        }
+
+        if (validity.patternMismatch) {
+            return field.dataset.errorPattern || 'Veuillez respecter le format demandé.';
+        }
+
+        if (validity.rangeUnderflow || validity.rangeOverflow) {
+            return field.dataset.errorRange || 'Veuillez saisir une valeur comprise dans la plage autorisée.';
+        }
+
+        if (validity.stepMismatch) {
+            return field.dataset.errorStep || 'Veuillez saisir une valeur correspondant au pas demandé.';
+        }
+
+        return field.validationMessage || 'Veuillez vérifier ce champ.';
+    };
+
+    const setStructuredFieldState = (form, field, valid, message = '') => {
+        field.classList.toggle('is-invalid', !valid);
+        field.setAttribute('aria-invalid', valid ? 'false' : 'true');
+
+        if (!field.id) {
+            return;
+        }
+
+        const error = form.querySelector(`[data-field-error-for="${field.id}"]`);
+        if (error) {
+            error.textContent = valid ? '' : message;
+        }
+    };
+
     const validateStructuredForm = (form) => {
         if (!form?.matches?.('.cosmethique-form--structured')) {
             return true;
@@ -264,12 +308,8 @@ document.addEventListener('DOMContentLoaded', () => {
         let firstInvalid = null;
 
         requiredFields.forEach((field) => {
-            const isCheckbox = field.type === 'checkbox';
-            const hasValue = isCheckbox ? field.checked : Boolean((field.value || '').trim());
-            const valid = hasValue && field.checkValidity();
-
-            field.classList.toggle('is-invalid', !valid);
-            field.setAttribute('aria-invalid', valid ? 'false' : 'true');
+            const valid = field.checkValidity();
+            setStructuredFieldState(form, field, valid, getStructuredFieldError(field));
 
             if (!valid && !firstInvalid) {
                 firstInvalid = field;
@@ -277,7 +317,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
 
         if (firstInvalid) {
-            status.textContent = translateUi('form_error', 'Merci de vérifier les champs indiqués avant d’envoyer votre demande.');
+            status.textContent = form.dataset.errorSummary || translateUi('form_error', 'Merci de vérifier les champs indiqués avant d’envoyer votre demande.');
             status.classList.add('is-error');
             status.classList.remove('is-success');
             firstInvalid.focus({ preventScroll: false });
@@ -291,15 +331,16 @@ document.addEventListener('DOMContentLoaded', () => {
 
     document.querySelectorAll('.cosmethique-form--structured input, .cosmethique-form--structured select, .cosmethique-form--structured textarea').forEach((field) => {
         const syncFieldState = () => {
-            if (!field.classList.contains('is-invalid')) {
+            if (!field.classList.contains('is-invalid') && field.getAttribute('aria-invalid') !== 'true') {
                 return;
             }
 
-            const isCheckbox = field.type === 'checkbox';
-            const valid = (isCheckbox ? field.checked : Boolean((field.value || '').trim())) && field.checkValidity();
+            const form = field.closest('form.cosmethique-form--structured');
+            const valid = field.checkValidity();
             if (valid) {
-                field.classList.remove('is-invalid');
-                field.setAttribute('aria-invalid', 'false');
+                setStructuredFieldState(form, field, true);
+            } else {
+                setStructuredFieldState(form, field, false, getStructuredFieldError(field));
             }
         };
 
@@ -1301,14 +1342,15 @@ Thomas Bernard`,
     };
 
     const fillFranchiseDemoForm = (container) => {
-        fillFirstMatchingField(container, [/nom.?complet|full.?name|your.?name|name/], 'Thomas Bernard');
+        fillFirstMatchingField(container, [/prenom|first.?name|given.?name/], 'Thomas');
+        fillFirstMatchingField(container, [/last.?name|family.?name|nom/], 'Bernard');
         fillFirstMatchingField(container, [/e-?mail|email|courriel/], 'thomas.bernard@email.com');
         fillFirstMatchingField(container, [/telephone|phone|tel/], '06 71 48 92 35');
-        fillFirstMatchingField(container, [/ville.?souhaitee|city|ville/], 'Lyon');
-        fillFirstMatchingField(container, [/apport|invest|budget|capital/], '180 000 €');
-        fillFirstMatchingField(container, [/surface|local|m2|m²/], '120 m²');
+        fillFirstMatchingField(container, [/implantation.?city|ville.?implantation|city|ville/], 'Lyon');
+        fillFirstMatchingField(container, [/implantation.?postcode|code.?postal|postcode|zip/], '69002');
+        fillFirstMatchingField(container, [/personal.?contribution|apport|invest|budget|capital/], '25000');
         fillFirstMatchingField(container, [/experience|professionnelle|retail|beaute/], 'Responsable de magasin spécialisé dans les produits de bien-être depuis 8 ans.');
-        fillFirstMatchingField(container, [/message|commentaire|demande/], demoMessages.franchise);
+        fillFirstMatchingField(container, [/project.?message|presentation.?projet|message|commentaire|demande/], demoMessages.franchise);
 
     };
 
@@ -1357,16 +1399,16 @@ Thomas Bernard`,
         }
 
         if (/devenir-franchise|franchise/i.test(path)) {
-            document.querySelectorAll('.wpcf7 form, .wpforms-form, form.cosmethique-form').forEach(fillFranchiseDemoForm);
+            document.querySelectorAll('.wpcf7 form:not([data-demo-autofill-disabled="true"]), .wpforms-form:not([data-demo-autofill-disabled="true"]), form.cosmethique-form:not([data-demo-autofill-disabled="true"])').forEach(fillFranchiseDemoForm);
         }
 
         if (document.body.classList.contains('woocommerce-account') || /mon-compte|my-account/i.test(path)) {
             document.querySelectorAll('form.woocommerce-form, form.woocommerce-EditAccountForm, form.woocommerce-address-fields, .woocommerce-account form').forEach(fillAccountDemoForm);
         }
 
-        document.querySelectorAll('form').forEach(fillGenericDemoForm);
+        document.querySelectorAll('form:not([data-demo-autofill-disabled="true"])').forEach(fillGenericDemoForm);
 
-        document.querySelectorAll('form').forEach((form) => {
+        document.querySelectorAll('form:not([data-demo-autofill-disabled="true"])').forEach((form) => {
             if (form.dataset.demoPlaceholderSubmitBound === 'true') {
                 return;
             }

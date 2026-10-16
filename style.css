@@ -5379,6 +5379,191 @@ button.category-card.is-active {
     font-weight: 900;
 }
 
+.franchise-section > * {
+    min-width: 0;
+}
+
+.franchise-section .form-card {
+    border-color: rgba(13, 27, 61, 0.1);
+    border-radius: 24px;
+    background: rgba(255, 255, 255, 0.94);
+    box-shadow: 0 22px 58px rgba(13, 27, 61, 0.08);
+}
+
+.franchise-section .form-card > h3 {
+    margin: 6px 0 10px;
+    color: var(--ink);
+}
+
+.franchise-form-intro {
+    max-width: 62ch;
+    margin-bottom: 10px;
+    line-height: 1.65;
+}
+
+.franchise-required-note {
+    margin: 0 0 18px;
+    color: #6B5A42;
+    font-size: 0.88rem;
+    font-weight: 700;
+}
+
+.franchise-required-note span,
+.franchise-required-mark {
+    color: #9A533F;
+    font-weight: 900;
+}
+
+.franchise-btob-form {
+    gap: 20px;
+}
+
+.franchise-btob-form .cosmethique-form-section {
+    gap: 14px;
+    padding: clamp(18px, 2vw, 24px);
+    border-color: rgba(13, 27, 61, 0.09);
+    border-radius: 18px;
+    background: #FCFAF6;
+}
+
+.franchise-btob-form .cosmethique-form-section legend {
+    color: var(--ink);
+    font-size: 1rem;
+}
+
+.franchise-btob-form .cosmethique-form-section--privacy {
+    background: rgba(244, 236, 223, 0.5);
+}
+
+.cosmethique-form-section-help {
+    margin: 0;
+    color: #667587;
+    font-size: 0.9rem;
+    line-height: 1.55;
+}
+
+.cosmethique-form-field {
+    display: grid;
+    min-width: 0;
+    align-content: start;
+    gap: 8px;
+}
+
+.franchise-btob-form .cosmethique-form-field > label:not(.checkbox-label) {
+    display: block;
+    color: var(--ink);
+    font-size: 0.93rem;
+    line-height: 1.4;
+}
+
+.franchise-btob-form input:not([type="checkbox"]),
+.franchise-btob-form textarea {
+    border-color: rgba(13, 27, 61, 0.16);
+    border-radius: 12px;
+    background: #FFFFFF;
+    transition: border-color 180ms ease, box-shadow 180ms ease, background-color 180ms ease;
+}
+
+.franchise-btob-form input:not([type="checkbox"]):hover,
+.franchise-btob-form textarea:hover {
+    border-color: rgba(43, 125, 138, 0.42);
+}
+
+.franchise-btob-form input:not([type="checkbox"]):focus-visible,
+.franchise-btob-form textarea:focus-visible {
+    border-color: #2B7D8A;
+    outline: 2px solid #0D1B3D !important;
+    outline-offset: 2px !important;
+    box-shadow: 0 0 0 5px rgba(43, 125, 138, 0.12) !important;
+}
+
+.franchise-btob-form textarea {
+    min-height: 128px;
+    resize: vertical;
+}
+
+.franchise-btob-form small {
+    color: #697789;
+    font-size: 0.82rem;
+    line-height: 1.5;
+}
+
+.franchise-currency-field {
+    position: relative;
+    min-width: 0;
+}
+
+.franchise-currency-field input {
+    padding-right: 52px;
+}
+
+.franchise-currency-field > span {
+    position: absolute;
+    top: 50%;
+    right: 16px;
+    display: grid;
+    width: 28px;
+    height: 28px;
+    place-items: center;
+    border-radius: 50%;
+    background: #F4ECDF;
+    color: var(--ink);
+    font-weight: 900;
+    pointer-events: none;
+    transform: translateY(-50%);
+}
+
+.franchise-btob-form .checkbox-label {
+    align-items: flex-start;
+    gap: 12px;
+    color: #425467;
+    font-size: 0.9rem;
+    line-height: 1.6;
+}
+
+.franchise-consent-heading {
+    margin: 0;
+    color: var(--ink);
+    font-size: 0.93rem;
+    font-weight: 800;
+    line-height: 1.4;
+}
+
+.franchise-btob-form .checkbox-label input {
+    flex: 0 0 auto;
+    width: 20px;
+    height: 20px;
+    margin: 3px 0 0;
+    accent-color: #0D1B3D;
+}
+
+.franchise-btob-form .checkbox-label a {
+    color: #0D1B3D;
+    font-weight: 800;
+    text-underline-offset: 3px;
+}
+
+.form-error-message {
+    color: #943F3F;
+    font-size: 0.82rem;
+    font-weight: 700;
+    line-height: 1.45;
+}
+
+.form-error-message:empty {
+    display: none;
+}
+
+.franchise-btob-form [aria-invalid="true"]:not(fieldset) {
+    border-color: #A04444;
+    box-shadow: 0 0 0 3px rgba(160, 68, 68, 0.12);
+}
+
+.franchise-submit-button {
+    width: fit-content;
+    min-width: 220px;
+}
+
 .franchise-form-status.is-error,
 .product-format-help,
 .form-error-message {
