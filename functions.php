@@ -436,12 +436,19 @@ function theme_perso_scripts() {
     $script_version    = file_exists( $main_script_path ) ? (string) filemtime( $main_script_path ) : $version;
 
     wp_enqueue_style( 'theme-perso-fonts', 'https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Inter:wght@400;500;600;700;800&display=swap', array(), null );
+    if ( is_page( 'devenir-franchise' ) ) {
+        wp_enqueue_style( 'leaflet', 'https://unpkg.com/leaflet@1.9.4/dist/leaflet.css', array(), '1.9.4' );
+        wp_enqueue_script( 'leaflet', 'https://unpkg.com/leaflet@1.9.4/dist/leaflet.js', array(), '1.9.4', true );
+    }
 
     if ( is_page( 'evenement' ) || is_front_page() ) {
         wp_enqueue_script( 'gsap', 'https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js', array(), '3.12.5', true );
     }
 
     $main_dependencies = array();
+    if ( is_page( 'devenir-franchise' ) ) {
+        $main_dependencies[] = 'leaflet';
+    }
     if ( is_page( 'evenement' ) || is_front_page() ) {
         $main_dependencies[] = 'gsap';
     }

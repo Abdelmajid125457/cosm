@@ -1175,6 +1175,11 @@
         min-width: 0;
     }
 
+    .franchise-map {
+        min-height: 360px !important;
+        border-radius: 22px !important;
+    }
+
     /* Mon compte */
     .account-premium,
     .account-access-section,

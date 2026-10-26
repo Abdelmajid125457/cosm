@@ -39,21 +39,10 @@ $franchise_training_url    = home_url( '/franchise/formation/' );
                 </div>
             </div>
         </div>
-        <div class="franchise-map-card franchise-opportunity-card">
-            <div class="franchise-opportunity-card__content">
-                <p class="eyebrow">Première étape</p>
-                <h3>Évaluez votre projet avant de candidater.</h3>
-                <p>Le questionnaire d’éligibilité fournit une première orientation. Il ne vaut ni acceptation du dossier, ni promesse d’implantation, ni accès automatique à la formation.</p>
-                <ol>
-                    <li>Questionnaire d’éligibilité</li>
-                    <li>Dépôt de candidature</li>
-                    <li>Analyse du dossier et entretien</li>
-                    <li>Étapes contractuelles</li>
-                    <li>Signature éventuelle du contrat</li>
-                </ol>
-            </div>
+        <div class="franchise-map-card">
+            <div id="cosmethique-franchise-map" class="franchise-map" data-franchise-map aria-label="Carte du réseau de franchises Cosm’Éthique"></div>
             <div class="franchise-map-cta">
-                <p>Vous souhaitez présenter votre projet ?</p>
+                <p>Vous souhaitez ouvrir une franchise dans votre ville ?</p>
                 <div class="franchise-cta-actions">
                     <a class="button button-primary" href="#franchise-request-form">Devenir franchisé</a>
                     <a class="button franchise-eligibility-button" href="<?php echo esc_url( $franchise_eligibility_url ); ?>">
