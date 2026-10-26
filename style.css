@@ -204,8 +204,7 @@ button {
 .shop-picto-grid svg,
 .home-expertise-cards span,
 .account-benefit-card svg,
-.diagnostic-indicators svg,
-.cosmethique-map-marker {
+.diagnostic-indicators svg {
     transition: transform 0.28s ease;
 }
 
@@ -216,8 +215,7 @@ button {
 .shop-picto-grid > *:hover svg,
 .home-expertise-cards article:hover span,
 .account-benefit-card:hover svg,
-.diagnostic-indicators > *:hover svg,
-.cosmethique-map-marker:hover {
+.diagnostic-indicators > *:hover svg {
     transform: scale(1.06) rotate(-3deg);
 }
 
@@ -5697,6 +5695,13 @@ button.category-card.is-active {
     text-transform: uppercase;
 }
 
+.franchise-network-stats--qualitative strong {
+    align-self: center;
+    font-family: var(--sans);
+    font-size: clamp(1.05rem, 1.4vw, 1.3rem);
+    line-height: 1.2;
+}
+
 .franchise-map-card {
     overflow: hidden;
     border: 1px solid rgba(13, 27, 61, 0.09);
@@ -5705,10 +5710,64 @@ button.category-card.is-active {
     box-shadow: 0 22px 54px rgba(13, 27, 61, 0.08);
 }
 
-.franchise-map {
-    width: 100%;
-    min-height: clamp(380px, 42vw, 560px);
+.franchise-opportunity-card {
+    background:
+        radial-gradient(circle at 90% 8%, rgba(201, 164, 92, 0.18), transparent 28%),
+        linear-gradient(145deg, #F9F5EE, #FFFFFF 70%);
+}
+
+.franchise-opportunity-card__content {
+    display: grid;
+    align-content: center;
+    min-height: clamp(380px, 40vw, 520px);
+    padding: clamp(28px, 4.5vw, 58px);
+}
+
+.franchise-opportunity-card__content h3 {
+    max-width: 620px;
+    margin: 0 0 16px;
+    color: #0D1B3D;
+    font-family: var(--serif);
+    font-size: clamp(2rem, 3.4vw, 3.6rem);
+    line-height: 1.04;
+}
+
+.franchise-opportunity-card__content > p:not(.eyebrow) {
+    max-width: 650px;
+    color: #5D6F82;
+    line-height: 1.7;
+}
+
+.franchise-opportunity-card__content ol {
+    display: grid;
+    gap: 10px;
+    margin: 24px 0 0;
+    padding: 0;
+    list-style: none;
+    counter-reset: franchise-opportunity;
+}
+
+.franchise-opportunity-card__content li {
+    display: grid;
+    grid-template-columns: 32px minmax(0, 1fr);
+    gap: 12px;
+    align-items: center;
+    color: #0D1B3D;
+    font-weight: 800;
+    counter-increment: franchise-opportunity;
+}
+
+.franchise-opportunity-card__content li::before {
+    content: counter(franchise-opportunity, decimal-leading-zero);
+    display: grid;
+    place-items: center;
+    width: 32px;
+    height: 32px;
+    border: 1px solid rgba(201, 164, 92, 0.28);
+    border-radius: 50%;
     background: #FFFFFF;
+    color: #7A642E;
+    font-size: 0.72rem;
 }
 
 .franchise-map-cta {
@@ -5777,11 +5836,11 @@ button.category-card.is-active {
 .franchise-training-preview {
     box-sizing: border-box;
     display: block;
-    width: min(1180px, calc(100% - 48px));
+    width: min(1180px, calc(100vw - 40px));
     max-width: none;
-    margin: clamp(36px, 5vw, 64px) auto;
+    margin: clamp(36px, 5vw, 64px) 0 clamp(36px, 5vw, 64px) 50%;
     padding: clamp(32px, 4vw, 56px);
-    overflow: visible;
+    overflow: hidden;
     border: 1px solid rgba(201, 164, 92, 0.22);
     border-radius: clamp(26px, 3.2vw, 42px);
     background:
@@ -5789,6 +5848,7 @@ button.category-card.is-active {
         radial-gradient(circle at 94% 90%, rgba(43, 125, 138, 0.08), transparent 28%),
         linear-gradient(135deg, #FFFFFF 0%, #FBF7F0 100%);
     box-shadow: 0 24px 72px rgba(13, 27, 61, 0.075);
+    transform: translateX(-50%);
 }
 
 .franchise-training-preview__inner {
@@ -5917,133 +5977,24 @@ button.category-card.is-active {
     hyphens: none;
 }
 
-.cosmethique-map-marker-wrap {
-    background: transparent;
-    border: 0;
+.franchise-candidate-journey {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin: 28px 0;
 }
 
-.cosmethique-map-marker {
-    display: grid;
-    place-items: center;
-    width: 46px;
-    height: 46px;
-    border: 2px solid #0D1B3D;
-    border-radius: 999px;
-    background: #FFFFFF;
-    box-shadow: 0 12px 24px rgba(13, 27, 61, 0.2);
-    color: #0D1B3D;
-    cursor: pointer;
-    transition: transform 0.25s ease, box-shadow 0.25s ease;
-}
-
-.cosmethique-map-marker:hover {
-    box-shadow: 0 18px 34px rgba(13, 27, 61, 0.25);
-    transform: translateY(-2px) scale(1.08);
-}
-
-.cosmethique-map-marker strong {
-    font-family: var(--serif);
-    font-size: 0.95rem;
-    line-height: 1;
-}
-
-.cosmethique-leaflet-popup .leaflet-popup-content-wrapper {
-    border-radius: 22px;
-    box-shadow: 0 18px 48px rgba(13, 27, 61, 0.16);
-}
-
-.cosmethique-leaflet-popup .leaflet-popup-content {
-    margin: 0;
-}
-
-.cosmethique-map-popup {
-    display: grid;
-    gap: 8px;
-    min-width: 240px;
-    padding: 18px;
-    color: #0D1B3D;
-}
-
-.cosmethique-map-popup-logo {
-    color: #0D1B3D;
-    font-family: var(--serif);
-    font-size: 1.05rem;
-    letter-spacing: 0.08em;
-}
-
-.cosmethique-map-popup h3,
-.cosmethique-map-popup p {
-    margin: 0;
-}
-
-.cosmethique-map-popup p {
-    color: #6b7c8f;
-    font-size: 0.88rem;
-    line-height: 1.45;
-}
-
-.cosmethique-map-popup .button {
-    min-height: 40px;
-    margin-top: 4px;
-    padding: 10px 14px;
-    font-size: 0.82rem;
-}
-
-.leaflet-popup-content .popup-btn,
-.leaflet-popup-content .popup-btn:link,
-.leaflet-popup-content .popup-btn:visited,
-.leaflet-popup-content .popup-btn:hover,
-.leaflet-popup-content .popup-btn:active,
-.cosmethique-map-popup .popup-btn,
-.cosmethique-map-popup .popup-btn:link,
-.cosmethique-map-popup .popup-btn:visited,
-.cosmethique-map-popup .popup-btn:hover,
-.cosmethique-map-popup .popup-btn:active {
+.franchise-candidate-journey span {
+    display: inline-flex;
+    align-items: center;
     min-height: 44px;
-    padding: 12px 24px;
+    padding: 10px 16px;
+    border: 1px solid rgba(201, 164, 92, 0.24);
     border-radius: 999px;
-    background: #2B7D8A;
-    color: #ffffff !important;
-    font-weight: 600;
-    text-decoration: none;
-    transition: background 0.25s ease, transform 0.25s ease, box-shadow 0.25s ease;
-}
-
-.leaflet-popup-content .popup-btn:hover,
-.leaflet-popup-content .popup-btn:focus-visible,
-.cosmethique-map-popup .popup-btn:hover,
-.cosmethique-map-popup .popup-btn:focus-visible {
-    background: #1E9CA6;
-    color: #ffffff !important;
-}
-
-.franchise-stats {
-    display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 14px;
-    margin: 30px 0;
-}
-
-.franchise-stats div {
-    padding: 20px;
-    border: 1px solid var(--line);
-    border-radius: 8px;
-    background: var(--ivory);
-}
-
-.franchise-stats strong {
-    display: block;
-    margin-bottom: 6px;
-    color: var(--sage-dark);
-    font-family: var(--serif);
-    font-size: 2.2rem;
-    line-height: 1;
-}
-
-.franchise-stats span {
-    display: block;
-    color: var(--muted);
-    font-size: 0.9rem;
+    background: #FBF7F0;
+    color: #0D1B3D;
+    font-size: 0.88rem;
+    font-weight: 800;
 }
 
 .legal-content {
@@ -13942,10 +13893,6 @@ body.cosmethique-sorting .woocommerce ul.products {
         padding: clamp(24px, 5vw, 42px);
     }
 
-    .franchise-map {
-        min-height: 430px;
-    }
-
     .cosmethique-shop-toolbar {
         align-items: stretch;
         flex-direction: column;
@@ -14703,10 +14650,6 @@ body.cosmethique-sorting .woocommerce ul.products {
         display: grid;
     }
 
-    .franchise-stats {
-        grid-template-columns: 1fr;
-    }
-
     .franchise-network {
         width: min(100% - 24px, 1280px);
         border-radius: 24px;
@@ -14718,10 +14661,6 @@ body.cosmethique-sorting .woocommerce ul.products {
 
     .franchise-map-card {
         border-radius: 22px;
-    }
-
-    .franchise-map {
-        min-height: 360px;
     }
 
     .franchise-map-cta {
@@ -21995,6 +21934,22 @@ select:focus,
     line-height: 1.7;
 }
 
+.franchise-training-page .franchise-flow-program__content .franchise-training-audience {
+    padding: 18px 20px;
+    border-left: 3px solid #C9A45C;
+    border-radius: 0 16px 16px 0;
+    background: #FBF7F0;
+    color: #0D1B3D;
+    font-weight: 800;
+}
+
+.franchise-training-page .franchise-flow-program__content .franchise-training-budget-note {
+    padding-top: 16px;
+    border-top: 1px solid rgba(201, 164, 92, 0.24);
+    color: #6A7582;
+    font-size: 0.92rem;
+}
+
 .franchise-training-page .franchise-flow-section {
     padding-block: clamp(76px, 8vw, 132px);
 }
@@ -22571,7 +22526,7 @@ select:focus,
     }
 
     .franchise-training-preview {
-        width: calc(100% - 32px);
+        width: calc(100vw - 32px);
         max-width: 1040px;
         align-items: start;
     }
@@ -22653,7 +22608,7 @@ select:focus,
     }
 
     .franchise-training-preview {
-        width: calc(100% - 24px);
+        width: calc(100vw - 24px);
         max-width: none;
         padding: 24px;
         border-radius: 24px;

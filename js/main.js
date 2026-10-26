@@ -451,9 +451,6 @@ document.addEventListener('DOMContentLoaded', () => {
             pushTrackingEvent('contact_submit');
         }
 
-        if (event.target.matches('[data-demo-autofill="franchise"] form, .form-card[data-demo-autofill="franchise"] form, #franchise-request-form form')) {
-            pushTrackingEvent('franchise_request');
-        }
     }, true);
 
     document.querySelectorAll('[data-franchise-info-form]').forEach((form) => {
@@ -485,6 +482,15 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         });
     });
+
+    if (document.querySelector('[data-franchise-confirmation-success]')) {
+        pushTrackingEvent('generate_lead', {
+            form_name: 'franchise_candidature',
+            lead_stage: 'application_received',
+            lead_qualified: false,
+            lead_qualification_status: 'pending_review'
+        });
+    }
 
     document.addEventListener('click', (event) => {
         const addToCart = event.target.closest('.ajax_add_to_cart, .add_to_cart_button');
@@ -3061,64 +3067,6 @@ Thomas Bernard`,
         updateStep();
     });
 
-    const franchiseMapElement = document.querySelector('[data-franchise-map]');
-    if (franchiseMapElement && window.L) {
-        const mapTranslations = i18n.map || {};
-        const translatedHours = (mapTranslations.mondaySaturdayHours && mapTranslations.mondaySaturdayHours[i18n.lang]) || 'Lun-Sam 10h-19h';
-        const viewStoreText = mapTranslations.viewStore || 'Voir la boutique';
-        const franchiseLocations = [
-            { city: 'Paris', coords: [48.8566, 2.3522], address: '18 rue Saint-Honoré, 75001 Paris', phone: '01 42 18 40 12', hours: translatedHours },
-            { city: 'Lyon', coords: [45.764, 4.8357], address: '6 rue Édouard Herriot, 69002 Lyon', phone: '04 78 20 14 88', hours: translatedHours },
-            { city: 'Marseille', coords: [43.2965, 5.3698], address: '22 rue Paradis, 13001 Marseille', phone: '04 91 35 72 10', hours: translatedHours },
-            { city: 'Bordeaux', coords: [44.8378, -0.5792], address: '9 cours de l’Intendance, 33000 Bordeaux', phone: '05 56 44 18 20', hours: translatedHours },
-            { city: 'Toulouse', coords: [43.6047, 1.4442], address: '14 rue d’Alsace-Lorraine, 31000 Toulouse', phone: '05 61 22 40 18', hours: translatedHours },
-            { city: 'Lille', coords: [50.6292, 3.0573], address: '5 rue Esquermoise, 59000 Lille', phone: '03 20 12 45 90', hours: translatedHours },
-            { city: 'Nantes', coords: [47.2184, -1.5536], address: '11 rue Crébillon, 44000 Nantes', phone: '02 40 18 72 30', hours: translatedHours },
-            { city: 'Strasbourg', coords: [48.5734, 7.7521], address: '7 rue des Hallebardes, 67000 Strasbourg', phone: '03 88 24 16 42', hours: translatedHours },
-            { city: 'Nice', coords: [43.7102, 7.262], address: '19 avenue Jean Médecin, 06000 Nice', phone: '04 93 62 14 75', hours: translatedHours },
-            { city: 'Montpellier', coords: [43.6108, 3.8767], address: '8 rue de la Loge, 34000 Montpellier', phone: '04 67 31 24 18', hours: translatedHours },
-            { city: 'Rennes', coords: [48.1173, -1.6778], address: '10 rue Le Bastard, 35000 Rennes', phone: '02 99 18 44 22', hours: translatedHours },
-            { city: 'Aix-en-Provence', coords: [43.5297, 5.4474], address: '16 cours Mirabeau, 13100 Aix-en-Provence', phone: '04 42 25 18 64', hours: translatedHours },
-        ];
-
-        const map = window.L.map(franchiseMapElement, {
-            scrollWheelZoom: false,
-            zoomControl: true,
-        }).setView([46.8, 2.5], 5.7);
-
-        window.L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-            maxZoom: 18,
-            attribution: '&copy; OpenStreetMap',
-        }).addTo(map);
-
-        const markerIcon = window.L.divIcon({
-            className: 'cosmethique-map-marker-wrap',
-            html: '<span class="cosmethique-map-marker"><strong>CÉ</strong></span>',
-            iconSize: [46, 46],
-            iconAnchor: [23, 23],
-            popupAnchor: [0, -20],
-        });
-
-        franchiseLocations.forEach((location) => {
-            const popup = `
-                <article class="cosmethique-map-popup">
-                    <strong class="cosmethique-map-popup-logo">COSM’ÉTHIQUE</strong>
-                    <h3>${location.city}</h3>
-                    <p>${location.address}</p>
-                    <p>${location.phone}</p>
-                    <p>${location.hours}</p>
-                    <a class="button button-primary popup-btn" href="#franchise-request-form">${viewStoreText}</a>
-                </article>
-            `;
-
-            window.L.marker(location.coords, { icon: markerIcon, title: `COSM’ÉTHIQUE ${location.city}` })
-                .addTo(map)
-                .bindPopup(popup, { closeButton: true, minWidth: 240, className: 'cosmethique-leaflet-popup' });
-        });
-
-        window.setTimeout(() => map.invalidateSize(), 300);
-    }
-
     document.querySelectorAll('[data-filter-group]').forEach((group) => {
         const groupName = group.dataset.filterGroup;
         const buttons = group.querySelectorAll('[data-filter-button]');
@@ -3435,57 +3383,13 @@ Thomas Bernard`,
                 result.scrollIntoView({ behavior: prefersReducedMotion ? 'auto' : 'smooth', block: 'center' });
             }
 
-            pushTrackingEvent('generate_lead', {
-                form_name: 'franchise_eligibility',
-                diagnostic_result: score >= 2 ? 'compatible' : 'adjust'
-            });
-        });
-    });
-
-    document.querySelectorAll('[data-franchise-application-form]').forEach((form) => {
-        const status = form.querySelector('.franchise-form-status');
-        const requiredFields = Array.from(form.querySelectorAll('input[required], select[required], textarea[required]'));
-
-        requiredFields.forEach((field) => {
-            field.addEventListener('input', () => {
-                if (field.matches('[data-franchise-captcha]')) {
-                    field.setCustomValidity('');
-                }
-
-                field.classList.remove('is-invalid');
-                field.removeAttribute('aria-invalid');
-            });
-        });
-
-        form.addEventListener('submit', (event) => {
-            let isValid = true;
-
-            requiredFields.forEach((field) => {
-                if (field.matches('[data-franchise-captcha]')) {
-                    field.setCustomValidity(field.value.trim() === '9' ? '' : 'Merci d’indiquer la bonne réponse.');
-                }
-
-                const valid = field.type === 'checkbox'
-                    ? field.checked
-                    : field.checkValidity() && Boolean((field.value || '').trim());
-                field.classList.toggle('is-invalid', !valid);
-                field.setAttribute('aria-invalid', valid ? 'false' : 'true');
-
-                if (!valid) {
-                    isValid = false;
-                }
-            });
-
-            if (!isValid) {
-                event.preventDefault();
-                if (status) {
-                    status.textContent = translateUi('form_error', 'Merci de vérifier les champs indiqués avant d’envoyer votre candidature.');
-                    status.classList.add('is-error');
-                }
-                return;
+            if (form.dataset.trackingCompleted !== 'true') {
+                form.dataset.trackingCompleted = 'true';
+                pushTrackingEvent('franchise_eligibility_completed', {
+                    form_name: 'franchise_eligibility',
+                    diagnostic_result: score >= 2 ? 'compatible' : 'adjust'
+                });
             }
-
-            pushTrackingEvent('franchise_request', { form_name: 'franchise_candidature' });
         });
     });
 

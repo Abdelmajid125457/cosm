@@ -991,7 +991,6 @@
     .about-ingredient-grid,
     .contact-social-grid,
     .franchise-network-stats,
-    .franchise-stats,
     .boutique-card-grid {
         display: grid !important;
         grid-template-columns: 1fr 1fr !important;
@@ -1172,14 +1171,8 @@
     }
 
     .franchise-network-stats div,
-    .franchise-stats div,
     .contact-social-card {
         min-width: 0;
-    }
-
-    .franchise-map {
-        min-height: 360px !important;
-        border-radius: 22px !important;
     }
 
     /* Mon compte */
@@ -1557,7 +1550,6 @@
     .about-ingredient-grid,
     .contact-social-grid,
     .franchise-network-stats,
-    .franchise-stats,
     .boutique-card-grid,
     .cart-benefits-grid,
     .product-hero-rating,

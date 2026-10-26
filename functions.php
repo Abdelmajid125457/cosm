@@ -436,19 +436,12 @@ function theme_perso_scripts() {
     $script_version    = file_exists( $main_script_path ) ? (string) filemtime( $main_script_path ) : $version;
 
     wp_enqueue_style( 'theme-perso-fonts', 'https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Inter:wght@400;500;600;700;800&display=swap', array(), null );
-    if ( is_page( 'devenir-franchise' ) ) {
-        wp_enqueue_style( 'leaflet', 'https://unpkg.com/leaflet@1.9.4/dist/leaflet.css', array(), '1.9.4' );
-        wp_enqueue_script( 'leaflet', 'https://unpkg.com/leaflet@1.9.4/dist/leaflet.js', array(), '1.9.4', true );
-    }
 
     if ( is_page( 'evenement' ) || is_front_page() ) {
         wp_enqueue_script( 'gsap', 'https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js', array(), '3.12.5', true );
     }
 
     $main_dependencies = array();
-    if ( is_page( 'devenir-franchise' ) ) {
-        $main_dependencies[] = 'leaflet';
-    }
     if ( is_page( 'evenement' ) || is_front_page() ) {
         $main_dependencies[] = 'gsap';
     }
@@ -1052,13 +1045,6 @@ function theme_perso_get_franchise_information_notice() {
         return $GLOBALS['theme_perso_franchise_information_notice'];
     }
 
-    if ( isset( $_GET['form'] ) && 'success' === sanitize_key( wp_unslash( $_GET['form'] ) ) ) { // phpcs:ignore WordPress.Security.NonceVerification.Recommended
-        return array(
-            'type'    => 'success',
-            'message' => __( 'Merci pour votre candidature. Notre équipe étudiera votre demande et reviendra vers vous prochainement.', 'theme-perso' ),
-        );
-    }
-
     return null;
 }
 
@@ -1204,8 +1190,16 @@ function theme_perso_force_devenir_franchise_page_request( $query_vars ) {
 }
 add_filter( 'request', 'theme_perso_force_devenir_franchise_page_request', 0 );
 
+function theme_perso_is_franchise_application_request() {
+    return in_array(
+        theme_perso_get_clean_request_path(),
+        array( 'devenir-franchise', 'franchise/candidature' ),
+        true
+    );
+}
+
 function theme_perso_handle_franchise_information_form() {
-    if ( ! is_page( 'devenir-franchise' ) || 'POST' !== ( $_SERVER['REQUEST_METHOD'] ?? '' ) ) {
+    if ( ! theme_perso_is_franchise_application_request() || 'POST' !== ( $_SERVER['REQUEST_METHOD'] ?? '' ) ) {
         return;
     }
 
@@ -1309,8 +1303,12 @@ function theme_perso_handle_franchise_information_form() {
         return;
     }
 
+    // Verrou court avant l'envoi pour bloquer deux requêtes concurrentes identiques.
+    set_transient( $duplicate_key, 'processing', 2 * MINUTE_IN_SECONDS );
+
     $recipient = sanitize_email( get_option( 'admin_email' ) );
     if ( ! is_email( $recipient ) ) {
+        delete_transient( $duplicate_key );
         $set_error( __( 'La candidature ne peut pas être transmise pour le moment. Merci de réessayer ultérieurement.', 'theme-perso' ) );
         return;
     }
@@ -1356,16 +1354,27 @@ function theme_perso_handle_franchise_information_form() {
     );
 
     if ( ! wp_mail( $recipient, $subject, $message, $headers ) ) {
+        delete_transient( $duplicate_key );
         $set_error( __( 'Votre candidature n’a pas pu être envoyée. Merci de réessayer dans quelques instants.', 'theme-perso' ) );
         return;
     }
 
-    set_transient( $duplicate_key, 1, 2 * MINUTE_IN_SECONDS );
+    set_transient( $duplicate_key, 'sent', 2 * MINUTE_IN_SECONDS );
     do_action( 'theme_perso_franchise_information_submitted', $submission );
+
+    $confirmation_token = strtolower( wp_generate_password( 32, false, false ) );
+    set_transient(
+        'cosmethique_franchise_confirmation_' . hash( 'sha256', $confirmation_token ),
+        array(
+            'created_at' => time(),
+            'lead_stage' => 'application_received',
+        ),
+        10 * MINUTE_IN_SECONDS
+    );
 
     $confirmation_page = get_page_by_path( 'franchise/confirmation' );
     $target            = $confirmation_page ? get_permalink( $confirmation_page ) : home_url( '/franchise/confirmation/' );
-    wp_safe_redirect( $target, 303 );
+    wp_safe_redirect( add_query_arg( 'franchise_success', $confirmation_token, $target ), 303 );
     exit;
 }
 add_action( 'template_redirect', 'theme_perso_handle_franchise_information_form', 20 );
@@ -1376,6 +1385,45 @@ function theme_perso_is_franchise_confirmation_request() {
     $request = isset( $wp->request ) ? trim( (string) $wp->request, '/' ) : '';
 
     return 'franchise/confirmation' === $request;
+}
+
+function theme_perso_validate_franchise_confirmation_request() {
+    if ( is_admin() || ! theme_perso_is_franchise_confirmation_request() || 'GET' !== ( $_SERVER['REQUEST_METHOD'] ?? 'GET' ) ) {
+        return;
+    }
+
+    $token = isset( $_GET['franchise_success'] ) ? sanitize_key( wp_unslash( $_GET['franchise_success'] ) ) : ''; // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+    $key   = $token ? 'cosmethique_franchise_confirmation_' . hash( 'sha256', $token ) : '';
+
+    if ( ! $key || false === get_transient( $key ) ) {
+        wp_safe_redirect( home_url( '/franchise/candidature/' ), 302 );
+        exit;
+    }
+
+    $GLOBALS['theme_perso_franchise_confirmation_token'] = $token;
+}
+add_action( 'template_redirect', 'theme_perso_validate_franchise_confirmation_request', 30 );
+
+function theme_perso_consume_franchise_confirmation_success() {
+    $token = isset( $GLOBALS['theme_perso_franchise_confirmation_token'] )
+        ? sanitize_key( $GLOBALS['theme_perso_franchise_confirmation_token'] )
+        : '';
+
+    if ( ! $token ) {
+        return false;
+    }
+
+    $key     = 'cosmethique_franchise_confirmation_' . hash( 'sha256', $token );
+    $payload = get_transient( $key );
+
+    if ( false === $payload ) {
+        return false;
+    }
+
+    delete_transient( $key );
+    unset( $GLOBALS['theme_perso_franchise_confirmation_token'] );
+
+    return true;
 }
 
 function theme_perso_allow_virtual_franchise_confirmation( $preempt, $wp_query ) {
@@ -1762,7 +1810,7 @@ function theme_perso_seo_page_map() {
             ),
             'devenir-franchise' => array(
                 'title'          => 'Devenir franchisé cosmétique naturelle | COSM’ÉTHIQUE',
-                'description'    => 'Rejoignez le réseau COSM’ÉTHIQUE et bénéficiez d’un parcours de formation hybride avec e-learning, serious game, immersion en boutique pilote et accompagnement post-ouverture.',
+                'description'    => 'Présentez votre projet de franchise COSM’ÉTHIQUE. Après validation et signature éventuelle, le Phygital Franchise Lab prépare l’ouverture de votre boutique.',
                 'og_title'       => 'Devenir franchisé COSM’ÉTHIQUE',
                 'og_description' => 'Découvrez le concept franchise COSM’ÉTHIQUE, le Phygital Franchise Lab et les étapes pour ouvrir une boutique de cosmétique naturelle.',
                 'image'          => get_template_directory_uri() . '/assets/home/home-savoir-faire-cosmethique.png',
@@ -1770,20 +1818,20 @@ function theme_perso_seo_page_map() {
             ),
             'franchise/formation' => array(
                 'title'          => 'Formation des franchisés | COSM’ÉTHIQUE',
-                'description'    => 'Découvrez le COSM’ÉTHIQUE Phygital Franchise Lab : LearnyBox, serious game, 6 jours en boutique pilote à Paris, validation à 80 % et suivi post-ouverture.',
+                'description'    => 'Découvrez le COSM’ÉTHIQUE Phygital Franchise Lab réservé aux franchisés signataires : LearnyBox, serious game, 6 jours à Paris, validation à 80 % et suivi à J+30 et J+90.',
                 'og_title'       => 'COSM’ÉTHIQUE Phygital Franchise Lab',
-                'og_description' => 'Un parcours hybride pour former les franchisés : e-learning LearnyBox, serious game, immersion en boutique pilote, certification interne et accompagnement post-ouverture.',
+                'og_description' => 'Un parcours hybride réservé aux franchisés ayant signé : LearnyBox, serious game, immersion en boutique pilote, validation et accompagnement post-ouverture.',
                 'image'          => get_template_directory_uri() . '/assets/home/home-savoir-faire-cosmethique.png',
                 'schema_type'    => 'EducationalOccupationalProgram',
             ),
             'franchise/eligibilite' => array(
                 'title'       => 'Éligibilité franchise | COSM’ÉTHIQUE',
-                'description' => 'Vérifiez votre éligibilité au réseau COSM’ÉTHIQUE avant le parcours Phygital Franchise Lab, la formation boutique pilote et la candidature franchise.',
+                'description' => 'Obtenez une première orientation sur votre projet COSM’ÉTHIQUE avant de déposer une candidature franchise, sans décision ni engagement contractuel.',
                 'schema_type' => 'WebPage',
             ),
             'franchise/candidature' => array(
                 'title'          => 'Candidature franchise | COSM’ÉTHIQUE',
-                'description'    => 'Déposez une candidature franchise COSM’ÉTHIQUE avec un formulaire qualifiant : profil, région souhaitée, expérience, apport, horizon d’ouverture, local et motivation.',
+                'description'    => 'Présentez votre projet de franchise COSM’ÉTHIQUE : identité, coordonnées, ville et code postal d’implantation, apport, expérience et motivations.',
                 'og_title'       => 'Candidature franchise COSM’ÉTHIQUE',
                 'og_description' => 'Présentez votre projet de boutique COSM’ÉTHIQUE et votre capacité à rejoindre le parcours franchise hybride.',
                 'image'          => get_template_directory_uri() . '/assets/home/home-univers-tous-les-soins.png',
@@ -4439,8 +4487,8 @@ function theme_perso_ensure_franchise_flow_pages() {
         ),
         'formation'  => array(
             'title'   => 'Formation des franchisés',
-            'excerpt' => 'Un parcours hybride LearnyBox, serious game, 6 jours en boutique pilote et accompagnement post-ouverture.',
-            'content' => '<h2>COSM’ÉTHIQUE Phygital Franchise Lab</h2><p>Découvrez le parcours hybride : LearnyBox, serious game, 6 jours présentiel/mixte en boutique pilote, validation à 80 % et accompagnement post-ouverture.</p><p><a class="button button-primary" href="/franchise/candidature/">Déposer ma candidature</a></p>',
+            'excerpt' => 'Un parcours hybride réservé aux franchisés ayant signé : LearnyBox, serious game, 6 jours à Paris et suivi à J+30 et J+90.',
+            'content' => '<h2>COSM’ÉTHIQUE Phygital Franchise Lab</h2><p>Ce parcours est réservé aux franchisés ayant signé leur contrat. Il associe LearnyBox, serious game, 6 jours présentiel/mixte en boutique pilote, validation à 80 % et suivi à J+30 et J+90.</p><p><a class="button button-primary" href="/franchise/candidature/">Déposer ma candidature</a></p>',
         ),
         'candidature' => array(
             'title'   => 'Candidature franchise',

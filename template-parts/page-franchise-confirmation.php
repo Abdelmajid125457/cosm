@@ -9,10 +9,17 @@ if ( ! defined( 'ABSPATH' ) ) {
     exit;
 }
 
+$confirmation_success = function_exists( 'theme_perso_consume_franchise_confirmation_success' )
+    && theme_perso_consume_franchise_confirmation_success();
+
+if ( ! $confirmation_success ) {
+    return;
+}
+
 $shop_url = function_exists( 'wc_get_page_permalink' ) ? wc_get_page_permalink( 'shop' ) : home_url( '/boutique/' );
 ?>
 
-<div class="franchise-flow franchise-confirmation-page">
+<div class="franchise-flow franchise-confirmation-page" data-franchise-confirmation-success>
     <section class="franchise-confirmation-panel" aria-labelledby="franchise-confirmation-title">
         <span class="franchise-confirmation-burst" aria-hidden="true"></span>
         <div class="franchise-confirmation-icon" aria-hidden="true">✓</div>
