@@ -14,6 +14,7 @@ $asset = function( $folder, $file ) {
 };
 
 $candidature_url = home_url( '/franchise/candidature/' );
+$investment_url  = home_url( '/franchise/investissement/' );
 $shop_url        = function_exists( 'wc_get_page_permalink' ) ? wc_get_page_permalink( 'shop' ) : home_url( '/boutique/' );
 
 $criteria = array(
@@ -168,6 +169,17 @@ $faq = array(
                     <p><?php echo esc_html( $item['text'] ); ?></p>
                 </article>
             <?php endforeach; ?>
+        </div>
+    </section>
+
+    <section class="franchise-flow-section franchise-investment-discovery" aria-labelledby="investment-discovery-title">
+        <div class="franchise-investment-discovery__inner motion-reveal">
+            <div>
+                <p class="franchise-flow-kicker"><?php esc_html_e( 'Investissement franchise', 'theme-perso' ); ?></p>
+                <h2 id="investment-discovery-title"><?php esc_html_e( 'Quel budget prévoir pour ouvrir votre franchise COSM’ÉTHIQUE ?', 'theme-perso' ); ?></h2>
+                <p><?php esc_html_e( 'Découvrez les conditions financières pour rejoindre notre réseau : droit d’entrée, investissement initial, formation comprise et redevances d’exploitation.', 'theme-perso' ); ?></p>
+            </div>
+            <a class="button button-primary" href="<?php echo esc_url( $investment_url ); ?>"><?php esc_html_e( 'Découvrir l’investissement franchise', 'theme-perso' ); ?></a>
         </div>
     </section>
 

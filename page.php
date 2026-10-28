@@ -21,7 +21,7 @@ get_header();
         $legal_slugs       = array( 'mentions-legales', 'cgv', 'cgu', 'politique-de-confidentialite', 'politique-de-cookies' );
         $is_institutional_page = in_array( $slug, $institutional_slugs, true );
         $is_legal_page     = in_array( $slug, $legal_slugs, true );
-        $is_franchise_child = in_array( $page_uri, array( 'franchise/formation', 'franchise/eligibilite', 'franchise/candidature', 'franchise/confirmation' ), true );
+        $is_franchise_child = in_array( $page_uri, array( 'franchise/formation', 'franchise/eligibilite', 'franchise/investissement', 'franchise/candidature', 'franchise/confirmation' ), true );
         $has_custom_hero   = in_array( $slug, array( 'diagnostic', 'mon-compte', 'plan-du-site', 'recrutement', 'evenement' ), true ) || $is_franchise_child || $is_cart_page || $is_checkout_page || $is_institutional_page;
         $is_compact_hero   = in_array( $slug, array( 'contact', 'devenir-franchise' ), true );
         $hero_classes      = 'page-hero' . ( $is_compact_hero ? ' page-hero--compact' : '' );
@@ -81,6 +81,8 @@ get_header();
                         get_template_part( 'template-parts/page', 'franchise-formation' );
                     } elseif ( 'franchise/eligibilite' === $page_uri ) {
                         get_template_part( 'template-parts/page', 'franchise-eligibilite' );
+                    } elseif ( 'franchise/investissement' === $page_uri ) {
+                        get_template_part( 'template-parts/page', 'franchise-investissement' );
                     } elseif ( 'franchise/candidature' === $page_uri ) {
                         get_template_part( 'template-parts/page', 'franchise-candidature' );
                     } elseif ( 'franchise/confirmation' === $page_uri ) {

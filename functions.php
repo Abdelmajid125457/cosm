@@ -1836,6 +1836,14 @@ function theme_perso_seo_page_map() {
                 'description' => 'Obtenez une première orientation sur votre projet COSM’ÉTHIQUE avant de déposer une candidature franchise, sans décision ni engagement contractuel.',
                 'schema_type' => 'WebPage',
             ),
+            'franchise/investissement' => array(
+                'title'          => 'Investissement franchise | COSM’ÉTHIQUE',
+                'description'    => 'Découvrez le budget prévisionnel pour ouvrir une franchise COSM’ÉTHIQUE : droit d’entrée, investissement global, formation incluse et redevance de 5 %.',
+                'og_title'       => 'Investissement franchise COSM’ÉTHIQUE',
+                'og_description' => 'Un modèle financier transparent : 50 000 € HT d’investissement global estimé, formation initiale incluse et redevance mensuelle de 5 % du chiffre d’affaires HT.',
+                'image'          => get_template_directory_uri() . '/assets/home/home-savoir-faire-cosmethique.png',
+                'schema_type'    => 'WebPage',
+            ),
             'franchise/candidature' => array(
                 'title'          => 'Candidature franchise | COSM’ÉTHIQUE',
                 'description'    => 'Présentez votre projet de franchise COSM’ÉTHIQUE : identité, coordonnées, ville et code postal d’implantation, apport, expérience et motivations.',
@@ -4496,6 +4504,11 @@ function theme_perso_ensure_franchise_flow_pages() {
             'title'   => 'Formation des franchisés',
             'excerpt' => 'Un parcours hybride réservé aux franchisés ayant signé : LearnyBox, serious game, 6 jours à Paris et suivi à J+30 et J+90.',
             'content' => '<h2>COSM’ÉTHIQUE Phygital Franchise Lab</h2><p>Ce parcours est réservé aux franchisés ayant signé leur contrat. Il associe LearnyBox, serious game, 6 jours présentiel/mixte en boutique pilote, validation à 80 % et suivi à J+30 et J+90.</p><p><a class="button button-primary" href="/franchise/candidature/">Déposer ma candidature</a></p>',
+        ),
+        'investissement' => array(
+            'title'   => 'Investissement franchise',
+            'excerpt' => 'Découvrez les conditions financières et le budget prévisionnel pour ouvrir une franchise COSM’ÉTHIQUE.',
+            'content' => '<h2>Investissement franchise COSM’ÉTHIQUE</h2><p>Découvrez le droit d’entrée, l’investissement global estimé, la formation incluse et la redevance d’exploitation.</p>',
         ),
         'candidature' => array(
             'title'   => 'Candidature franchise',

@@ -3451,6 +3451,35 @@ Thomas Bernard`,
         });
     });
 
+    document.querySelectorAll('[data-franchise-royalty-calculator]').forEach((calculator) => {
+        const revenueInput = calculator.querySelector('[data-franchise-revenue]');
+        const royaltyOutput = calculator.querySelector('[data-franchise-royalty]');
+        const remainderOutput = calculator.querySelector('[data-franchise-remainder]');
+
+        if (!revenueInput || !royaltyOutput || !remainderOutput) {
+            return;
+        }
+
+        const locale = i18n.lang === 'fr' ? 'fr-FR' : (i18n.lang || 'fr-FR');
+        const formatter = new Intl.NumberFormat(locale, {
+            style: 'currency',
+            currency: 'EUR',
+            maximumFractionDigits: 2,
+        });
+
+        const updateRoyalty = () => {
+            const revenue = Math.max(0, Number.parseFloat(revenueInput.value) || 0);
+            const royalty = revenue * 0.05;
+            const remainder = revenue - royalty;
+
+            royaltyOutput.textContent = `${formatter.format(royalty)} HT`;
+            remainderOutput.textContent = `${formatter.format(remainder)} HT`;
+        };
+
+        revenueInput.addEventListener('input', updateRoyalty);
+        updateRoyalty();
+    });
+
     const footerNavGroups = Array.from(document.querySelectorAll('.site-footer .footer-nav-group'));
     if (footerNavGroups.length) {
         const mobileFooterQuery = window.matchMedia('(max-width: 820px)');
